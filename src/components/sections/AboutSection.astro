@@ -1,0 +1,51 @@
+---
+const destinations = [
+  { name: "Bali", href: "/surfcamp/bali" },
+  { name: "Costa Rica", href: "/surfcamp/costa-rica" },
+  { name: "Morocco", href: "/surfcamp/morocco" },
+  { name: "Nicaragua", href: "/surfcamp/nicaragua" },
+  { name: "Portugal", href: "/surfcamp/portugal" },
+];
+---
+
+<section class="pt-4 sm:pt-6 pb-20 sm:pb-28 bg-dark">
+  <div class="px-6 sm:px-12 lg:px-20 max-w-[1400px]">
+    <p class="text-xs uppercase tracking-[0.25em] text-white/30 mb-6">
+      A little about Rapture Surfcamps
+    </p>
+
+    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white/90 leading-[1.15] max-w-5xl">
+      We&apos;re a network of{" "}
+      <span class="text-ocean-light">8 unique surf camps</span> in{" "}
+      <span class="text-ocean-light">5 countries</span> on{" "}
+      <span class="text-ocean-light">4 continents</span>. In the last
+      21 years, we&apos;ve helped more than{" "}
+      <span class="text-ocean-light">85k people</span> from all over
+      the world to learn to surf and find the best waves.
+    </h2>
+
+    <p class="mt-8 text-xl sm:text-2xl md:text-3xl text-white/50 max-w-4xl leading-relaxed">
+      Surf the world and visit us in{" "}
+      {destinations.map((dest, i) => (
+        <>
+          <a
+            href={dest.href}
+            class="text-white underline underline-offset-4 decoration-white/30 hover:decoration-ocean-light hover:text-ocean-light transition-colors"
+          >
+            {dest.name}
+          </a>{i < destinations.length - 2 ? ", " : i === destinations.length - 2 ? " or " : "!"}
+        </>
+      ))}
+    </p>
+
+    <a
+      href="/about"
+      class="inline-flex items-center gap-2 mt-10 text-sm font-medium text-ocean-light hover:text-white transition-colors group"
+    >
+      Learn more about us
+      <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</section>

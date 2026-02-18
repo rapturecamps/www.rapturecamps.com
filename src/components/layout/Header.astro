@@ -1,0 +1,121 @@
+---
+import { navigation, countries } from "@/lib/data";
+
+const navItems = navigation.main.slice(1);
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 right-0 z-50"
+>
+  <div class="mx-auto w-full px-4 sm:px-6 lg:px-10">
+    <div class="flex h-20 items-center justify-between">
+      <a href="/">
+        <img
+          src="/images/rapturecamps-logo.svg"
+          alt="Rapture Surfcamps"
+          width="140"
+          height="124"
+          class="h-14 w-auto"
+        />
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-7">
+        {countries.map((country) => (
+          <a
+            href={`/surfcamp/${country.slug}`}
+            class="text-sm text-white/80 hover:text-white transition-colors"
+          >
+            {country.name}
+          </a>
+        ))}
+
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-white/80 hover:text-white transition-colors"
+          >
+            {item.label}
+          </a>
+        ))}
+
+        <a
+          href="/de/"
+          class="h-8 w-8 rounded-full border border-white/40 flex items-center justify-center text-xs font-medium text-white/80 hover:text-white hover:border-white/70 transition-colors"
+        >
+          de
+        </a>
+
+        <a
+          href="https://bookings.rapturecamps.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-full border-2 border-white px-6 py-1.5 text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
+        >
+          Book
+        </a>
+      </nav>
+
+      <button
+        id="menu-toggle"
+        class="lg:hidden text-white/70 hover:text-white"
+        aria-label="Toggle menu"
+      >
+        <svg id="icon-menu" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
+        <svg id="icon-close" class="h-6 w-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="lg:hidden bg-brand-blue border-t border-white/10 hidden">
+    <div class="px-4 py-6 space-y-1">
+      {countries.map((country) => (
+        <a
+          href={`/surfcamp/${country.slug}`}
+          class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+        >
+          {country.name}
+        </a>
+      ))}
+
+      <div class="my-3 border-t border-white/10" />
+
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <div class="my-3 border-t border-white/10" />
+
+      <a
+        href="/de/"
+        class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+      >
+        Deutsch
+      </a>
+
+      <div class="pt-4">
+        <a
+          href="https://bookings.rapturecamps.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="block w-full rounded-full border-2 border-white py-3 text-center text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
+        >
+          Book
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+

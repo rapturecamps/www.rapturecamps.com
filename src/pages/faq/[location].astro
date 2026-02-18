@@ -1,0 +1,61 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { destinations } from "@/lib/data";
+
+const faqCategories = [
+  "Booking & Prices",
+  "Rooms",
+  "Surfing & Lessons",
+  "How To Reach Us",
+  "Sightseeing",
+  "Food & Beverages",
+  "Other",
+];
+
+export function getStaticPaths() {
+  const locations = destinations.map((d) => d.slug.split("/").pop()!);
+  return locations.map((location) => ({ params: { location } }));
+}
+
+const { location } = Astro.params;
+const title = location!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+---
+
+<BaseLayout
+  title={`FAQ - ${title} | Rapture Surfcamps`}
+  description={`Frequently asked questions about our surf camp in ${title}.`}
+>
+  <div class="pt-32 pb-12 bg-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <a href="/surfcamp" class="inline-flex items-center gap-2 text-xs text-white/30 hover:text-white/60 mb-6 transition-colors">
+        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+        Back to Destinations
+      </a>
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-white">FAQ — {title}</h1>
+      <p class="mt-3 text-base text-white/40">Everything you need to know before your trip.</p>
+    </div>
+  </div>
+
+  <section class="py-12 bg-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      {faqCategories.map((category) => (
+        <div class="mb-10">
+          <h2 class="text-base font-semibold text-white mb-4 pb-3 border-b border-white/10">{category}</h2>
+          <div class="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <details class="group rounded-lg border border-white/5 overflow-hidden">
+                <summary class="flex cursor-pointer items-center justify-between p-4 text-sm text-white/70 hover:bg-white/5 transition-colors">
+                  <span>Sample FAQ question {i} for {category}</span>
+                  <svg class="h-4 w-4 text-white/30 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                </summary>
+                <div class="px-4 pb-4 text-sm text-white/40">
+                  <p>FAQ answers will be populated from Storyblok once the CMS is connected.</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

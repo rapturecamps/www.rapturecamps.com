@@ -1,0 +1,109 @@
+---
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import "@/styles/globals.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "Rapture Surfcamps - Learn to Surf, Surf the World, Stay with Us!",
+  description = "A network of 8 unique surf camps in 5 countries on 4 continents. Surf the world with Rapture in Bali, Costa Rica, Portugal, Morocco, and Nicaragua.",
+  ogImage,
+} = Astro.props;
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+---
+
+<!doctype html>
+<html lang={Astro.currentLocale ?? "en"}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/images/rapturecamps-logo.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rapture Surfcamps" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@rapturecamps" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="font-sans antialiased bg-dark text-white">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      (function () {
+        var hdr = document.getElementById("main-header");
+        var btn = document.getElementById("menu-toggle");
+        var menu = document.getElementById("mobile-menu");
+        var iconMenu = document.getElementById("icon-menu");
+        var iconClose = document.getElementById("icon-close");
+        if (!hdr || !btn || !menu || !iconMenu || !iconClose) return;
+
+        var menuOpen = false;
+
+        function openMenu() {
+          menuOpen = true;
+          menu.classList.remove("hidden");
+          iconMenu.classList.add("hidden");
+          iconClose.classList.remove("hidden");
+          hdr.setAttribute("data-open", "true");
+        }
+
+        function closeMenu() {
+          menuOpen = false;
+          menu.classList.add("hidden");
+          iconMenu.classList.remove("hidden");
+          iconClose.classList.add("hidden");
+          hdr.removeAttribute("data-open");
+        }
+
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (menuOpen) { closeMenu(); } else { openMenu(); }
+        });
+
+        menu.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () { closeMenu(); });
+        });
+
+        var scrolled = false;
+        function onScroll() {
+          var shouldBeScrolled = window.scrollY > 50;
+          if (shouldBeScrolled !== scrolled) {
+            scrolled = shouldBeScrolled;
+            if (scrolled) {
+              hdr.setAttribute("data-scrolled", "true");
+            } else {
+              hdr.removeAttribute("data-scrolled");
+            }
+          }
+        }
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+      })();
+    </script>
+  </body>
+</html>

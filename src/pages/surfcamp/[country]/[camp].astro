@@ -1,0 +1,94 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import { destinations } from "@/lib/data";
+
+const inclusionIcons: Record<string, string> = {
+  "Surf guiding": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "3 Course Breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Delicious Dinner": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Free Flow Coffee & Tea": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Surf theory class": "M22 10v6M2 10l10-5 10 5-10 5z M6 12v5c6 5 6.9 3.6 12 0v-5",
+  "Beach Transfer": "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z M3 12h1 M16 12h5",
+  "Video Analysis": "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z",
+  "WIFI": "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01",
+  "Yoga for Surfers": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22",
+};
+
+const defaultInclusions = [
+  { title: "Surf guiding", description: "For an extra price" },
+  { title: "3 Course Breakfast", description: "Rich breakfast to get started" },
+  { title: "Delicious Dinner", description: "Monday-Friday" },
+  { title: "Free Flow Coffee & Tea", description: "For Breakfast" },
+  { title: "Surf theory class", description: "Learn all the basics" },
+  { title: "Beach Transfer", description: "Daily" },
+  { title: "Video Analysis", description: "Weekly" },
+  { title: "WIFI", description: "Free" },
+  { title: "Yoga for Surfers", description: "Daily" },
+];
+
+export function getStaticPaths() {
+  return destinations.map((d) => {
+    const parts = d.slug.replace("/surfcamp/", "").split("/");
+    return { params: { country: parts[0], camp: parts[1] } };
+  });
+}
+
+const { country, camp } = Astro.params;
+const campTitle = camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+---
+
+<BaseLayout
+  title={`Rapture Surf Camp ${campTitle} | Rapture Surfcamps`}
+  description={`Experience the best surf camp at ${campTitle}. Daily surf lessons, yoga, delicious food, and unforgettable vibes.`}
+>
+  <Hero
+    title={`Rapture Surf Camp\n${campTitle}`}
+    subtitle={countryTitle}
+    ctaText="Book Now"
+    ctaHref={`https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`}
+    backgroundImage="https://images.unsplash.com/photo-1537519646099-2b3c3e647e70?w=1920&h=1080&fit=crop"
+  />
+
+  <section class="py-20 bg-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="text-base text-white/50 leading-relaxed space-y-4">
+        <p>Welcome to Rapture surf camp {campTitle}! This page will be populated with content from Storyblok once the CMS is connected.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-dark-lighter">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h2 class="text-lg sm:text-xl font-medium text-white mb-10">Your booking always includes</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {defaultInclusions.map((item) => (
+          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white/40 mb-3">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={inclusionIcons[item.title] || "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"} />
+              </svg>
+            </div>
+            <h3 class="text-xs font-semibold text-white">{item.title}</h3>
+            <p class="mt-1 text-[10px] text-white/30">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-2xl font-semibold text-white mb-4">Got more questions?</h2>
+      <p class="text-sm text-white/40">
+        Read our <a href={`/faq/${camp}`} class="text-ocean-light hover:underline">FAQ</a>,
+        browse our <a href={`/blog/category/${country}`} class="text-ocean-light hover:underline">Blog</a>,
+        or <a href="/contact" class="text-ocean-light hover:underline">message us</a> directly.
+      </p>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

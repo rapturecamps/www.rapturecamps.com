@@ -1,0 +1,96 @@
+---
+import { countries, navigation } from "@/lib/data";
+
+const socialLinks = [
+  { label: "Instagram", href: "https://www.instagram.com/rapturecamps/", icon: "M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" },
+  { label: "Facebook", href: "https://www.facebook.com/Rapturecamps/", icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
+  { label: "Telegram", href: "https://t.me/rapturecampsbot", icon: "m22 2-7 20-4-9-9-4Z M22 2 11 13" },
+  { label: "WhatsApp", href: "https://wa.me/+447700177360", icon: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-dark-lighter border-t border-white/5">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <a href="/" class="inline-flex items-center gap-3">
+          <img src="/images/rapturecamps-logo.svg" alt="Rapture Surfcamps" class="h-12 w-auto" />
+        </a>
+        <p class="mt-4 text-xs leading-relaxed text-white/30 max-w-xs">
+          A network of 8 unique surf camps in 5 countries on 4 continents.
+          Helping more than 85k people learn to surf since 2003.
+        </p>
+        <div class="mt-5 flex gap-3">
+          {socialLinks.map(({ href, label, icon }) => (
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-white/30 hover:text-white hover:border-white/30 transition-colors"
+              aria-label={label}
+            >
+              <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d={icon} />
+              </svg>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Destinations</h3>
+        <ul class="space-y-2.5">
+          {countries.map((country) => (
+            <li>
+              <a href={`/surfcamp/${country.slug}`} class="text-sm text-white/30 hover:text-white transition-colors">
+                {country.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Company</h3>
+        <ul class="space-y-2.5">
+          {navigation.main.map((item) => (
+            <li>
+              <a href={item.href} class="text-sm text-white/30 hover:text-white transition-colors">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Get in Touch</h3>
+        <ul class="space-y-2.5">
+          <li><a href="/contact" class="text-sm text-white/30 hover:text-white transition-colors">Contact Us</a></li>
+          <li><a href="https://wa.me/+447700177360" target="_blank" rel="noopener noreferrer" class="text-sm text-white/30 hover:text-white transition-colors">WhatsApp</a></li>
+          <li><a href="https://t.me/rapturecampsbot" target="_blank" rel="noopener noreferrer" class="text-sm text-white/30 hover:text-white transition-colors">Telegram</a></li>
+        </ul>
+        <div class="mt-6">
+          <a
+            href="https://bookings.rapturecamps.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block rounded-full bg-white/10 border border-white/20 px-5 py-2 text-xs font-medium text-white hover:bg-white/20 transition-all"
+          >
+            Book Now
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-white/5 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-[11px] text-white/20">&copy; {currentYear} Rapture Surfcamps. All rights reserved.</p>
+      <div class="flex gap-6">
+        <a href="/privacy-policy" class="text-[11px] text-white/20 hover:text-white/40 transition-colors">Privacy Policy</a>
+        <a href="/imprint" class="text-[11px] text-white/20 hover:text-white/40 transition-colors">Imprint</a>
+      </div>
+    </div>
+  </div>
+</footer>

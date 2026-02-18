@@ -1,0 +1,87 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  tagline?: string;
+  backgroundImage?: string;
+  backgroundVideo?: string;
+  showScrollIndicator?: boolean;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  title,
+  subtitle,
+  tagline,
+  backgroundImage = "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
+  backgroundVideo,
+  showScrollIndicator = false,
+  ctaText,
+  ctaHref,
+} = Astro.props;
+---
+
+<section class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+  {backgroundVideo ? (
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      class="absolute inset-0 h-full w-full object-cover"
+      poster={backgroundImage}
+    >
+      <source src={backgroundVideo} type="video/mp4" />
+    </video>
+  ) : (
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${backgroundImage})`}
+    />
+  )}
+  <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
+
+  <div class="relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl pt-20">
+    {tagline && (
+      <p class="mb-4 text-xs sm:text-sm uppercase tracking-[0.25em] text-white/50 font-light">
+        {tagline}
+      </p>
+    )}
+
+    <h1 class="font-display text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white leading-[0.95] tracking-tight whitespace-pre-line">
+      {title}
+    </h1>
+
+    {subtitle && (
+      <p class="mt-6 text-base sm:text-lg text-white/60 max-w-lg leading-relaxed font-light">
+        {subtitle}
+      </p>
+    )}
+
+    {ctaText && ctaHref && (
+      <div class="mt-8">
+        <a
+          href={ctaHref}
+          class="inline-block rounded-full bg-white/10 border border-white/20 px-7 py-3 text-sm font-medium text-white hover:bg-white/20 transition-all"
+        >
+          {ctaText}
+        </a>
+      </div>
+    )}
+  </div>
+
+  {showScrollIndicator && (
+    <div class="absolute bottom-8 left-6 sm:left-12 lg:left-20 z-10">
+      <a
+        href="#destinations"
+        class="flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-white/40 hover:text-white/70 transition-colors"
+      >
+        <span>Or Scroll Down</span>
+        <svg class="h-4 w-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </a>
+    </div>
+  )}
+</section>

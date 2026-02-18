@@ -1,0 +1,53 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import StatsSection from "@/components/sections/StatsSection.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+---
+
+<BaseLayout
+  title="About Us | Rapture Surfcamps"
+  description="Founded in 2003 by an Australian photographer and an Austrian entrepreneur, Rapture Surfcamps has grown into a global network of 8 surf camps across 5 countries."
+>
+  <Hero
+    title="Our Story"
+    subtitle="Two decades of sharing the stoke"
+    backgroundImage="https://images.unsplash.com/photo-1502680390548-bdbac40a5e46?w=1920&h=1080&fit=crop"
+  />
+
+  <section class="py-20 bg-dark">
+    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+      <div class="space-y-6 text-base sm:text-lg text-white/50 leading-relaxed">
+        <p>
+          Rapture Surfcamps was born in 2003 when an Australian photographer
+          and an Austrian entrepreneur decided to combine their passion for
+          surfing with their love of travel. What started as a single surf
+          house in Morocco has grown into a global network of 8 unique surf
+          camps across 5 countries on 4 continents.
+        </p>
+        <p>
+          Over the past two decades, we've welcomed more than 85,000
+          guests from every corner of the globe. From first-time surfers
+          catching their very first wave to seasoned pros hunting barrels,
+          our camps are built around one simple idea: sharing the joy of
+          surfing in incredible locations with a community of like-minded
+          adventurers.
+        </p>
+        <p>
+          Every Rapture camp is owner-operated by surfers who know the local
+          breaks inside and out. We're not a faceless chain — each camp
+          has its own personality, its own vibe, and its own magic.
+        </p>
+        <p>
+          Whether you're drawn to the tropical perfection of Bali, the
+          Pura Vida spirit of Costa Rica, the raw beauty of Morocco, the
+          wild Atlantic coast of Portugal, or the unspoiled shores of
+          Nicaragua — there's a Rapture camp waiting for you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <StatsSection />
+  <CTASection />
+</BaseLayout>

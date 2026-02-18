@@ -1,0 +1,35 @@
+---
+const stats = [
+  { label: "Established", value: "2003" },
+  { prefix: "More than", label: "Happy Customers", value: "80k", accent: true },
+  { label: "TripAdvisor Awards", value: "23" },
+  { label: "Destinations", value: "8" },
+  { prefix: "More than", label: "Instagram Followers", value: "35k", accent: true },
+];
+---
+
+<section class="py-16 sm:py-20">
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="flex flex-wrap lg:flex-nowrap items-start gap-y-10">
+      {stats.map((stat, i) => (
+        <div class:list={[
+          "flex-1 min-w-[45%] sm:min-w-0 text-center",
+          i > 0 && "lg:border-l lg:border-white/10"
+        ]}>
+          {stat.prefix ? (
+            <p class="text-xs uppercase tracking-wider text-white/40 mb-1">{stat.prefix}</p>
+          ) : (
+            <p class="text-xs uppercase tracking-wider text-white/40 mb-1">&nbsp;</p>
+          )}
+          <p class:list={[
+            "text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-none",
+            stat.accent ? "text-ocean-light" : "text-white"
+          ]}>
+            {stat.value}
+          </p>
+          <p class="mt-2 text-xs sm:text-sm text-white/40">{stat.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
