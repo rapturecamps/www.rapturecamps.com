@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rapture Surfcamps — www.rapturecamps.com
+
+A network of 8 unique surf camps in 5 countries on 4 continents.
+
+## Tech Stack
+
+- **[Astro](https://astro.build/)** v5 — Static site generator with zero-JS by default
+- **[React](https://react.dev/)** — Used as islands for interactive components only
+- **[Tailwind CSS](https://tailwindcss.com/)** v4 — Utility-first styling via `@tailwindcss/vite`
+- **[Storyblok](https://www.storyblok.com/)** — Headless CMS (integration prepared, pending token)
+- **[Vercel](https://vercel.com/)** — Hosting and deployment
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Opens at [http://localhost:4321](http://localhost:4321).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start dev server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build locally |
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── components/
+│   ├── layout/          # Header (Astro), Footer (Astro)
+│   └── sections/        # Hero, About, Stats, CTA, Social (Astro)
+│                        # DestinationGrid, BlogFeed (React islands)
+├── layouts/
+│   └── BaseLayout.astro # HTML shell, fonts, meta
+├── lib/
+│   ├── data.ts          # Static data (destinations, stats, nav)
+│   ├── types.ts         # TypeScript types
+│   └── storyblok.ts     # Storyblok client setup
+├── pages/               # File-based routing
+│   ├── index.astro      # Homepage
+│   ├── about.astro
+│   ├── contact.astro
+│   ├── 404.astro
+│   ├── blog/            # Blog listing, post detail, category pages
+│   ├── faq/             # FAQ by location
+│   └── surfcamp/        # Country + camp pages
+└── styles/
+    └── globals.css      # Tailwind theme, custom properties
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Static components** (Hero, About, Stats, CTA, Social, Footer) ship zero JavaScript
+- **React islands** hydrate only when needed:
+  - `DestinationGrid` — `client:visible` (carousel)
+  - `BlogFeed` — `client:visible` (carousel)
+- **Header** is a pure Astro component with inline JS for scroll detection and mobile menu
+- **i18n** configured for `en` (default) and `de` with prefix-free default locale
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Configured for Vercel static output. Connect the GitHub repo to Vercel and it will auto-deploy on push to `main`.
