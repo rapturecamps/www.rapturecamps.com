@@ -1,0 +1,62 @@
+---
+interface Props {
+  images: {
+    src: string;
+    alt: string;
+  }[];
+  variant?: "collage" | "two-up" | "three-up";
+}
+
+const { images, variant = "collage" } = Astro.props;
+---
+
+{variant === "collage" && images.length >= 4 && (
+  <section class="py-4 sm:py-8 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="grid grid-cols-2 gap-3 sm:gap-4">
+        <div class="col-span-2 aspect-[21/9] overflow-hidden rounded-xl">
+          <img src={images[0].src} alt={images[0].alt} class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="aspect-[4/3] overflow-hidden rounded-xl">
+          <img src={images[1].src} alt={images[1].alt} class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div class="grid grid-rows-2 gap-3 sm:gap-4">
+          <div class="overflow-hidden rounded-xl">
+            <img src={images[2].src} alt={images[2].alt} class="h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div class="overflow-hidden rounded-xl">
+            <img src={images[3].src} alt={images[3].alt} class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === "two-up" && images.length >= 2 && (
+  <section class="py-4 sm:py-8 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+        {images.slice(0, 2).map((img) => (
+          <div class="aspect-[4/3] overflow-hidden rounded-xl">
+            <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+{variant === "three-up" && images.length >= 3 && (
+  <section class="py-4 sm:py-8 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        {images.slice(0, 3).map((img) => (
+          <div class="aspect-[4/3] overflow-hidden rounded-xl">
+            <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

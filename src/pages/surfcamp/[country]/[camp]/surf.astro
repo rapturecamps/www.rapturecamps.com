@@ -1,0 +1,286 @@
+---
+import CampLayout from "@/components/layout/CampLayout.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import ContentBlock from "@/components/sections/ContentBlock.astro";
+import { destinations } from "@/lib/data";
+
+export function getStaticPaths() {
+  return destinations.map((d) => {
+    const parts = d.slug.replace("/surfcamp/", "").split("/");
+    return { params: { country: parts[0], camp: parts[1] } };
+  });
+}
+
+const { country, camp } = Astro.params;
+const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
+const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay/guests`;
+const basePath = `/surfcamp/${country}/${camp}`;
+
+const surfSpots = [
+  {
+    name: "Main Beach Break",
+    level: "All Levels",
+    type: "Beach Break",
+    image: "https://images.unsplash.com/photo-1502680390548-bdbac40e4a9f?w=600&h=400&fit=crop",
+    desc: "Our go-to spot for daily lessons. Consistent, forgiving waves with a sandy bottom — perfect for building confidence and progressing fast.",
+  },
+  {
+    name: "The Reef",
+    level: "Intermediate+",
+    type: "Reef Break",
+    image: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=600&h=400&fit=crop",
+    desc: "A fast, hollow right-hander breaking over coral. Best on mid-tide with a south swell. Booties recommended.",
+  },
+  {
+    name: "Secret Point",
+    level: "Advanced",
+    type: "Point Break",
+    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop",
+    desc: "Long, peeling left-hander wrapping around the headland. Can hold overhead swells and offers 200m+ rides on the right day.",
+  },
+];
+
+const schedule = [
+  { time: "06:30", activity: "Wake-up & light stretch", icon: "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z M6.34 17.66 4 22 M17.66 17.66 20 22" },
+  { time: "07:00", activity: "Breakfast buffet", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" },
+  { time: "08:00", activity: "Surf theory & video analysis", icon: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" },
+  { time: "08:30", activity: "Morning surf session (2–3 hrs)", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
+  { time: "12:00", activity: "Lunch & free time", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" },
+  { time: "14:00", activity: "Yoga or recovery session", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6" },
+  { time: "15:00", activity: "Afternoon surf session (2 hrs)", icon: "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
+  { time: "17:30", activity: "Sunset beers & video review", icon: "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z" },
+  { time: "19:00", activity: "Dinner", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" },
+];
+
+const levels = [
+  {
+    level: "Beginner",
+    subtitle: "Never surfed or still learning to stand",
+    features: [
+      "Pop-up technique on the beach",
+      "Paddling and wave selection",
+      "Riding whitewater to green waves",
+      "Ocean safety & etiquette",
+    ],
+    outcome: "By the end of the week, you'll be standing up and riding unbroken green waves.",
+    color: "text-green-400",
+    bgColor: "bg-green-400/10",
+  },
+  {
+    level: "Intermediate",
+    subtitle: "You can stand up and ride the wave face",
+    features: [
+      "Bottom turns & top turns",
+      "Reading the lineup & positioning",
+      "Generating speed on the face",
+      "Duck diving & wave selection",
+    ],
+    outcome: "You'll leave with cleaner turns, better wave reading, and the confidence to surf new spots.",
+    color: "text-ocean-light",
+    bgColor: "bg-ocean-light/10",
+  },
+  {
+    level: "Advanced",
+    subtitle: "Experienced surfer looking for the best waves",
+    features: [
+      "Guided sessions at reef and point breaks",
+      "Barrel riding techniques",
+      "Aerial progression",
+      "Swell and wind forecasting",
+    ],
+    outcome: "Our instructors take you to the best breaks for the conditions — spots you'd never find on your own.",
+    color: "text-amber-400",
+    bgColor: "bg-amber-400/10",
+  },
+];
+
+const equipment = [
+  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
+  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature", icon: "M20.38 3.46 16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" },
+  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit", icon: "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z" },
+  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral", icon: "M4 16v-2.38C4 11.5 2.97 9.5 3 7c.03-2.72 1.49-5.03 3.97-5.97 1.02-.39 2.08-.02 2.84.66L12 4l2.19-2.31c.76-.68 1.82-1.05 2.84-.66C19.51 1.97 20.97 4.28 21 7c.03 2.5-1 4.5-1 6.62V16" },
+];
+---
+
+<CampLayout
+  campName={campTitle}
+  countryName={countryTitle}
+  basePath={basePath}
+  activePage="surf"
+  bookingUrl={bookingUrl}
+  title={`Surf at ${campTitle} | Rapture Surfcamps`}
+  description={`Discover the surf spots, conditions, and lessons at Rapture Surf Camp ${campTitle} in ${countryTitle}.`}
+>
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+        <div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">The Waves</h2>
+          <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-xl">
+            <p>The coastline around {campTitle} is stacked with surf breaks for every level. From gentle beach breaks perfect for your first pop-up to fast reef passes that'll get your heart pumping — there's a wave for every day and every surfer.</p>
+            <p>Our instructors have been surfing these waters for years. They know exactly where to go based on the swell, wind, and tide — so you're always in the right spot at the right time.</p>
+          </div>
+        </div>
+        <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
+          <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-5">Surf Conditions</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">Wave Type</span>
+              <span class="text-sm text-white font-medium">Beach, Reef & Point</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">Water Temperature</span>
+              <span class="text-sm text-white font-medium">24–30°C</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">Peak Season</span>
+              <span class="text-sm text-white font-medium">May – October</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">Swell Direction</span>
+              <span class="text-sm text-white font-medium">SW – S</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-white/40">Surf Spots Within Reach</span>
+              <span class="text-sm text-white font-medium">15+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image break -->
+  <ImageBreak
+    src="https://images.unsplash.com/photo-1502680390548-bdbac40e4a9f?w=1920&h=800&fit=crop"
+    alt={`Surfer riding a wave near ${campTitle}`}
+    caption={`The lineup near ${campTitle}`}
+    height="short"
+  />
+
+  <!-- Surf Spots -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Surf Spots Nearby</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">We rotate between 15+ breaks depending on conditions. Here are some of the highlights.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {surfSpots.map((spot) => (
+          <div class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter">
+            <div class="aspect-[3/2] overflow-hidden">
+              <img
+                src={spot.image}
+                alt={spot.name}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-2">
+                <h3 class="text-base font-semibold text-white">{spot.name}</h3>
+              </div>
+              <div class="flex gap-2 mb-3">
+                <span class="text-[10px] uppercase tracking-wider text-ocean-light bg-ocean-light/10 rounded-full px-2.5 py-0.5">{spot.level}</span>
+                <span class="text-[10px] uppercase tracking-wider text-white/30 bg-white/5 rounded-full px-2.5 py-0.5">{spot.type}</span>
+              </div>
+              <p class="text-sm text-white/40 leading-relaxed">{spot.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Surf Lessons -->
+  <ContentBlock
+    heading="Surf Lessons & Coaching"
+    body="<p>Every session starts with a plan. Our ISA-certified instructors analyse the conditions, match you to the right break, and set goals for the session. In the water, they're right there with you — correcting your stance, helping you read the waves, pushing you just enough.</p><p>We keep groups to a maximum of 5 surfers per instructor, so you get genuine one-on-one attention. After each session, we review video footage together so you can see exactly what to work on. It's the fastest way to improve.</p>"
+    image="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&h=600&fit=crop"
+    imageAlt={`Surf coaching at ${campTitle}`}
+    background="dark-lighter"
+  />
+
+  <!-- Surf Levels -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Your Surf Level</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Whether it's your first wave or your thousandth, we have a programme tailored for you.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {levels.map((item) => (
+          <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-1">
+              <span class:list={["inline-block h-2 w-2 rounded-full", item.color === "text-green-400" ? "bg-green-400" : item.color === "text-ocean-light" ? "bg-ocean-light" : "bg-amber-400"]} />
+              <h3 class="text-lg font-semibold text-white">{item.level}</h3>
+            </div>
+            <p class:list={["text-xs mb-5", item.color]}>{item.subtitle}</p>
+            <ul class="space-y-2.5 mb-6 flex-1">
+              {item.features.map((f) => (
+                <li class="flex items-start gap-2.5 text-sm text-white/50">
+                  <svg class="h-4 w-4 mt-0.5 text-white/20 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div class:list={["rounded-lg p-3 text-xs leading-relaxed", item.bgColor, item.color]}>
+              {item.outcome}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- A Typical Surf Day -->
+  <section class="py-16 sm:py-20 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">A Typical Surf Day</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Every day is different depending on conditions, but here's what a standard day at {campTitle} looks like.</p>
+      <div class="max-w-2xl">
+        <div class="relative">
+          <div class="absolute left-[19px] top-3 bottom-3 w-px bg-white/10" />
+          <div class="space-y-0">
+            {schedule.map((s, i) => (
+              <div class="relative flex items-start gap-5 py-3">
+                <div class="relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-dark border border-white/10">
+                  <svg class="h-4 w-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={s.icon} />
+                  </svg>
+                </div>
+                <div class="pt-2">
+                  <span class="text-xs text-ocean-light font-medium tracking-wide">{s.time}</span>
+                  <p class="text-sm text-white/60 mt-0.5">{s.activity}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Boards & Equipment -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Boards & Equipment</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Everything you need is included. Just bring yourself and a sense of adventure.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {equipment.map((e) => (
+          <div class="p-5 rounded-xl bg-dark-lighter border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white/40 mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={e.icon} />
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">{e.item}</h3>
+            <p class="text-xs text-white/40 leading-relaxed">{e.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</CampLayout>

@@ -1,0 +1,33 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  height?: "short" | "medium" | "tall";
+}
+
+const { src, alt, caption, height = "medium" } = Astro.props;
+
+const heightClass = {
+  short: "h-[250px] sm:h-[350px]",
+  medium: "h-[350px] sm:h-[450px] lg:h-[500px]",
+  tall: "h-[450px] sm:h-[550px] lg:h-[650px]",
+}[height];
+---
+
+<section class="relative overflow-hidden">
+  <div class:list={["relative w-full", heightClass]}>
+    <img
+      src={src}
+      alt={alt}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/30 via-transparent to-dark/30" />
+  </div>
+  {caption && (
+    <div class="absolute bottom-6 left-6 sm:left-12 lg:left-20 z-10">
+      <p class="text-xs text-white/50 uppercase tracking-wider">{caption}</p>
+    </div>
+  )}
+</section>

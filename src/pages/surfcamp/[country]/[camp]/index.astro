@@ -1,0 +1,354 @@
+---
+import CampLayout from "@/components/layout/CampLayout.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import ImageGrid from "@/components/sections/ImageGrid.astro";
+import Reviews from "@/components/sections/Reviews.astro";
+import VideoTestimonials from "@/components/sections/VideoTestimonials.astro";
+import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
+import { destinations } from "@/lib/data";
+
+const inclusionIcons: Record<string, string> = {
+  "Surf guiding": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "3 Course Breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Delicious Dinner": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Free Flow Coffee & Tea": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Surf theory class": "M22 10v6M2 10l10-5 10 5-10 5z M6 12v5c6 5 6.9 3.6 12 0v-5",
+  "Beach Transfer": "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z M3 12h1 M16 12h5",
+  "Video Analysis": "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z",
+  "WIFI": "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01",
+  "Yoga for Surfers": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22",
+};
+
+const defaultInclusions = [
+  { title: "Surf guiding", description: "For an extra price" },
+  { title: "3 Course Breakfast", description: "Rich breakfast to get started" },
+  { title: "Delicious Dinner", description: "Monday-Friday" },
+  { title: "Free Flow Coffee & Tea", description: "For Breakfast" },
+  { title: "Surf theory class", description: "Learn all the basics" },
+  { title: "Beach Transfer", description: "Daily" },
+  { title: "Video Analysis", description: "Weekly" },
+  { title: "WIFI", description: "Free" },
+  { title: "Yoga for Surfers", description: "Daily" },
+];
+
+export function getStaticPaths() {
+  return destinations.map((d) => {
+    const parts = d.slug.replace("/surfcamp/", "").split("/");
+    return { params: { country: parts[0], camp: parts[1] } };
+  });
+}
+
+const { country, camp } = Astro.params;
+const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
+const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay/guests`;
+const basePath = `/surfcamp/${country}/${camp}`;
+const rating = campData?.rating || 4.7;
+const reviewCount = campData?.reviewCount || 100;
+const tagline = campData?.tagline || "Your home away from home, right on the beach";
+
+const highlights = [
+  {
+    title: "World-Class Surf",
+    desc: "15+ breaks within reach, from mellow beach breaks to pumping reef passes. Daily guided sessions with ISA-certified instructors.",
+    icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  },
+  {
+    title: "Incredible Food",
+    desc: "Three-course breakfast and dinner prepared fresh daily by our chefs. Local ingredients, international flavours, every diet catered for.",
+    icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  },
+  {
+    title: "Comfortable Rooms",
+    desc: "From social shared rooms to private suites with ocean views. Every option includes all meals, surf, and yoga. Just pick your vibe.",
+    icon: "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
+  },
+  {
+    title: "Yoga & Wellness",
+    desc: "Daily yoga sessions, post-surf stretching, and optional massages. Your body will thank you after a full day in the water.",
+    icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22",
+  },
+  {
+    title: "Community & Vibes",
+    desc: "Meet surfers from around the world. Sunset beers, movie nights, beach BBQs — the Rapture community is what keeps people coming back.",
+    icon: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2 M23 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75 M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z",
+  },
+  {
+    title: "Epic Location",
+    desc: `${campData?.location || "Right on the coast"} — close enough to the best breaks for a quick paddle, far enough from the crowds to feel like a retreat.`,
+    icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
+  },
+];
+
+const subPages = [
+  {
+    title: "Surf",
+    href: `${basePath}/surf`,
+    desc: "Explore the local breaks, lesson programmes, and what a typical surf day looks like.",
+    image: "https://images.unsplash.com/photo-1502680390548-bdbac40e4a9f?w=600&h=400&fit=crop",
+    icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  },
+  {
+    title: "Rooms",
+    href: `${basePath}/rooms`,
+    desc: "Shared rooms, private suites, glamping tents — find your perfect fit.",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop",
+    icon: "M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10",
+  },
+  {
+    title: "Food",
+    href: `${basePath}/food`,
+    desc: "Fresh meals, weekly menus, and how we cater for every dietary need.",
+    image: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=600&h=400&fit=crop",
+    icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20",
+  },
+];
+
+const reviews = [
+  { name: "Emma T.", location: "London, UK", text: "The best two weeks of my life. I went from barely standing up to confidently riding green waves. The instructors are incredible and the camp has the most amazing vibe.", rating: 5 },
+  { name: "Lucas M.", location: "Berlin, Germany", text: "This was my third time at Rapture and it never disappoints. The food, the waves, the people — everything is dialled in. Already booking my next trip.", rating: 5 },
+  { name: "Sarah K.", location: "Sydney, Australia", text: "As an experienced surfer, I was worried a surf camp would be too beginner-focused. Not at all — the surf guiding took me to spots I'd never have found on my own.", rating: 5 },
+];
+
+const videoTestimonials = [
+  {
+    name: "Marco",
+    date: "22.08.2025",
+    location: "Bali Green Bowl",
+    quote: "I have learned to surf in one week.",
+    posterImage: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&h=620&fit=crop",
+  },
+  {
+    name: "Fabiola",
+    date: "15.06.2024",
+    location: "Portugal Ericeira",
+    quote: "The best experience of my life, honestly.",
+    posterImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=620&fit=crop",
+  },
+  {
+    name: "Jonas",
+    date: "03.09.2025",
+    location: "Costa Rica Avellanas",
+    quote: "Couldn't ask for a better time.",
+    posterImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=620&fit=crop",
+  },
+  {
+    name: "Lina",
+    date: "28.07.2025",
+    location: "Morocco Banana Village",
+    quote: "The vibes, the waves, the people — pure magic.",
+    posterImage: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=620&fit=crop",
+  },
+  {
+    name: "Tom",
+    date: "11.04.2025",
+    location: "Nicaragua Maderas",
+    quote: "Went for one week, stayed for three.",
+    posterImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=620&fit=crop",
+  },
+  {
+    name: "Amelie",
+    date: "19.01.2025",
+    location: "Bali Padang Padang",
+    quote: "I found my happy place. Coming back next year.",
+    posterImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=620&fit=crop",
+  },
+];
+---
+
+<CampLayout
+  campName={campTitle}
+  countryName={countryTitle}
+  basePath={basePath}
+  activePage="overview"
+  bookingUrl={bookingUrl}
+>
+  <!-- Intro with rating -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
+        <div class="lg:col-span-3">
+          <p class="text-sm text-ocean-light font-medium mb-4">{campData?.location || countryTitle}</p>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{tagline}</h2>
+          <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-2xl">
+            <p>Rapture Surf Camp {campTitle} is more than just a surf camp — it's a community of ocean lovers, a place to disconnect from the noise and reconnect with what matters. Whether you're picking up a surfboard for the first time or chasing your thousandth barrel, this is where it happens.</p>
+            <p>Set in {countryTitle}'s most iconic surf region, our camp offers daily surf lessons, yoga, incredible food, and a crew of like-minded travellers from around the world. We've been doing this since 2003 — and we've got it dialled.</p>
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
+            <div class="flex items-center gap-3 mb-5">
+              <div class="flex items-center gap-1">
+                {[1,2,3,4,5].map((star) => (
+                  <svg class:list={["h-4 w-4", star <= Math.round(rating) ? "text-amber-400" : "text-white/10"]} viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                ))}
+              </div>
+              <span class="text-sm text-white font-semibold">{rating}</span>
+              <span class="text-xs text-white/30">({reviewCount} reviews)</span>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                <span class="text-sm text-white/40">Location</span>
+                <span class="text-sm text-white font-medium">{campData?.location || countryTitle}</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                <span class="text-sm text-white/40">Surf Levels</span>
+                <span class="text-sm text-white font-medium">All Levels</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                <span class="text-sm text-white/40">Min. Stay</span>
+                <span class="text-sm text-white font-medium">3 nights</span>
+              </div>
+              <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                <span class="text-sm text-white/40">Group Size</span>
+                <span class="text-sm text-white font-medium">Max 5:1 ratio</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-white/40">Languages</span>
+                <span class="text-sm text-white font-medium">EN, DE, PT, ES</span>
+              </div>
+            </div>
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="book-link mt-6 flex w-full items-center justify-center rounded-full bg-ocean px-6 py-3 text-sm font-semibold text-white hover:bg-ocean-light transition-colors"
+            >
+              Check Availability
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Grid -->
+  <ImageGrid
+    images={[
+      { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=500&fit=crop", alt: `Camp area at ${campTitle}` },
+      { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=450&fit=crop", alt: `Lounge area at ${campTitle}` },
+      { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=600&h=225&fit=crop", alt: `Outdoor spaces at ${campTitle}` },
+      { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=225&fit=crop", alt: `Aerial view of ${campTitle}` },
+    ]}
+    variant="collage"
+  />
+
+  <!-- Why Choose This Camp -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Why Rapture {campTitle}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Here's what makes this camp one of a kind — and why our guests keep coming back.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {highlights.map((h) => (
+          <div class="p-6 rounded-xl bg-dark-lighter border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ocean-light mb-4">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={h.icon} />
+              </svg>
+            </div>
+            <h3 class="text-base font-semibold text-white mb-2">{h.title}</h3>
+            <p class="text-sm text-white/40 leading-relaxed">{h.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Break -->
+  <ImageBreak
+    src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=800&fit=crop"
+    alt={`Sunset surf at ${campTitle}`}
+    caption={`Golden hour at ${campTitle}, ${countryTitle}`}
+    height="short"
+  />
+
+  <!-- Explore Sub-Pages -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Explore the Camp</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Dive deeper into what awaits you at {campTitle}.</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {subPages.map((page) => (
+          <a href={page.href} class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors">
+            <div class="aspect-[16/10] overflow-hidden">
+              <img
+                src={page.image}
+                alt={page.title}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white/40">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={page.icon} />
+                  </svg>
+                </div>
+                <h3 class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{page.title}</h3>
+              </div>
+              <p class="text-sm text-white/40 leading-relaxed">{page.desc}</p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Inclusions -->
+  <section class="py-16 sm:py-20 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Your Booking Always Includes</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">No hidden extras. Everything below is part of every booking at {campTitle}.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+        {defaultInclusions.map((item) => (
+          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white/40 mb-3">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={inclusionIcons[item.title] || ""} />
+              </svg>
+            </div>
+            <h3 class="text-xs font-semibold text-white">{item.title}</h3>
+            <p class="mt-1 text-[10px] text-white/30">{item.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <Reviews heading={`What Guests Say About ${campTitle}`} reviews={reviews} />
+
+  <!-- Elfsight Reviews (test) -->
+  <ElfsightReviews
+    heading="Google & TripAdvisor Reviews"
+    appId="4b0fc7df-20a4-459a-b38e-28ab56a32099"
+  />
+
+  <!-- Video Testimonials -->
+  <VideoTestimonials heading="Stories from Our Guests" testimonials={videoTestimonials} />
+
+  <!-- Questions -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-3xl px-6 sm:px-12 lg:px-20 text-center">
+      <h2 class="text-2xl font-semibold text-white mb-4">Got more questions?</h2>
+      <p class="text-sm text-white/40 mb-6">
+        Read our <a href={`/faq/${camp}`} class="text-ocean-light hover:underline">FAQ</a>,
+        browse our <a href={`/blog/category/${country}`} class="text-ocean-light hover:underline">Blog</a>,
+        or <a href="/contact" class="text-ocean-light hover:underline">message us</a> directly.
+      </p>
+      <a
+        href="/contact"
+        class="inline-block rounded-full border border-white/20 px-7 py-3 text-sm font-medium text-white hover:bg-white/10 transition-all"
+      >
+        Get in Touch
+      </a>
+    </div>
+  </section>
+
+  <CTASection />
+</CampLayout>

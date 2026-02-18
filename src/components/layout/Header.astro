@@ -1,7 +1,12 @@
 ---
-import { navigation, countries } from "@/lib/data";
+import { navigation, countries, destinations } from "@/lib/data";
 
 const navItems = navigation.main.slice(1);
+
+const campsByCountry = countries.map((country) => ({
+  ...country,
+  camps: destinations.filter((d) => d.country === country.name),
+}));
 ---
 
 <header
@@ -20,15 +25,61 @@ const navItems = navigation.main.slice(1);
         />
       </a>
 
+      <!-- Desktop nav -->
       <nav class="hidden lg:flex items-center gap-7">
-        {countries.map((country) => (
-          <a
-            href={`/surfcamp/${country.slug}`}
-            class="text-sm text-white/80 hover:text-white transition-colors"
+        <div id="dest-trigger" class="relative">
+          <button
+            id="dest-btn"
+            class="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors"
           >
-            {country.name}
-          </a>
-        ))}
+            Destinations
+            <svg class="h-3.5 w-3.5 transition-transform duration-200" id="dest-chevron" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <!-- Desktop dropdown panel -->
+          <div
+            id="dest-panel"
+            class="dest-panel fixed top-20 left-0 right-0 pt-0 opacity-0 invisible pointer-events-none transition-all duration-200"
+          >
+            <div class="bg-[#0c1e3d]/95 backdrop-blur-xl border-t border-b border-white/10 shadow-2xl">
+              <div class="mx-auto max-w-7xl px-8 lg:px-12 py-7">
+                <div class="grid grid-cols-5 gap-8">
+                  {campsByCountry.map((country) => (
+                    <div>
+                      <a
+                        href={`/surfcamp/${country.slug}`}
+                        class="text-xs uppercase tracking-wider text-white/40 hover:text-white/65 transition-colors"
+                      >
+                        {country.name}
+                      </a>
+                      <div class="mt-3 space-y-1">
+                        {country.camps.map((camp) => (
+                          <a
+                            href={camp.slug}
+                            class="group flex items-center gap-3 rounded-xl px-2 py-2 -mx-2 hover:bg-white/5 transition-colors"
+                          >
+                            <img
+                              src={`${camp.image.split("?")[0]}?w=160&h=160&fit=crop`}
+                              alt={camp.name}
+                              class="h-16 w-16 rounded-lg object-cover flex-shrink-0"
+                              loading="lazy"
+                            />
+                            <div class="min-w-0">
+                              <span class="block text-sm text-white/85 group-hover:text-white transition-colors truncate">{camp.name}</span>
+                              <span class="block text-[11px] text-white/30 leading-tight mt-0.5">{camp.location}</span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {navItems.map((item) => (
           <a
@@ -50,12 +101,13 @@ const navItems = navigation.main.slice(1);
           href="https://bookings.rapturecamps.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="rounded-full border-2 border-white px-6 py-1.5 text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
+          class="book-link rounded-full border-2 border-white px-6 py-1.5 text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
         >
           Book
         </a>
       </nav>
 
+      <!-- Mobile toggle -->
       <button
         id="menu-toggle"
         class="lg:hidden text-white/70 hover:text-white"
@@ -74,15 +126,48 @@ const navItems = navigation.main.slice(1);
     </div>
   </div>
 
+  <!-- Mobile menu -->
   <div id="mobile-menu" class="lg:hidden bg-brand-blue border-t border-white/10 hidden">
-    <div class="px-4 py-6 space-y-1">
-      {countries.map((country) => (
-        <a
-          href={`/surfcamp/${country.slug}`}
-          class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
-        >
-          {country.name}
-        </a>
+    <div class="px-4 py-6 space-y-1 max-h-[calc(100dvh-5rem)] overflow-y-auto">
+
+      <!-- Mobile country accordions -->
+      {campsByCountry.map((country) => (
+        <div class="mobile-country">
+          <button
+            class="mobile-country-btn w-full flex items-center justify-between rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+            data-country={country.slug}
+          >
+            <span>{country.name}</span>
+            <svg class="mobile-country-chevron h-4 w-4 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+          <div class="mobile-country-camps hidden pl-4 pb-2">
+            <a
+              href={`/surfcamp/${country.slug}`}
+              class="block rounded-lg px-4 py-2 text-xs uppercase tracking-wider text-white/40 hover:text-white/70"
+            >
+              All {country.name} camps
+            </a>
+            {country.camps.map((camp) => (
+              <a
+                href={camp.slug}
+                class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10"
+              >
+                <img
+                  src={`${camp.image.split("?")[0]}?w=64&h=64&fit=crop`}
+                  alt={camp.name}
+                  class="h-8 w-8 rounded-md object-cover flex-shrink-0"
+                  loading="lazy"
+                />
+                <div>
+                  <span>{camp.name}</span>
+                  <span class="block text-[10px] text-white/30">{camp.location}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
       ))}
 
       <div class="my-3 border-t border-white/10" />
@@ -110,7 +195,7 @@ const navItems = navigation.main.slice(1);
           href="https://bookings.rapturecamps.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="block w-full rounded-full border-2 border-white py-3 text-center text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
+          class="book-link block w-full rounded-full border-2 border-white py-3 text-center text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
         >
           Book
         </a>
@@ -118,4 +203,3 @@ const navItems = navigation.main.slice(1);
     </div>
   </div>
 </header>
-

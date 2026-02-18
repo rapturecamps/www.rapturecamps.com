@@ -1,0 +1,213 @@
+---
+import CampLayout from "@/components/layout/CampLayout.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import { destinations } from "@/lib/data";
+
+export function getStaticPaths() {
+  return destinations.map((d) => {
+    const parts = d.slug.replace("/surfcamp/", "").split("/");
+    return { params: { country: parts[0], camp: parts[1] } };
+  });
+}
+
+const { country, camp } = Astro.params;
+const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
+const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay/guests`;
+const basePath = `/surfcamp/${country}/${camp}`;
+
+const rooms = [
+  {
+    type: "Shared Room",
+    tag: "Most Popular",
+    tagColor: "text-ocean-light bg-ocean-light/10",
+    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=500&fit=crop",
+    price: "From €45 / night",
+    capacity: "4–6 guests",
+    desc: "Our shared rooms are spacious, clean, and designed for the social surfer. Each bed comes with a privacy curtain, reading light, and personal power outlet. The quickest way to make friends you'll keep for life.",
+    features: ["Personal locker & shelf space", "Air conditioning", "Fresh linen & towels", "Shared bathroom"],
+  },
+  {
+    type: "Twin / Double",
+    tag: "",
+    tagColor: "",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
+    price: "From €75 / night",
+    capacity: "2 guests",
+    desc: "A room for two — ideal for couples or friends travelling together. The same Rapture atmosphere with a bit more privacy. All rooms have their own ensuite bathroom.",
+    features: ["Private ensuite bathroom", "Air conditioning", "Balcony or terrace", "Fresh linen & towels"],
+  },
+  {
+    type: "Private Room",
+    tag: "Premium",
+    tagColor: "text-amber-400 bg-amber-400/10",
+    image: "https://images.unsplash.com/photo-1590490360182-c33d82de0e75?w=800&h=500&fit=crop",
+    price: "From €95 / night",
+    capacity: "1–2 guests",
+    desc: "Your own space at the camp. These rooms come with extra touches — a minibar, premium bedding, and a private terrace with a view. Limited availability, so book early.",
+    features: ["King-size bed", "Private terrace", "Mini-fridge", "Premium bathroom amenities"],
+  },
+  {
+    type: "Glamping Tent",
+    tag: "Unique",
+    tagColor: "text-green-400 bg-green-400/10",
+    image: "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?w=800&h=500&fit=crop",
+    price: "From €55 / night",
+    capacity: "2 guests",
+    desc: "Sleep under the stars without roughing it. Our glamping tents have proper beds, fairy lights, and all the romance of camping with none of the discomfort. Wake up to birdsong and ocean sounds.",
+    features: ["Real mattress & bedding", "Fairy lights & lanterns", "Shared facilities nearby", "Surrounded by nature"],
+  },
+];
+
+const roomInclusions = [
+  { item: "Daily surf lessons", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
+  { item: "Three-course breakfast", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" },
+  { item: "Dinner (Mon – Fri)", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" },
+  { item: "Beach transfers", icon: "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" },
+  { item: "Yoga sessions", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6" },
+  { item: "Free WiFi", icon: "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" },
+];
+
+const facilities = [
+  { name: "Swimming Pool", desc: "Open-air pool with sun loungers", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
+  { name: "Yoga Shala", desc: "Dedicated space for daily classes", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22" },
+  { name: "Outdoor Lounge", desc: "Hammocks, daybeds & chill areas", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
+  { name: "Surf Storage", desc: "Secure board racks & rinse station", icon: "M4 22V4c0-.5.2-1 .6-1.4C5 2.2 5.5 2 6 2h12c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v18" },
+  { name: "Communal Kitchen", desc: "For those in-between snack cravings", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4" },
+  { name: "Laundry Service", desc: "Wash & fold available daily", icon: "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" },
+];
+---
+
+<CampLayout
+  campName={campTitle}
+  countryName={countryTitle}
+  basePath={basePath}
+  activePage="rooms"
+  bookingUrl={bookingUrl}
+  title={`Rooms at ${campTitle} | Rapture Surfcamps`}
+  description={`Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
+>
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">Where You'll Stay</h2>
+      <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-3xl">
+        <p>Every room at {campTitle} is designed with one thing in mind: recharging after a day in the water. Whether you're going social in a shared room or treating yourself to a private suite, you'll wake up refreshed and ready for the next session.</p>
+        <p>All accommodation options include daily surf lessons, meals, yoga, and access to every camp facility. The only difference is how much privacy you want.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Room Types -->
+  <section class="py-16 sm:py-20 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">Room Types</h2>
+      <div class="space-y-8">
+        {rooms.map((room, i) => (
+          <div class:list={[
+            "grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-xl border border-white/5 bg-dark overflow-hidden",
+          ]}>
+            <div class:list={["aspect-[16/10] lg:aspect-auto overflow-hidden", i % 2 === 1 && "lg:order-2"]}>
+              <img
+                src={room.image}
+                alt={room.type}
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div class:list={["p-6 sm:p-8 flex flex-col justify-center", i % 2 === 1 && "lg:order-1"]}>
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="text-xl font-semibold text-white">{room.type}</h3>
+                {room.tag && <span class:list={["text-[10px] uppercase tracking-wider rounded-full px-2.5 py-0.5", room.tagColor]}>{room.tag}</span>}
+              </div>
+              <div class="flex items-center gap-4 mb-4">
+                <span class="text-sm text-ocean-light font-medium">{room.price}</span>
+                <span class="text-xs text-white/30">{room.capacity}</span>
+              </div>
+              <p class="text-sm text-white/50 leading-relaxed mb-5">{room.desc}</p>
+              <ul class="grid grid-cols-2 gap-2">
+                {room.features.map((f) => (
+                  <li class="flex items-center gap-2 text-xs text-white/40">
+                    <svg class="h-3.5 w-3.5 text-ocean-light/60 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Break -->
+  <ImageBreak
+    src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=800&fit=crop"
+    alt={`Pool area at ${campTitle}`}
+    caption={`The pool & lounge area at ${campTitle}`}
+    height="short"
+  />
+
+  <!-- Every Room Includes -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Every Booking Includes</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">No matter which room you choose, these are always part of the package.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {roomInclusions.map((inc) => (
+          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark-lighter border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white/40 mb-3">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={inc.icon} />
+              </svg>
+            </div>
+            <span class="text-xs font-medium text-white/60">{inc.item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Camp Facilities -->
+  <section class="py-16 sm:py-20 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Camp Facilities</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">Our camps are designed to feel like home — with a few upgrades.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {facilities.map((f) => (
+          <div class="flex items-start gap-4 p-5 rounded-xl bg-dark border border-white/5">
+            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-white/5 text-white/40">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={f.icon} />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-semibold text-white mb-0.5">{f.name}</h3>
+              <p class="text-xs text-white/40">{f.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Strip -->
+  <section class="bg-dark">
+    <div class="grid grid-cols-2 sm:grid-cols-4">
+      {[
+        { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&h=400&fit=crop", alt: "Lounge area" },
+        { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=500&h=400&fit=crop", alt: "Outdoor bathroom" },
+        { src: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=500&h=400&fit=crop", alt: "Pool at sunset" },
+        { src: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=500&h=400&fit=crop", alt: "Tropical surroundings" },
+      ].map((img) => (
+        <div class="aspect-square overflow-hidden">
+          <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection />
+</CampLayout>

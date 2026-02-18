@@ -69,6 +69,11 @@ export interface Destination {
   slug: string;
   image: string;
   location: string;
+  tagline?: string;
+  rating?: number;
+  reviewCount?: number;
+  amenities?: string[];
+  bookingUrl?: string;
 }
 
 export interface StatItem {

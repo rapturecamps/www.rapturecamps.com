@@ -1,0 +1,264 @@
+---
+interface VideoTestimonial {
+  name: string;
+  date: string;
+  location: string;
+  quote: string;
+  videoSrc?: string;
+  posterImage: string;
+}
+
+interface Props {
+  heading?: string;
+  testimonials: VideoTestimonial[];
+}
+
+const {
+  heading = "Stories from Our Guests",
+  testimonials,
+} = Astro.props;
+---
+
+<section class="py-16 sm:py-20 bg-dark">
+  <div class="px-6 sm:px-12 lg:px-20 mb-8 flex items-end justify-between gap-4">
+    <div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
+    </div>
+    <div class="hidden sm:flex items-center gap-2">
+      <button
+        class="vt-prev flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        aria-label="Previous"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button
+        class="vt-next flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+        aria-label="Next"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="vt-track relative">
+    <div class="vt-slider flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pl-6 sm:pl-12 lg:pl-20" style="scroll-padding-inline-start: var(--vt-pad);">
+      {testimonials.map((t, i) => (
+        <div
+          class="vt-card group relative flex-shrink-0 w-[260px] sm:w-[280px] lg:w-[300px] snap-start rounded-2xl overflow-hidden cursor-pointer select-none"
+          data-index={i}
+          data-video={t.videoSrc || ""}
+        >
+          {/* Aspect ratio wrapper (9:16 portrait) */}
+          <div class="relative aspect-[9/14]">
+            {/* Poster image */}
+            <img
+              src={t.posterImage}
+              alt={`Video review by ${t.name}`}
+              class="vt-poster absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+
+            {/* Video element (hidden until play) */}
+            {t.videoSrc && (
+              <video
+                class="vt-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300"
+                preload="none"
+                loop
+                playsinline
+                muted
+                poster={t.posterImage}
+              >
+                <source src={t.videoSrc} type="video/mp4" />
+              </video>
+            )}
+
+            {/* Location badge */}
+            <div class="absolute top-4 left-4 z-20">
+              <span class="inline-block rounded-full bg-green-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-dark">
+                {t.location}
+              </span>
+            </div>
+
+            {/* Bottom gradient + text (default state) */}
+            <div class="vt-overlay absolute inset-0 z-10 flex flex-col justify-end transition-opacity duration-300">
+              <div class="bg-gradient-to-t from-dark/90 via-dark/40 to-transparent p-5 pt-24">
+                <p class="vt-quote text-lg sm:text-xl font-semibold text-white leading-snug mb-3 transition-all duration-300">
+                  {t.quote}
+                </p>
+                <div class="vt-meta flex items-center gap-2 transition-all duration-300">
+                  <span class="text-sm font-medium text-white">{t.name}</span>
+                  <span class="text-xs text-white/40">{t.date}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Play/Pause button (appears on hover, bottom-aligned) */}
+            <div class="vt-controls absolute inset-x-0 bottom-0 z-20 flex justify-center pb-6 opacity-0 transition-opacity duration-300 pointer-events-none">
+              <button class="vt-play-btn pointer-events-auto flex items-center gap-2.5 rounded-full bg-white/95 px-5 py-3 shadow-lg backdrop-blur-sm transition-transform duration-200 hover:scale-105 active:scale-95">
+                <svg class="vt-icon-play h-5 w-5 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg class="vt-icon-pause h-5 w-5 text-brand-blue hidden" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+                </svg>
+                <span class="vt-btn-text text-sm font-semibold text-dark/90">Play Story</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+      {/* Trailing spacer to preserve right padding when scrolled to end */}
+      <div class="flex-shrink-0 w-px" aria-hidden="true" />
+    </div>
+
+    {/* Mobile arrows (overlaid on edges) */}
+    <button
+      class="vt-prev-mobile sm:hidden absolute left-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
+      aria-label="Previous"
+    >
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <button
+      class="vt-next-mobile sm:hidden absolute right-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
+      aria-label="Next"
+    >
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .vt-slider {
+    --vt-pad: 1.5rem;        /* px-6 = 24px */
+    scroll-padding-inline-start: var(--vt-pad);
+  }
+  @media (min-width: 640px) {
+    .vt-slider { --vt-pad: 3rem; }   /* sm:px-12 = 48px */
+  }
+  @media (min-width: 1024px) {
+    .vt-slider { --vt-pad: 5rem; }   /* lg:px-20 = 80px */
+  }
+
+  .vt-card:hover .vt-controls,
+  .vt-card[data-playing] .vt-controls {
+    opacity: 1;
+  }
+
+  .vt-card:hover .vt-quote,
+  .vt-card:hover .vt-meta {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .vt-card[data-playing] .vt-quote,
+  .vt-card[data-playing] .vt-meta {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .vt-card:hover .vt-overlay {
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .vt-card[data-playing] .vt-video {
+    opacity: 1;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var tracks = document.querySelectorAll(".vt-track");
+    tracks.forEach(function (track) {
+      var slider = track.querySelector(".vt-slider");
+      if (!slider) return;
+
+      var cards = track.querySelectorAll(".vt-card");
+      var cardWidth = 0;
+
+      function getCardWidth() {
+        var first = cards[0];
+        if (first) cardWidth = first.offsetWidth + 16;
+      }
+      getCardWidth();
+      window.addEventListener("resize", getCardWidth);
+
+      function scrollBy(dir) {
+        slider.scrollBy({ left: dir * cardWidth * 2, behavior: "smooth" });
+      }
+
+      var section = track.closest("section");
+      if (section) {
+        section.querySelectorAll(".vt-prev, .vt-prev-mobile").forEach(function (btn) {
+          btn.addEventListener("click", function () { scrollBy(-1); });
+        });
+        section.querySelectorAll(".vt-next, .vt-next-mobile").forEach(function (btn) {
+          btn.addEventListener("click", function () { scrollBy(1); });
+        });
+      }
+
+      var currentlyPlaying = null;
+
+      cards.forEach(function (card) {
+        var video = card.querySelector(".vt-video");
+        var playBtn = card.querySelector(".vt-play-btn");
+        var iconPlay = card.querySelector(".vt-icon-play");
+        var iconPause = card.querySelector(".vt-icon-pause");
+        var btnText = card.querySelector(".vt-btn-text");
+
+        if (!playBtn) return;
+
+        function stopVideo() {
+          if (video) {
+            video.pause();
+            video.currentTime = 0;
+          }
+          card.removeAttribute("data-playing");
+          if (iconPlay) iconPlay.classList.remove("hidden");
+          if (iconPause) iconPause.classList.add("hidden");
+          if (btnText) btnText.textContent = "Play Story";
+        }
+
+        function playVideo() {
+          if (currentlyPlaying && currentlyPlaying !== card) {
+            var prev = currentlyPlaying;
+            var prevVideo = prev.querySelector(".vt-video");
+            if (prevVideo) { prevVideo.pause(); prevVideo.currentTime = 0; }
+            prev.removeAttribute("data-playing");
+            var prevPlay = prev.querySelector(".vt-icon-play");
+            var prevPause = prev.querySelector(".vt-icon-pause");
+            var prevText = prev.querySelector(".vt-btn-text");
+            if (prevPlay) prevPlay.classList.remove("hidden");
+            if (prevPause) prevPause.classList.add("hidden");
+            if (prevText) prevText.textContent = "Play Story";
+          }
+
+          if (video) {
+            video.play();
+          }
+          card.setAttribute("data-playing", "");
+          if (iconPlay) iconPlay.classList.add("hidden");
+          if (iconPause) iconPause.classList.remove("hidden");
+          if (btnText) btnText.textContent = "Pause Story";
+          currentlyPlaying = card;
+        }
+
+        playBtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          if (card.hasAttribute("data-playing")) {
+            if (video) video.pause();
+            card.removeAttribute("data-playing");
+            if (iconPlay) iconPlay.classList.remove("hidden");
+            if (iconPause) iconPause.classList.add("hidden");
+            if (btnText) btnText.textContent = "Play Story";
+            currentlyPlaying = null;
+          } else {
+            playVideo();
+          }
+        });
+      });
+    });
+  })();
+</script>

@@ -23,6 +23,10 @@ html {
   scroll-behavior: smooth;
 }
 
+h2, h3, h4, h5, h6 {
+  letter-spacing: -0.03em;
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-text-primary);
@@ -60,7 +64,28 @@ body {
 }
 
 #main-header[data-scrolled="true"],
-#main-header[data-open="true"] {
+#main-header[data-open="true"],
+#main-header[data-dropdown="true"] {
   background-color: var(--color-brand-blue);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+/* Desktop destinations dropdown */
+.dest-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#dest-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.mobile-country-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* Camp subnav sticky positioning */
+#camp-subnav {
+  top: 5rem; /* h-20 = 80px = 5rem, sits right below the main header */
 }

@@ -1,0 +1,167 @@
+---
+interface Props {
+  heading?: string;
+  appId: string;
+}
+
+const {
+  heading = "What Our Guests Say",
+  appId,
+} = Astro.props;
+---
+
+<section class="py-16 sm:py-20 bg-dark elfsight-reviews-section">
+  <div class="px-6 sm:px-12 lg:px-20">
+    {heading && (
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    )}
+    <div class="elfsight-reviews-wrapper">
+      <div class={`elfsight-app-${appId}`} data-elfsight-app-lazy></div>
+    </div>
+  </div>
+</section>
+
+<script is:inline src="https://elfsightcdn.com/platform.js" async></script>
+
+<style is:global>
+  .elfsight-reviews-section [class*="eapps-"] {
+    --eapps-widget-font-family: "Inter", sans-serif !important;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  /* Main widget container — remove default backgrounds */
+  .elfsight-reviews-section [class*="eapps-reviews-"] {
+    background: transparent !important;
+    color: #fff !important;
+  }
+
+  /* Hide Elfsight's built-in header/title */
+  .elfsight-reviews-section .es-header,
+  .elfsight-reviews-section [class*="eapps-reviews"][class*="header"],
+  .elfsight-reviews-section [class*="Header"] {
+    display: none !important;
+  }
+
+  /* Left-align widget content & strip internal padding */
+  .elfsight-reviews-section [class*="eapps-"],
+  .elfsight-reviews-section [class*="eapps-"] > div {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+  }
+
+  .elfsight-reviews-section .elfsight-reviews-wrapper [class*="eapps-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* Star ratings */
+  .elfsight-reviews-section .es-star {
+    color: #fbbf24 !important;
+    fill: #fbbf24 !important;
+  }
+
+  /* Review cards */
+  .elfsight-reviews-section .es-review,
+  .elfsight-reviews-section [class*="review-item"],
+  .elfsight-reviews-section [class*="ReviewItem"] {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 0.75rem !important;
+    color: #fff !important;
+  }
+
+  /* Review text */
+  .elfsight-reviews-section .es-review-text,
+  .elfsight-reviews-section [class*="review-text"],
+  .elfsight-reviews-section [class*="ReviewText"] {
+    color: rgba(255, 255, 255, 0.5) !important;
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Reviewer name */
+  .elfsight-reviews-section .es-reviewer-name,
+  .elfsight-reviews-section [class*="reviewer-name"],
+  .elfsight-reviews-section [class*="ReviewerName"] {
+    color: #fff !important;
+    font-weight: 600 !important;
+  }
+
+  /* Review date & source */
+  .elfsight-reviews-section .es-review-date,
+  .elfsight-reviews-section [class*="review-date"],
+  .elfsight-reviews-section [class*="ReviewDate"] {
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* "Read more" / "Show more" links */
+  .elfsight-reviews-section .es-read-more,
+  .elfsight-reviews-section [class*="read-more"],
+  .elfsight-reviews-section [class*="ReadMore"] {
+    color: #38bdf8 !important;
+  }
+
+  /* Navigation arrows */
+  .elfsight-reviews-section .es-arrow,
+  .elfsight-reviews-section [class*="arrow"],
+  .elfsight-reviews-section [class*="Arrow"] {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 9999px !important;
+  }
+
+  /* Pagination dots */
+  .elfsight-reviews-section [class*="dot"],
+  .elfsight-reviews-section [class*="Dot"] {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+  .elfsight-reviews-section [class*="dot"][class*="active"],
+  .elfsight-reviews-section [class*="Dot"][class*="active"] {
+    background: #38bdf8 !important;
+  }
+
+  /* Buttons (Write a Review, etc.) */
+  .elfsight-reviews-section .es-button,
+  .elfsight-reviews-section [class*="Button"] {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 9999px !important;
+  }
+
+  /* Rating numbers */
+  .elfsight-reviews-section [class*="rating-value"],
+  .elfsight-reviews-section [class*="RatingValue"],
+  .elfsight-reviews-section [class*="rating-number"] {
+    color: #fff !important;
+  }
+
+  /* Review count text */
+  .elfsight-reviews-section [class*="rating-count"],
+  .elfsight-reviews-section [class*="RatingCount"],
+  .elfsight-reviews-section [class*="reviews-count"] {
+    color: rgba(255, 255, 255, 0.4) !important;
+  }
+
+  /* Source icon labels (Google, TripAdvisor) */
+  .elfsight-reviews-section [class*="source-name"],
+  .elfsight-reviews-section [class*="SourceName"] {
+    color: rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* Hide Elfsight branding if on paid plan */
+  .elfsight-reviews-section [class*="eapps-link"],
+  .elfsight-reviews-section [class*="PoweredBy"] {
+    opacity: 0.3 !important;
+  }
+
+  /* Popup / modal overrides (review detail view) */
+  [class*="eapps-reviews"][class*="popup"],
+  [class*="eapps-reviews"][class*="modal"] {
+    background: #111827 !important;
+    color: #fff !important;
+  }
+</style>

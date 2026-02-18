@@ -4,10 +4,13 @@ interface Props {
   subtitle?: string;
   tagline?: string;
   backgroundImage?: string;
+  backgroundImages?: string[];
   backgroundVideo?: string;
   showScrollIndicator?: boolean;
   ctaText?: string;
   ctaHref?: string;
+  /** Seconds between image transitions (default 6) */
+  rotationInterval?: number;
 }
 
 const {
@@ -15,15 +18,24 @@ const {
   subtitle,
   tagline,
   backgroundImage = "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
+  backgroundImages,
   backgroundVideo,
   showScrollIndicator = false,
   ctaText,
   ctaHref,
+  rotationInterval = 6,
 } = Astro.props;
+
+const hasVideo = !!backgroundVideo;
+const images = backgroundImages && backgroundImages.length > 1
+  ? backgroundImages
+  : [backgroundImage];
+const hasRotation = !hasVideo && images.length > 1;
 ---
 
 <section class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
-  {backgroundVideo ? (
+
+  {hasVideo ? (
     <video
       autoplay
       loop
@@ -34,12 +46,26 @@ const {
     >
       <source src={backgroundVideo} type="video/mp4" />
     </video>
+  ) : hasRotation ? (
+    <div class="hero-slideshow absolute inset-0" data-interval={rotationInterval}>
+      {images.map((src, i) => (
+        <div
+          class:list={[
+            "hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[1500ms] ease-in-out",
+            i === 0 ? "opacity-100" : "opacity-0",
+          ]}
+          style={`background-image: url(${src})`}
+          data-slide={i}
+        />
+      ))}
+    </div>
   ) : (
     <div
       class="absolute inset-0 bg-cover bg-center bg-no-repeat"
       style={`background-image: url(${backgroundImage})`}
     />
   )}
+
   <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
 
   <div class="relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl pt-20">
@@ -85,3 +111,33 @@ const {
     </div>
   )}
 </section>
+
+<script is:inline>
+  (function () {
+    var slideshows = document.querySelectorAll(".hero-slideshow");
+    slideshows.forEach(function (ss) {
+      var slides = ss.querySelectorAll(".hero-slide");
+      if (slides.length < 2) return;
+
+      var interval = parseInt(ss.getAttribute("data-interval") || "6", 10) * 1000;
+      var current = 0;
+      var total = slides.length;
+      var paused = false;
+
+      function next() {
+        if (paused) return;
+        slides[current].classList.remove("opacity-100");
+        slides[current].classList.add("opacity-0");
+        current = (current + 1) % total;
+        slides[current].classList.remove("opacity-0");
+        slides[current].classList.add("opacity-100");
+      }
+
+      setInterval(next, interval);
+
+      document.addEventListener("visibilitychange", function () {
+        paused = document.hidden;
+      });
+    });
+  })();
+</script>

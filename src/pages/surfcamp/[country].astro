@@ -2,33 +2,266 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import ImageGrid from "@/components/sections/ImageGrid.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import ContentBlock from "@/components/sections/ContentBlock.astro";
+import Reviews from "@/components/sections/Reviews.astro";
 import { destinations, countries } from "@/lib/data";
 
-const countryData: Record<string, { title: string; tagline: string; description: string }> = {
+const countryContent: Record<string, {
+  title: string;
+  tagline: string;
+  description: string;
+  heroImage: string;
+  heroImages?: string[];
+  intro: string;
+  campsSectionTitle: string;
+  imageGrid: { src: string; alt: string }[];
+  contentBlocks: { heading: string; body: string; image?: string; imageAlt?: string; reverse?: boolean; background?: "dark" | "dark-lighter" }[];
+  imageBreak: { src: string; alt: string; caption?: string };
+  reviews: { name: string; location?: string; text: string; rating: number }[];
+}> = {
   bali: {
     title: "Surf Camps\nin Bali",
     tagline: "Experience some of the world's best waves on the stunning Bukit Peninsula",
-    description: "The tropical paradise of Bali is famous for being one of the most popular surfing destinations worldwide. The waves here are excellent all year round with consistent swells and an incredible selection of breaks for surfers ranging from the beginner to experts.",
+    description: "The tropical paradise of Bali is famous for being one of the most popular surfing destinations worldwide. With waves for every level, warm water year-round, and an incredible culture — it's the ultimate surf trip.",
+    heroImage: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1920&h=1080&fit=crop",
+    heroImages: [
+      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=1080&fit=crop",
+    ],
+    intro: "From the legendary barrels of Padang Padang to the beginner-friendly breaks of Green Bowl, Bali's Bukit Peninsula has it all. We run two camps here — each with its own character, but both sharing that unmistakable Rapture spirit.",
+    campsSectionTitle: "Stay at Our Surf Camps in Bali",
+    imageGrid: [
+      { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=500&fit=crop", alt: "Tropical pool area at Rapture surf camp Bali" },
+      { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=450&fit=crop", alt: "Relaxation lounge overlooking the pool" },
+      { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=600&h=225&fit=crop", alt: "Balinese outdoor bathroom" },
+      { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=225&fit=crop", alt: "Aerial view of Bali surf camp" },
+    ],
+    contentBlocks: [
+      {
+        heading: "When Is the Best Time to Surf in Bali?",
+        body: "<p>Bali delivers rideable waves 365 days a year, but the peak season runs from June through September. During the dry season, consistent Indian Ocean swells hit the west-facing reefs of the Bukit Peninsula, creating the powerful barrels Bali is famous for.</p><p>The wet season (November–March) brings smaller, more playful waves on the east coast — perfect for progressing your skills without the crowds. Water temperature stays between 26–30°C year-round, so you'll rarely need more than a rash vest.</p>",
+        image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=600&fit=crop",
+        imageAlt: "Surfer riding a wave in Bali",
+      },
+      {
+        heading: "World-Class Waves for Every Level",
+        body: "<p>Bali is home to over 60 surf spots. Beginners find their feet at Padang Padang Right, where long unbroken walls roll in at high tide. Intermediate surfers challenge themselves at Dreamland and Balangan, while experts chase the hollow lefts of Uluwatu and the famous Padang Padang barrel.</p><p>Our surf instructors know every break on the Bukit and will guide you to the right spot for your level — whether it's your first pop-up or your hundredth tube ride.</p>",
+        image: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=800&h=600&fit=crop",
+        imageAlt: "Aerial view of surf break in Bali",
+        reverse: true,
+        background: "dark-lighter",
+      },
+      {
+        heading: "More Than Just Surfing",
+        body: "<p>Between sessions, Bali offers an endless menu: explore ancient Hindu temples perched on sea cliffs, hike through emerald rice terraces in Ubud, or simply unwind with a Balinese massage and a fresh coconut by the pool.</p><p>Our camps include daily yoga classes, delicious local cuisine prepared by our chefs, and a community of like-minded travellers from around the world. Whether you're here for a week or a month, Bali has a way of feeling like home.</p>",
+        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
+        imageAlt: "Bali temple at sunset",
+      },
+    ],
+    imageBreak: {
+      src: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=800&fit=crop",
+      alt: "Surfer walking with board on Bali beach at sunset",
+      caption: "Padang Padang Beach, Bukit Peninsula",
+    },
+    reviews: [
+      { name: "Emma T.", location: "London, UK", text: "The best two weeks of my life. I went from barely standing up to confidently riding green waves. The instructors are incredible and the camp has the most amazing vibe.", rating: 5 },
+      { name: "Lucas M.", location: "Berlin, Germany", text: "This was my third time at Rapture Bali and it never disappoints. The food, the waves, the people — everything is dialled in. Already booking my next trip.", rating: 5 },
+      { name: "Sarah K.", location: "Sydney, Australia", text: "As an experienced surfer, I was worried a surf camp would be too beginner-focused. Not at all — the surf guiding took me to spots I'd never have found on my own. Uluwatu at sunrise was unforgettable.", rating: 5 },
+    ],
   },
   "costa-rica": {
     title: "Surf Camp\nin Costa Rica",
     tagline: "Pura Vida vibes and world-class waves in tropical paradise",
-    description: "Costa Rica offers some of the most consistent surf conditions in Central America. Our camp in Avellanas puts you right in the heart of Guanacaste's legendary coastline.",
+    description: "Costa Rica offers some of the most consistent surf conditions in Central America. Our camp in Avellanas puts you in the heart of Guanacaste's legendary coastline — warm water, offshore winds, and that unmistakable Pura Vida spirit.",
+    heroImage: "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop",
+    heroImages: [
+      "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1920&h=1080&fit=crop",
+    ],
+    intro: "Playa Avellanas is one of Costa Rica's best-kept secrets: perfect waves, zero crowds, and a jungle backdrop that feels like a movie set. Our freshly renovated camp sits right in the middle of it all.",
+    campsSectionTitle: "Stay at Our Surf Camp in Costa Rica",
+    imageGrid: [
+      { src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=500&fit=crop", alt: "Costa Rica tropical beach" },
+      { src: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=600&h=450&fit=crop", alt: "Surf camp pool area Costa Rica" },
+      { src: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=600&h=225&fit=crop", alt: "Jungle surroundings at Avellanas" },
+      { src: "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=600&h=225&fit=crop", alt: "Costa Rica wildlife sloth" },
+    ],
+    contentBlocks: [
+      {
+        heading: "When Is the Best Time to Surf in Costa Rica?",
+        body: "<p>Costa Rica's Pacific coast fires year-round, but the prime season is May through November when consistent south swells deliver overhead waves to Guanacaste's beaches. The dry season (December–April) brings smaller, cleaner conditions perfect for learning.</p><p>Water temperatures hover around 27–29°C, and you'll surf in boardshorts every session. Offshore winds are common in the mornings, grooming the waves to perfection before the afternoon sea breeze kicks in.</p>",
+        image: "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=800&h=600&fit=crop",
+        imageAlt: "Surfing at Playa Avellanas",
+      },
+      {
+        heading: "Pura Vida at Playa Avellanas",
+        body: "<p>Our camp is surrounded by jungle — wake up to howler monkeys, spot sloths in the trees, and watch iguanas sun themselves by the pool. The freshly renovated property features an outdoor cinema, recovery centre, and blazing-fast internet for digital nomads.</p><p>Playa Tamarindo is just 20 minutes away for nightlife, restaurants, and shopping. But most guests find everything they need right here: great waves, incredible food, yoga at sunset, and new friends from around the world.</p>",
+        image: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=800&h=600&fit=crop",
+        imageAlt: "Pool area at Costa Rica surf camp",
+        reverse: true,
+        background: "dark-lighter",
+      },
+    ],
+    imageBreak: {
+      src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=800&fit=crop",
+      alt: "Tropical beach in Costa Rica at golden hour",
+      caption: "Playa Avellanas, Guanacaste",
+    },
+    reviews: [
+      { name: "Mike R.", location: "Toronto, Canada", text: "The waves at Avellanas are so consistent — I surfed twice a day for a full week and every session was different. The camp food is insane, especially the fresh fruit breakfast buffet.", rating: 5 },
+      { name: "Anna L.", location: "Stockholm, Sweden", text: "Came for the surf, stayed for the Pura Vida. The staff are like family, the jungle setting is magical, and I saw my first wild sloth on day two!", rating: 5 },
+      { name: "Tom H.", location: "Melbourne, Australia", text: "Great setup for remote workers — the WiFi is solid and there's plenty of quiet spots to work between sessions. Best workation I've ever done.", rating: 4 },
+    ],
   },
   portugal: {
     title: "Surf Camps\nin Portugal",
     tagline: "Europe's premier surf destination with year-round waves",
-    description: "Portugal's Atlantic coast delivers powerful, consistent surf that attracts riders from around the world. From the World Surfing Reserve of Ericeira to the wild Alentejo coast.",
+    description: "Portugal's Atlantic coast delivers powerful, consistent surf that attracts riders from around the world. From the World Surfing Reserve of Ericeira to the wild Alentejo coast — we have three camps to choose from.",
+    heroImage: "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=1080&fit=crop",
+    heroImages: [
+      "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
+    ],
+    intro: "Portugal is Europe's surfing capital and for good reason. World-class waves, charming coastal villages, incredible food, and affordable prices make it the perfect destination whether you're learning to surf or chasing your best barrel.",
+    campsSectionTitle: "Stay at Our Surf Camps in Portugal",
+    imageGrid: [
+      { src: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=1200&h=500&fit=crop", alt: "Portuguese coastline with dramatic cliffs" },
+      { src: "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=600&h=450&fit=crop", alt: "Surfer at Ericeira beach" },
+      { src: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=600&h=225&fit=crop", alt: "Ericeira old town" },
+      { src: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=600&h=225&fit=crop", alt: "Sunset surfing in Portugal" },
+    ],
+    contentBlocks: [
+      {
+        heading: "When Is the Best Time to Surf in Portugal?",
+        body: "<p>Portugal's surf season never really stops. Summer (June–September) brings smaller, consistent swells ideal for beginners and intermediates — plus warm weather and long days. Autumn and winter (October–March) is when the Atlantic unleashes powerful swells that light up world-class breaks like Coxos and Supertubos.</p><p>Water temperatures range from 15°C in winter to 20°C in summer — wetsuits are standard, but the waves are absolutely worth it.</p>",
+        image: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=800&h=600&fit=crop",
+        imageAlt: "Portugal coastline surf break",
+      },
+      {
+        heading: "Ericeira: Europe's World Surfing Reserve",
+        body: "<p>Ericeira is one of only two World Surfing Reserves in Europe, and our main camp sits oceanfront overlooking Foz do Lizandro beach. Walk to 7 different surf breaks, explore the charming old town with its cobblestone streets and seafood restaurants, and enjoy the best of Portuguese village life.</p><p>For a more premium experience, our Coxos Surf Villa offers an infinity pool facing the ocean, just steps from one of Europe's most famous waves. A shuttle connects both properties throughout the day.</p>",
+        image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&h=600&fit=crop",
+        imageAlt: "Ericeira old town Portugal",
+        reverse: true,
+        background: "dark-lighter",
+      },
+      {
+        heading: "The Wild Alentejo Coast",
+        body: "<p>Our Milfontes Eco Surfcamp offers something completely different: a small farm setting in the heart of the Southwest Alentejo Natural Park. This is for surfers who want to disconnect — permaculture gardens, Portuguese cooking workshops, and empty lineups on uncrowded beaches.</p><p>Hike the Rota Vicentina trail, explore hidden coves, and experience a side of Portugal most tourists never see.</p>",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
+        imageAlt: "Alentejo coast Portugal",
+      },
+    ],
+    imageBreak: {
+      src: "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=800&fit=crop",
+      alt: "Surfer riding a wave at Ericeira Portugal",
+      caption: "Ericeira, World Surfing Reserve",
+    },
+    reviews: [
+      { name: "Julia W.", location: "Munich, Germany", text: "Ericeira is paradise. The camp is right on the beach, the town is beautiful, and the surf instructors really know what they're doing. I improved so much in just one week.", rating: 5 },
+      { name: "Pierre D.", location: "Paris, France", text: "Stayed at the Coxos Villa — the infinity pool with ocean view is unreal. And the shuttle to the main camp for lessons worked perfectly. Best surf trip in Europe.", rating: 5 },
+      { name: "Lisa B.", location: "Amsterdam, Netherlands", text: "Milfontes was exactly what I needed. Away from the crowds, surrounded by nature, with incredible empty waves. The eco approach is genuine and the food from the garden was amazing.", rating: 5 },
+    ],
   },
   morocco: {
     title: "Surf Camp\nin Morocco",
     tagline: "Where African desert meets Atlantic swell",
-    description: "Morocco's southern coast offers incredible right-hand point breaks, warm hospitality, and an unforgettable cultural experience. This is where Rapture started.",
+    description: "Morocco's southern coast offers incredible right-hand point breaks, warm hospitality, and an unforgettable cultural experience. This is where Rapture started over 20 years ago.",
+    heroImage: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
+    heroImages: [
+      "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1517821099606-cef63a9bcda6?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1920&h=1080&fit=crop",
+    ],
+    intro: "Sidi Ifni is where it all began. More than 20 years ago, our founders fell in love with Morocco's waves and culture — and started the very first Rapture camp right here. That same spirit lives on in our Banana Village surf house.",
+    campsSectionTitle: "Stay at Our Surf Camp in Morocco",
+    imageGrid: [
+      { src: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200&h=500&fit=crop", alt: "Morocco coastline with surf" },
+      { src: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=600&h=450&fit=crop", alt: "Moroccan surf break" },
+      { src: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=600&h=225&fit=crop", alt: "Moroccan architecture" },
+      { src: "https://images.unsplash.com/photo-1517821099606-cef63a9bcda6?w=600&h=225&fit=crop", alt: "Moroccan food and tea" },
+    ],
+    contentBlocks: [
+      {
+        heading: "When Is the Best Time to Surf in Morocco?",
+        body: "<p>Morocco is a true winter surf destination. From October through April, powerful Atlantic swells wrap around the coast, delivering world-class right-hand point breaks. The dry season means offshore winds and clear skies — perfect conditions session after session.</p><p>Summer brings smaller waves that are ideal for beginners, plus warmer water temperatures. Year-round air temperatures stay between 18–28°C, making Morocco comfortable any time of year.</p>",
+        image: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=800&h=600&fit=crop",
+        imageAlt: "Surf break in Morocco",
+      },
+      {
+        heading: "Culture, Tradition, and Incredible Hospitality",
+        body: "<p>Morocco offers something no other surf destination can: a deep immersion into North African culture. Explore Berber villages, wander through ancient medinas, ride camels along the beach, and drink sweet mint tea on the rooftop as the sun sets over the Atlantic.</p><p>Our Banana Village surf house is intimate — just 21 guests maximum — with three meals a day, a rooftop terrace with panoramic ocean views, and some of the warmest hospitality you'll find anywhere.</p>",
+        image: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=800&h=600&fit=crop",
+        imageAlt: "Moroccan cultural experience",
+        reverse: true,
+        background: "dark-lighter",
+      },
+    ],
+    imageBreak: {
+      src: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1920&h=800&fit=crop",
+      alt: "Morocco Atlantic coast at golden hour",
+      caption: "Sidi Ifni, Morocco — Where Rapture Began",
+    },
+    reviews: [
+      { name: "Oscar F.", location: "Barcelona, Spain", text: "Morocco blew my mind. The waves are incredible, the food is the best of any surf camp I've stayed at, and the rooftop sunsets are magical. Such a unique experience.", rating: 5 },
+      { name: "Hannah M.", location: "Dublin, Ireland", text: "I was nervous travelling to Morocco as a solo female surfer but felt completely safe and welcomed from the moment I arrived. The staff are like family. Can't wait to return.", rating: 5 },
+      { name: "Jan K.", location: "Prague, Czech Republic", text: "Best value surf camp I've found. Three meals a day, surf lessons, yoga — all included. The waves in winter are absolutely pumping. Bring a 3/2 wetsuit.", rating: 5 },
+    ],
   },
   nicaragua: {
     title: "Surf Camps\nin Nicaragua",
     tagline: "Central America's hidden gem for surfers",
-    description: "Nicaragua's Pacific coast delivers powerful beach breaks and a laid-back atmosphere that's hard to beat.",
+    description: "Nicaragua's Pacific coast delivers powerful beach breaks, 330 days of offshore winds, and a laid-back atmosphere that's hard to beat. The Land of Lakes and Volcanoes is calling.",
+    heroImage: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=1920&h=1080&fit=crop",
+    heroImages: [
+      "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1920&h=1080&fit=crop",
+    ],
+    intro: "Playa Maderas is pure magic — a jungle-fringed bay with consistent surf, warm water, and a vibe that makes you never want to leave. We run two properties here: our hilltop surf camp with infinity pool and glamping tents, and the boutique Maderas Surf Resort.",
+    campsSectionTitle: "Stay at Our Surf Camps in Nicaragua",
+    imageGrid: [
+      { src: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=1200&h=500&fit=crop", alt: "Nicaragua tropical coast" },
+      { src: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=450&fit=crop", alt: "Surf camp pool Nicaragua" },
+      { src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&h=225&fit=crop", alt: "Jungle setting at Maderas" },
+      { src: "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=600&h=225&fit=crop", alt: "Nicaragua wildlife" },
+    ],
+    contentBlocks: [
+      {
+        heading: "When Is the Best Time to Surf in Nicaragua?",
+        body: "<p>Nicaragua is blessed with 330 days of offshore winds per year — one of the most consistent surf destinations on the planet. The dry season (November–April) brings clean conditions and overhead swells to Playa Maderas, while the rainy season (May–October) offers bigger waves with fewer crowds.</p><p>Water temperature sits at a balmy 27–29°C year-round. Boardshorts and a rash vest are all you need.</p>",
+        image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop",
+        imageAlt: "Surfing in Nicaragua",
+      },
+      {
+        heading: "A Surf Sanctuary in the Jungle",
+        body: "<p>Our main camp sits on a hilltop overlooking the jungle and ocean, with an infinity pool that's become one of the most photographed spots in Nicaraguan surf culture. Choose between private rooms and unique glamping tents — either way, you'll wake up to birdsong and ocean views.</p><p>Surf guiding is included six days a week for intermediate and advanced surfers. For a more boutique experience, the Maderas Surf Resort offers premium accommodation with a laid-back vibe and easy access to San Juan del Sur's nightlife, just 30 minutes away.</p>",
+        image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
+        imageAlt: "Infinity pool at Nicaragua surf camp",
+        reverse: true,
+        background: "dark-lighter",
+      },
+    ],
+    imageBreak: {
+      src: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=1920&h=800&fit=crop",
+      alt: "Playa Maderas beach Nicaragua at sunset",
+      caption: "Playa Maderas, San Juan del Sur",
+    },
+    reviews: [
+      { name: "Chris P.", location: "Los Angeles, USA", text: "Nicaragua is the real deal. Warm water, consistent waves, zero crowds. The glamping tents at the hilltop camp are so cool and the infinity pool at sunset is next level.", rating: 5 },
+      { name: "Mia S.", location: "Copenhagen, Denmark", text: "The surf guiding made all the difference — the instructors know exactly where to go depending on the swell. I surfed waves I never would have found on my own.", rating: 5 },
+      { name: "Ben A.", location: "Cape Town, South Africa", text: "Best surf camp vibes anywhere. The community of travellers, the nightly dinners, watching surf movies under the stars — it's like summer camp for adults, but with perfect waves.", rating: 4 },
+    ],
   },
 };
 
@@ -37,12 +270,23 @@ export function getStaticPaths() {
 }
 
 const { country } = Astro.params;
-const data = countryData[country!];
+const data = countryContent[country!];
 if (!data) return Astro.redirect("/404");
 
 const countryCamps = destinations.filter(
   (d) => d.country.toLowerCase().replace(" ", "-") === country
 );
+
+const amenityLabels: Record<string, string> = {
+  "pool": "Pool",
+  "surf-lessons": "Surf Lessons",
+  "yoga": "Yoga",
+  "restaurant": "Meals Included",
+  "wifi": "WiFi",
+  "bar": "Bar",
+  "gym": "Gym",
+  "bikes": "Bikes",
+};
 ---
 
 <BaseLayout
@@ -52,23 +296,54 @@ const countryCamps = destinations.filter(
   <Hero
     title={data.title}
     subtitle={data.tagline}
-    backgroundImage="https://images.unsplash.com/photo-1502680390548-bdbac40a5e46?w=1920&h=1080&fit=crop"
+    backgroundImage={data.heroImage}
+    backgroundImages={data.heroImages}
   />
 
-  <section class="py-20 bg-dark">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <p class="text-base text-white/40 max-w-2xl mb-12 leading-relaxed">{data.description}</p>
+  <!-- Intro + Camp Cards -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <p class="text-base sm:text-lg text-white/50 max-w-3xl leading-relaxed mb-16">{data.intro}</p>
+
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">{data.campsSectionTitle}</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {countryCamps.map((camp) => (
-          <a href={camp.slug} class="group overflow-hidden rounded-xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
+          <a href={camp.slug} class="group overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
             <div class="relative aspect-[16/10] overflow-hidden">
               <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+              {camp.rating && (
+                <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
+                  <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                  <span class="text-white text-xs font-semibold">{camp.rating}</span>
+                  {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
+                </div>
+              )}
             </div>
             <div class="p-6">
               <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
               <h3 class="text-xl font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
-              <div class="mt-3 flex items-center gap-2 text-ocean-light text-xs font-medium opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+              {camp.tagline && <p class="text-sm text-white/45 mt-1.5 leading-snug">{camp.tagline}</p>}
+
+              {camp.amenities && camp.amenities.length > 0 && (
+                <div class="mt-4 flex flex-wrap gap-2">
+                  {camp.amenities.map((amenity) => (
+                    <span class="inline-flex items-center gap-1.5 text-[11px] text-white/40 bg-white/5 rounded-full px-2.5 py-1">
+                      {amenity === "pool" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>}
+                      {amenity === "surf-lessons" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>}
+                      {amenity === "yoga" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1.5"/><path d="M7 21l3-7"/><path d="M17 21l-3-7"/><path d="m4 16 4-2.5"/><path d="m20 16-4-2.5"/><path d="m9 10.5 3 3 3-3"/></svg>}
+                      {amenity === "restaurant" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>}
+                      {amenity === "wifi" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>}
+                      {amenity === "bar" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8Z"/></svg>}
+                      {amenity === "gym" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767-1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l1.767 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>}
+                      {amenity === "bikes" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>}
+                      {amenityLabels[amenity] || amenity}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <div class="mt-4 flex items-center gap-2 text-ocean-light text-xs font-medium opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
                 <span>View this camp</span>
                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
               </div>
@@ -79,5 +354,31 @@ const countryCamps = destinations.filter(
     </div>
   </section>
 
+  <!-- Image Grid Break -->
+  <ImageGrid images={data.imageGrid} variant="collage" />
+
+  <!-- Content Blocks -->
+  {data.contentBlocks.map((block) => (
+    <ContentBlock
+      heading={block.heading}
+      body={block.body}
+      image={block.image}
+      imageAlt={block.imageAlt}
+      reverse={block.reverse}
+      background={block.background}
+    />
+  ))}
+
+  <!-- Full-width Image Break -->
+  <ImageBreak
+    src={data.imageBreak.src}
+    alt={data.imageBreak.alt}
+    caption={data.imageBreak.caption}
+  />
+
+  <!-- Customer Reviews -->
+  <Reviews reviews={data.reviews} />
+
+  <!-- CTA -->
   <CTASection />
 </BaseLayout>

@@ -7,12 +7,14 @@ interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  bookingUrl?: string;
 }
 
 const {
   title = "Rapture Surfcamps - Learn to Surf, Surf the World, Stay with Us!",
   description = "A network of 8 unique surf camps in 5 countries on 4 continents. Surf the world with Rapture in Bali, Costa Rica, Portugal, Morocco, and Nicaragua.",
   ogImage,
+  bookingUrl,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
@@ -46,7 +48,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
       rel="stylesheet"
     />
   </head>
-  <body class="font-sans antialiased bg-dark text-white">
+  <body class="font-sans antialiased bg-dark text-white" data-booking-url={bookingUrl}>
     <Header />
     <main>
       <slot />
@@ -89,6 +91,81 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
           link.addEventListener("click", function () { closeMenu(); });
         });
 
+        /* --- Desktop destinations dropdown --- */
+        var destTrigger = document.getElementById("dest-trigger");
+        var destPanel = document.getElementById("dest-panel");
+        var destChevron = document.getElementById("dest-chevron");
+        var destBtn = document.getElementById("dest-btn");
+
+        if (destTrigger && destPanel && destChevron) {
+          var dropdownOpen = false;
+          var closeTimer = null;
+
+          function showDropdown() {
+            if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+            dropdownOpen = true;
+            destPanel.classList.add("is-open");
+            destChevron.classList.add("is-open");
+            hdr.setAttribute("data-dropdown", "true");
+          }
+
+          function hideDropdown() {
+            dropdownOpen = false;
+            destPanel.classList.remove("is-open");
+            destChevron.classList.remove("is-open");
+            hdr.removeAttribute("data-dropdown");
+          }
+
+          function scheduleClose() {
+            closeTimer = setTimeout(hideDropdown, 150);
+          }
+
+          destTrigger.addEventListener("mouseenter", showDropdown);
+          destTrigger.addEventListener("mouseleave", scheduleClose);
+
+          destBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (dropdownOpen) { hideDropdown(); } else { showDropdown(); }
+          });
+
+          destPanel.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", hideDropdown);
+          });
+
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && dropdownOpen) hideDropdown();
+          });
+        }
+
+        /* --- Mobile country accordions --- */
+        var countryBtns = menu.querySelectorAll(".mobile-country-btn");
+        countryBtns.forEach(function (cbtn) {
+          cbtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            var parent = cbtn.closest(".mobile-country");
+            var camps = parent.querySelector(".mobile-country-camps");
+            var chevron = parent.querySelector(".mobile-country-chevron");
+            var isOpen = !camps.classList.contains("hidden");
+
+            if (isOpen) {
+              camps.classList.add("hidden");
+              chevron.classList.remove("is-open");
+            } else {
+              camps.classList.remove("hidden");
+              chevron.classList.add("is-open");
+            }
+          });
+        });
+
+        /* --- Context-aware Book button --- */
+        var contextBookingUrl = document.body.getAttribute("data-booking-url");
+        if (contextBookingUrl) {
+          document.querySelectorAll(".book-link").forEach(function (link) {
+            link.setAttribute("href", contextBookingUrl);
+          });
+        }
+
+        /* --- Scroll detection --- */
         var scrolled = false;
         function onScroll() {
           var shouldBeScrolled = window.scrollY > 50;
