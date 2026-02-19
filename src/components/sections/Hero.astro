@@ -43,7 +43,7 @@ const images = backgroundImages && backgroundImages.length > 1
 const hasRotation = !hasVideo && images.length > 1;
 ---
 
-<section class:list={["relative flex items-end overflow-hidden", fullHeight ? "h-screen min-h-[700px]" : "h-[65vh] sm:h-screen min-h-[480px] sm:min-h-[700px]"]}>
+<section class:list={["relative flex items-end overflow-hidden", fullHeight ? "h-[calc(100vh-165px)] sm:h-screen min-h-[600px] sm:min-h-[700px]" : "h-[65vh] sm:h-screen min-h-[480px] sm:min-h-[700px]"]}>
 
   {hasVideo ? (
     <video
@@ -78,7 +78,7 @@ const hasRotation = !hasVideo && images.length > 1;
 
   <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
 
-  <div class:list={["relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl", fullHeight ? "pb-28 sm:pb-16 lg:pb-20" : "pb-12 sm:pb-16 lg:pb-20"]}>
+  <div class:list={["relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl", fullHeight ? "pb-[87px] sm:pb-16 lg:pb-20" : "pb-12 sm:pb-16 lg:pb-20"]}>
     {tagline && (
       <p class="mb-4 text-xs sm:text-sm uppercase tracking-[0.25em] text-white/50 font-light">
         {tagline}
