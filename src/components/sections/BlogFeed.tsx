@@ -68,7 +68,7 @@ export default function BlogFeed() {
   };
 
   return (
-    <section className="py-16 bg-dark-lighter">
+    <section className="pt-12 sm:pt-16 pb-16 bg-dark-lighter">
       <div className="px-6 sm:px-12 lg:px-20">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">

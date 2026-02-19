@@ -78,7 +78,7 @@ const hasRotation = !hasVideo && images.length > 1;
 
   <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
 
-  <div class="relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl pb-12 sm:pb-16 lg:pb-20">
+  <div class:list={["relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl", fullHeight ? "pb-28 sm:pb-16 lg:pb-20" : "pb-12 sm:pb-16 lg:pb-20"]}>
     {tagline && (
       <p class="mb-4 text-xs sm:text-sm uppercase tracking-[0.25em] text-white/50 font-light">
         {tagline}

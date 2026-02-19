@@ -74,6 +74,7 @@ export interface Destination {
   reviewCount?: number;
   amenities?: string[];
   bookingUrl?: string;
+  heroImages?: string[];
 }
 
 export interface StatItem {

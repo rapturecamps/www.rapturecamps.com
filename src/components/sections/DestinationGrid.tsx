@@ -15,7 +15,7 @@ export default function DestinationGrid() {
   };
 
   return (
-    <section id="destinations" className="py-20 sm:py-28 bg-dark">
+    <section id="destinations" className="pt-0 sm:pt-10 pb-16 sm:pb-28 bg-dark">
       <div className="px-6 sm:px-12 lg:px-20">
         <div className="flex items-end justify-between mb-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
