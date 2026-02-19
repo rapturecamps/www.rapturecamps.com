@@ -33,7 +33,7 @@ const images = backgroundImages && backgroundImages.length > 1
 const hasRotation = !hasVideo && images.length > 1;
 ---
 
-<section class="relative h-screen min-h-[700px] flex items-center overflow-hidden">
+<section class="relative h-[85vh] sm:h-screen min-h-[550px] sm:min-h-[700px] flex items-end overflow-hidden">
 
   {hasVideo ? (
     <video
@@ -68,7 +68,7 @@ const hasRotation = !hasVideo && images.length > 1;
 
   <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
 
-  <div class="relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl pt-20">
+  <div class="relative z-10 px-6 sm:px-12 lg:px-20 max-w-5xl pb-12 sm:pb-16 lg:pb-20">
     {tagline && (
       <p class="mb-4 text-xs sm:text-sm uppercase tracking-[0.25em] text-white/50 font-light">
         {tagline}
@@ -80,13 +80,13 @@ const hasRotation = !hasVideo && images.length > 1;
     </h1>
 
     {subtitle && (
-      <p class="mt-6 text-base sm:text-lg text-white/60 max-w-lg leading-relaxed font-light">
+      <p class="mt-3 sm:mt-6 text-base sm:text-lg text-white/60 max-w-lg leading-relaxed font-light">
         {subtitle}
       </p>
     )}
 
     {ctaText && ctaHref && (
-      <div class="mt-8">
+      <div class="mt-5 sm:mt-8">
         <a
           href={ctaHref}
           class="inline-block rounded-full bg-white/10 border border-white/20 px-7 py-3 text-sm font-medium text-white hover:bg-white/20 transition-all"
