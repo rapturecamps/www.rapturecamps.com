@@ -20,11 +20,12 @@ const tabs = [
   <div class="mx-auto w-full px-6 sm:px-12 lg:px-20">
     <div class="flex h-12 items-center gap-6">
       <div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
-        {tabs.map((tab) => (
+        {tabs.map((tab, i) => (
           <a
             href={tab.href}
             class:list={[
-              "camp-tab relative whitespace-nowrap px-4 py-2 text-sm transition-colors rounded-lg flex-shrink-0",
+              "camp-tab relative whitespace-nowrap pr-4 py-2 text-sm transition-colors rounded-lg flex-shrink-0",
+              i === 0 ? "pl-0" : "pl-4",
               activePage === tab.id
                 ? "text-white font-medium"
                 : "text-white/40 hover:text-white/70",
@@ -33,7 +34,7 @@ const tabs = [
           >
             {tab.label}
             {activePage === tab.id && (
-              <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-ocean-light rounded-full" />
+              <span class:list={["absolute bottom-0 right-4 h-0.5 bg-ocean-light rounded-full", i === 0 ? "left-0" : "left-4"]} />
             )}
           </a>
         ))}
