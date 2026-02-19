@@ -185,39 +185,63 @@ These live in the `data/` folder and are **never published as pages**. They serv
 
 ---
 
+## SEO & Heading Architecture
+
+Every page separates display text from SEO-critical elements:
+
+| Field               | Purpose                                                        |
+|---------------------|----------------------------------------------------------------|
+| `internal_name`     | Storyblok admin only (auto-generated from slug, never public)  |
+| `seo_title`         | `<title>` tag for browser tab and search results               |
+| `seo_description`   | Meta description for SERP snippet                              |
+| `seo_og_image`      | Open Graph image for social sharing                            |
+| `seo_canonical`     | Canonical URL (optional, for duplicate content)                |
+| `hero_display_text` | Big visual text in the hero — NOT an `<h1>`, rendered as `<p>` |
+| `h1`                | The actual `<h1>` tag, placed in the first content section after the hero/subnav. SEO-optimized. |
+
+**Key rule**: The hero display text is decorative (e.g., a surfing slogan, the camp name) and rendered as a styled `<p>`. The real `<h1>` comes in the first content section below the subnav and should be the phrase you want to rank for (e.g., "Oceanfront camp in Europe's World Surfing Reserve").
+
+The `seo` group on every page content type includes: `seo_title`, `seo_description`, `seo_og_image`, `seo_canonical`.
+
+---
+
 ## Page Content Types
 
 ### `page_home`
 
-| Field  | Type    | Notes                                    |
-|--------|---------|------------------------------------------|
-| `hero` | Blok    | Single: `hero_blok`                      |
-| `body` | Bloks   | Composable: any section bloks            |
-| `seo`  | Group   | title, description, og_image, canonical  |
+| Field               | Type    | Notes                                    |
+|---------------------|---------|------------------------------------------|
+| `hero_display_text` | Text    | Slogan / display text (not H1)           |
+| `h1`                | Text    | SEO heading in first content section     |
+| `hero`              | Blok    | Single: `hero_blok`                      |
+| `body`              | Bloks   | Composable: any section bloks            |
+| `seo`               | Group   | title, description, og_image, canonical  |
 
 ### `page_country`
 
-| Field              | Type          | Notes                                    |
-|--------------------|---------------|------------------------------------------|
-| `name`             | Text          | e.g. "Bali"                              |
-| `tagline`          | Text          | Short hero tagline                       |
-| `description`      | Textarea      | Meta description / intro paragraph       |
-| `hero_images`      | Multi-asset   | Rotating hero backgrounds                |
-| `intro`            | Richtext      | Introductory paragraph below hero        |
-| `camps_heading`    | Text          | e.g. "Stay at Our Surf Camps in Bali"   |
-| `body`             | Bloks         | Composable: content_block, image_grid, image_break, reviews_section, etc. |
-| `seo`              | Group         | title, description, og_image, canonical  |
+| Field               | Type          | Notes                                    |
+|---------------------|---------------|------------------------------------------|
+| `name`              | Text          | e.g. "Bali"                              |
+| `hero_display_text` | Text          | Big visual text in hero (not H1)         |
+| `h1`                | Text          | SEO H1 e.g. "Stay at Our Surf Camps in Bali" |
+| `tagline`           | Text          | Short hero subtitle                      |
+| `description`       | Textarea      | Intro paragraph                          |
+| `hero_images`       | Multi-asset   | Rotating hero backgrounds                |
+| `body`              | Bloks         | Composable: content_block, image_grid, image_break, reviews_section, etc. |
+| `seo`               | Group         | title, description, og_image, canonical  |
 
 ### `page_camp` (overview / "The Surfcamp")
 
-| Field              | Type          | Notes                                        |
-|--------------------|---------------|----------------------------------------------|
-| `name`             | Text          | e.g. "Green Bowl"                            |
-| `country`          | Story         | Reference to parent country page             |
-| `location`         | Text          | e.g. "Bukit Peninsula"                       |
-| `tagline`          | Text          | Card tagline                                 |
-| `hero_images`      | Multi-asset   | Rotating hero backgrounds                    |
-| `booking_url`      | URL           | External booking engine link                 |
+| Field               | Type          | Notes                                        |
+|---------------------|---------------|----------------------------------------------|
+| `name`              | Text          | e.g. "Green Bowl"                            |
+| `hero_display_text` | Text          | Big visual text in hero (not H1)             |
+| `h1`                | Text          | SEO H1 e.g. "Oceanfront camp in Europe's World Surfing Reserve" |
+| `country`           | Story         | Reference to parent country page             |
+| `location`          | Text          | e.g. "Bukit Peninsula"                       |
+| `tagline`           | Text          | Card tagline                                 |
+| `hero_images`       | Multi-asset   | Rotating hero backgrounds                    |
+| `booking_url`       | URL           | External booking engine link                 |
 | `inclusions`       | Multi-Stories | References to `data/inclusions/*`            |
 | `amenities`        | Multi-Stories | References to `data/amenities/*`             |
 | `rating`           | Number        | e.g. 4.8                                     |

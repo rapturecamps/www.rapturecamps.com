@@ -303,9 +303,8 @@ const amenityLabels: Record<string, string> = {
   <!-- Intro + Camp Cards -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{data.campsSectionTitle}</h1>
       <p class="text-base sm:text-lg text-white/50 max-w-3xl leading-relaxed mb-16">{data.intro}</p>
-
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">{data.campsSectionTitle}</h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {countryCamps.map((camp) => (
