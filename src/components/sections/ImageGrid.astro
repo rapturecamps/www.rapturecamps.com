@@ -13,19 +13,23 @@ const { images, variant = "collage" } = Astro.props;
 {variant === "collage" && images.length >= 4 && (
   <section class="py-4 sm:py-8 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <div class="grid grid-cols-2 gap-3 sm:gap-4">
-        <div class="col-span-2 aspect-[21/9] overflow-hidden rounded-xl">
+      <div class="grid grid-cols-1 gap-3 sm:gap-4">
+        <!-- Top: full-width image -->
+        <div class="aspect-[21/9] overflow-hidden rounded-xl">
           <img src={images[0].src} alt={images[0].alt} class="h-full w-full object-cover" loading="lazy" />
         </div>
-        <div class="aspect-[4/3] overflow-hidden rounded-xl">
-          <img src={images[1].src} alt={images[1].alt} class="h-full w-full object-cover" loading="lazy" />
-        </div>
-        <div class="grid grid-rows-2 gap-3 sm:gap-4">
-          <div class="overflow-hidden rounded-xl">
-            <img src={images[2].src} alt={images[2].alt} class="h-full w-full object-cover" loading="lazy" />
+        <!-- Bottom: tall left + two stacked right, equal height -->
+        <div class="grid grid-cols-2 gap-3 sm:gap-4" style="height: clamp(200px, 28vw, 360px);">
+          <div class="overflow-hidden rounded-xl h-full">
+            <img src={images[1].src} alt={images[1].alt} class="h-full w-full object-cover" loading="lazy" />
           </div>
-          <div class="overflow-hidden rounded-xl">
-            <img src={images[3].src} alt={images[3].alt} class="h-full w-full object-cover" loading="lazy" />
+          <div class="grid grid-rows-2 gap-3 sm:gap-4 h-full">
+            <div class="overflow-hidden rounded-xl">
+              <img src={images[2].src} alt={images[2].alt} class="h-full w-full object-cover" loading="lazy" />
+            </div>
+            <div class="overflow-hidden rounded-xl">
+              <img src={images[3].src} alt={images[3].alt} class="h-full w-full object-cover" loading="lazy" />
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,333 @@
+---
+import { destinations } from "@/lib/data";
+
+// Video config — supports "local", "youtube", "vimeo", or "wistia"
+const video = {
+  type: "local" as "local" | "youtube" | "vimeo" | "wistia",
+  src: "/videos/mobile-menu-background.mp4",
+  // Examples:
+  // type: "youtube", src: "dQw4w9WgXcQ"
+  // type: "vimeo", src: "76979871"
+  // type: "wistia", src: "abc123def4"
+};
+
+const posts = [
+  { slug: "bioluminescence-in-costa-rica", title: "Bioluminescence In Costa Rica", image: "https://www.rapturecamps.com/wp-content/uploads/2025/05/Bioluminescence-In-Costa-rica.jpg", category: "Costa Rica" },
+  { slug: "dominical-costa-rica", title: "Dominical: Surfing, Yoga & Laid-Back Vibes", image: "https://www.rapturecamps.com/wp-content/uploads/2025/05/Dominical-costa-rica-surfer.jpg", category: "Inspiration" },
+  { slug: "one-week-in-costa-rica-travel-itinerary", title: "One Week In Costa Rica Itinerary", image: "https://www.rapturecamps.com/wp-content/uploads/2025/05/sea-turtle-heading-to-beach.jpg", category: "Costa Rica" },
+];
+
+const updates = [
+  { text: "Summer 2026 bookings are open! Early bird spots going fast for Bali & Portugal.", time: "2h ago", pinned: true },
+  { text: "New blog post: Bioluminescence in Costa Rica — the dazzling night surf phenomenon.", time: "1d ago" },
+  { text: "Ericeira just got rated #1 surf destination in Europe again. We're not surprised.", time: "3d ago" },
+  { text: "Yoga retreat week added to Green Bowl camp — April 12–19. Limited to 12 people.", time: "5d ago" },
+  { text: "Our Morocco camp in Banana Village is fully renovated. New rooftop lounge is fire.", time: "1w ago" },
+];
+
+const socials = [
+  { name: "Instagram", href: "https://www.instagram.com/rapturecamps/", icon: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z M17.5 6.5h.01", bg: "bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400" },
+  { name: "TikTok", href: "https://www.tiktok.com/@rapturecamps", icon: "M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5", bg: "bg-black border border-white/20" },
+  { name: "YouTube", href: "https://www.youtube.com/user/Rapturecamps/", icon: "m22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z M9.75 15.02l5.75-3.27-5.75-3.27v6.54z", bg: "bg-red-600" },
+  { name: "Facebook", href: "https://www.facebook.com/Rapturecamps/", icon: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z", bg: "bg-[#1877F2]" },
+];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rapture Surfcamps | Links</title>
+  <meta name="description" content="All links from Rapture Surfcamps — destinations, blog, booking, and more." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0a0e17;
+      color: #fff;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .linktree-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 0 16px 48px;
+    }
+
+    /* Profile header */
+    .profile { text-align: center; padding: 32px 0 24px; }
+    .profile img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); }
+    .profile h1 { font-size: 18px; font-weight: 700; margin-top: 12px; }
+    .profile p { font-size: 13px; color: rgba(255,255,255,0.45); margin-top: 4px; line-height: 1.5; }
+
+    /* Section labels */
+    .section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.25);
+      margin: 28px 0 12px;
+    }
+
+    /* Video */
+    .video-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      aspect-ratio: 9/16;
+      max-height: 420px;
+      width: 100%;
+      background: #111827;
+    }
+    .video-wrap video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* CTA button */
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      background: #005AFF;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 12px;
+    }
+    .cta-btn:hover { background: #0047cc; }
+    .cta-btn:active { transform: scale(0.98); }
+
+    /* Destination cards */
+    .dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .dest-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      text-decoration: none;
+      display: block;
+    }
+    .dest-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+    .dest-card:hover img { transform: scale(1.1); }
+    .dest-card .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 40%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 14px;
+    }
+    .dest-card .dest-loc {
+      font-size: 9px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2px;
+    }
+    .dest-card .dest-name { font-size: 15px; font-weight: 600; color: #fff; }
+    .dest-card .dest-country { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+    /* News ticker */
+    .ticker { display: flex; flex-direction: column; gap: 8px; }
+    .ticker-item {
+      display: flex;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .ticker-item.pinned { border-color: rgba(0,90,255,0.25); background: rgba(0,90,255,0.06); }
+    .ticker-dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      margin-top: 5px;
+    }
+    .ticker-item.pinned .ticker-dot { background: #005AFF; }
+    .ticker-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+    .ticker-time { font-size: 10px; color: rgba(255,255,255,0.2); margin-top: 3px; }
+
+    /* Blog cards */
+    .blog-list { display: flex; flex-direction: column; gap: 8px; }
+    .blog-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .blog-card:hover { background: rgba(255,255,255,0.06); }
+    .blog-card img {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .blog-card .blog-cat { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.05em; }
+    .blog-card .blog-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 2px; line-height: 1.3; }
+
+    /* Social row */
+    .social-row { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      transition: transform 0.15s, opacity 0.2s;
+    }
+    .social-btn:hover { opacity: 0.85; }
+    .social-btn:active { transform: scale(0.95); }
+    .social-btn svg { width: 18px; height: 18px; }
+
+    /* Footer */
+    .bio-footer {
+      text-align: center;
+      padding: 32px 0 16px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.15);
+    }
+    .bio-footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
+    .bio-footer a:hover { color: rgba(255,255,255,0.5); }
+  </style>
+</head>
+<body>
+  <div class="linktree-wrap">
+    <!-- Profile -->
+    <div class="profile">
+      <img src="https://www.rapturecamps.com/wp-content/uploads/2019/10/Rapturecamps_logo.png" alt="Rapture Surfcamps" />
+      <h1>Rapture Surfcamps</h1>
+      <p>Surf the World since 2003<br/>Bali · Costa Rica · Portugal · Morocco · Nicaragua</p>
+    </div>
+
+    <!-- Video -->
+    <div class="video-wrap">
+      {video.type === "local" && (
+        <video src={video.src} autoplay muted loop playsinline></video>
+      )}
+      {video.type === "youtube" && (
+        <iframe
+          src={`https://www.youtube.com/embed/${video.src}?autoplay=1&mute=1&loop=1&playlist=${video.src}&controls=0&modestbranding=1&rel=0&showinfo=0`}
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          style="width:100%;height:100%;border:none;"
+        ></iframe>
+      )}
+      {video.type === "vimeo" && (
+        <iframe
+          src={`https://player.vimeo.com/video/${video.src}?autoplay=1&muted=1&loop=1&background=1`}
+          allow="autoplay"
+          allowfullscreen
+          style="width:100%;height:100%;border:none;"
+        ></iframe>
+      )}
+      {video.type === "wistia" && (
+        <iframe
+          src={`https://fast.wistia.net/embed/iframe/${video.src}?autoPlay=true&silentAutoPlay=true&controlsVisibleOnLoad=false&playbar=false&smallPlayButton=false&volumeControl=false&fullscreenButton=false`}
+          allow="autoplay"
+          allowfullscreen
+          style="width:100%;height:100%;border:none;"
+        ></iframe>
+      )}
+    </div>
+
+    <!-- Book CTA -->
+    <a href="/" class="cta-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book Your Surf Trip
+    </a>
+
+    <!-- News Ticker -->
+    <p class="section-label">Latest Updates</p>
+    <div class="ticker">
+      {updates.map((u) => (
+        <div class:list={["ticker-item", u.pinned && "pinned"]}>
+          <div class="ticker-dot"></div>
+          <div>
+            <div class="ticker-text">{u.text}</div>
+            <div class="ticker-time">{u.time}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Destinations -->
+    <p class="section-label">Our Destinations</p>
+    <div class="dest-grid">
+      {destinations.slice(0, 8).map((d) => (
+        <a href={d.slug} class="dest-card">
+          <img src={d.image} alt={`${d.name} surf camp in ${d.country}`} loading="lazy" />
+          <div class="overlay">
+            <span class="dest-loc">{d.location}</span>
+            <span class="dest-name">{d.name}</span>
+            <span class="dest-country">{d.country}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- Latest Blog Posts -->
+    <p class="section-label">From the Blog</p>
+    <div class="blog-list">
+      {posts.map((p) => (
+        <a href={`/blog/${p.slug}`} class="blog-card">
+          <img src={p.image} alt={p.title} loading="lazy" />
+          <div>
+            <div class="blog-cat">{p.category}</div>
+            <div class="blog-title">{p.title}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- More Links -->
+    <p class="section-label">More</p>
+    <a href="/contact" class="cta-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.12);">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6"/></svg>
+      Contact Us
+    </a>
+    <a href="/jobs" class="cta-btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.12); margin-top: 8px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+      We're Hiring
+    </a>
+
+    <!-- Social -->
+    <div class="social-row">
+      {socials.map((s) => (
+        <a href={s.href} target="_blank" rel="noopener noreferrer" class:list={["social-btn", s.bg]} aria-label={s.name}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d={s.icon} /></svg>
+        </a>
+      ))}
+    </div>
+
+    <!-- Footer -->
+    <div class="bio-footer">
+      <a href="https://www.rapturecamps.com">rapturecamps.com</a> · Est. 2003
+    </div>
+  </div>
+</body>
+</html>

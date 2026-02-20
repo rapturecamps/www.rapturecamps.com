@@ -1,0 +1,87 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+---
+
+<BaseLayout
+  title="Jobs | Work With Us - Rapture Surfcamps"
+  description="Do you want to work with us? Check surf jobs available at our camps. Browse through our career opportunities and join the Rapture family!"
+>
+  <Hero
+    title="Work With Us"
+    subtitle="Join the Rapture family and turn the ocean into your office"
+    backgroundImage="https://www.rapturecamps.com/wp-content/uploads/2020/04/Work-with-us.jpg"
+  />
+
+  <!-- Intro -->
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20 max-w-4xl mx-auto text-center">
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">Join the Rapture Family</h1>
+      <p class="text-base sm:text-lg text-white/50 leading-relaxed">
+        We're always looking for passionate, driven people to join our team across Bali, Costa Rica, Portugal, Morocco, and Nicaragua. If you love surf, travel, and making people's holidays unforgettable — we'd love to hear from you.
+      </p>
+    </div>
+  </section>
+
+  <!-- Airtable Embed -->
+  <section class="pb-16 sm:pb-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20 max-w-5xl mx-auto">
+      <div class="rounded-2xl overflow-hidden border border-white/5">
+        <iframe
+          class="airtable-embed airtable-dynamic-height"
+          src="https://airtable.com/embed/shryDGaBJfwfMyYSU?backgroundColor=cyan"
+          width="100%"
+          height="2106"
+          style="background: transparent; border: none;"
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="py-16 sm:py-20 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20 max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-4">Got Questions?</h2>
+      <p class="text-base text-white/40 mb-8">Reach out to us directly — we're happy to tell you more about life at Rapture.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="https://wa.me/+447700177360"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-sm font-semibold text-white hover:bg-[#20bd5a] transition-colors"
+        >
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <a
+          href="https://t.me/rapturecampsbot"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-[#229ED9] px-6 py-3 text-sm font-semibold text-white hover:bg-[#1b8abf] transition-colors"
+        >
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m22 2-7 20-4-9-9-4Z M22 2 11 13"/>
+          </svg>
+          Telegram
+        </a>
+        <a
+          href="mailto:info@rapturecamps.com"
+          class="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-white hover:bg-white/10 transition-colors"
+        >
+          <svg class="h-4.5 w-4.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6"/>
+          </svg>
+          Email Us
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>
+
+<script is:inline src="https://static.airtable.com/js/embed/embed_snippet_v1.js"></script>

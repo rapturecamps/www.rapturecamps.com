@@ -17,7 +17,7 @@ const currentYear = new Date().getFullYear();
     style="background-image: url(/images/footer-bg.png)"
   />
   <div class="absolute inset-0 bg-dark-lighter/90" />
-  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="relative z-10 px-6 sm:px-12 lg:px-20">
     <div class="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
       <div>
         <a href="/" class="inline-flex items-center gap-3">
@@ -87,6 +87,51 @@ const currentYear = new Date().getFullYear();
             Book Now
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="border-t border-white/5 py-10">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <div>
+          <h3 class="text-sm font-semibold text-white mb-1">Join Our Newsletter</h3>
+          <p class="text-xs text-white/30">Surf tips, travel inspiration, and exclusive deals. No spam, ever.</p>
+        </div>
+        <form
+          method="POST"
+          id="zcampaignOptinForm"
+          action="https://ecms-zcmp.maillist-manage.eu/weboptin.zc"
+          target="_zcSignup"
+          class="flex w-full sm:w-auto gap-2"
+        >
+          <input
+            type="email"
+            name="CONTACT_EMAIL"
+            id="EMBED_FORM_EMAIL_LABEL"
+            required
+            placeholder="your@email.com"
+            class="flex-1 sm:w-64 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-ocean focus:ring-1 focus:ring-ocean/30 transition-colors"
+          />
+          <button
+            type="submit"
+            id="zcWebOptin"
+            class="flex-shrink-0 rounded-full bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors"
+          >
+            Join
+          </button>
+          <input type="hidden" name="submitType" value="optinCustomView" />
+          <input type="hidden" name="emailReportId" value="" />
+          <input type="hidden" name="formType" value="QuickForm" />
+          <input type="hidden" name="zx" value="14ac446cfb" />
+          <input type="hidden" name="zcvers" value="2.0" />
+          <input type="hidden" name="oldListIds" value="" />
+          <input type="hidden" name="mode" value="OptinCreateView" />
+          <input type="hidden" name="zcld" value="117eb0f345eba43a" />
+          <input type="hidden" name="zctd" value="117eb0f345eabdc1" />
+          <input type="hidden" name="zc_trackCode" value="ZCFORMVIEW" />
+          <input type="hidden" name="zc_formIx" value="3z2b2128153aed60f6885522e8aac1be9c22ac6a3107ace76c937c69ca781bb5a3" />
+          <input type="hidden" name="viewFrom" value="URL_ACTION" />
+        </form>
       </div>
     </div>
 
