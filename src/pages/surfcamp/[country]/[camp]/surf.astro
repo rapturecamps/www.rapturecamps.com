@@ -98,10 +98,10 @@ const levels = [
 ];
 
 const equipment = [
-  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
-  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature", icon: "M20.38 3.46 16 2 12 5.5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" },
-  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit", icon: "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z" },
-  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral", icon: "M4 16v-2.38C4 11.5 2.97 9.5 3 7c.03-2.72 1.49-5.03 3.97-5.97 1.02-.39 2.08-.02 2.84.66L12 4l2.19-2.31c.76-.68 1.82-1.05 2.84-.66C19.51 1.97 20.97 4.28 21 7c.03 2.5-1 4.5-1 6.62V16" },
+  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level", icon: "M17.5 2.5c1 1 1.5 3.5.5 7s-3.5 7-6.5 9.5c-1 .8-2 1.2-2.5 1.5-.5-.3-1.5-.7-2.5-1.5-3-2.5-5.5-6-6.5-9.5s-.5-6 .5-7 3-.5 5.5.5 4 2.5 5.5 2.5 3.5-1.5 5.5-2.5 4.5-1.5 5.5-.5z" },
+  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature", icon: "M16 2l-4 3-4-3-3.46 1.46a2 2 0 0 0-.54 1.37V10l-1 1v5h2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4h2v-5l-1-1V4.83a2 2 0 0 0-.54-1.37z" },
+  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit", icon: "M20.38 3.46L16 2l-4 3.5L8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" },
+  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral", icon: "M5 22h4a2 2 0 0 0 2-2v-3a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v3a2 2 0 0 0 2 2h4v-5a7 7 0 0 0-7-7h0a7 7 0 0 0-7 7z" },
 ];
 ---
 
@@ -210,14 +210,22 @@ const equipment = [
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Your Surf Level</h2>
       <p class="text-base text-white/40 mb-10 max-w-2xl">Whether it's your first wave or your thousandth, we have a programme tailored for you.</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {levels.map((item) => (
-          <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-1">
-              <span class:list={["inline-block h-2 w-2 rounded-full", item.color === "text-green-400" ? "bg-green-400" : item.color === "text-ocean-light" ? "bg-ocean-light" : "bg-amber-400"]} />
-              <h3 class="text-lg font-semibold text-white">{item.level}</h3>
+        {levels.map((item, i) => (
+          <div class="surf-level-card rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col" data-level={i}>
+            <!-- Header (always visible) -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class:list={["inline-block h-2 w-2 rounded-full", item.color === "text-green-400" ? "bg-green-400" : item.color === "text-ocean-light" ? "bg-ocean-light" : "bg-amber-400"]} />
+                <h3 class="text-lg font-semibold text-white">{item.level}</h3>
+              </div>
+              <button class="surf-level-toggle flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/40 hover:bg-white/10 hover:text-white transition-colors" aria-label={`Expand ${item.level} details`}>
+                <svg class="surf-level-chevron h-4 w-4 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
             </div>
-            <p class:list={["text-xs mb-5", item.color]}>{item.subtitle}</p>
-            <ul class="space-y-2.5 mb-6 flex-1">
+            <p class:list={["text-xs mt-1", item.color]}>{item.subtitle}</p>
+
+            <!-- Always visible content -->
+            <ul class="space-y-2.5 mt-5 mb-5 flex-1">
               {item.features.map((f) => (
                 <li class="flex items-start gap-2.5 text-sm text-white/50">
                   <svg class="h-4 w-4 mt-0.5 text-white/20 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
@@ -228,9 +236,49 @@ const equipment = [
             <div class:list={["rounded-lg p-3 text-xs leading-relaxed", item.bgColor, item.color]}>
               {item.outcome}
             </div>
+
+            <!-- Expandable extra content -->
+            <div class="surf-level-body overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
+              <div class="pt-5 border-t border-white/5 mt-5">
+                <p class="text-sm text-white/50 leading-relaxed">{item.extra || "More details coming soon — including typical session breakdowns, recommended board types, and progression milestones."}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
+
+      <script is:inline>
+      (function () {
+        document.querySelectorAll(".surf-level-card").forEach(function (card) {
+          var toggle = card.querySelector(".surf-level-toggle");
+          var body = card.querySelector(".surf-level-body");
+          var chevron = card.querySelector(".surf-level-chevron");
+          if (!toggle || !body) return;
+
+          var open = false;
+
+          function expand() {
+            body.style.maxHeight = body.scrollHeight + "px";
+            body.style.opacity = "1";
+            if (chevron) chevron.style.transform = "rotate(180deg)";
+            card.style.borderColor = "rgba(255,255,255,0.1)";
+            open = true;
+          }
+
+          function collapse() {
+            body.style.maxHeight = "0";
+            body.style.opacity = "0";
+            if (chevron) chevron.style.transform = "rotate(0deg)";
+            card.style.borderColor = "";
+            open = false;
+          }
+
+          toggle.addEventListener("click", function () {
+            if (open) collapse(); else expand();
+          });
+        });
+      })();
+      </script>
     </div>
   </section>
 
@@ -270,7 +318,7 @@ const equipment = [
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {equipment.map((e) => (
           <div class="p-5 rounded-xl bg-dark-lighter border border-white/5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-white/40 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-4">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d={e.icon} />
               </svg>
