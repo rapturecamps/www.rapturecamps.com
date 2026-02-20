@@ -75,6 +75,8 @@ export interface Destination {
   amenities?: string[];
   bookingUrl?: string;
   heroImages?: string[];
+  latitude?: number;
+  longitude?: number;
 }
 
 export interface StatItem {
