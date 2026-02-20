@@ -6,6 +6,8 @@ import ImageGrid from "@/components/sections/ImageGrid.astro";
 import Reviews from "@/components/sections/Reviews.astro";
 import VideoTestimonials from "@/components/sections/VideoTestimonials.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
+import VideoBlock from "@/components/sections/VideoBlock.astro";
+import ImageCarousel from "@/components/sections/ImageCarousel.astro";
 import { destinations } from "@/lib/data";
 
 const inclusionIcons: Record<string, string> = {
@@ -266,6 +268,33 @@ const videoTestimonials = [
       </div>
     </div>
   </section>
+
+  <!-- Video Block -->
+  <VideoBlock
+    type="youtube"
+    src="gFiIesECPrA"
+    title="Life at the Camp"
+    description={`A glimpse into daily life at Rapture Surf Camp ${campTitle}.`}
+    aspect="16:9"
+    controls
+    background="dark-lighter"
+  />
+
+  <!-- Image Carousel -->
+  <ImageCarousel
+    title={`${campTitle} Gallery`}
+    description="Swipe through to see the camp, the surf, and the vibes."
+    images={[
+      { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=675&fit=crop", alt: `Surf session near ${campTitle}`, caption: "Morning surf session with the crew" },
+      { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=1200&h=675&fit=crop", alt: `Relaxing at ${campTitle}`, caption: "Chill vibes at the camp lounge" },
+      { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&h=675&fit=crop", alt: `Aerial view near ${campTitle}` },
+      { src: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1200&h=675&fit=crop", alt: `Sunset surf at ${campTitle}`, caption: "Golden hour in the lineup" },
+      { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=1200&h=675&fit=crop", alt: `Beach near ${campTitle}`, caption: "The beach is just steps away" },
+      { src: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1200&h=675&fit=crop", alt: `Waves near ${campTitle}` },
+    ]}
+    aspect="16:9"
+    background="dark"
+  />
 
   <!-- Image Break -->
   <ImageBreak

@@ -1,0 +1,216 @@
+---
+export interface CarouselImage {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+export interface Props {
+  /** Array of images to display */
+  images: CarouselImage[];
+  /** Optional heading above the carousel */
+  title?: string;
+  /** Optional description below the heading */
+  description?: string;
+  /** Aspect ratio for images */
+  aspect?: "16:9" | "4:3" | "3:2" | "1:1" | "21:9";
+  /** Background variant */
+  background?: "dark" | "dark-lighter";
+  /** Full-bleed (edge-to-edge images, no horizontal padding). Defaults to false */
+  fullBleed?: boolean;
+  /** Show dot indicators. Defaults to true */
+  dots?: boolean;
+  /** Show image counter (e.g. "3 / 12"). Defaults to true */
+  counter?: boolean;
+  /** Rounded corners on images. Defaults to true (ignored when fullBleed) */
+  rounded?: boolean;
+}
+
+const {
+  images,
+  title,
+  description,
+  aspect = "16:9",
+  background = "dark",
+  fullBleed = false,
+  dots = true,
+  counter = true,
+  rounded = true,
+} = Astro.props;
+
+const aspectClass: Record<string, string> = {
+  "16:9": "aspect-video",
+  "4:3": "aspect-[4/3]",
+  "3:2": "aspect-[3/2]",
+  "1:1": "aspect-square",
+  "21:9": "aspect-[21/9]",
+};
+
+const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const ratio = aspectClass[aspect] || "aspect-video";
+const uid = "ic-" + Math.random().toString(36).slice(2, 8);
+---
+
+{images.length > 0 && (
+  <section class:list={["py-12 sm:py-16", bgClass]}>
+    <div class:list={[fullBleed ? "" : "px-6 sm:px-12 lg:px-20"]}>
+      {(title || description) && (
+        <div class:list={["mb-6", fullBleed && "px-6 sm:px-12 lg:px-20"]}>
+          {title && <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-white mb-2">{title}</h2>}
+          {description && <p class="text-sm sm:text-base text-white/40 max-w-2xl">{description}</p>}
+        </div>
+      )}
+
+      <div class="ic-wrap relative group" data-uid={uid}>
+        <!-- Slider track -->
+        <div class="ic-slider flex overflow-x-auto scroll-smooth snap-x snap-mandatory ic-no-scrollbar" style="-webkit-overflow-scrolling: touch;">
+          {images.map((img, i) => (
+            <div class:list={["ic-slide flex-shrink-0 w-full snap-center", !fullBleed && "px-0"]} data-index={i}>
+              <div class:list={["relative overflow-hidden", ratio, rounded && !fullBleed ? "rounded-xl" : ""]}>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  class="absolute inset-0 h-full w-full object-cover"
+                  loading={i === 0 ? "eager" : "lazy"}
+                  decoding={i === 0 ? "sync" : "async"}
+                />
+                {img.caption && (
+                  <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent px-5 pb-4 pt-10">
+                    <p class="text-sm text-white/80">{img.caption}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Arrow buttons (hidden when only 1 image) */}
+        {images.length > 1 && (
+          <>
+            <button
+              class="ic-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+              aria-label="Previous image"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button
+              class="ic-next absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+              aria-label="Next image"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </>
+        )}
+
+        {/* Counter badge */}
+        {counter && images.length > 1 && (
+          <div class="absolute top-3 right-3 z-20 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-1">
+            <span class="ic-counter text-[11px] text-white/80 font-medium tabular-nums">1 / {images.length}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Dot indicators */}
+      {dots && images.length > 1 && (
+        <div class="ic-dots flex items-center justify-center gap-1.5 mt-4" data-uid={uid}>
+          {images.map((_, i) => (
+            <button
+              class:list={["ic-dot h-1.5 rounded-full transition-all duration-300", i === 0 ? "w-5 bg-white/70" : "w-1.5 bg-white/20"]}
+              data-index={i}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}
+
+<style>
+  .ic-no-scrollbar::-webkit-scrollbar { display: none; }
+  .ic-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @media (hover: none) {
+    .ic-prev, .ic-next { opacity: 1; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll(".ic-wrap").forEach(function (wrap) {
+    var slider = wrap.querySelector(".ic-slider");
+    if (!slider) return;
+
+    var slides = wrap.querySelectorAll(".ic-slide");
+    if (slides.length < 2) return;
+
+    var uid = wrap.getAttribute("data-uid");
+    var dotsContainer = document.querySelector('.ic-dots[data-uid="' + uid + '"]');
+    var allDots = dotsContainer ? dotsContainer.querySelectorAll(".ic-dot") : [];
+    var counterEl = wrap.querySelector(".ic-counter");
+    var total = slides.length;
+    var current = 0;
+
+    function goTo(idx) {
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      slides[idx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    }
+
+    function updateIndicators(idx) {
+      current = idx;
+      if (counterEl) counterEl.textContent = (idx + 1) + " / " + total;
+      allDots.forEach(function (dot, i) {
+        if (i === idx) {
+          dot.classList.remove("w-1.5", "bg-white/20");
+          dot.classList.add("w-5", "bg-white/70");
+        } else {
+          dot.classList.remove("w-5", "bg-white/70");
+          dot.classList.add("w-1.5", "bg-white/20");
+        }
+      });
+    }
+
+    var scrollTimer;
+    slider.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var sliderRect = slider.getBoundingClientRect();
+        var center = sliderRect.left + sliderRect.width / 2;
+        var closest = 0;
+        var closestDist = Infinity;
+        slides.forEach(function (slide, i) {
+          var rect = slide.getBoundingClientRect();
+          var dist = Math.abs(rect.left + rect.width / 2 - center);
+          if (dist < closestDist) { closestDist = dist; closest = i; }
+        });
+        if (closest !== current) updateIndicators(closest);
+      }, 60);
+    });
+
+    wrap.querySelector(".ic-prev")?.addEventListener("click", function () { goTo(current - 1); });
+    wrap.querySelector(".ic-next")?.addEventListener("click", function () { goTo(current + 1); });
+
+    allDots.forEach(function (dot) {
+      dot.addEventListener("click", function () {
+        var idx = parseInt(dot.getAttribute("data-index"), 10);
+        goTo(idx);
+      });
+    });
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    slider.addEventListener("touchstart", function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    slider.addEventListener("touchend", function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+  });
+})();
+</script>

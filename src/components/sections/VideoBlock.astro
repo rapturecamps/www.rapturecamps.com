@@ -1,0 +1,149 @@
+---
+export interface Props {
+  /** "file" for direct MP4/WebM URLs, or "youtube" | "vimeo" | "wistia" */
+  type: "file" | "youtube" | "vimeo" | "wistia";
+  /** File URL, YouTube video ID, Vimeo video ID, or Wistia video ID */
+  src: string;
+  /** Optional heading above the video */
+  title?: string;
+  /** Optional description below the heading */
+  description?: string;
+  /** Aspect ratio class — defaults to 16:9 */
+  aspect?: "16:9" | "4:3" | "1:1" | "21:9";
+  /** Autoplay (muted). Defaults to false */
+  autoplay?: boolean;
+  /** Show player controls. Defaults to true */
+  controls?: boolean;
+  /** Loop the video. Defaults to false */
+  loop?: boolean;
+  /** Poster/thumbnail image URL (file type only) */
+  poster?: string;
+  /** Background variant */
+  background?: "dark" | "dark-lighter";
+  /** Full-bleed (no horizontal padding). Defaults to false */
+  fullBleed?: boolean;
+  /** Optional caption below the video */
+  caption?: string;
+}
+
+const {
+  type,
+  src,
+  title,
+  description,
+  aspect = "16:9",
+  autoplay = false,
+  controls = true,
+  loop = false,
+  poster,
+  background = "dark",
+  fullBleed = false,
+  caption,
+} = Astro.props;
+
+const aspectClass: Record<string, string> = {
+  "16:9": "aspect-video",
+  "4:3": "aspect-[4/3]",
+  "1:1": "aspect-square",
+  "21:9": "aspect-[21/9]",
+};
+
+const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const ratio = aspectClass[aspect] || "aspect-video";
+
+function youtubeEmbedUrl(id: string) {
+  const params = new URLSearchParams({
+    rel: "0",
+    modestbranding: "1",
+    showinfo: "0",
+  });
+  if (autoplay) { params.set("autoplay", "1"); params.set("mute", "1"); }
+  if (loop) { params.set("loop", "1"); params.set("playlist", id); }
+  if (!controls) params.set("controls", "0");
+  return `https://www.youtube.com/embed/${id}?${params}`;
+}
+
+function vimeoEmbedUrl(id: string) {
+  const params = new URLSearchParams();
+  if (autoplay) { params.set("autoplay", "1"); params.set("muted", "1"); }
+  if (loop) params.set("loop", "1");
+  if (!controls) params.set("background", "1");
+  return `https://player.vimeo.com/video/${id}?${params}`;
+}
+
+function wistiaEmbedUrl(id: string) {
+  const params = new URLSearchParams({
+    controlsVisibleOnLoad: controls ? "true" : "false",
+    playbar: controls ? "true" : "false",
+  });
+  if (autoplay) { params.set("autoPlay", "true"); params.set("silentAutoPlay", "true"); }
+  if (loop) params.set("endVideoBehavior", "loop");
+  if (!controls) {
+    params.set("smallPlayButton", "false");
+    params.set("volumeControl", "false");
+    params.set("fullscreenButton", "false");
+  }
+  return `https://fast.wistia.net/embed/iframe/${id}?${params}`;
+}
+---
+
+<section class:list={["py-12 sm:py-16", bgClass]}>
+  <div class:list={[fullBleed ? "" : "px-6 sm:px-12 lg:px-20"]}>
+    {(title || description) && (
+      <div class:list={["mb-6", fullBleed && "px-6 sm:px-12 lg:px-20"]}>
+        {title && <h2 class="text-xl sm:text-2xl lg:text-3xl font-semibold text-white mb-2">{title}</h2>}
+        {description && <p class="text-sm sm:text-base text-white/40 max-w-2xl">{description}</p>}
+      </div>
+    )}
+
+    <div class:list={["relative overflow-hidden rounded-xl", ratio, fullBleed && "rounded-none"]}>
+      {type === "file" && (
+        <video
+          src={src}
+          class="absolute inset-0 h-full w-full object-cover"
+          autoplay={autoplay}
+          muted={autoplay}
+          loop={loop}
+          controls={controls}
+          playsinline
+          poster={poster}
+          preload={poster ? "none" : "metadata"}
+        />
+      )}
+
+      {type === "youtube" && (
+        <iframe
+          src={youtubeEmbedUrl(src)}
+          class="absolute inset-0 h-full w-full"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        />
+      )}
+
+      {type === "vimeo" && (
+        <iframe
+          src={vimeoEmbedUrl(src)}
+          class="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        />
+      )}
+
+      {type === "wistia" && (
+        <iframe
+          src={wistiaEmbedUrl(src)}
+          class="absolute inset-0 h-full w-full"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          loading="lazy"
+        />
+      )}
+    </div>
+
+    {caption && (
+      <p class:list={["text-xs text-white/25 mt-3", fullBleed && "px-6 sm:px-12 lg:px-20"]}>{caption}</p>
+    )}
+  </div>
+</section>
