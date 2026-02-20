@@ -1,16 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import FAQSection from "@/components/sections/FAQSection.astro";
 import { destinations } from "@/lib/data";
-
-const faqCategories = [
-  "Booking & Prices",
-  "Rooms",
-  "Surfing & Lessons",
-  "How To Reach Us",
-  "Sightseeing",
-  "Food & Beverages",
-  "Other",
-];
 
 export function getStaticPaths() {
   const locations = destinations.map((d) => d.slug.split("/").pop()!);
@@ -18,44 +9,83 @@ export function getStaticPaths() {
 }
 
 const { location } = Astro.params;
-const title = location!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const campData = destinations.find((d) => d.slug.split("/").pop() === location);
+const campName = campData?.name || location!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryName = campData?.country || "";
+const campImage = campData?.image || "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=600&fit=crop";
+const campSlug = campData?.slug || `/surfcamp`;
+
+const faqData: Record<string, { question: string; answer: string }[]> = {
+  "Booking & Prices": [
+    { question: "How do I book a surf camp?", answer: "You can book directly through our website by selecting your preferred camp and dates. A deposit is required to secure your spot, with the remaining balance due 30 days before arrival." },
+    { question: "What is the cancellation policy?", answer: "Free cancellation up to 30 days before check-in. Between 30 and 14 days, a 50% refund applies. Within 14 days of check-in, bookings are non-refundable." },
+    { question: "Are there group discounts?", answer: "Yes! Groups of 4 or more receive a 10% discount. Contact us directly for custom group packages and team retreats." },
+  ],
+  "Surfing & Lessons": [
+    { question: "Do I need surfing experience?", answer: "Not at all. Our camps welcome everyone from complete beginners to advanced surfers. We group lessons by skill level so you always progress at your own pace." },
+    { question: "What equipment is provided?", answer: "All surf equipment is included — boards, wetsuits (where needed), rash guards, and reef booties. We have a wide range of board sizes for all levels." },
+    { question: "How many surf lessons per day?", answer: "Typically two sessions per day — a morning session (2-3 hours) and an afternoon session (1.5-2 hours). You're free to join one or both." },
+  ],
+  "Rooms": [
+    { question: "What room types are available?", answer: "We offer shared rooms (4-6 beds), twin/double rooms, private rooms, and glamping tents depending on the location. All include fresh linen, towels, and daily cleaning." },
+    { question: "Is there air conditioning?", answer: "Yes, all indoor rooms have air conditioning. Glamping tents use natural ventilation and fans." },
+  ],
+  "Food & Beverages": [
+    { question: "What meals are included?", answer: "Breakfast and dinner (Mon-Fri) are included in all packages. Breakfast is a full spread with fresh fruit, eggs, smoothie bowls, and unlimited coffee. Dinners are three-course meals with a rotating menu." },
+    { question: "Can you accommodate dietary requirements?", answer: "Absolutely. We cater to vegetarian, vegan, gluten-free, and most allergy requirements. Just let us know when booking and our kitchen team will take care of the rest." },
+  ],
+  "How To Reach Us": [
+    { question: "Do you offer airport transfers?", answer: "Yes, we can arrange airport transfers for an additional fee. Details and pricing vary by location — check your camp's page or contact us after booking." },
+    { question: "How do I get to the surf camp?", answer: "Each camp page has detailed directions. Most locations are accessible by taxi, shuttle, or public transport from the nearest international airport." },
+  ],
+};
 ---
 
 <BaseLayout
-  title={`FAQ - ${title} | Rapture Surfcamps`}
-  description={`Frequently asked questions about our surf camp in ${title}.`}
+  title={`FAQ — ${campName} | Rapture Surfcamps`}
+  description={`Frequently asked questions about Rapture Surf Camp ${campName} in ${countryName}. Booking, surf lessons, rooms, food, and more.`}
 >
-  <div class="pt-32 pb-12 bg-dark">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <a href="/surfcamp" class="inline-flex items-center gap-2 text-xs text-white/30 hover:text-white/60 mb-6 transition-colors">
+  <!-- Hero banner with camp image -->
+  <div class="relative h-[280px] sm:h-[320px] overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${campImage.replace('w=800&h=1000', 'w=1920&h=600')})`}
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/40 to-dark" />
+    <div class="relative z-10 flex flex-col justify-end h-full px-6 sm:px-12 lg:px-20 pb-10">
+      <a href="/faq" class="inline-flex items-center gap-2 text-xs text-white/40 hover:text-white/70 mb-4 transition-colors w-fit">
         <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
-        Back to Destinations
+        All FAQ
       </a>
-      <h1 class="font-display text-4xl md:text-5xl font-bold text-white">FAQ — {title}</h1>
-      <p class="mt-3 text-base text-white/40">Everything you need to know before your trip.</p>
+      {countryName && (
+        <p class="text-xs uppercase tracking-[0.2em] text-white/40 mb-2">{countryName}</p>
+      )}
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">FAQ — {campName}</h1>
     </div>
   </div>
 
-  <section class="py-12 bg-dark">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-      {faqCategories.map((category) => (
-        <div class="mb-10">
-          <h2 class="text-base font-semibold text-white mb-4 pb-3 border-b border-white/10">{category}</h2>
-          <div class="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <details class="group rounded-lg border border-white/5 overflow-hidden">
-                <summary class="flex cursor-pointer items-center justify-between p-4 text-sm text-white/70 hover:bg-white/5 transition-colors">
-                  <span>Sample FAQ question {i} for {category}</span>
-                  <svg class="h-4 w-4 text-white/30 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
-                </summary>
-                <div class="px-4 pb-4 text-sm text-white/40">
-                  <p>FAQ answers will be populated from Storyblok once the CMS is connected.</p>
-                </div>
-              </details>
-            ))}
-          </div>
+  <FAQSection grouped={faqData} />
+
+  <!-- Link to camp page -->
+  <section class="pb-16 sm:pb-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 sm:p-8 text-center">
+        <p class="text-white/50 text-sm mb-4">Still have questions? Check out the camp or get in touch.</p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <a
+            href={campSlug}
+            class="inline-block rounded-full bg-white px-5 py-2 text-xs font-semibold text-brand-blue hover:bg-white/90 transition-colors"
+          >
+            Visit {campName}
+          </a>
+          <a
+            href="/contact"
+            class="inline-block rounded-full bg-white/10 border border-white/10 px-5 py-2 text-xs font-semibold text-white hover:bg-white/20 transition-colors"
+          >
+            Contact Us
+          </a>
         </div>
-      ))}
+      </div>
     </div>
   </section>
 </BaseLayout>

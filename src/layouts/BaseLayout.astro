@@ -1,13 +1,33 @@
 ---
 import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
+import ContactWidget from "@/components/layout/ContactWidget.astro";
+import ExitIntentPopup from "@/components/popups/ExitIntentPopup.astro";
+import SpinningWheelPopup from "@/components/popups/SpinningWheelPopup.astro";
+import SpecialOfferPopup from "@/components/popups/SpecialOfferPopup.astro";
 import "@/styles/globals.css";
+
+interface SpecialOffer {
+  headline: string;
+  body: string;
+  ctaText: string;
+  ctaHref: string;
+  image?: string;
+  voucherCode?: string;
+  expiresAt?: string;
+}
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
   bookingUrl?: string;
+  /** Enable spinning wheel popup on this page */
+  showWheel?: boolean;
+  /** Pass a special offer to show the highest-priority popup */
+  specialOffer?: SpecialOffer;
+  /** Disable all popups on this page (e.g. legal pages) */
+  disablePopups?: boolean;
 }
 
 const {
@@ -15,6 +35,9 @@ const {
   description = "A network of 8 unique surf camps in 5 countries on 4 continents. Surf the world with Rapture in Bali, Costa Rica, Portugal, Morocco, and Nicaragua.",
   ogImage,
   bookingUrl,
+  showWheel = false,
+  specialOffer,
+  disablePopups = false,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
@@ -54,6 +77,79 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
       <slot />
     </main>
     <Footer />
+    <ContactWidget />
+
+    {/* --- Popup system --- */}
+    {!disablePopups && (
+      <>
+        <ExitIntentPopup />
+        <SpinningWheelPopup />
+        {specialOffer && (
+          <SpecialOfferPopup
+            headline={specialOffer.headline}
+            body={specialOffer.body}
+            ctaText={specialOffer.ctaText}
+            ctaHref={specialOffer.ctaHref}
+            image={specialOffer.image}
+            voucherCode={specialOffer.voucherCode}
+            expiresAt={specialOffer.expiresAt}
+          />
+        )}
+      </>
+    )}
+
+    <script is:inline
+      data-has-offer={!disablePopups && specialOffer ? "true" : "false"}
+      data-has-wheel={!disablePopups && showWheel ? "true" : "false"}
+      data-popups-disabled={disablePopups ? "true" : "false"}
+      id="popup-manager-script"
+    >
+    /* --- Popup Manager --- */
+    (function () {
+      var script = document.getElementById("popup-manager-script");
+      if (!script) return;
+      var disabled = script.getAttribute("data-popups-disabled") === "true";
+      if (disabled) return;
+
+      var hasOffer = script.getAttribute("data-has-offer") === "true";
+      var hasWheel = script.getAttribute("data-has-wheel") === "true";
+      var SESSION_KEY = "rc_popup_shown";
+
+      if (sessionStorage.getItem(SESSION_KEY)) return;
+
+      function firePopup(type) {
+        sessionStorage.setItem(SESSION_KEY, type);
+        window.dispatchEvent(new CustomEvent("rc:show-popup", { detail: { type: type } }));
+      }
+
+      // Priority: Special Offer > Spinning Wheel > Exit Intent
+      if (hasOffer) {
+        setTimeout(function () { firePopup("special-offer"); }, 5000);
+        return;
+      }
+
+      if (hasWheel) {
+        setTimeout(function () { firePopup("spinning-wheel"); }, 15000);
+        return;
+      }
+
+      var exitFired = false;
+
+      function onExitIntent() {
+        if (exitFired) return;
+        if (sessionStorage.getItem(SESSION_KEY)) return;
+        exitFired = true;
+        firePopup("exit-intent");
+      }
+
+      document.addEventListener("mouseleave", function (e) {
+        if (e.clientY <= 0) onExitIntent();
+      });
+
+      setTimeout(function () { onExitIntent(); }, 45000);
+    })();
+    </script>
+
     <script is:inline>
       (function () {
         var hdr = document.getElementById("main-header");
@@ -71,6 +167,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
           iconMenu.classList.add("hidden");
           iconClose.classList.remove("hidden");
           hdr.setAttribute("data-open", "true");
+          document.body.style.overflow = "hidden";
         }
 
         function closeMenu() {
@@ -79,6 +176,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
           iconMenu.classList.remove("hidden");
           iconClose.classList.add("hidden");
           hdr.removeAttribute("data-open");
+          document.body.style.overflow = "";
         }
 
         btn.addEventListener("click", function (e) {

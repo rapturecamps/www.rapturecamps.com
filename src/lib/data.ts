@@ -116,7 +116,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/morocco-banana-village-surf-stay/guests",
     heroImages: [
       "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1502680390548-bdbac40e4a9f?w=1920&h=1080&fit=crop",
+      "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1920&h=1080&fit=crop",
     ],
   },
@@ -124,7 +124,7 @@ export const destinations: Destination[] = [
     name: "Playa Maderas",
     country: "Nicaragua",
     slug: "/surfcamp/nicaragua/maderas",
-    image: "https://images.unsplash.com/photo-1455729552457-5c322b382886?w=800&h=1000&fit=crop",
+    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=1000&fit=crop",
     location: "San Juan del Sur",
     tagline: "Hilltop camp with infinity pool and glamping tents",
     rating: 4.8,

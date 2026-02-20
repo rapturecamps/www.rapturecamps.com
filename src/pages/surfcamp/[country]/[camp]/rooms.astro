@@ -43,7 +43,7 @@ const rooms = [
     type: "Private Room",
     tag: "Premium",
     tagColor: "text-amber-400 bg-amber-400/10",
-    image: "https://images.unsplash.com/photo-1590490360182-c33d82de0e75?w=800&h=500&fit=crop",
+    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
     price: "From €95 / night",
     capacity: "1–2 guests",
     desc: "Your own space at the camp. These rooms come with extra touches — a minibar, premium bedding, and a private terrace with a view. Limited availability, so book early.",
@@ -119,6 +119,15 @@ const facilities = [
               />
             </div>
             <div class:list={["p-6 sm:p-8 flex flex-col justify-center", i % 2 === 1 && "lg:order-1"]}>
+              <!-- FOMO banner -->
+              <div class="room-fomo mb-4 flex items-center gap-2 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-2" data-room-index={i} data-room-type={room.type}>
+                <span class="relative flex h-2 w-2 flex-shrink-0">
+                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+                  <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
+                </span>
+                <span class="room-fomo-text text-xs text-amber-300/90 font-medium"></span>
+              </div>
+
               <div class="flex items-center gap-3 mb-1">
                 <h3 class="text-xl font-semibold text-white">{room.type}</h3>
                 {room.tag && <span class:list={["text-[10px] uppercase tracking-wider rounded-full px-2.5 py-0.5", room.tagColor]}>{room.tag}</span>}
@@ -210,5 +219,140 @@ const facilities = [
     </div>
   </section>
 
+  <!-- Accepted Payment Methods -->
+  <section class="py-12 sm:py-16 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="flex flex-col items-center text-center">
+        <div class="flex items-center gap-2 mb-5">
+          <svg class="h-4.5 w-4.5 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span class="text-xs uppercase tracking-wider text-white/30 font-medium">Secure payments</span>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <!-- Visa -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#1A1F71"/>
+              <path d="M19.5 21h-3l1.9-11h3l-1.9 11zm13.6-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.6 3.1 1.2.6 1.5.9 1.5 1.4 0 .8-.9 1.1-1.8 1.1-1.2 0-1.8-.2-2.8-.6l-.4-.2-.4 2.5c.7.3 2 .6 3.3.6 3.2 0 5.2-1.5 5.2-3.8 0-1.3-.8-2.3-2.5-3.1-1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 1 0 1.7.2 2.2.4l.3.1.6-2.3zm7.9-.3h-2.3c-.7 0-1.3.2-1.6.9l-4.5 10.1h3.2s.5-1.4.6-1.7h3.9c.1.4.4 1.7.4 1.7H43l-2-11zm-3.7 7.1c.3-.7 1.2-3.2 1.2-3.2s.3-.7.4-1.1l.2 1 .7 3.3h-2.5zM17.2 10h-4.7l-.1.2c3.7.9 6.2 3.1 7.2 5.8l-1-4.9c-.2-.8-.8-1-1.4-1.1z" fill="#fff"/>
+            </svg>
+          </div>
+          <!-- Mastercard -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#252525"/>
+              <circle cx="19" cy="16" r="8" fill="#EB001B"/>
+              <circle cx="29" cy="16" r="8" fill="#F79E1B"/>
+              <path d="M24 10.3a8 8 0 0 1 0 11.4 8 8 0 0 1 0-11.4z" fill="#FF5F00"/>
+            </svg>
+          </div>
+          <!-- Amex -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#006FCF"/>
+              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial, sans-serif">AMEX</text>
+            </svg>
+          </div>
+          <!-- PayPal -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#003087"/>
+              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6.5" font-weight="bold" font-family="Arial, sans-serif">PayPal</text>
+            </svg>
+          </div>
+          <!-- Klarna -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#FFB3C7"/>
+              <text x="24" y="18.5" text-anchor="middle" fill="#0A0B09" font-size="7" font-weight="bold" font-family="Arial, sans-serif">Klarna</text>
+            </svg>
+          </div>
+          <!-- Apple Pay -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#000"/>
+              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="Arial, sans-serif"> Pay</text>
+              <path d="M15.2 13.2c.3-.4.5-.9.5-1.4-.5 0-1.1.3-1.5.7-.3.3-.6.9-.5 1.4.5 0 1.1-.3 1.5-.7zm.4.8c-.8 0-1.5.5-1.9.5s-1-.4-1.7-.4c-.8 0-1.6.5-2.1 1.3-.9 1.5-.2 3.7.6 4.9.4.6.9 1.3 1.6 1.2.6 0 .9-.4 1.6-.4.7 0 1 .4 1.6.4.7 0 1.1-.6 1.5-1.2.5-.7.7-1.4.7-1.4-.7-.3-1.3-1.2-1.3-2.2 0-.9.5-1.7 1.2-2.1-.5-.7-1.2-1-1.8-1.1z" fill="white"/>
+            </svg>
+          </div>
+          <!-- Google Pay -->
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
+            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
+              <rect width="48" height="32" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width=".5"/>
+              <text x="30" y="18.5" text-anchor="middle" fill="#5f6368" font-size="6" font-weight="500" font-family="Arial, sans-serif">Pay</text>
+              <path d="M14.5 17.5c0-2.5 2-4.5 4.4-4.5 1.3 0 2.2.5 2.9 1.2l-.8.8c-.5-.5-1.2-.8-2.1-.8-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1.2 0 1.8-.5 2.2-.9.3-.3.5-.8.6-1.5h-2.8v-1.1h3.9c0 .3.1.5.1.9 0 1.1-.3 2.4-1.2 3.3-.9.9-2 1.4-3.4 1.4-2.6.1-4.8-1.9-4.8-4.2z" fill="#4285F4"/>
+            </svg>
+          </div>
+        </div>
+        <p class="text-[11px] text-white/20 mt-4">Pay securely with your preferred method. Klarna buy-now-pay-later available at checkout.</p>
+      </div>
+    </div>
+  </section>
+
   <CTASection />
+
+  <script is:inline>
+  (function () {
+    var SK = "rc_room_fomo";
+    var stored = null;
+    try { stored = JSON.parse(sessionStorage.getItem(SK)); } catch(e) {}
+
+    var hour = new Date().getHours();
+    var busy = (hour >= 9 && hour <= 20) ? 1 : (hour >= 7 && hour <= 22) ? 0.6 : 0.3;
+
+    function r(min, max) {
+      return Math.round(min + Math.random() * (max - min) * busy);
+    }
+
+    var messages = [
+      function (d) { return "Booked " + d.bookings + "x today \u2014 " + d.viewing + " people viewing now"; },
+      function (d) { return d.viewing + " people looking at this room right now"; },
+      function (d) { return "Selling fast \u2014 only " + d.left + " spots left this month"; },
+      function (d) { return "Booked " + d.bookings + " times in the last 24h"; },
+      function (d) { return d.left + " rooms left \u2014 " + d.bookings + " booked today"; },
+    ];
+
+    var roomProfiles = [
+      { minBook: 3, maxBook: 9, minView: 4, maxView: 14, minLeft: 2, maxLeft: 6, msgPool: [0, 1, 4] },
+      { minBook: 2, maxBook: 6, minView: 2, maxView: 8,  minLeft: 3, maxLeft: 8, msgPool: [0, 3, 1] },
+      { minBook: 1, maxBook: 4, minView: 3, maxView: 10, minLeft: 1, maxLeft: 4, msgPool: [2, 4, 3] },
+      { minBook: 1, maxBook: 5, minView: 2, maxView: 7,  minLeft: 2, maxLeft: 5, msgPool: [2, 0, 1] },
+    ];
+
+    if (!stored || (Date.now() - stored.ts > 300000)) {
+      stored = { ts: Date.now(), rooms: [] };
+      for (var i = 0; i < roomProfiles.length; i++) {
+        var p = roomProfiles[i];
+        var pick = p.msgPool[Math.floor(Math.random() * p.msgPool.length)];
+        stored.rooms.push({
+          bookings: r(p.minBook, p.maxBook),
+          viewing: r(p.minView, p.maxView),
+          left: r(p.minLeft, p.maxLeft),
+          msgIdx: pick,
+        });
+      }
+      try { sessionStorage.setItem(SK, JSON.stringify(stored)); } catch(e) {}
+    }
+
+    document.querySelectorAll(".room-fomo").forEach(function (el) {
+      var idx = parseInt(el.getAttribute("data-room-index"), 10);
+      if (isNaN(idx) || !stored.rooms[idx]) return;
+      var d = stored.rooms[idx];
+      var textEl = el.querySelector(".room-fomo-text");
+      if (textEl) textEl.textContent = messages[d.msgIdx](d);
+    });
+
+    // Slowly tick viewing count on one random room every ~45-70s
+    setInterval(function () {
+      var idx = Math.floor(Math.random() * stored.rooms.length);
+      stored.rooms[idx].viewing = Math.min(stored.rooms[idx].viewing + 1, 20);
+      stored.ts = Date.now();
+      try { sessionStorage.setItem(SK, JSON.stringify(stored)); } catch(e) {}
+      var el = document.querySelector('.room-fomo[data-room-index="' + idx + '"]');
+      if (el) {
+        var d = stored.rooms[idx];
+        var textEl = el.querySelector(".room-fomo-text");
+        if (textEl) textEl.textContent = messages[d.msgIdx](d);
+      }
+    }, 45000 + Math.random() * 25000);
+  })();
+  </script>
 </CampLayout>

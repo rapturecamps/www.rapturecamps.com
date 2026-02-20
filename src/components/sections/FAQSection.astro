@@ -1,0 +1,84 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  heading?: string;
+  items: FAQItem[];
+  grouped?: Record<string, FAQItem[]>;
+}
+
+const {
+  heading,
+  items = [],
+  grouped,
+} = Astro.props;
+
+const allItems = grouped
+  ? Object.values(grouped).flat()
+  : items;
+
+const jsonLd = allItems.length > 0 ? JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": allItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer,
+    },
+  })),
+}) : null;
+---
+
+<section class="py-16 sm:py-20 bg-dark">
+  <div class="px-6 sm:px-12 lg:px-20">
+    {heading && (
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">{heading}</h2>
+    )}
+
+    {grouped ? (
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-10">
+        {Object.entries(grouped).map(([category, categoryItems]) => (
+          <div>
+            <h3 class="text-base font-semibold text-white mb-4 pb-3 border-b border-white/10">{category}</h3>
+            <div class="space-y-2">
+              {categoryItems.map((item) => (
+                <details class="group rounded-lg border border-white/5 overflow-hidden">
+                  <summary class="flex cursor-pointer items-center justify-between p-4 text-sm text-white/70 hover:bg-white/5 transition-colors">
+                    <span>{item.question}</span>
+                    <svg class="h-4 w-4 flex-shrink-0 ml-4 text-white/30 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+                  </summary>
+                  <div class="px-4 pb-4 text-sm text-white/40 leading-relaxed">
+                    <p>{item.answer}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-8 gap-y-2">
+        {items.map((item) => (
+          <details class="group rounded-lg border border-white/5 overflow-hidden">
+            <summary class="flex cursor-pointer items-center justify-between p-4 text-sm text-white/70 hover:bg-white/5 transition-colors">
+              <span>{item.question}</span>
+              <svg class="h-4 w-4 flex-shrink-0 ml-4 text-white/30 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg>
+            </summary>
+            <div class="px-4 pb-4 text-sm text-white/40 leading-relaxed">
+              <p>{item.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+{jsonLd && (
+  <script type="application/ld+json" set:html={jsonLd} />
+)}

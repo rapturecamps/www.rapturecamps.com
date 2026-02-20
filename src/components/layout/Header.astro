@@ -127,42 +127,56 @@ const campsByCountry = countries.map((country) => ({
   </div>
 
   <!-- Mobile menu -->
-  <div id="mobile-menu" class="lg:hidden bg-brand-blue border-t border-white/10 hidden">
-    <div class="px-4 py-6 space-y-1 max-h-[calc(100dvh-5rem)] overflow-y-auto">
+  <div id="mobile-menu" class="lg:hidden hidden" style="position:fixed;top:5rem;left:0;right:0;bottom:0;width:100vw;max-width:100%;overflow:hidden;">
+    <!-- Video background -->
+    <video
+      class="absolute inset-0 h-full w-full object-cover"
+      autoplay
+      loop
+      muted
+      playsinline
+      style="min-width:100%;min-height:100%;"
+    >
+      <source src="/videos/mobile-menu-background.mp4" type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-dark/40" />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-dark/30 to-dark" />
+
+    <div class="relative z-10 px-6 py-8 space-y-1 overflow-y-auto" style="height:100%;-webkit-overflow-scrolling:touch;">
 
       <!-- Mobile country accordions -->
       {campsByCountry.map((country) => (
         <div class="mobile-country">
           <button
-            class="mobile-country-btn w-full flex items-center justify-between rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+            class="mobile-country-btn w-full flex items-center justify-between rounded-lg px-4 py-3 text-lg font-medium text-white/80 hover:text-white hover:bg-white/10"
             data-country={country.slug}
           >
             <span>{country.name}</span>
-            <svg class="mobile-country-chevron h-4 w-4 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+            <svg class="mobile-country-chevron h-5 w-5 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
             </svg>
           </button>
           <div class="mobile-country-camps hidden pl-4 pb-2">
             <a
               href={`/surfcamp/${country.slug}`}
-              class="block rounded-lg px-4 py-2 text-xs uppercase tracking-wider text-white/40 hover:text-white/70"
+              class="block rounded-lg px-4 py-2.5 text-xs uppercase tracking-wider text-white/40 hover:text-white/70"
             >
               All {country.name} camps
             </a>
             {country.camps.map((camp) => (
               <a
                 href={camp.slug}
-                class="flex items-center gap-3 rounded-lg px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10"
+                class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-base text-white/70 hover:text-white hover:bg-white/10"
               >
                 <img
-                  src={`${camp.image.split("?")[0]}?w=64&h=64&fit=crop`}
+                  src={`${camp.image.split("?")[0]}?w=80&h=80&fit=crop`}
                   alt={camp.name}
-                  class="h-8 w-8 rounded-md object-cover flex-shrink-0"
+                  class="h-10 w-10 rounded-lg object-cover flex-shrink-0"
                   loading="lazy"
                 />
                 <div>
                   <span>{camp.name}</span>
-                  <span class="block text-[10px] text-white/30">{camp.location}</span>
+                  <span class="block text-xs text-white/30 mt-0.5">{camp.location}</span>
                 </div>
               </a>
             ))}
@@ -170,32 +184,32 @@ const campsByCountry = countries.map((country) => ({
         </div>
       ))}
 
-      <div class="my-3 border-t border-white/10" />
+      <div class="my-4 border-t border-white/10" />
 
       {navItems.map((item) => (
         <a
           href={item.href}
-          class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+          class="block rounded-lg px-4 py-3 text-lg font-medium text-white/80 hover:text-white hover:bg-white/10"
         >
           {item.label}
         </a>
       ))}
 
-      <div class="my-3 border-t border-white/10" />
+      <div class="my-4 border-t border-white/10" />
 
       <a
         href="/de/"
-        class="block rounded-lg px-4 py-2.5 text-sm text-white/80 hover:text-white hover:bg-white/10"
+        class="block rounded-lg px-4 py-3 text-lg font-medium text-white/80 hover:text-white hover:bg-white/10"
       >
         Deutsch
       </a>
 
-      <div class="pt-4">
+      <div class="pt-6">
         <a
           href="https://bookings.rapturecamps.com"
           target="_blank"
           rel="noopener noreferrer"
-          class="book-link block w-full rounded-full border-2 border-white py-3 text-center text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
+          class="book-link block w-full rounded-full border-2 border-white py-3.5 text-center text-base font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
         >
           Book
         </a>

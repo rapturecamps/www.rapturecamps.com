@@ -15,7 +15,7 @@ export default function DestinationGrid() {
   };
 
   return (
-    <section id="destinations" className="pt-0 sm:pt-10 pb-16 sm:pb-28 bg-dark">
+    <section id="destinations" className="pt-0 sm:pt-10 pb-10 sm:pb-20 bg-dark">
       <div className="px-6 sm:px-12 lg:px-20">
         <div className="flex items-end justify-between mb-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
@@ -57,7 +57,7 @@ export default function DestinationGrid() {
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <p className="text-xs uppercase tracking-wider text-white/50 mb-1">
                     {dest.location}

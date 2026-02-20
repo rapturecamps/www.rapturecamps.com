@@ -1,13 +1,36 @@
 ---
+interface ReviewSchema {
+  businessName: string;
+  ratingValue: number;
+  reviewCount: number;
+  url?: string;
+}
+
 interface Props {
   heading?: string;
   appId: string;
+  schema?: ReviewSchema;
 }
 
 const {
   heading = "What Our Guests Say",
   appId,
+  schema,
 } = Astro.props;
+
+const jsonLd = schema ? JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "TouristTrip",
+  "name": schema.businessName,
+  ...(schema.url && { "url": schema.url }),
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": schema.ratingValue,
+    "bestRating": 5,
+    "worstRating": 1,
+    "reviewCount": schema.reviewCount,
+  },
+}) : null;
 ---
 
 <section class="py-16 sm:py-20 bg-dark elfsight-reviews-section">
@@ -20,6 +43,10 @@ const {
     </div>
   </div>
 </section>
+
+{jsonLd && (
+  <script type="application/ld+json" set:html={jsonLd} />
+)}
 
 <script is:inline src="https://elfsightcdn.com/platform.js" async></script>
 
