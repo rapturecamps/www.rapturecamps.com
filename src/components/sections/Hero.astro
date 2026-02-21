@@ -1,5 +1,5 @@
 ---
-import { unsplashWidth } from "@/lib/image-utils";
+import { responsiveSrc } from "@/lib/image-utils";
 
 interface Props {
   title: string;
@@ -44,11 +44,8 @@ const images = backgroundImages && backgroundImages.length > 1
   : [backgroundImage];
 const hasRotation = !hasVideo && images.length > 1;
 
-function heroSrcset(src: string) {
-  if (!src.includes("images.unsplash.com")) return undefined;
-  const base = src.replace(/[?&]w=\d+/, "").replace(/[?&]h=\d+/, "");
-  const sep = base.includes("?") ? "&" : "?";
-  return [400, 800, 1200, 1920].map((w) => `${base}${sep}w=${w}&fit=crop&auto=format ${w}w`).join(", ");
+function heroImg(src: string) {
+  return responsiveSrc(src);
 }
 ---
 
@@ -67,7 +64,9 @@ function heroSrcset(src: string) {
     </video>
   ) : hasRotation ? (
     <div class="hero-slideshow absolute inset-0" data-interval={rotationInterval}>
-      {images.map((src, i) => (
+      {images.map((src, i) => {
+        const ri = heroImg(src);
+        return (
         <div
           class:list={[
             "hero-slide absolute inset-0 transition-opacity duration-[1500ms] ease-in-out",
@@ -77,8 +76,8 @@ function heroSrcset(src: string) {
         >
           {i === 0 ? (
             <img
-              src={src}
-              srcset={heroSrcset(src)}
+              src={ri.src}
+              srcset={ri.srcset}
               sizes="100vw"
               alt=""
               class="h-full w-full object-cover"
@@ -87,8 +86,8 @@ function heroSrcset(src: string) {
             />
           ) : (
             <img
-              data-src={src}
-              data-srcset={heroSrcset(src)}
+              data-src={ri.src}
+              data-srcset={ri.srcset}
               sizes="100vw"
               alt=""
               class="h-full w-full object-cover"
@@ -97,12 +96,12 @@ function heroSrcset(src: string) {
             />
           )}
         </div>
-      ))}
+      )})}
     </div>
   ) : (
     <img
-      src={backgroundImage}
-      srcset={heroSrcset(backgroundImage)}
+      src={heroImg(backgroundImage).src}
+      srcset={heroImg(backgroundImage).srcset}
       sizes="100vw"
       alt=""
       class="absolute inset-0 h-full w-full object-cover"
