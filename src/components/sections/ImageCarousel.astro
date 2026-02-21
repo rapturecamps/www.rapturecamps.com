@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 export interface CarouselImage {
   src: string;
   alt: string;
@@ -48,6 +50,7 @@ const aspectClass: Record<string, string> = {
 
 const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const ratio = aspectClass[aspect] || "aspect-video";
+const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
 const uid = "ic-" + Math.random().toString(36).slice(2, 8);
 ---
 
@@ -64,11 +67,13 @@ const uid = "ic-" + Math.random().toString(36).slice(2, 8);
       <div class="ic-wrap relative group" data-uid={uid}>
         <!-- Slider track -->
         <div class="ic-slider flex overflow-x-auto scroll-smooth snap-x snap-mandatory ic-no-scrollbar" style="-webkit-overflow-scrolling: touch;">
-          {images.map((img, i) => (
+          {rImages.map((img, i) => (
             <div class:list={["ic-slide flex-shrink-0 w-full snap-center", !fullBleed && "px-0"]} data-index={i}>
               <div class:list={["relative overflow-hidden", ratio, rounded && !fullBleed ? "rounded-xl" : ""]}>
                 <img
                   src={img.src}
+                  srcset={img.srcset}
+                  sizes="100vw"
                   alt={img.alt}
                   class="absolute inset-0 h-full w-full object-cover"
                   loading={i === 0 ? "eager" : "lazy"}

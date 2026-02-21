@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   images: {
     src: string;
@@ -8,6 +10,7 @@ interface Props {
 }
 
 const { images, variant = "collage" } = Astro.props;
+const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
 ---
 
 {variant === "collage" && images.length >= 4 && (
@@ -16,19 +19,19 @@ const { images, variant = "collage" } = Astro.props;
       <div class="grid grid-cols-1 gap-3 sm:gap-4">
         <!-- Top: full-width image -->
         <div class="aspect-[21/9] overflow-hidden rounded-xl">
-          <img src={images[0].src} alt={images[0].alt} class="h-full w-full object-cover" loading="lazy" />
+          <img src={rImages[0].src} srcset={rImages[0].srcset} sizes="(min-width: 1024px) 90vw, 100vw" alt={rImages[0].alt} class="h-full w-full object-cover" loading="lazy" />
         </div>
         <!-- Bottom: tall left + two stacked right -->
         <div class="grid grid-cols-2 gap-3 sm:gap-4">
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={images[1].src} alt={images[1].alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={rImages[1].src} srcset={rImages[1].srcset} sizes="50vw" alt={rImages[1].alt} class="h-full w-full object-cover" loading="lazy" />
           </div>
           <div class="grid grid-rows-2 gap-3 sm:gap-4">
             <div class="overflow-hidden rounded-xl">
-              <img src={images[2].src} alt={images[2].alt} class="h-full w-full object-cover" loading="lazy" />
+              <img src={rImages[2].src} srcset={rImages[2].srcset} sizes="50vw" alt={rImages[2].alt} class="h-full w-full object-cover" loading="lazy" />
             </div>
             <div class="overflow-hidden rounded-xl">
-              <img src={images[3].src} alt={images[3].alt} class="h-full w-full object-cover" loading="lazy" />
+              <img src={rImages[3].src} srcset={rImages[3].srcset} sizes="50vw" alt={rImages[3].alt} class="h-full w-full object-cover" loading="lazy" />
             </div>
           </div>
         </div>
@@ -41,9 +44,9 @@ const { images, variant = "collage" } = Astro.props;
   <section class="py-4 sm:py-8 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        {images.slice(0, 2).map((img) => (
+        {rImages.slice(0, 2).map((img) => (
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 50vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
           </div>
         ))}
       </div>
@@ -55,9 +58,9 @@ const { images, variant = "collage" } = Astro.props;
   <section class="py-4 sm:py-8 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        {images.slice(0, 3).map((img) => (
+        {rImages.slice(0, 3).map((img) => (
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 33vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
           </div>
         ))}
       </div>

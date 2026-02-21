@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   src: string;
   alt: string;
@@ -13,12 +15,16 @@ const heightClass = {
   medium: "h-[350px] sm:h-[450px] lg:h-[500px]",
   tall: "h-[450px] sm:h-[550px] lg:h-[650px]",
 }[height];
+
+const img = responsiveSrc(src);
 ---
 
 <section class="relative overflow-hidden">
   <div class:list={["relative w-full", heightClass]}>
     <img
-      src={src}
+      src={img.src}
+      srcset={img.srcset}
+      sizes="100vw"
       alt={alt}
       class="absolute inset-0 h-full w-full object-cover"
       loading="lazy"
