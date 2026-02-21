@@ -20,6 +20,9 @@ const countryContent: Record<string, {
   contentBlocks: { heading: string; body: string; image?: string; imageAlt?: string; reverse?: boolean; background?: "dark" | "dark-lighter" }[];
   imageBreak: { src: string; alt: string; caption?: string };
   reviews: { name: string; location?: string; text: string; rating: number }[];
+  comparison?: { heading: string; subtitle: string; features: string[]; camps: { slug: string; values: string[] }[] };
+  surfSpots?: { heading: string; subtitle: string; spots: { name: string; level: string; type: string; description: string }[] };
+  faqs?: { question: string; answer: string }[];
 }> = {
   bali: {
     title: "Surf Camps\nin Bali",
@@ -72,6 +75,35 @@ const countryContent: Record<string, {
       { name: "Lucas M.", location: "Berlin, Germany", text: "This was my third time at Rapture Bali and it never disappoints. The food, the waves, the people — everything is dialled in. Already booking my next trip.", rating: 5 },
       { name: "Sarah K.", location: "Sydney, Australia", text: "As an experienced surfer, I was worried a surf camp would be too beginner-focused. Not at all — the surf guiding took me to spots I'd never have found on my own. Uluwatu at sunrise was unforgettable.", rating: 5 },
     ],
+    comparison: {
+      heading: "Which Bali Camp Is Right for You?",
+      subtitle: "Both camps are on the Bukit Peninsula, 15 minutes apart. Here's how they compare.",
+      features: ["Vibe", "Best For", "Surf Breaks Nearby", "Pool", "Rooms", "Group Size", "Yoga", "Nightlife Access"],
+      camps: [
+        { slug: "/surfcamp/bali/green-bowl", values: ["Social & lively", "All levels", "Green Bowl, Dreamland, Balangan", "Yes — large pool area", "4 room types", "Up to 35 guests", "Daily", "15 min to Uluwatu bars"] },
+        { slug: "/surfcamp/bali/padang-padang", values: ["Boutique & intimate", "Intermediate+", "Padang Padang, Uluwatu, Impossibles", "Yes — private villa pool", "3 room types", "Up to 16 guests", "Daily", "5 min walk to Padang Padang"] },
+      ],
+    },
+    faqs: [
+      { question: "Is Bali good for beginner surfers?", answer: "Absolutely. Bali has dozens of beginner-friendly breaks with sandy bottoms and mellow whitewater. Our Green Bowl camp specialises in taking first-timers from zero to riding green waves within a week. The warm water (26–30°C) and year-round consistency make it one of the best places in the world to learn." },
+      { question: "What is the best time to surf in Bali?", answer: "The peak surf season is June through September when consistent Indian Ocean swells hit the Bukit Peninsula. But Bali has rideable waves 365 days a year — the wet season (November–March) brings smaller, playful waves ideal for progressing. Water is warm year-round." },
+      { question: "How much does a surf camp in Bali cost?", answer: "Our Bali camps start from around €500 per week, including accommodation, daily surf lessons or guiding, breakfast and dinner, yoga, video analysis, and airport transfers. It's all-inclusive — no hidden extras." },
+      { question: "Do I need a visa to surf in Bali?", answer: "Most nationalities can get a Visa on Arrival (VOA) at the airport for 30 days, which can be extended once for another 30 days. Check with the Indonesian embassy for your specific nationality." },
+      { question: "What should I bring to a surf camp in Bali?", answer: "We provide all surf equipment (boards, rash vests, reef booties). Bring sunscreen (reef-safe preferred), a hat, light clothing, and mosquito repellent. A thin rash vest or lycra is useful for sun protection." },
+      { question: "Can I work remotely from your Bali surf camp?", answer: "Yes — both camps have fast WiFi and plenty of quiet spots to work between surf sessions. Many of our guests are digital nomads combining work and surf. Bali's timezone (GMT+8) works well for European morning meetings." },
+    ],
+    surfSpots: {
+      heading: "Surf Spots Near Our Bali Camps",
+      subtitle: "The Bukit Peninsula is home to some of the most famous surf breaks in the world. Here are the key spots we take our guests to.",
+      spots: [
+        { name: "Padang Padang", level: "Advanced", type: "Reef break, left", description: "Bali's most famous barrel. A fast, hollow left that breaks over a sharp reef shelf. Works best on bigger SW swells (6ft+) from June to September. The Rip Curl Cup is held here when conditions align." },
+        { name: "Uluwatu", level: "Intermediate–Advanced", type: "Reef break, left", description: "A world-class left-hander with multiple takeoff zones (The Peak, Racetracks, Outside Corner). Long, walling rides on solid swells — one of Indonesia's most iconic waves." },
+        { name: "Dreamland", level: "All levels", type: "Beach break", description: "A wide beach break with punchy peaks. The inside section is forgiving for beginners at high tide, while the outside delivers fun barrels on bigger days." },
+        { name: "Balangan", level: "Intermediate", type: "Reef break, left", description: "A mellow left-hander over a flat reef shelf. Consistent and fun on mid-sized swells — a great confidence-builder for intermediates stepping up to reef breaks." },
+        { name: "Green Bowl", level: "Intermediate–Advanced", type: "Reef break, left & right", description: "A secluded spot reached by 300 steps down a cliff. Offers both lefts and rights depending on swell direction. Uncrowded due to the hike — worth every step." },
+        { name: "Bingin", level: "Intermediate–Advanced", type: "Reef break, left", description: "A short, intense left tube over shallow reef. Best at mid to low tide with a south swell. Technical and rewarding for competent surfers." },
+      ],
+    },
   },
   "costa-rica": {
     title: "Surf Camp\nin Costa Rica",
@@ -118,6 +150,24 @@ const countryContent: Record<string, {
       { name: "Anna L.", location: "Stockholm, Sweden", text: "Came for the surf, stayed for the Pura Vida. The staff are like family, the jungle setting is magical, and I saw my first wild sloth on day two!", rating: 5 },
       { name: "Tom H.", location: "Melbourne, Australia", text: "Great setup for remote workers — the WiFi is solid and there's plenty of quiet spots to work between sessions. Best workation I've ever done.", rating: 4 },
     ],
+    faqs: [
+      { question: "Is Costa Rica good for beginner surfers?", answer: "Excellent. Playa Avellanas has several zones suited to beginners — wide sandy beaches with consistent whitewater for learning. The water is warm (27–29°C) year-round, so you can focus on surfing without worrying about cold water." },
+      { question: "What is the best time to surf in Costa Rica?", answer: "The dry season (December–April) brings smaller, clean conditions perfect for learning. May through November sees bigger, more consistent south swells for intermediate and advanced surfers. Offshore mornings are common in both seasons." },
+      { question: "How safe is Costa Rica for solo travellers?", answer: "Costa Rica is one of the safest countries in Central America and a well-trodden surf travel route. Our camp has 24/7 security and the Avellanas community is very welcoming. Solo travellers make up about 60% of our guests." },
+      { question: "How do I get from San José airport to the camp?", answer: "The camp is about 4.5 hours from San José (SJO) airport. We offer shared shuttle transfers on Saturday arrival/departure days, or you can rent a 4x4 for the drive — the roads are paved but the last stretch is unpaved." },
+      { question: "Is the WiFi good enough for remote work?", answer: "Yes — we invested in a dedicated fibre line specifically for digital nomads. There are quiet workspaces, power outlets, and strong coverage across the property. Many guests do month-long workation stays." },
+    ],
+    surfSpots: {
+      heading: "Surf Spots in Guanacaste, Costa Rica",
+      subtitle: "Guanacaste's coast is packed with world-class breaks. Here are the spots we surf most.",
+      spots: [
+        { name: "Playa Avellanas", level: "All levels", type: "Beach break", description: "Our home break — a long stretch of sandy beach with multiple peaks. Beginners take the inside whitewater, while experienced surfers find hollow sections on the outer sandbars. Consistent and offshore most mornings." },
+        { name: "Little Hawaii", level: "Intermediate–Advanced", type: "Beach/rock break", description: "The southern end of Avellanas where a rock shelf creates a powerful, hollow right-hander. Named by locals for its Hawaiian-like intensity. Best on a rising tide with south swell." },
+        { name: "Playa Negra", level: "Intermediate–Advanced", type: "Reef break, right", description: "One of Costa Rica's best right-hand reef breaks. A fast, hollow wave over a rock shelf — technical but incredibly fun. 10 minutes south of camp." },
+        { name: "Playa Grande", level: "Beginner–Intermediate", type: "Beach break", description: "A wide, sandy beach break inside Las Baulas National Park. Long, mellow waves ideal for longboarding and building confidence. Also a major leatherback turtle nesting site." },
+        { name: "Tamarindo", level: "Beginner", type: "Beach break", description: "One of Costa Rica's most famous beginner spots. Wide, gentle waves on a sandy bottom. 20 minutes north of camp — also great for an evening out." },
+      ],
+    },
   },
   portugal: {
     title: "Surf Camps\nin Portugal",
@@ -170,6 +220,36 @@ const countryContent: Record<string, {
       { name: "Pierre D.", location: "Paris, France", text: "Stayed at the Coxos Villa — the infinity pool with ocean view is unreal. And the shuttle to the main camp for lessons worked perfectly. Best surf trip in Europe.", rating: 5 },
       { name: "Lisa B.", location: "Amsterdam, Netherlands", text: "Milfontes was exactly what I needed. Away from the crowds, surrounded by nature, with incredible empty waves. The eco approach is genuine and the food from the garden was amazing.", rating: 5 },
     ],
+    comparison: {
+      heading: "Which Portugal Camp Is Right for You?",
+      subtitle: "Three distinct experiences across the Portuguese coast. Here's how they compare.",
+      features: ["Location", "Vibe", "Best For", "Surf Breaks Nearby", "Pool", "Rooms", "Unique Feature"],
+      camps: [
+        { slug: "/surfcamp/portugal/ericeira", values: ["Ericeira", "Beachfront social hub", "All levels", "Foz do Lizandro, Coxos, Ribeira d'Ilhas", "No — ocean is your pool", "6 room types", "Oceanfront location, walk to town"] },
+        { slug: "/surfcamp/portugal/coxos", values: ["Ericeira (Coxos)", "Premium & exclusive", "Intermediate+", "Coxos, Crazy Left, Cave", "Yes — infinity pool ocean view", "4 premium suites", "Infinity pool facing Europe's best wave"] },
+        { slug: "/surfcamp/portugal/milfontes", values: ["Milfontes, Alentejo", "Eco retreat & nature", "All levels", "Milfontes, Almograve, Zambujeira", "No — outdoor shower!", "Eco rooms & tents", "Permaculture farm, empty lineups"] },
+      ],
+    },
+    faqs: [
+      { question: "Is Portugal good for beginner surfers?", answer: "Absolutely. Portugal has a huge variety of beach breaks with sandy bottoms that are perfect for learning. Our Ericeira camp and Milfontes Eco camp both run structured beginner programs. The consistency of Atlantic swells means you'll get waves every day." },
+      { question: "What is the best time to surf in Portugal?", answer: "Summer (June–September) is ideal for beginners and intermediates — smaller, consistent swells plus warm weather. Autumn/winter (October–March) brings powerful Atlantic swells for experienced surfers. The water is cooler (15–20°C) so wetsuits are required year-round." },
+      { question: "Do I need a wetsuit to surf in Portugal?", answer: "Yes, always. In summer a 3/2mm fullsuit is standard, and in winter you'll want a 4/3mm with boots. We provide wetsuits free of charge at all our Portugal camps." },
+      { question: "What's the difference between Ericeira and Milfontes?", answer: "Ericeira is a vibrant surf town with restaurants, nightlife, and easy access from Lisbon (45 min). Milfontes is a rural eco-retreat in a natural park — think farm-to-table meals, empty beaches, and total disconnection. Both have excellent waves." },
+      { question: "How do I get to your Portugal surf camps?", answer: "Fly into Lisbon (LIS) airport. Ericeira is 45 minutes north by car/shuttle. Milfontes is about 2.5 hours south. We arrange shared transfers on check-in/check-out days, or you can rent a car." },
+      { question: "Can I visit multiple camps in one trip?", answer: "Yes — it's a popular option. Many guests spend a week in Ericeira and a week in Milfontes for the contrast. We can arrange shuttle transfers between camps and offer multi-camp discounts." },
+    ],
+    surfSpots: {
+      heading: "Surf Spots on Portugal's Atlantic Coast",
+      subtitle: "Portugal has some of Europe's best waves. Here are the breaks near our three camps.",
+      spots: [
+        { name: "Coxos", level: "Advanced", type: "Reef/point break, right", description: "Portugal's most famous wave and one of Europe's best right-hand point breaks. A powerful, hollow barrel that breaks over a rocky shelf. Located in Ericeira's World Surfing Reserve — serious wave for serious surfers." },
+        { name: "Ribeira d'Ilhas", level: "All levels", type: "Reef break, right", description: "A long, user-friendly right-hander and WSL event site. Multiple sections allow beginners to ride the inside while advanced surfers work the outer peak. One of Ericeira's most consistent spots." },
+        { name: "Foz do Lizandro", level: "Beginner–Intermediate", type: "Beach break", description: "Our Ericeira camp's home break — a wide river-mouth beach break with sandy bottom. Mellow waves ideal for learning. Walk to the lineup in 2 minutes from the camp." },
+        { name: "São Lourenço", level: "Intermediate–Advanced", type: "Beach break", description: "A powerful beach break 5 minutes south of Ericeira. Heavy shorebreak and barrel sections make it exciting on solid swells. Best for confident surfers." },
+        { name: "Praia do Malhão", level: "All levels", type: "Beach break", description: "A wild, empty beach break in the Alentejo near our Milfontes camp. Multiple peaks along a long stretch of sand, often uncrowded even in summer. Perfect for surfers who want space." },
+        { name: "Zambujeira do Mar", level: "Intermediate", type: "Beach break", description: "A picturesque cove near Milfontes with a consistent left and right peak. Works well on NW and W swells. Also home to the Sudoeste music festival in summer." },
+      ],
+    },
   },
   morocco: {
     title: "Surf Camp\nin Morocco",
@@ -216,6 +296,24 @@ const countryContent: Record<string, {
       { name: "Hannah M.", location: "Dublin, Ireland", text: "I was nervous travelling to Morocco as a solo female surfer but felt completely safe and welcomed from the moment I arrived. The staff are like family. Can't wait to return.", rating: 5 },
       { name: "Jan K.", location: "Prague, Czech Republic", text: "Best value surf camp I've found. Three meals a day, surf lessons, yoga — all included. The waves in winter are absolutely pumping. Bring a 3/2 wetsuit.", rating: 5 },
     ],
+    faqs: [
+      { question: "Is Morocco safe for surf travellers?", answer: "Yes. Morocco has a well-established surf tourism scene, particularly in the Agadir and Sidi Ifni regions. Our camp has operated here for over 20 years. The local community is welcoming and hospitality is deeply ingrained in Moroccan culture." },
+      { question: "What is the best time to surf in Morocco?", answer: "October through April is prime season — powerful north Atlantic swells deliver consistent overhead waves to Morocco's point breaks. Summer (May–September) brings smaller waves ideal for beginners, plus warmer water." },
+      { question: "Do I need a wetsuit in Morocco?", answer: "In winter (October–March), a 3/2mm wetsuit is recommended as water drops to 17–19°C. In summer you can often surf in boardshorts or a spring suit. We provide wetsuits at the camp." },
+      { question: "What makes Morocco different from other surf destinations?", answer: "Morocco offers a unique combination of world-class right-hand point breaks, North African culture, incredible food, and excellent value. Our camp in Banana Village is intimate (max 21 guests), and the cultural immersion — Berber villages, mint tea rituals, medina exploring — is unmatched." },
+      { question: "How do I get to your Morocco surf camp?", answer: "Fly into Agadir (AGA) airport. The camp is approximately 2.5 hours south in Sidi Ifni. We arrange airport transfers on check-in days, or you can arrange a taxi." },
+    ],
+    surfSpots: {
+      heading: "Surf Spots Near Sidi Ifni, Morocco",
+      subtitle: "Morocco's southern coast is a right-hand point break paradise. Here are the breaks we surf.",
+      spots: [
+        { name: "Sidi Ifni Main", level: "All levels", type: "Beach break", description: "The town beach offers a wide, sandy-bottom break with peaks along its length. Protected from big swells, it's a reliable spot for beginners and a fun option when the points are too big." },
+        { name: "Legzira", level: "Intermediate–Advanced", type: "Point break, right", description: "A long, walling right-hander in front of Morocco's famous red rock arches. Best on mid-tide with a solid NW swell. Beautiful setting with dramatic cliff backdrop." },
+        { name: "The Camel", level: "Advanced", type: "Point break, right", description: "A powerful, hollow right that peels along a rocky point south of Sidi Ifni. Named for the camel that hangs out on the beach. Handles big swells and delivers long rides." },
+        { name: "Banana Village", level: "Beginner–Intermediate", type: "Beach break", description: "Named after our camp, this is a mellow beach break right on the doorstep. Small, consistent waves on a sandy bottom — ideal for morning warm-ups and afternoon practice sessions." },
+        { name: "Devil's Rock", level: "Advanced", type: "Reef break, right", description: "A heavy, shallow reef break that only works on bigger swells. Short, intense barrels for experienced surfers. Our guides know the lineup intimately — not one to paddle out without local knowledge." },
+      ],
+    },
   },
   nicaragua: {
     title: "Surf Camps\nin Nicaragua",
@@ -262,6 +360,34 @@ const countryContent: Record<string, {
       { name: "Mia S.", location: "Copenhagen, Denmark", text: "The surf guiding made all the difference — the instructors know exactly where to go depending on the swell. I surfed waves I never would have found on my own.", rating: 5 },
       { name: "Ben A.", location: "Cape Town, South Africa", text: "Best surf camp vibes anywhere. The community of travellers, the nightly dinners, watching surf movies under the stars — it's like summer camp for adults, but with perfect waves.", rating: 4 },
     ],
+    comparison: {
+      heading: "Which Nicaragua Camp Is Right for You?",
+      subtitle: "Two properties at Playa Maderas, each with a distinct personality.",
+      features: ["Vibe", "Best For", "Pool", "Accommodation", "Group Size", "Meals", "Standout Feature"],
+      camps: [
+        { slug: "/surfcamp/nicaragua/maderas", values: ["Backpacker chic & social", "All levels", "Yes — infinity pool with jungle views", "Private rooms & glamping tents", "Up to 30 guests", "Breakfast & dinner included", "Hilltop infinity pool, outdoor cinema"] },
+        { slug: "/surfcamp/nicaragua/surf-resort", values: ["Boutique & relaxed", "Intermediate+", "Yes — plunge pool", "Premium private rooms", "Up to 12 guests", "Breakfast included", "Small & intimate, beachfront access"] },
+      ],
+    },
+    faqs: [
+      { question: "Is Nicaragua good for beginner surfers?", answer: "Yes. Playa Maderas has a sandy bottom and delivers consistent, forgiving waves ideal for learning. Our beginner programs include small-group lessons, video analysis, and daily theory sessions. The warm water (27–29°C) and mellow beach break make it very approachable." },
+      { question: "What is the best time to surf in Nicaragua?", answer: "Nicaragua gets waves year-round thanks to 330 days of offshore winds. The dry season (November–April) offers cleaner conditions and overhead swells. The rainy season (May–October) brings bigger waves with fewer crowds. Brief afternoon rain showers keep things green." },
+      { question: "How safe is Nicaragua for tourists?", answer: "The San Juan del Sur and Maderas Beach area is well-established for tourism and very safe. Our camp has security and the local surf community is friendly. As with any travel, use common sense — avoid walking alone at night in remote areas." },
+      { question: "What's the difference between the hilltop camp and the resort?", answer: "The hilltop camp is larger, more social, and great for solo travellers or groups — think infinity pool parties, outdoor cinema, and shared dinners. The Maderas Surf Resort is smaller (max 12 guests), more intimate, and ideal for couples or those wanting a quieter experience." },
+      { question: "How do I get from Managua airport to the camp?", answer: "The camp is about 2.5 hours from Managua (MGA) airport. We offer shuttle transfers on check-in days, or you can arrange a private taxi. Some guests fly into Costa Rica (Liberia airport) and cross the border overland — we can help coordinate." },
+      { question: "Can I combine surf with volcano hiking?", answer: "Definitely. Nicaragua is the Land of Lakes and Volcanoes — we organise day trips to Masaya Volcano, Ometepe Island, and the colonial city of Granada. It's one of the things that makes Nicaragua special compared to other surf destinations." },
+    ],
+    surfSpots: {
+      heading: "Surf Spots Near Playa Maderas, Nicaragua",
+      subtitle: "Nicaragua's Pacific coast delivers some of Central America's most consistent surf. Here are our go-to breaks.",
+      spots: [
+        { name: "Playa Maderas", level: "All levels", type: "Beach break", description: "Our home break — a jungle-fringed bay with a sandy bottom and multiple peaks. Beginners learn on the inside, while advanced surfers find punchy barrels on the outer banks. Consistent year-round with 330 days of offshore wind." },
+        { name: "Playa Remanso", level: "Beginner–Intermediate", type: "Beach break", description: "A sheltered bay just south of Maderas with smaller, mellow waves. Perfect for first-timers and longboarders. The beach is quieter and the water calmer — ideal for building confidence." },
+        { name: "Playa Yankee", level: "Intermediate–Advanced", type: "Beach break", description: "A powerful beach break north of Maderas that picks up more swell. Fast, hollow peaks deliver barrel opportunities on bigger days. Usually uncrowded." },
+        { name: "Playa El Coco", level: "Intermediate", type: "Beach/cobblestone break", description: "A consistent left and right peak over a cobblestone bottom. Works on all tides and handles a wide range of swell sizes. 20 minutes from camp." },
+        { name: "Punta Teonoste", level: "Advanced", type: "Point break, left", description: "A long, walling left-hander that wraps around a rocky point. Best on solid south swells with a rising tide. One of Nicaragua's hidden gems — our surf guides know the access." },
+      ],
+    },
   },
 };
 
@@ -293,6 +419,20 @@ const amenityLabels: Record<string, string> = {
   title={`${data.title.replace("\n", " ")} | Rapture Surfcamps`}
   description={data.description}
 >
+  {data.faqs && data.faqs.length > 0 && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": data.faqs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer,
+        },
+      })),
+    })} />
+  )}
   <Hero
     title={data.title}
     subtitle={data.tagline}
@@ -353,6 +493,92 @@ const amenityLabels: Record<string, string> = {
     </div>
   </section>
 
+  {/* Camp Comparison Table (multi-camp countries only) */}
+  {data.comparison && (
+    <section class="py-16 sm:py-24 bg-dark-lighter" id="compare">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <div class="max-w-4xl mx-auto text-center mb-12">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h2>
+          <p class="text-base text-white/45 max-w-2xl mx-auto">{data.comparison.subtitle}</p>
+        </div>
+
+        {/* Desktop: table view */}
+        <div class="hidden md:block max-w-5xl mx-auto">
+          <div class="rounded-2xl border border-white/5 overflow-hidden">
+            {/* Header row */}
+            <div class="grid bg-dark-lighter border-b border-white/5" style={`grid-template-columns: 1fr repeat(${data.comparison.camps.length}, 1fr)`}>
+              <div class="p-5"></div>
+              {data.comparison.camps.map((camp) => {
+                const dest = countryCamps.find((d) => camp.slug.endsWith(d.slug.split("/").pop()!));
+                return (
+                  <div class="p-5 text-center border-l border-white/5">
+                    <a href={camp.slug} class="group">
+                      <p class="text-sm font-semibold text-white group-hover:text-ocean-light transition-colors">{dest?.name || camp.slug.split("/").pop()}</p>
+                      <p class="text-[11px] text-white/30 mt-0.5">{dest?.location}</p>
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Feature rows */}
+            {data.comparison.features.map((feature, i) => (
+              <div class={`grid ${i % 2 === 0 ? "bg-dark" : "bg-dark-lighter/50"} ${i < data.comparison!.features.length - 1 ? "border-b border-white/5" : ""}`} style={`grid-template-columns: 1fr repeat(${data.comparison!.camps.length}, 1fr)`}>
+                <div class="p-4 px-5 flex items-center">
+                  <span class="text-sm text-white/50 font-medium">{feature}</span>
+                </div>
+                {data.comparison!.camps.map((camp) => (
+                  <div class="p-4 px-5 border-l border-white/5 flex items-center">
+                    <span class="text-sm text-white/80">{camp.values[i]}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+            {/* CTA row */}
+            <div class="grid bg-dark-lighter border-t border-white/5" style={`grid-template-columns: 1fr repeat(${data.comparison.camps.length}, 1fr)`}>
+              <div class="p-5"></div>
+              {data.comparison.camps.map((camp) => (
+                <div class="p-5 text-center border-l border-white/5">
+                  <a href={camp.slug} class="inline-flex items-center gap-2 text-sm font-medium text-ocean-light hover:text-ocean transition-colors">
+                    <span>View camp</span>
+                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile: stacked cards */}
+        <div class="md:hidden space-y-6">
+          {data.comparison.camps.map((camp) => {
+            const dest = countryCamps.find((d) => camp.slug.endsWith(d.slug.split("/").pop()!));
+            return (
+              <a href={camp.slug} class="block rounded-2xl border border-white/5 bg-dark-lighter p-5 transition-all hover:border-white/15 group">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <p class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{dest?.name || camp.slug.split("/").pop()}</p>
+                    <p class="text-[11px] text-white/30 mt-0.5">{dest?.location}</p>
+                  </div>
+                  <svg class="h-4 w-4 text-white/20 group-hover:text-ocean-light transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </div>
+                <div class="space-y-3">
+                  {data.comparison!.features.map((feature, i) => (
+                    <div class="flex justify-between items-start gap-4">
+                      <span class="text-xs text-white/35 shrink-0">{feature}</span>
+                      <span class="text-xs text-white/70 text-right">{camp.values[i]}</span>
+                    </div>
+                  ))}
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- Image Grid Break -->
   <ImageGrid images={data.imageGrid} variant="collage" />
 
@@ -368,6 +594,41 @@ const amenityLabels: Record<string, string> = {
     />
   ))}
 
+  {/* Surf Spots Section */}
+  {data.surfSpots && (
+    <section class="py-16 sm:py-24 bg-dark" id="surf-spots">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <div class="max-w-4xl mb-12">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.surfSpots.heading}</h2>
+          <p class="text-base text-white/45 max-w-3xl leading-relaxed">{data.surfSpots.subtitle}</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {data.surfSpots.spots.map((spot) => {
+            const levelColor = spot.level === "Advanced"
+              ? "text-red-400 bg-red-400/10 border-red-400/20"
+              : spot.level === "Beginner" || spot.level === "All levels"
+                ? "text-green-400 bg-green-400/10 border-green-400/20"
+                : "text-amber-400 bg-amber-400/10 border-amber-400/20";
+
+            return (
+              <div class="rounded-xl border border-white/5 bg-dark-lighter p-5 hover:border-white/10 transition-colors">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                  <h3 class="text-base font-semibold text-white">{spot.name}</h3>
+                  <span class={`shrink-0 text-[10px] font-semibold uppercase tracking-wider rounded-full border px-2 py-0.5 ${levelColor}`}>
+                    {spot.level}
+                  </span>
+                </div>
+                <p class="text-[11px] uppercase tracking-wider text-white/25 mb-3">{spot.type}</p>
+                <p class="text-sm text-white/50 leading-relaxed">{spot.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- Full-width Image Break -->
   <ImageBreak
     src={data.imageBreak.src}
@@ -377,6 +638,34 @@ const amenityLabels: Record<string, string> = {
 
   <!-- Customer Reviews -->
   <Reviews reviews={data.reviews} />
+
+  {/* FAQ Section */}
+  {data.faqs && data.faqs.length > 0 && (
+    <section class="py-16 sm:py-24 bg-dark-lighter" id="faq">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <div class="max-w-3xl mx-auto">
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-3">Frequently Asked Questions</h2>
+          <p class="text-base text-white/40 mb-12">Everything you need to know about surfing in {data.title.replace("Surf Camps\nin ", "").replace("Surf Camp\nin ", "")}.</p>
+
+          <div class="space-y-0 divide-y divide-white/5">
+            {data.faqs.map((faq, i) => (
+              <details class="group py-5 first:pt-0 last:pb-0" data-faq-index={i}>
+                <summary class="flex items-center justify-between cursor-pointer list-none select-none">
+                  <h3 class="text-sm sm:text-base font-medium text-white pr-8 group-open:text-ocean-light transition-colors">{faq.question}</h3>
+                  <span class="shrink-0 text-white/30 group-open:text-ocean-light transition-transform duration-300 group-open:rotate-45">
+                    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                  </span>
+                </summary>
+                <div class="pt-3 pr-12">
+                  <p class="text-sm text-white/55 leading-relaxed">{faq.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
 
   <!-- CTA -->
   <CTASection />
