@@ -16,7 +16,7 @@ const { country, camp } = Astro.params;
 const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
 const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay/guests`;
+const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
 const surfSpots = [

@@ -11,7 +11,7 @@ export const destinations: Destination[] = [
     rating: 4.8,
     reviewCount: 312,
     amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi", "bar"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-green-bowl-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-green-bowl-surf-stay",
     latitude: -8.81,
     longitude: 115.14,
     heroImages: [
@@ -30,7 +30,7 @@ export const destinations: Destination[] = [
     rating: 4.9,
     reviewCount: 187,
     amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-padang-padang-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-padang-padang-surf-stay",
     latitude: -8.81,
     longitude: 115.10,
     heroImages: [
@@ -49,7 +49,7 @@ export const destinations: Destination[] = [
     rating: 4.7,
     reviewCount: 245,
     amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi", "gym"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/costa-rica-avellanas-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/costa-rica-avellanas-surf-stay",
     latitude: 10.26,
     longitude: -85.84,
     heroImages: [
@@ -68,7 +68,7 @@ export const destinations: Destination[] = [
     rating: 4.8,
     reviewCount: 428,
     amenities: ["surf-lessons", "yoga", "restaurant", "wifi", "bar", "bikes"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-ericeira-lizandro-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-ericeira-surf-stay",
     latitude: 38.96,
     longitude: -9.42,
     heroImages: [
@@ -87,7 +87,7 @@ export const destinations: Destination[] = [
     rating: 4.9,
     reviewCount: 156,
     amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-ericeira-coxos-surf-villa-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/pt-cx-surf-and-stay",
     latitude: 38.98,
     longitude: -9.42,
     heroImages: [
@@ -106,7 +106,7 @@ export const destinations: Destination[] = [
     rating: 4.6,
     reviewCount: 98,
     amenities: ["surf-lessons", "yoga", "restaurant", "wifi"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-alentejo-milfontes-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-milfontes-surf-and-stay",
     latitude: 37.72,
     longitude: -8.79,
     heroImages: [
@@ -125,7 +125,7 @@ export const destinations: Destination[] = [
     rating: 4.7,
     reviewCount: 203,
     amenities: ["surf-lessons", "yoga", "restaurant", "wifi"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/morocco-banana-village-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/morocco-banana-village-surf-and-stay",
     latitude: 29.38,
     longitude: -10.17,
     heroImages: [
@@ -144,7 +144,7 @@ export const destinations: Destination[] = [
     rating: 4.8,
     reviewCount: 276,
     amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi", "bar"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-maderas-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-maderas-surf-stay",
     latitude: 11.16,
     longitude: -85.83,
     heroImages: [
@@ -163,7 +163,7 @@ export const destinations: Destination[] = [
     rating: 4.7,
     reviewCount: 134,
     amenities: ["pool", "surf-lessons", "restaurant", "wifi", "bar"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-maderas-surf-resort-surf-stay/guests",
+    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-surf-resort",
     latitude: 11.16,
     longitude: -85.83,
     heroImages: [
