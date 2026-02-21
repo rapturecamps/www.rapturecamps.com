@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 ---
@@ -8,15 +9,17 @@ import CTASection from "@/components/sections/CTASection.astro";
 <BaseLayout
   title="About Us | Rapture Surfcamps"
   description="Founded in 2003 by an Australian photographer and an Austrian entrepreneur, Rapture Surfcamps has grown into a global network of 8 surf camps across 5 countries."
+  ogImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=630&fit=crop"
 >
   <Hero
     title="Our Story"
-    subtitle="Two decades of sharing the stoke"
     backgroundImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop"
-  />
+  >
+    <Breadcrumbs inline crumbs={[{ label: "About" }]} />
+  </Hero>
 
   <section class="py-20 bg-dark">
-    <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl px-6 sm:px-12 lg:px-20">
       <div class="space-y-6 text-base sm:text-lg text-white/50 leading-relaxed">
         <p>
           Rapture Surfcamps was born in 2003 when an Australian photographer

@@ -3,7 +3,6 @@ import CampLayout from "@/components/layout/CampLayout.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
-import Reviews from "@/components/sections/Reviews.astro";
 import VideoTestimonials from "@/components/sections/VideoTestimonials.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import VideoBlock from "@/components/sections/VideoBlock.astro";
@@ -106,12 +105,6 @@ const subPages = [
     image: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=600&h=400&fit=crop",
     icon: "M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3 M10 1v3 M14 1v3",
   },
-];
-
-const reviews = [
-  { name: "Emma T.", location: "London, UK", text: "The best two weeks of my life. I went from barely standing up to confidently riding green waves. The instructors are incredible and the camp has the most amazing vibe.", rating: 5 },
-  { name: "Lucas M.", location: "Berlin, Germany", text: "This was my third time at Rapture and it never disappoints. The food, the waves, the people — everything is dialled in. Already booking my next trip.", rating: 5 },
-  { name: "Sarah K.", location: "Sydney, Australia", text: "As an experienced surfer, I was worried a surf camp would be too beginner-focused. Not at all — the surf guiding took me to spots I'd never have found on my own.", rating: 5 },
 ];
 
 const videoTestimonials = [
@@ -359,19 +352,12 @@ const videoTestimonials = [
   </section>
 
   <!-- Reviews -->
-  <Reviews heading={`What Guests Say About ${campTitle}`} reviews={reviews} />
-
-  <!-- Elfsight Reviews (test) -->
-  <ElfsightReviews
-    heading="Google & TripAdvisor Reviews"
-    appId="4b0fc7df-20a4-459a-b38e-28ab56a32099"
-    schema={{
-      businessName: `Rapture Surf Camp ${campTitle}`,
-      ratingValue: rating,
-      reviewCount: reviewCount,
-      url: `https://www.rapturecamps.com${basePath}`,
-    }}
-  />
+  {campData?.elfsightId && (
+    <ElfsightReviews
+      heading={`What Guests Say About ${campTitle}`}
+      appId={campData.elfsightId}
+    />
+  )}
 
   <!-- Video Testimonials -->
   <VideoTestimonials heading="Stories from Our Guests" testimonials={videoTestimonials} />

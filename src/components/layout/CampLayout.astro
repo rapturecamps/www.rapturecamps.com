@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CampSubnav from "./CampSubnav.astro";
 
 interface SpecialOffer {
@@ -43,6 +44,8 @@ const {
   disablePopups,
 } = Astro.props;
 
+const countrySlug = basePath.split("/")[2];
+
 const pageLabels: Record<string, string> = {
   overview: "The Surfcamp",
   surf: "Surf",
@@ -53,18 +56,21 @@ const pageLabel = pageLabels[activePage] || "";
 const heroTitle = activePage === "overview"
   ? `Rapture Surf Camp\n${campName}`
   : pageLabel;
-const heroSubtitle = activePage === "overview"
-  ? countryName
-  : `Rapture Surf Camp ${campName}`;
 ---
 
-<BaseLayout title={title} description={description} bookingUrl={bookingUrl} showWheel={showWheel} specialOffer={specialOffer} disablePopups={disablePopups}>
+<BaseLayout title={title} description={description} ogImage={heroImage} bookingUrl={bookingUrl} showWheel={showWheel} specialOffer={specialOffer} disablePopups={disablePopups}>
   <Hero
     title={heroTitle}
-    subtitle={heroSubtitle}
     backgroundImage={heroImage}
     backgroundImages={heroImages}
-  />
+  >
+    <Breadcrumbs inline crumbs={[
+      { label: "Surf Camps", href: "/surfcamp" },
+      { label: countryName, href: `/surfcamp/${countrySlug}` },
+      { label: campName, href: activePage === "overview" ? undefined : basePath },
+      ...(activePage !== "overview" ? [{ label: pageLabel }] : []),
+    ]} />
+  </Hero>
 
   <CampSubnav
     campName={campName}

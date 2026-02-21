@@ -28,6 +28,8 @@ interface Props {
   specialOffer?: SpecialOffer;
   /** Disable all popups on this page (e.g. legal pages) */
   disablePopups?: boolean;
+  /** Prevent search engines from indexing this page */
+  noindex?: boolean;
 }
 
 const {
@@ -38,10 +40,13 @@ const {
   showWheel = false,
   specialOffer,
   disablePopups = false,
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const defaultOgImage = `${siteUrl}/images/og-default.jpg`;
+const resolvedOgImage = ogImage || defaultOgImage;
 ---
 
 <!doctype html>
@@ -51,23 +56,31 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/images/rapturecamps-logo.svg" />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={canonicalUrl} />
+    <link rel="alternate" hreflang="de" href={new URL(`/de${Astro.url.pathname}`, siteUrl)} />
+    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Rapture Surfcamps" />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={resolvedOgImage} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@rapturecamps" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={resolvedOgImage} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>

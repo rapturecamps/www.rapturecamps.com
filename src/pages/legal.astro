@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 ---
 
 <BaseLayout
@@ -9,9 +10,10 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 >
   <div class="pt-32 pb-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20 max-w-3xl">
-      <h1 class="font-display text-4xl sm:text-5xl font-bold text-white mb-10">Legal Notice</h1>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-white">Legal Notice</h1>
+      <Breadcrumbs inline crumbs={[{ label: "Legal Notice" }]} />
 
-      <div class="prose-legal space-y-8 text-sm text-white/50 leading-relaxed">
+      <div class="prose-legal space-y-8 text-sm text-white/50 leading-relaxed mt-10">
         <section>
           <h2 class="text-lg font-semibold text-white mb-3">Company Information</h2>
           <p>

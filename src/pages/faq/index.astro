@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { destinations } from "@/lib/data";
 ---
 
@@ -7,10 +8,11 @@ import { destinations } from "@/lib/data";
   title="FAQ | Rapture Surfcamps"
   description="Frequently asked questions about Rapture Surfcamps. Find answers about booking, surfing lessons, rooms, food, and more."
 >
-  <div class="pt-32 pb-16 bg-dark">
+  <div class="pt-32 pb-8 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <h1 class="font-display text-4xl sm:text-5xl font-bold text-white">Frequently Asked Questions</h1>
       <p class="mt-4 text-base sm:text-lg text-white/50 max-w-2xl">Select your camp to find answers about booking, surf lessons, rooms, food, and everything else you need to know.</p>
+      <Breadcrumbs inline crumbs={[{ label: "FAQ" }]} />
     </div>
   </div>
 

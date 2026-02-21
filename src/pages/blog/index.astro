@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 
 const categories = [
   { name: "All", slug: "" },
@@ -25,12 +26,14 @@ const posts = [
 <BaseLayout
   title="Blog - Waves for Days | Rapture Surfcamps"
   description="Surf destinations, tips, and travel inspiration from Rapture Surfcamps."
+  ogImage="https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1200&h=630&fit=crop"
 >
   <Hero
     title="Waves for Days"
-    subtitle="Surf destinations, tips, and travel inspiration from around the world"
     backgroundImage="https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop"
-  />
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Blog" }]} />
+  </Hero>
 
   <section class="py-12 bg-dark">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

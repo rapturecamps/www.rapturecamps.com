@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
 import { destinations } from "@/lib/data";
 
@@ -44,6 +45,7 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
 <BaseLayout
   title={`FAQ — ${campName} | Rapture Surfcamps`}
   description={`Frequently asked questions about Rapture Surf Camp ${campName} in ${countryName}. Booking, surf lessons, rooms, food, and more.`}
+  ogImage={campImage}
 >
   <!-- Hero banner with camp image -->
   <div class="relative h-[280px] sm:h-[320px] overflow-hidden">
@@ -53,14 +55,11 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
     />
     <div class="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/40 to-dark" />
     <div class="relative z-10 flex flex-col justify-end h-full px-6 sm:px-12 lg:px-20 pb-10">
-      <a href="/faq" class="inline-flex items-center gap-2 text-xs text-white/40 hover:text-white/70 mb-4 transition-colors w-fit">
-        <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
-        All FAQ
-      </a>
-      {countryName && (
-        <p class="text-xs uppercase tracking-[0.2em] text-white/40 mb-2">{countryName}</p>
-      )}
       <h1 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-white">FAQ — {campName}</h1>
+      <Breadcrumbs inline crumbs={[
+        { label: "FAQ", href: "/faq" },
+        { label: campName },
+      ]} />
     </div>
   </div>
 

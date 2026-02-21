@@ -1,11 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ContentBlock from "@/components/sections/ContentBlock.astro";
-import Reviews from "@/components/sections/Reviews.astro";
+import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import { destinations, countries } from "@/lib/data";
 
 const countryContent: Record<string, {
@@ -19,8 +20,7 @@ const countryContent: Record<string, {
   imageGrid: { src: string; alt: string }[];
   contentBlocks: { heading: string; body: string; image?: string; imageAlt?: string; reverse?: boolean; background?: "dark" | "dark-lighter" }[];
   imageBreak: { src: string; alt: string; caption?: string };
-  reviews: { name: string; location?: string; text: string; rating: number }[];
-  comparison?: { heading: string; subtitle: string; features: string[]; camps: { slug: string; values: string[] }[] };
+  comparison: { heading: string; subtitle: string; features: string[]; camps: { slug: string; values: string[] }[] };
   surfSpots?: { heading: string; subtitle: string; spots: { name: string; level: string; type: string; description: string }[] };
   faqs?: { question: string; answer: string }[];
 }> = {
@@ -70,11 +70,6 @@ const countryContent: Record<string, {
       alt: "Surfer walking with board on Bali beach at sunset",
       caption: "Padang Padang Beach, Bukit Peninsula",
     },
-    reviews: [
-      { name: "Emma T.", location: "London, UK", text: "The best two weeks of my life. I went from barely standing up to confidently riding green waves. The instructors are incredible and the camp has the most amazing vibe.", rating: 5 },
-      { name: "Lucas M.", location: "Berlin, Germany", text: "This was my third time at Rapture Bali and it never disappoints. The food, the waves, the people — everything is dialled in. Already booking my next trip.", rating: 5 },
-      { name: "Sarah K.", location: "Sydney, Australia", text: "As an experienced surfer, I was worried a surf camp would be too beginner-focused. Not at all — the surf guiding took me to spots I'd never have found on my own. Uluwatu at sunrise was unforgettable.", rating: 5 },
-    ],
     comparison: {
       heading: "Which Bali Camp Is Right for You?",
       subtitle: "Both camps are on the Bukit Peninsula, 15 minutes apart. Here's how they compare.",
@@ -145,11 +140,14 @@ const countryContent: Record<string, {
       alt: "Tropical beach in Costa Rica at golden hour",
       caption: "Playa Avellanas, Guanacaste",
     },
-    reviews: [
-      { name: "Mike R.", location: "Toronto, Canada", text: "The waves at Avellanas are so consistent — I surfed twice a day for a full week and every session was different. The camp food is insane, especially the fresh fruit breakfast buffet.", rating: 5 },
-      { name: "Anna L.", location: "Stockholm, Sweden", text: "Came for the surf, stayed for the Pura Vida. The staff are like family, the jungle setting is magical, and I saw my first wild sloth on day two!", rating: 5 },
-      { name: "Tom H.", location: "Melbourne, Australia", text: "Great setup for remote workers — the WiFi is solid and there's plenty of quiet spots to work between sessions. Best workation I've ever done.", rating: 4 },
-    ],
+    comparison: {
+      heading: "Stay at Our Surf Camp in Costa Rica",
+      subtitle: "Playa Avellanas is one of Costa Rica's best-kept secrets: perfect waves, zero crowds, and a jungle backdrop that feels like a movie set.",
+      features: ["Vibe", "Best For", "Surf Breaks Nearby", "Pool", "Rooms", "Group Size", "Meals", "Unique Feature"],
+      camps: [
+        { slug: "/surfcamp/costa-rica/avellanas", values: ["Pura Vida & adventurous", "All levels", "Avellanas, Little Hawaii, Playa Negra", "Yes — pool & jacuzzi", "5 room types", "Up to 30 guests", "Breakfast & dinner included", "Jungle setting, outdoor cinema, recovery centre"] },
+      ],
+    },
     faqs: [
       { question: "Is Costa Rica good for beginner surfers?", answer: "Excellent. Playa Avellanas has several zones suited to beginners — wide sandy beaches with consistent whitewater for learning. The water is warm (27–29°C) year-round, so you can focus on surfing without worrying about cold water." },
       { question: "What is the best time to surf in Costa Rica?", answer: "The dry season (December–April) brings smaller, clean conditions perfect for learning. May through November sees bigger, more consistent south swells for intermediate and advanced surfers. Offshore mornings are common in both seasons." },
@@ -215,11 +213,6 @@ const countryContent: Record<string, {
       alt: "Surfer riding a wave at Ericeira Portugal",
       caption: "Ericeira, World Surfing Reserve",
     },
-    reviews: [
-      { name: "Julia W.", location: "Munich, Germany", text: "Ericeira is paradise. The camp is right on the beach, the town is beautiful, and the surf instructors really know what they're doing. I improved so much in just one week.", rating: 5 },
-      { name: "Pierre D.", location: "Paris, France", text: "Stayed at the Coxos Villa — the infinity pool with ocean view is unreal. And the shuttle to the main camp for lessons worked perfectly. Best surf trip in Europe.", rating: 5 },
-      { name: "Lisa B.", location: "Amsterdam, Netherlands", text: "Milfontes was exactly what I needed. Away from the crowds, surrounded by nature, with incredible empty waves. The eco approach is genuine and the food from the garden was amazing.", rating: 5 },
-    ],
     comparison: {
       heading: "Which Portugal Camp Is Right for You?",
       subtitle: "Three distinct experiences across the Portuguese coast. Here's how they compare.",
@@ -291,11 +284,14 @@ const countryContent: Record<string, {
       alt: "Morocco Atlantic coast at golden hour",
       caption: "Sidi Ifni, Morocco — Where Rapture Began",
     },
-    reviews: [
-      { name: "Oscar F.", location: "Barcelona, Spain", text: "Morocco blew my mind. The waves are incredible, the food is the best of any surf camp I've stayed at, and the rooftop sunsets are magical. Such a unique experience.", rating: 5 },
-      { name: "Hannah M.", location: "Dublin, Ireland", text: "I was nervous travelling to Morocco as a solo female surfer but felt completely safe and welcomed from the moment I arrived. The staff are like family. Can't wait to return.", rating: 5 },
-      { name: "Jan K.", location: "Prague, Czech Republic", text: "Best value surf camp I've found. Three meals a day, surf lessons, yoga — all included. The waves in winter are absolutely pumping. Bring a 3/2 wetsuit.", rating: 5 },
-    ],
+    comparison: {
+      heading: "Stay at Our Surf Camp in Morocco",
+      subtitle: "Sidi Ifni is where it all began. More than 20 years ago, our founders started the very first Rapture camp right here.",
+      features: ["Vibe", "Best For", "Surf Breaks Nearby", "Pool", "Rooms", "Group Size", "Meals", "Unique Feature"],
+      camps: [
+        { slug: "/surfcamp/morocco/banana-village", values: ["Intimate & cultural", "All levels", "Sidi Ifni Main, Legzira, The Camel", "No — rooftop terrace instead", "3 room types", "Max 21 guests", "3 meals a day included", "Rooftop ocean views, Berber village trips, 20+ years history"] },
+      ],
+    },
     faqs: [
       { question: "Is Morocco safe for surf travellers?", answer: "Yes. Morocco has a well-established surf tourism scene, particularly in the Agadir and Sidi Ifni regions. Our camp has operated here for over 20 years. The local community is welcoming and hospitality is deeply ingrained in Moroccan culture." },
       { question: "What is the best time to surf in Morocco?", answer: "October through April is prime season — powerful north Atlantic swells deliver consistent overhead waves to Morocco's point breaks. Summer (May–September) brings smaller waves ideal for beginners, plus warmer water." },
@@ -355,11 +351,6 @@ const countryContent: Record<string, {
       alt: "Playa Maderas beach Nicaragua at sunset",
       caption: "Playa Maderas, San Juan del Sur",
     },
-    reviews: [
-      { name: "Chris P.", location: "Los Angeles, USA", text: "Nicaragua is the real deal. Warm water, consistent waves, zero crowds. The glamping tents at the hilltop camp are so cool and the infinity pool at sunset is next level.", rating: 5 },
-      { name: "Mia S.", location: "Copenhagen, Denmark", text: "The surf guiding made all the difference — the instructors know exactly where to go depending on the swell. I surfed waves I never would have found on my own.", rating: 5 },
-      { name: "Ben A.", location: "Cape Town, South Africa", text: "Best surf camp vibes anywhere. The community of travellers, the nightly dinners, watching surf movies under the stars — it's like summer camp for adults, but with perfect waves.", rating: 4 },
-    ],
     comparison: {
       heading: "Which Nicaragua Camp Is Right for You?",
       subtitle: "Two properties at Playa Maderas, each with a distinct personality.",
@@ -399,6 +390,9 @@ const { country } = Astro.params;
 const data = countryContent[country!];
 if (!data) return Astro.redirect("/404");
 
+const countryInfo = countries.find((c) => c.slug === country);
+const countryName = countryInfo?.name || country!;
+
 const countryCamps = destinations.filter(
   (d) => d.country.toLowerCase().replace(" ", "-") === country
 );
@@ -418,6 +412,7 @@ const amenityLabels: Record<string, string> = {
 <BaseLayout
   title={`${data.title.replace("\n", " ")} | Rapture Surfcamps`}
   description={data.description}
+  ogImage={data.heroImage}
 >
   {data.faqs && data.faqs.length > 0 && (
     <script type="application/ld+json" slot="head" set:html={JSON.stringify({
@@ -435,149 +430,123 @@ const amenityLabels: Record<string, string> = {
   )}
   <Hero
     title={data.title}
-    subtitle={data.tagline}
     backgroundImage={data.heroImage}
     backgroundImages={data.heroImages}
-  />
+  >
+    <Breadcrumbs inline crumbs={[
+      { label: "Surf Camps", href: "/surfcamp" },
+      { label: countryName },
+    ]} />
+  </Hero>
 
-  <!-- Intro + Camp Cards -->
+  <!-- Intro + Camps -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{data.campsSectionTitle}</h1>
-      <p class="text-base sm:text-lg text-white/50 max-w-3xl leading-relaxed mb-16">{data.intro}</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {countryCamps.map((camp) => (
-          <a href={camp.slug} class="group overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
-            <div class="relative aspect-[16/10] overflow-hidden">
-              <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-              {camp.rating && (
-                <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
-                  <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  <span class="text-white text-xs font-semibold">{camp.rating}</span>
-                  {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
-                </div>
-              )}
-            </div>
-            <div class="p-6">
-              <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
-              <h3 class="text-xl font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
-              {camp.tagline && <p class="text-sm text-white/45 mt-1.5 leading-snug">{camp.tagline}</p>}
-
-              {camp.amenities && camp.amenities.length > 0 && (
-                <div class="mt-4 flex flex-wrap gap-2">
-                  {camp.amenities.map((amenity) => (
-                    <span class="inline-flex items-center gap-1.5 text-[11px] text-white/40 bg-white/5 rounded-full px-2.5 py-1">
-                      {amenity === "pool" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>}
-                      {amenity === "surf-lessons" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>}
-                      {amenity === "yoga" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="1.5"/><path d="M7 21l3-7"/><path d="M17 21l-3-7"/><path d="m4 16 4-2.5"/><path d="m20 16-4-2.5"/><path d="m9 10.5 3 3 3-3"/></svg>}
-                      {amenity === "restaurant" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg>}
-                      {amenity === "wifi" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M2 8.82a15 15 0 0 1 20 0"/><path d="M5 12.859a10 10 0 0 1 14 0"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/></svg>}
-                      {amenity === "bar" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8"/><path d="M12 11v11"/><path d="m19 3-7 8-7-8Z"/></svg>}
-                      {amenity === "gym" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.4 14.4 9.6 9.6"/><path d="M18.657 21.485a2 2 0 1 1-2.829-2.828l-1.767-1.768a2 2 0 1 1-2.829-2.829l6.364-6.364a2 2 0 1 1 2.829 2.829l1.767 1.767a2 2 0 1 1 2.828 2.829z"/><path d="m21.5 21.5-1.4-1.4"/><path d="M3.9 3.9 2.5 2.5"/><path d="M6.404 12.768a2 2 0 1 1-2.829-2.829l1.768-1.767a2 2 0 1 1-2.828-2.829l2.828-2.828a2 2 0 1 1 2.829 2.828l1.767-1.768a2 2 0 1 1 2.829 2.829z"/></svg>}
-                      {amenity === "bikes" && <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>}
-                      {amenityLabels[amenity] || amenity}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div class="mt-4 flex items-center gap-2 text-ocean-light text-xs font-medium opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                <span>View this camp</span>
-                <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-              </div>
-            </div>
-          </a>
-        ))}
+      <div class="max-w-4xl mx-auto text-center mb-14">
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h1>
+        <p class="text-base sm:text-lg text-white/50 max-w-3xl mx-auto leading-relaxed">{data.comparison.subtitle}</p>
       </div>
-    </div>
-  </section>
 
-  {/* Camp Comparison Table (multi-camp countries only) */}
-  {data.comparison && (
-    <section class="py-16 sm:py-24 bg-dark-lighter" id="compare">
-      <div class="px-6 sm:px-12 lg:px-20">
-        <div class="max-w-4xl mx-auto text-center mb-12">
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h2>
-          <p class="text-base text-white/45 max-w-2xl mx-auto">{data.comparison.subtitle}</p>
-        </div>
-
-        {/* Desktop: table view */}
-        <div class="hidden md:block max-w-5xl mx-auto">
-          <div class="rounded-2xl border border-white/5 overflow-hidden">
-            {/* Header row */}
-            <div class="grid bg-dark-lighter border-b border-white/5" style={`grid-template-columns: 1fr repeat(${data.comparison.camps.length}, 1fr)`}>
-              <div class="p-5"></div>
-              {data.comparison.camps.map((camp) => {
-                const dest = countryCamps.find((d) => camp.slug.endsWith(d.slug.split("/").pop()!));
-                return (
-                  <div class="p-5 text-center border-l border-white/5">
-                    <a href={camp.slug} class="group">
-                      <p class="text-sm font-semibold text-white group-hover:text-ocean-light transition-colors">{dest?.name || camp.slug.split("/").pop()}</p>
-                      <p class="text-[11px] text-white/30 mt-0.5">{dest?.location}</p>
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Feature rows */}
-            {data.comparison.features.map((feature, i) => (
-              <div class={`grid ${i % 2 === 0 ? "bg-dark" : "bg-dark-lighter/50"} ${i < data.comparison!.features.length - 1 ? "border-b border-white/5" : ""}`} style={`grid-template-columns: 1fr repeat(${data.comparison!.camps.length}, 1fr)`}>
-                <div class="p-4 px-5 flex items-center">
-                  <span class="text-sm text-white/50 font-medium">{feature}</span>
-                </div>
-                {data.comparison!.camps.map((camp) => (
-                  <div class="p-4 px-5 border-l border-white/5 flex items-center">
-                    <span class="text-sm text-white/80">{camp.values[i]}</span>
-                  </div>
-                ))}
-              </div>
-            ))}
-
-            {/* CTA row */}
-            <div class="grid bg-dark-lighter border-t border-white/5" style={`grid-template-columns: 1fr repeat(${data.comparison.camps.length}, 1fr)`}>
-              <div class="p-5"></div>
-              {data.comparison.camps.map((camp) => (
-                <div class="p-5 text-center border-l border-white/5">
-                  <a href={camp.slug} class="inline-flex items-center gap-2 text-sm font-medium text-ocean-light hover:text-ocean transition-colors">
-                    <span>View camp</span>
-                    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile: stacked cards */}
-        <div class="md:hidden space-y-6">
-          {data.comparison.camps.map((camp) => {
-            const dest = countryCamps.find((d) => camp.slug.endsWith(d.slug.split("/").pop()!));
+      {/* Desktop layout */}
+      <div class={`hidden md:block ${data.comparison.camps.length === 1 ? "max-w-2xl mx-auto" : ""}`}>
+        <div class="grid gap-6 mb-6" style={`grid-template-columns: repeat(${data.comparison.camps.length}, 1fr)`}>
+          {data.comparison.camps.map((compCamp) => {
+            const camp = countryCamps.find((d) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
+            if (!camp) return null;
             return (
-              <a href={camp.slug} class="block rounded-2xl border border-white/5 bg-dark-lighter p-5 transition-all hover:border-white/15 group">
-                <div class="flex items-center justify-between mb-4">
-                  <div>
-                    <p class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{dest?.name || camp.slug.split("/").pop()}</p>
-                    <p class="text-[11px] text-white/30 mt-0.5">{dest?.location}</p>
-                  </div>
-                  <svg class="h-4 w-4 text-white/20 group-hover:text-ocean-light transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                </div>
-                <div class="space-y-3">
-                  {data.comparison!.features.map((feature, i) => (
-                    <div class="flex justify-between items-start gap-4">
-                      <span class="text-xs text-white/35 shrink-0">{feature}</span>
-                      <span class="text-xs text-white/70 text-right">{camp.values[i]}</span>
+              <a href={camp.slug} class="group overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
+                <div class="relative aspect-[16/10] overflow-hidden">
+                  <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  {camp.rating && (
+                    <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
+                      <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                      <span class="text-white text-xs font-semibold">{camp.rating}</span>
+                      {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
                     </div>
-                  ))}
+                  )}
+                </div>
+                <div class="p-5">
+                  <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
+                  <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
+                  {camp.tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{camp.tagline}</p>}
+                  {camp.amenities && camp.amenities.length > 0 && (
+                    <div class="mt-3 flex flex-wrap gap-1.5">
+                      {camp.amenities.map((amenity) => (
+                        <span class="inline-flex items-center gap-1 text-[10px] text-white/40 bg-white/5 rounded-full px-2 py-0.5">
+                          {amenityLabels[amenity] || amenity}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </a>
             );
           })}
         </div>
+
+        <div class="grid gap-6" style={`grid-template-columns: repeat(${data.comparison.camps.length}, 1fr)`}>
+          {data.comparison.camps.map((camp, campIdx) => (
+            <div class="rounded-2xl border border-white/5 overflow-hidden">
+              {data.comparison.features.map((feature, i) => (
+                <div class={`p-4 px-5 ${i % 2 === 0 ? "bg-dark-lighter/50" : "bg-dark"} ${i < data.comparison.features.length - 1 ? "border-b border-white/5" : ""}`}>
+                  <span class="block text-[11px] uppercase tracking-wider text-white/30 mb-1">{feature}</span>
+                  <span class="text-sm text-white/75">{camp.values[i]}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
-  )}
+
+      {/* Mobile layout */}
+      <div class="md:hidden space-y-6">
+        {data.comparison.camps.map((compCamp) => {
+          const camp = countryCamps.find((d) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
+          if (!camp) return null;
+          return (
+            <a href={camp.slug} class="block overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15 group">
+              <div class="relative aspect-[16/10] overflow-hidden">
+                <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                {camp.rating && (
+                  <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
+                    <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                    <span class="text-white text-xs font-semibold">{camp.rating}</span>
+                    {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
+                  </div>
+                )}
+              </div>
+              <div class="p-5">
+                <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
+                <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
+                {camp.tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{camp.tagline}</p>}
+                {camp.amenities && camp.amenities.length > 0 && (
+                  <div class="mt-3 flex flex-wrap gap-1.5">
+                    {camp.amenities.map((amenity) => (
+                      <span class="inline-flex items-center gap-1 text-[10px] text-white/40 bg-white/5 rounded-full px-2 py-0.5">
+                        {amenityLabels[amenity] || amenity}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                <div class="mt-4 pt-4 border-t border-white/5 space-y-2.5">
+                  {data.comparison.features.map((feature, i) => (
+                    <div class="flex justify-between items-start gap-4">
+                      <span class="text-xs text-white/30 shrink-0">{feature}</span>
+                      <span class="text-xs text-white/65 text-right">{compCamp.values[i]}</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="mt-4 flex items-center gap-2 text-ocean-light text-xs font-medium">
+                  <span>View this camp</span>
+                  <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
 
   <!-- Image Grid Break -->
   <ImageGrid images={data.imageGrid} variant="collage" />
@@ -637,7 +606,12 @@ const amenityLabels: Record<string, string> = {
   />
 
   <!-- Customer Reviews -->
-  <Reviews reviews={data.reviews} />
+  {countryCamps[0]?.elfsightId && (
+    <ElfsightReviews
+      heading={`What Guests Say About ${countryName}`}
+      appId={countryCamps[0].elfsightId}
+    />
+  )}
 
   {/* FAQ Section */}
   {data.faqs && data.faqs.length > 0 && (

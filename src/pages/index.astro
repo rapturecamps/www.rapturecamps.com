@@ -9,6 +9,28 @@ import SocialGrid from "@/components/sections/SocialGrid.astro";
 ---
 
 <BaseLayout showWheel>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Rapture Surfcamps",
+    "url": "https://www.rapturecamps.com",
+    "logo": "https://www.rapturecamps.com/images/rapturecamps-logo.svg",
+    "description": "A network of 8 unique surf camps in 5 countries on 4 continents.",
+    "foundingDate": "2003",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "info@rapturecamps.com",
+      "telephone": "+447700177360",
+      "availableLanguage": ["English", "German"]
+    },
+    "sameAs": [
+      "https://www.instagram.com/rapturecamps",
+      "https://www.facebook.com/rapturecamps",
+      "https://www.youtube.com/@rapturecamps",
+      "https://www.tiktok.com/@rapturecamps"
+    ]
+  })} />
   <Hero
     tagline="Rapture Surfcamps"
     title={`All you have\nis now.`}

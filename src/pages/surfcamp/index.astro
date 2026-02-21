@@ -1,16 +1,17 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { countries } from "@/lib/data";
 ---
 
 <BaseLayout
   title="Surf Camps Worldwide | Rapture Surfcamps"
   description="Choose your surf camp destination. Rapture Surfcamps operates in Bali, Costa Rica, Portugal, Morocco, and Nicaragua."
+  ogImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=630&fit=crop"
 >
   <Hero
     title="Choose Your Destination"
-    subtitle="From tropical Bali to the Atlantic coast of Portugal — find your surf camp."
     backgroundImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop"
     backgroundImages={[
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
@@ -18,7 +19,9 @@ import { countries } from "@/lib/data";
       "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
     ]}
-  />
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Surf Camps" }]} />
+  </Hero>
 
   <section class="py-20 bg-dark">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

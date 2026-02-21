@@ -1,18 +1,21 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 ---
 
 <BaseLayout
   title="Jobs | Work With Us - Rapture Surfcamps"
   description="Do you want to work with us? Check surf jobs available at our camps. Browse through our career opportunities and join the Rapture family!"
+  ogImage="https://www.rapturecamps.com/wp-content/uploads/2020/04/Work-with-us.jpg"
 >
   <Hero
     title="Work With Us"
-    subtitle="Join the Rapture family and turn the ocean into your office"
     backgroundImage="https://www.rapturecamps.com/wp-content/uploads/2020/04/Work-with-us.jpg"
-  />
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Jobs" }]} />
+  </Hero>
 
   <!-- Intro -->
   <section class="py-16 sm:py-20 bg-dark">

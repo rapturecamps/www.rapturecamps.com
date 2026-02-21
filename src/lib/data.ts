@@ -14,6 +14,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-green-bowl-surf-stay",
     latitude: -8.81,
     longitude: 115.14,
+    elfsightId: "3fe95465-93dd-483e-b5a0-6817fe35a177",
     heroImages: [
       "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=1080&fit=crop",
@@ -33,6 +34,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/bali-padang-padang-surf-stay",
     latitude: -8.81,
     longitude: 115.10,
+    elfsightId: "64690298-a208-4a08-a02f-3af3c1c064f0",
     heroImages: [
       "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920&h=1080&fit=crop",
@@ -52,6 +54,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/costa-rica-avellanas-surf-stay",
     latitude: 10.26,
     longitude: -85.84,
+    elfsightId: "d7ad8e50-5970-408b-8530-a8cb217f6e48",
     heroImages: [
       "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920&h=1080&fit=crop",
@@ -71,6 +74,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-ericeira-surf-stay",
     latitude: 38.96,
     longitude: -9.42,
+    elfsightId: "4b0fc7df-20a4-459a-b38e-28ab56a32099",
     heroImages: [
       "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
@@ -90,6 +94,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/pt-cx-surf-and-stay",
     latitude: 38.98,
     longitude: -9.42,
+    elfsightId: "c4ec2428-a8fb-41fb-8308-cbdbc5febca6",
     heroImages: [
       "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=1080&fit=crop",
@@ -109,6 +114,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/portugal-milfontes-surf-and-stay",
     latitude: 37.72,
     longitude: -8.79,
+    elfsightId: "a6b57b4b-ac51-44a7-889f-75709e21c138",
     heroImages: [
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop",
@@ -147,6 +153,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-maderas-surf-stay",
     latitude: 11.16,
     longitude: -85.83,
+    elfsightId: "0e05f6aa-1dd8-4c38-9b40-529290504acf",
     heroImages: [
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920&h=1080&fit=crop",
@@ -166,6 +173,7 @@ export const destinations: Destination[] = [
     bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-surf-resort",
     latitude: 11.16,
     longitude: -85.83,
+    elfsightId: "0e05f6aa-1dd8-4c38-9b40-529290504acf",
     heroImages: [
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",

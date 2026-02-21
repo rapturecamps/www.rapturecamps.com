@@ -95,6 +95,8 @@ const hasRotation = !hasVideo && images.length > 1;
       </p>
     )}
 
+    <slot />
+
     {ctaText && ctaHref && (
       <div class="hidden sm:block mt-5 sm:mt-8">
         <a

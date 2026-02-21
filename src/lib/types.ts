@@ -77,6 +77,7 @@ export interface Destination {
   heroImages?: string[];
   latitude?: number;
   longitude?: number;
+  elfsightId?: string;
 }
 
 export interface StatItem {
