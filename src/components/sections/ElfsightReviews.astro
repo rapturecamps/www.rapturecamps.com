@@ -33,13 +33,13 @@ const jsonLd = schema ? JSON.stringify({
 }) : null;
 ---
 
-<section class="py-16 sm:py-20 bg-dark elfsight-reviews-section">
+<section class="py-16 sm:py-20 bg-dark elfsight-reviews-section" data-elfsight-lazy data-elfsight-id={appId}>
   <div class="px-6 sm:px-12 lg:px-20">
     {heading && (
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
     )}
     <div class="elfsight-reviews-wrapper">
-      <div class={`elfsight-app-${appId}`} data-elfsight-app-lazy></div>
+      <div class="elfsight-placeholder" style="min-height:200px"></div>
     </div>
   </div>
 </section>
@@ -48,7 +48,42 @@ const jsonLd = schema ? JSON.stringify({
   <script type="application/ld+json" set:html={jsonLd} />
 )}
 
-<script is:inline src="https://elfsightcdn.com/platform.js" async></script>
+<script is:inline>
+(function () {
+  if (window.__elfsightLazyInit) return;
+  window.__elfsightLazyInit = true;
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
+      var id = el.getAttribute("data-elfsight-id");
+      var wrapper = el.querySelector(".elfsight-placeholder");
+      if (wrapper && id) {
+        var w = document.createElement("div");
+        w.className = "elfsight-app-" + id;
+        w.setAttribute("data-elfsight-app-lazy", "");
+        wrapper.replaceWith(w);
+      }
+    });
+    var s = document.createElement("script");
+    s.src = "https://static.elfsight.com/platform/platform.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        load();
+        observer.disconnect();
+      }
+    });
+  }, { rootMargin: "400px" });
+  document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
+    observer.observe(el);
+  });
+})();
+</script>
 
 <style is:global>
   .elfsight-reviews-section [class*="eapps-"] {

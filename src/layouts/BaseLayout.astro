@@ -30,6 +30,8 @@ interface Props {
   disablePopups?: boolean;
   /** Prevent search engines from indexing this page */
   noindex?: boolean;
+  /** Preload a hero/LCP image for faster rendering */
+  preloadImage?: string;
 }
 
 const {
@@ -41,6 +43,7 @@ const {
   specialOffer,
   disablePopups = false,
   noindex = false,
+  preloadImage,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
@@ -76,6 +79,8 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
+
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

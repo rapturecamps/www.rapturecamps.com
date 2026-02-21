@@ -356,6 +356,12 @@ const videoTestimonials = [
     <ElfsightReviews
       heading={`What Guests Say About ${campTitle}`}
       appId={campData.elfsightId}
+      schema={{
+        businessName: `Rapture Surf Camp ${campTitle}`,
+        ratingValue: campData.rating || 4.7,
+        reviewCount: campData.reviewCount || 100,
+        url: `https://www.rapturecamps.com${basePath}`,
+      }}
     />
   )}
 

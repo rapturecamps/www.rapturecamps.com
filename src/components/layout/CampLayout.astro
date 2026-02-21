@@ -58,7 +58,7 @@ const heroTitle = activePage === "overview"
   : pageLabel;
 ---
 
-<BaseLayout title={title} description={description} ogImage={heroImage} bookingUrl={bookingUrl} showWheel={showWheel} specialOffer={specialOffer} disablePopups={disablePopups}>
+<BaseLayout title={title} description={description} ogImage={heroImage} bookingUrl={bookingUrl} showWheel={showWheel} specialOffer={specialOffer} disablePopups={disablePopups} preloadImage={heroImages?.[0] || heroImage}>
   <Hero
     title={heroTitle}
     backgroundImage={heroImage}

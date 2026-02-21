@@ -413,6 +413,7 @@ const amenityLabels: Record<string, string> = {
   title={`${data.title.replace("\n", " ")} | Rapture Surfcamps`}
   description={data.description}
   ogImage={data.heroImage}
+  preloadImage={data.heroImages?.[0] || data.heroImage}
 >
   {data.faqs && data.faqs.length > 0 && (
     <script type="application/ld+json" slot="head" set:html={JSON.stringify({
@@ -610,6 +611,12 @@ const amenityLabels: Record<string, string> = {
     <ElfsightReviews
       heading={`What Guests Say About ${countryName}`}
       appId={countryCamps[0].elfsightId}
+      schema={{
+        businessName: `Rapture Surfcamps ${countryName}`,
+        ratingValue: countryCamps[0].rating || 4.7,
+        reviewCount: countryCamps.reduce((sum, c) => sum + (c.reviewCount || 0), 0),
+        url: `https://www.rapturecamps.com/surfcamp/${country}`,
+      }}
     />
   )}
 

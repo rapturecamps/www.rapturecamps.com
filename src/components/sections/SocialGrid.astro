@@ -1,14 +1,49 @@
 ---
 ---
 
-<section class="pt-16 sm:pt-28 pb-20 sm:pb-28 bg-dark-lighter">
+<section class="pt-16 sm:pt-28 pb-20 sm:pb-28 bg-dark-lighter" data-elfsight-lazy data-elfsight-id="6fdbc2bd-1ccb-40d6-bacc-7aa0f0072abc">
   <div class="px-6 sm:px-12 lg:px-20">
     <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">
       Discover Our Social Feed
     </h2>
 
-    <div class="elfsight-app-6fdbc2bd-1ccb-40d6-bacc-7aa0f0072abc" data-elfsight-app-lazy></div>
+    <div class="elfsight-placeholder" style="min-height:300px"></div>
   </div>
 </section>
 
-<script is:inline src="https://static.elfsight.com/platform/platform.js" async></script>
+<script is:inline>
+(function () {
+  if (window.__elfsightLazyInit) return;
+  window.__elfsightLazyInit = true;
+  var loaded = false;
+  function load() {
+    if (loaded) return;
+    loaded = true;
+    document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
+      var id = el.getAttribute("data-elfsight-id");
+      var wrapper = el.querySelector(".elfsight-placeholder");
+      if (wrapper && id) {
+        var w = document.createElement("div");
+        w.className = "elfsight-app-" + id;
+        w.setAttribute("data-elfsight-app-lazy", "");
+        wrapper.replaceWith(w);
+      }
+    });
+    var s = document.createElement("script");
+    s.src = "https://static.elfsight.com/platform/platform.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        load();
+        observer.disconnect();
+      }
+    });
+  }, { rootMargin: "400px" });
+  document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
+    observer.observe(el);
+  });
+})();
+</script>
