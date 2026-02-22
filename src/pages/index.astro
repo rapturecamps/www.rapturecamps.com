@@ -6,6 +6,12 @@ import AboutSection from "@/components/sections/AboutSection.astro";
 import BlogFeed from "@/components/sections/BlogFeed";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import SocialGrid from "@/components/sections/SocialGrid.astro";
+import { getHomepage } from "@/lib/sanity-data";
+
+const hp = await getHomepage();
+const heroTagline = hp?.heroTagline || "Rapture Surfcamps";
+const heroTitle = hp?.heroTitle || "All you have is now.";
+const heroSubtitle = hp?.heroSubtitle || "Unparalleled Surf Camp Experience at the Best Surf Spots!";
 ---
 
 <BaseLayout showWheel>
@@ -32,15 +38,15 @@ import SocialGrid from "@/components/sections/SocialGrid.astro";
     ]
   })} />
   <Hero
-    tagline="Rapture Surfcamps"
-    title={`All you have\nis now.`}
-    subtitle="Unparalleled Surf Camp Experience at the Best Surf Spots!"
+    tagline={heroTagline}
+    title={heroTitle}
+    subtitle={heroSubtitle}
     backgroundVideo="/videos/background-video.mp4"
     titleSize="large"
     fullHeight
   />
   <DestinationGrid client:visible />
-  <AboutSection />
+  <AboutSection heading={hp?.aboutHeading} subtext={hp?.aboutSubtext} linkText={hp?.aboutLinkText} />
   <BlogFeed client:visible />
   <StatsSection />
   <SocialGrid />

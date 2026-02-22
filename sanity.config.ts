@@ -14,7 +14,7 @@ const LANGUAGES = [
   { id: "de", title: "German" },
 ];
 
-const I18N_SCHEMA_TYPES = ["camp", "country"];
+const I18N_SCHEMA_TYPES = ["camp", "country", "blogPost", "faq", "page", "homepage"];
 
 export default defineConfig({
   name: "rapturecamps",
@@ -28,12 +28,11 @@ export default defineConfig({
           .title("Content")
           .items([
             S.listItem()
-              .title("Site Settings")
+              .title("Homepage")
               .child(
-                S.document()
-                  .schemaType("siteSettings")
-                  .documentId("siteSettings")
+                S.documentTypeList("homepage").title("Homepage")
               ),
+            S.documentTypeListItem("page").title("Pages"),
             S.divider(),
             S.documentTypeListItem("country").title("Countries"),
             S.listItem()
@@ -51,6 +50,14 @@ export default defineConfig({
             S.documentTypeListItem("blogCategory").title("Blog Categories"),
             S.divider(),
             S.documentTypeListItem("faq").title("FAQs"),
+            S.divider(),
+            S.listItem()
+              .title("Site Settings")
+              .child(
+                S.document()
+                  .schemaType("siteSettings")
+                  .documentId("siteSettings")
+              ),
           ]),
     }),
     documentInternationalization({

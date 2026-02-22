@@ -12,6 +12,8 @@ import {
   CAMP_BY_SLUG,
   COUNTRY_BY_SLUG,
   SITE_SETTINGS,
+  PAGE_BY_SLUG,
+  HOMEPAGE,
 } from "./queries";
 import {
   destinations as hardcodedDestinations,
@@ -139,6 +141,30 @@ export async function getSiteSettings() {
     contact: {},
     ogImage: null,
   };
+}
+
+// ─── Page by slug ──────────────────────────────────────────────────────────
+
+export async function getPageBySlug(slug: string, lang = "en") {
+  try {
+    const page = await sanityClient.fetch(PAGE_BY_SLUG, { slug, lang });
+    if (page) return page;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch page ${slug}`, e);
+  }
+  return null;
+}
+
+// ─── Homepage ──────────────────────────────────────────────────────────────
+
+export async function getHomepage(lang = "en") {
+  try {
+    const homepage = await sanityClient.fetch(HOMEPAGE, { lang });
+    if (homepage) return homepage;
+  } catch (e) {
+    console.warn("[sanity] Failed to fetch homepage", e);
+  }
+  return null;
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────

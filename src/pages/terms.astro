@@ -1,82 +1,44 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { PortableText } from "astro-portabletext";
+import { getPageBySlug } from "@/lib/sanity-data";
+
+const page = await getPageBySlug("terms");
+const title = page?.title || "Terms & Conditions";
+const seoTitle = page?.seo?.title || "Terms & Conditions | Rapture Surfcamps";
+const seoDesc = page?.seo?.description || "Terms and conditions for booking and staying at Rapture Surfcamps.";
 ---
 
-<BaseLayout
-  title="Terms & Conditions | Rapture Surfcamps"
-  description="Terms and conditions for booking and staying at Rapture Surfcamps."
-  disablePopups
->
+<BaseLayout title={seoTitle} description={seoDesc} disablePopups>
   <div class="pt-32 pb-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20 max-w-3xl">
-      <h1 class="font-display text-4xl sm:text-5xl font-bold text-white">Terms & Conditions</h1>
-      <Breadcrumbs inline crumbs={[{ label: "Terms & Conditions" }]} />
-      <p class="text-sm text-white/30 mt-6 mb-10">Last updated: February 2026</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-white">{title}</h1>
+      <Breadcrumbs inline crumbs={[{ label: title }]} />
 
-      <div class="space-y-8 text-sm text-white/50 leading-relaxed">
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">1. Scope</h2>
-          <p>These General Terms and Conditions apply to all bookings made through rapturecamps.com and its affiliated booking platforms. By making a reservation, you agree to these terms.</p>
-        </section>
+      {page?.lastUpdated && (
+        <p class="text-sm text-white/30 mt-6 mb-10">Last updated: {new Date(page.lastUpdated).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
+      )}
 
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">2. Booking & Confirmation</h2>
-          <p>A booking is confirmed once you receive a written confirmation email and the deposit has been processed. The remaining balance is due 30 days before the arrival date. Bookings made within 30 days of arrival require full payment at the time of booking.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">3. Prices & Payment</h2>
-          <p>All prices listed on the website are per person and include the services described on the respective camp page. Prices are subject to change without notice, but confirmed bookings will be honoured at the price quoted at the time of booking.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">4. Cancellation Policy</h2>
-          <ul class="list-disc pl-5 space-y-1 mt-2">
-            <li>More than 30 days before arrival: full refund minus processing fee</li>
-            <li>15–30 days before arrival: 50% refund</li>
-            <li>Less than 15 days before arrival: no refund</li>
-            <li>No-show: no refund</li>
-          </ul>
-          <p class="mt-2">We strongly recommend purchasing travel insurance that covers cancellation.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">5. Changes by the Guest</h2>
-          <p>Date changes are subject to availability and must be requested at least 14 days before the original arrival date. A rebooking fee may apply.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">6. Changes by Rapture Surfcamps</h2>
-          <p>We reserve the right to make changes to the programme due to weather, surf conditions, or other circumstances beyond our control. In the event of significant changes, you will be offered an alternative or a refund.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">7. Liability & Assumption of Risk</h2>
-          <p>Surfing and related activities carry inherent risks. By participating in our programmes, you acknowledge and accept these risks. Rapture Surfcamps and its instructors are not liable for injuries or loss of property unless caused by gross negligence.</p>
-          <p class="mt-2">All guests are required to sign a liability waiver upon check-in.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">8. Insurance</h2>
-          <p>Travel and health insurance is not included in our packages. We require all guests to have adequate travel insurance covering medical expenses, repatriation, and cancellation. Proof of insurance may be requested at check-in.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">9. House Rules</h2>
-          <p>Guests are expected to respect camp property, fellow guests, staff, and the local community. Rapture Surfcamps reserves the right to terminate a stay without refund if a guest's behaviour is deemed unacceptable.</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">10. Governing Law</h2>
-          <p>These terms are governed by [applicable law / jurisdiction]. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of [jurisdiction].</p>
-        </section>
-
-        <section>
-          <h2 class="text-lg font-semibold text-white mb-3">11. Contact</h2>
-          <p>For questions regarding these terms, please contact us at <a href="mailto:info@rapturecamps.com" class="text-ocean-light hover:underline">info@rapturecamps.com</a>.</p>
-        </section>
-      </div>
+      {page?.body ? (
+        <div class="prose-legal space-y-4 text-sm text-white/50 leading-relaxed mt-10">
+          <PortableText value={page.body} />
+        </div>
+      ) : (
+        <p class="text-sm text-white/50 mt-10">Content coming soon.</p>
+      )}
     </div>
   </div>
 </BaseLayout>
+
+<style is:global>
+  .prose-legal h2 { font-size: 1.125rem; font-weight: 600; color: white; margin-bottom: 0.75rem; margin-top: 2rem; }
+  .prose-legal h3 { font-size: 1rem; font-weight: 600; color: white; margin-bottom: 0.5rem; margin-top: 1.5rem; }
+  .prose-legal p { margin-bottom: 1rem; }
+  .prose-legal ul { list-style-type: disc; padding-left: 1.25rem; margin-bottom: 1rem; }
+  .prose-legal ol { list-style-type: decimal; padding-left: 1.25rem; margin-bottom: 1rem; }
+  .prose-legal li { margin-bottom: 0.25rem; }
+  .prose-legal a { color: var(--color-ocean-light, #38bdf8); }
+  .prose-legal a:hover { text-decoration: underline; }
+  .prose-legal strong { color: rgba(255,255,255,0.7); }
+</style>

@@ -7,17 +7,13 @@ import CTASection from "@/components/sections/CTASection.astro";
 import { PortableText } from "astro-portabletext";
 import { getPageBySlug } from "@/lib/sanity-data";
 
-const page = await getPageBySlug("about");
-const title = page?.title || "Our Story";
-const seoTitle = page?.seo?.title || "About Us | Rapture Surfcamps";
-const seoDesc = page?.seo?.description || "Founded in 2003, Rapture Surfcamps has grown into a global network of 8 surf camps across 5 countries.";
+const page = await getPageBySlug("about", "de");
+const title = page?.title || "Unsere Geschichte";
+const seoTitle = page?.seo?.title || "Über uns | Rapture Surfcamps";
+const seoDesc = page?.seo?.description || "Gegründet 2003, ist Rapture Surfcamps zu einem globalen Netzwerk von 8 Surfcamps in 5 Ländern gewachsen.";
 ---
 
-<BaseLayout
-  title={seoTitle}
-  description={seoDesc}
-  ogImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=630&fit=crop"
->
+<BaseLayout title={seoTitle} description={seoDesc}>
   <Hero
     title={title}
     backgroundImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop"
@@ -33,7 +29,7 @@ const seoDesc = page?.seo?.description || "Founded in 2003, Rapture Surfcamps ha
         </div>
       ) : (
         <div class="space-y-6 text-base sm:text-lg text-white/50 leading-relaxed">
-          <p>Rapture Surfcamps was born in 2003 when an Australian photographer and an Austrian entrepreneur decided to combine their passion for surfing with their love of travel.</p>
+          <p>Inhalte werden bald verfügbar sein. Erstelle eine deutsche Übersetzung dieser Seite in Sanity Studio.</p>
         </div>
       )}
     </div>

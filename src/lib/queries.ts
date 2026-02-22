@@ -125,6 +125,29 @@ export const ALL_BLOG_POSTS = `*[_type == "blogPost"] | order(publishedAt desc) 
   "categories": categories[]->{ name, "slug": slug.current }
 }`;
 
+export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  lastUpdated,
+  body,
+  seo
+}`;
+
+export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  heroTagline,
+  heroTitle,
+  heroSubtitle,
+  aboutHeading,
+  aboutSubtext,
+  aboutLinkText,
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    language
+  }
+}`;
+
 export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug][0] {
   _id,
   title,

@@ -4,28 +4,21 @@ import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { PortableText } from "astro-portabletext";
 import { getPageBySlug } from "@/lib/sanity-data";
 
-const page = await getPageBySlug("legal");
-const title = page?.title || "Legal Notice";
-const seoTitle = page?.seo?.title || "Legal Notice | Rapture Surfcamps";
-const seoDesc = page?.seo?.description || "Legal notice and imprint for Rapture Surfcamps.";
+const page = await getPageBySlug("legal", "de");
+const title = page?.title || "Impressum";
 ---
 
-<BaseLayout title={seoTitle} description={seoDesc} disablePopups>
+<BaseLayout title={`${title} | Rapture Surfcamps`} description={page?.seo?.description || "Impressum für Rapture Surfcamps."} disablePopups>
   <div class="pt-32 pb-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20 max-w-3xl">
       <h1 class="font-display text-4xl sm:text-5xl font-bold text-white">{title}</h1>
       <Breadcrumbs inline crumbs={[{ label: title }]} />
-
-      {page?.lastUpdated && (
-        <p class="text-sm text-white/30 mt-6 mb-10">Last updated: {new Date(page.lastUpdated).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</p>
-      )}
-
       {page?.body ? (
         <div class="prose-legal space-y-4 text-sm text-white/50 leading-relaxed mt-10">
           <PortableText value={page.body} />
         </div>
       ) : (
-        <p class="text-sm text-white/50 mt-10">Content coming soon.</p>
+        <p class="text-sm text-white/50 mt-10">Erstelle eine deutsche Übersetzung dieser Seite in Sanity Studio.</p>
       )}
     </div>
   </div>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import DestinationGrid from "@/components/sections/DestinationGrid";
+import AboutSection from "@/components/sections/AboutSection.astro";
+import BlogFeed from "@/components/sections/BlogFeed";
+import StatsSection from "@/components/sections/StatsSection.astro";
+import SocialGrid from "@/components/sections/SocialGrid.astro";
+import { getHomepage } from "@/lib/sanity-data";
+
+const hp = await getHomepage("de");
+const heroTagline = hp?.heroTagline || "Rapture Surfcamps";
+const heroTitle = hp?.heroTitle || "Alles was zählt ist jetzt.";
+const heroSubtitle = hp?.heroSubtitle || "Einzigartiges Surfcamp-Erlebnis an den besten Surfspots!";
+---
+
+<BaseLayout showWheel>
+  <Hero
+    tagline={heroTagline}
+    title={heroTitle}
+    subtitle={heroSubtitle}
+    backgroundVideo="/videos/background-video.mp4"
+    titleSize="large"
+    fullHeight
+  />
+  <DestinationGrid client:visible />
+  <AboutSection
+    heading={hp?.aboutHeading || "Wir sind ein Netzwerk von 8 einzigartigen Surfcamps in 5 Ländern auf 4 Kontinenten. In den letzten 21 Jahren haben wir mehr als 85.000 Menschen aus aller Welt geholfen, surfen zu lernen und die besten Wellen zu finden."}
+    subtext={hp?.aboutSubtext || "Surfe die Welt und besuche uns in"}
+    linkText={hp?.aboutLinkText || "Mehr über uns erfahren"}
+    aboutHref="/de/about"
+  />
+  <BlogFeed client:visible />
+  <StatsSection />
+  <SocialGrid />
+</BaseLayout>

@@ -28,6 +28,15 @@ const TRANSLATABLE_STRING_FIELDS = [
   "caption",
   "label",
   "excerpt",
+  "question",
+  "answer",
+  "title",
+  "heroTagline",
+  "heroTitle",
+  "heroSubtitle",
+  "aboutHeading",
+  "aboutSubtext",
+  "aboutLinkText",
 ];
 
 const SKIP_FIELDS = [

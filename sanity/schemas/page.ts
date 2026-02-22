@@ -1,8 +1,8 @@
 import { defineType, defineField } from "sanity";
 
 export default defineType({
-  name: "blogPost",
-  title: "Blog Post",
+  name: "page",
+  title: "Page",
   type: "document",
   fields: [
     defineField({
@@ -25,16 +25,10 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
-      name: "excerpt",
-      title: "Excerpt",
-      type: "text",
-      rows: 3,
-    }),
-    defineField({
-      name: "featuredImage",
-      title: "Featured Image",
-      type: "image",
-      options: { hotspot: true },
+      name: "lastUpdated",
+      title: "Last Updated",
+      type: "date",
+      description: "Shown at the top of legal pages (e.g. 'Last updated: February 2026').",
     }),
     defineField({
       name: "body",
@@ -72,43 +66,20 @@ export default defineType({
               },
             ],
           },
+          lists: [
+            { title: "Bullet", value: "bullet" },
+            { title: "Numbered", value: "number" },
+          ],
         },
         {
           type: "image",
           options: { hotspot: true },
           fields: [
-            {
-              name: "caption",
-              type: "string",
-              title: "Caption",
-            },
-            {
-              name: "alt",
-              type: "string",
-              title: "Alt Text",
-            },
+            { name: "caption", type: "string", title: "Caption" },
+            { name: "alt", type: "string", title: "Alt Text" },
           ],
         },
       ],
-    }),
-    defineField({
-      name: "categories",
-      title: "Categories",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "blogCategory" }] }],
-    }),
-    defineField({
-      name: "tags",
-      title: "Tags",
-      type: "array",
-      of: [{ type: "string" }],
-      options: { layout: "tags" },
-    }),
-    defineField({
-      name: "publishedAt",
-      title: "Published At",
-      type: "datetime",
-      validation: (r) => r.required(),
     }),
     defineField({
       name: "seo",
@@ -116,18 +87,10 @@ export default defineType({
       type: "seo",
     }),
   ],
-  orderings: [
-    {
-      title: "Published Date (Newest)",
-      name: "publishedAtDesc",
-      by: [{ field: "publishedAt", direction: "desc" }],
-    },
-  ],
   preview: {
-    select: {
-      title: "title",
-      subtitle: "publishedAt",
-      media: "featuredImage",
+    select: { title: "title", slug: "slug.current" },
+    prepare({ title, slug }) {
+      return { title, subtitle: `/${slug || ""}` };
     },
   },
 });

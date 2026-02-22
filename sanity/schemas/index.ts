@@ -3,6 +3,8 @@ import country from "./country";
 import blogPost from "./blogPost";
 import blogCategory from "./blogCategory";
 import faq from "./faq";
+import page from "./page";
+import homepage from "./homepage";
 import siteSettings from "./siteSettings";
 
 import contentBlock from "./blocks/contentBlock";
@@ -39,6 +41,8 @@ export const schemaTypes = [
   blogPost,
   blogCategory,
   faq,
+  page,
+  homepage,
   siteSettings,
 
   // Page builder blocks — shared
