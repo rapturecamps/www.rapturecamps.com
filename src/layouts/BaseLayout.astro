@@ -80,9 +80,8 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
 
-    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
-
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
   </head>
   <body class="font-sans antialiased bg-dark text-white" data-booking-url={bookingUrl}>
     <Header />

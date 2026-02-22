@@ -1,6 +1,4 @@
 ---
-import { responsiveSrc } from "@/lib/image-utils";
-
 interface Props {
   title: string;
   subtitle?: string;
@@ -44,9 +42,6 @@ const images = backgroundImages && backgroundImages.length > 1
   : [backgroundImage];
 const hasRotation = !hasVideo && images.length > 1;
 
-function heroImg(src: string) {
-  return responsiveSrc(src);
-}
 ---
 
 <section class:list={["relative flex items-end overflow-hidden", fullHeight ? "h-[calc(100vh-85px)] sm:h-[calc(100vh-170px)] min-h-[600px] sm:min-h-[530px]" : "h-[calc(65vh-170px)] sm:h-[calc(100vh-170px)] min-h-[310px] sm:min-h-[530px]"]}>
@@ -64,49 +59,22 @@ function heroImg(src: string) {
     </video>
   ) : hasRotation ? (
     <div class="hero-slideshow absolute inset-0" data-interval={rotationInterval}>
-      {images.map((src, i) => {
-        const ri = heroImg(src);
-        return (
+      {images.map((src, i) => (
         <div
           class:list={[
-            "hero-slide absolute inset-0 transition-opacity duration-[1500ms] ease-in-out",
+            "hero-slide absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[1500ms] ease-in-out",
             i === 0 ? "opacity-100" : "opacity-0",
           ]}
+          style={i === 0 ? `background-image: url(${src})` : undefined}
+          data-bg={i > 0 ? src : undefined}
           data-slide={i}
-        >
-          {i === 0 ? (
-            <img
-              src={ri.src}
-              srcset={ri.srcset}
-              sizes="100vw"
-              alt=""
-              class="h-full w-full object-cover"
-              fetchpriority="high"
-              decoding="async"
-            />
-          ) : (
-            <img
-              data-src={ri.src}
-              data-srcset={ri.srcset}
-              sizes="100vw"
-              alt=""
-              class="h-full w-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-        </div>
-      )})}
+        />
+      ))}
     </div>
   ) : (
-    <img
-      src={heroImg(backgroundImage).src}
-      srcset={heroImg(backgroundImage).srcset}
-      sizes="100vw"
-      alt=""
-      class="absolute inset-0 h-full w-full object-cover"
-      fetchpriority="high"
-      decoding="async"
+    <div
+      class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      style={`background-image: url(${backgroundImage})`}
     />
   )}
 
@@ -175,13 +143,10 @@ function heroImg(src: string) {
         if (loaded) return;
         loaded = true;
         for (var i = 0; i < slides.length; i++) {
-          var img = slides[i].querySelector("img[data-src]");
-          if (img) {
-            img.src = img.getAttribute("data-src");
-            var ss = img.getAttribute("data-srcset");
-            if (ss) img.srcset = ss;
-            img.removeAttribute("data-src");
-            img.removeAttribute("data-srcset");
+          var bg = slides[i].getAttribute("data-bg");
+          if (bg) {
+            slides[i].style.backgroundImage = "url(" + bg + ")";
+            slides[i].removeAttribute("data-bg");
           }
         }
       }
