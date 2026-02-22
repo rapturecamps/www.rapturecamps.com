@@ -3,7 +3,7 @@
  * Spinning Wheel Popup — "Spin to Win"
  * Wheel is visible from the start alongside the email form.
  * After entering email, the wheel spins and reveals the prize.
- * Storyblok-ready: segments array maps to a repeatable blok field.
+ * Segments array can be made CMS-editable via Sanity.
  */
 
 interface Segment {
@@ -287,7 +287,7 @@ const segmentAngle = 360 / segmentCount;
     var email = emailInput.value.trim();
     if (!email) return;
 
-    // TODO: Send email to backend/Storyblok/webhook
+    // TODO: Send email to backend/webhook
     console.log("[SpinWheel] Email captured:", email);
 
     // Switch to spinning state
