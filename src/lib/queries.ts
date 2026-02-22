@@ -1,17 +1,18 @@
 /**
  * Centralized GROQ queries for fetching Sanity data.
+ * Queries that fetch camps/countries accept a $lang parameter (defaults to "en").
  */
 
-export const COUNTRY_SLUGS = `*[_type == "country"]{ "slug": slug.current }`;
+export const COUNTRY_SLUGS = `*[_type == "country" && (language == $lang || (!defined(language) && $lang == "en"))]{ "slug": slug.current }`;
 
-export const ALL_COUNTRIES = `*[_type == "country"] | order(name asc) {
+export const ALL_COUNTRIES = `*[_type == "country" && (language == $lang || (!defined(language) && $lang == "en"))] | order(name asc) {
   _id,
   name,
   "slug": slug.current,
   flag
 }`;
 
-export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug][0] {
+export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
   name,
   "slug": slug.current,
@@ -24,7 +25,7 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug][0
   seo
 }`;
 
-export const ALL_CAMPS = `*[_type == "camp"] | order(name asc) {
+export const ALL_CAMPS = `*[_type == "camp" && (language == $lang || (!defined(language) && $lang == "en"))] | order(name asc) {
   _id,
   name,
   "slug": slug.current,
@@ -43,7 +44,7 @@ export const ALL_CAMPS = `*[_type == "camp"] | order(name asc) {
   "image": image.asset->url
 }`;
 
-export const CAMPS_BY_COUNTRY = `*[_type == "camp" && country->slug.current == $countrySlug] | order(name asc) {
+export const CAMPS_BY_COUNTRY = `*[_type == "camp" && country->slug.current == $countrySlug && (language == $lang || (!defined(language) && $lang == "en"))] | order(name asc) {
   _id,
   name,
   "slug": slug.current,
@@ -64,7 +65,7 @@ export const CAMPS_BY_COUNTRY = `*[_type == "camp" && country->slug.current == $
   seo
 }`;
 
-export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug][0] {
+export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
   name,
   "slug": slug.current,
@@ -97,7 +98,11 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug][0] {
     "resolvedImageUrl": image.asset->url,
     meals[] { ..., "resolvedImageUrl": image.asset->url }
   },
-  seo
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    "slug": slug.current,
+    language
+  }
 }`;
 
 export const SITE_SETTINGS = `*[_type == "siteSettings" && _id == "siteSettings"][0] {

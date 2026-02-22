@@ -1,7 +1,20 @@
-import { defineConfig } from "sanity";
+import { defineConfig, defineField } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
+import { documentInternationalization } from "@sanity/document-internationalization";
+import {
+  useDeleteTranslationAction,
+  useDuplicateWithTranslationsAction,
+} from "@sanity/document-internationalization";
 import { schemaTypes } from "./sanity/schemas";
+import { TranslateAction } from "./sanity/actions/translateAction";
+
+const LANGUAGES = [
+  { id: "en", title: "English" },
+  { id: "de", title: "German" },
+];
+
+const I18N_SCHEMA_TYPES = ["camp", "country"];
 
 export default defineConfig({
   name: "rapturecamps",
@@ -40,8 +53,25 @@ export default defineConfig({
             S.documentTypeListItem("faq").title("FAQs"),
           ]),
     }),
+    documentInternationalization({
+      supportedLanguages: LANGUAGES,
+      schemaTypes: I18N_SCHEMA_TYPES,
+    }),
     visionTool(),
   ],
+  document: {
+    actions: (prev, context) => {
+      if (I18N_SCHEMA_TYPES.includes(context.schemaType)) {
+        return [
+          ...prev,
+          useDeleteTranslationAction,
+          useDuplicateWithTranslationsAction,
+          TranslateAction,
+        ];
+      }
+      return prev;
+    },
+  },
   schema: {
     types: schemaTypes,
   },

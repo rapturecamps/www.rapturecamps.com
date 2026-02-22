@@ -1,0 +1,71 @@
+---
+/**
+ * German country page — thin wrapper.
+ * Once country documents are translated in Sanity, this page will serve German content.
+ * Hardcoded country content (image grids, comparison tables) is shared with the English version for now.
+ */
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import { getCountries, getCountryBySlug, getCampsByCountry } from "@/lib/sanity-data";
+import { t } from "@/lib/i18n";
+
+const lang = "de";
+
+export async function getStaticPaths() {
+  const countries = await getCountries("de");
+  return countries.map((c: any) => ({ params: { country: c.slug } }));
+}
+
+const { country } = Astro.params;
+const countryData = await getCountryBySlug(country!, lang);
+const camps = await getCampsByCountry(country!, lang);
+const countryName = countryData?.name || country!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+---
+
+<BaseLayout
+  title={`Surfcamps in ${countryName} | Rapture Surfcamps`}
+  description={countryData?.description || `Entdecke Rapture Surfcamps in ${countryName}.`}
+>
+  <Hero
+    title={`Surfcamps\nin ${countryName}`}
+    subtitle={countryData?.intro || `Entdecke unsere Surfcamps in ${countryName}.`}
+    images={countryData?.heroImages}
+  />
+
+  <Breadcrumbs
+    crumbs={[
+      { label: "Surfcamps", href: "/de/surfcamp" },
+      { label: countryName },
+    ]}
+  />
+
+  {camps?.length > 0 && (
+    <section class="py-16 sm:py-20 bg-dark">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-10">Unsere Camps in {countryName}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {camps.map((camp: any) => (
+            <a href={`/de/surfcamp/${country}/${camp.slug?.replace?.(`/surfcamp/${country}/`, "") || camp.slug}`} class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors">
+              <div class="aspect-[16/10] overflow-hidden">
+                <img
+                  src={camp.image || "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=600&h=400&fit=crop"}
+                  alt={camp.name}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="p-5">
+                <h3 class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
+                <p class="text-sm text-white/40 mt-1">{camp.location || camp.tagline}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <CTASection />
+</BaseLayout>

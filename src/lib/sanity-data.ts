@@ -1,6 +1,7 @@
 /**
  * Data fetching layer: provides the same shapes as data.ts but sourced from Sanity.
  * Falls back to hardcoded data.ts when Sanity fields are missing (e.g. images).
+ * All camp/country functions accept an optional `lang` parameter (defaults to "en").
  */
 
 import { sanityClient } from "./sanity";
@@ -22,9 +23,9 @@ import type { Destination, StatItem } from "./types";
 
 // ─── Countries ─────────────────────────────────────────────────────────────
 
-export async function getCountries() {
+export async function getCountries(lang = "en") {
   try {
-    const sanityCountries = await sanityClient.fetch(ALL_COUNTRIES);
+    const sanityCountries = await sanityClient.fetch(ALL_COUNTRIES, { lang });
     if (sanityCountries?.length) return sanityCountries;
   } catch (e) {
     console.warn("[sanity] Failed to fetch countries, using fallback", e);
@@ -34,9 +35,9 @@ export async function getCountries() {
 
 // ─── Country by slug ───────────────────────────────────────────────────────
 
-export async function getCountryBySlug(slug: string) {
+export async function getCountryBySlug(slug: string, lang = "en") {
   try {
-    const country = await sanityClient.fetch(COUNTRY_BY_SLUG, { slug });
+    const country = await sanityClient.fetch(COUNTRY_BY_SLUG, { slug, lang });
     if (country) return country;
   } catch (e) {
     console.warn(`[sanity] Failed to fetch country ${slug}, using fallback`, e);
@@ -46,9 +47,9 @@ export async function getCountryBySlug(slug: string) {
 
 // ─── All destinations (camps) ──────────────────────────────────────────────
 
-export async function getDestinations(): Promise<Destination[]> {
+export async function getDestinations(lang = "en"): Promise<Destination[]> {
   try {
-    const sanityCamps = await sanityClient.fetch(ALL_CAMPS);
+    const sanityCamps = await sanityClient.fetch(ALL_CAMPS, { lang });
     if (sanityCamps?.length) {
       return sanityCamps.map((camp: any) => mergeWithHardcoded(camp));
     }
@@ -60,9 +61,9 @@ export async function getDestinations(): Promise<Destination[]> {
 
 // ─── Camps by country ──────────────────────────────────────────────────────
 
-export async function getCampsByCountry(countrySlug: string) {
+export async function getCampsByCountry(countrySlug: string, lang = "en") {
   try {
-    const camps = await sanityClient.fetch(CAMPS_BY_COUNTRY, { countrySlug });
+    const camps = await sanityClient.fetch(CAMPS_BY_COUNTRY, { countrySlug, lang });
     if (camps?.length) {
       return camps.map((camp: any) => mergeWithHardcoded(camp));
     }
@@ -76,20 +77,24 @@ export async function getCampsByCountry(countrySlug: string) {
 
 // ─── Camp by slug ──────────────────────────────────────────────────────────
 
-export async function getCampBySlug(slug: string) {
+export async function getCampBySlug(slug: string, lang = "en") {
   try {
-    const camp = await sanityClient.fetch(CAMP_BY_SLUG, { slug });
+    const camp = await sanityClient.fetch(CAMP_BY_SLUG, { slug, lang });
     if (camp) {
       const merged = mergeWithHardcoded(camp);
       (merged as any).surfPageBuilder = camp.surfPageBuilder || null;
       (merged as any).roomsPageBuilder = camp.roomsPageBuilder || null;
       (merged as any).foodPageBuilder = camp.foodPageBuilder || null;
+      (merged as any)._translations = camp._translations || [];
       return merged;
     }
   } catch (e) {
     console.warn(`[sanity] Failed to fetch camp ${slug}`, e);
   }
-  return hardcodedDestinations.find((d) => d.slug.endsWith(slug)) || null;
+  if (lang === "en") {
+    return hardcodedDestinations.find((d) => d.slug.endsWith(slug)) || null;
+  }
+  return null;
 }
 
 // ─── Site settings ─────────────────────────────────────────────────────────
@@ -143,10 +148,6 @@ function formatStatValue(value: number, suffix?: string): string {
   return String(value);
 }
 
-/**
- * Merge Sanity camp data with hardcoded fallbacks for fields that may
- * not yet be populated (especially images).
- */
 function mergeWithHardcoded(sanityCamp: any): Destination {
   const hardcoded = hardcodedDestinations.find(
     (d) =>

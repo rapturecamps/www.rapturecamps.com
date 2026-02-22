@@ -1,0 +1,37 @@
+---
+interface Props {
+  currentLang?: "en" | "de";
+  translations?: { slug: string; language: string }[];
+  currentPath?: string;
+}
+
+const { currentLang = "en", translations = [], currentPath = "/" } = Astro.props;
+
+function getAlternatePath(targetLang: string): string | null {
+  const match = translations.find((t) => t.language === targetLang);
+  if (match) {
+    const pathWithoutLang = currentPath.replace(/^\/de/, "");
+    return targetLang === "en" ? pathWithoutLang : `/de${pathWithoutLang}`;
+  }
+  if (targetLang === "de") return `/de${currentPath}`;
+  return currentPath.replace(/^\/de/, "") || "/";
+}
+
+const alternateLang = currentLang === "en" ? "de" : "en";
+const alternateLabel = currentLang === "en" ? "DE" : "EN";
+const alternateHref = getAlternatePath(alternateLang);
+---
+
+{alternateHref && (
+  <a
+    href={alternateHref}
+    class="flex items-center gap-1.5 rounded-full border border-white/10 px-3 py-1.5 text-xs font-medium text-white/60 hover:text-white hover:border-white/20 transition-colors"
+    title={currentLang === "en" ? "Auf Deutsch wechseln" : "Switch to English"}
+  >
+    <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    </svg>
+    {alternateLabel}
+  </a>
+)}
