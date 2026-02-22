@@ -9,6 +9,7 @@ export default defineConfig({
   site: "https://www.rapturecamps.com",
   output: "static",
   adapter: vercel(),
+  devToolbar: { enabled: false },
   integrations: [
     react(),
     sanity({

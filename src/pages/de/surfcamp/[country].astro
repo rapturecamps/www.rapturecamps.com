@@ -29,9 +29,10 @@ const countryName = countryData?.name || country!.split("-").map((w: string) => 
   description={countryData?.description || `Entdecke Rapture Surfcamps in ${countryName}.`}
 >
   <Hero
-    title={`Surfcamps\nin ${countryName}`}
+    title={countryData?.heroTitle || `Surfcamps\nin ${countryName}`}
+    tagline={countryData?.heroTagline}
     subtitle={countryData?.intro || `Entdecke unsere Surfcamps in ${countryName}.`}
-    images={countryData?.heroImages}
+    backgroundImages={countryData?.heroImages}
   />
 
   <Breadcrumbs

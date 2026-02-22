@@ -22,6 +22,8 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
   comparison,
   pageBuilder,
   heroImages,
+  heroTitle,
+  heroTagline,
   seo
 }`;
 
@@ -81,6 +83,12 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
   longitude,
   elfsightId,
   heroImages,
+  heroTitle,
+  heroSubtitle,
+  heroTagline,
+  surfHeroTitle,
+  roomsHeroTitle,
+  foodHeroTitle,
   "image": image.asset->url,
   pageBuilder,
   surfPageBuilder[] {

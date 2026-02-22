@@ -405,6 +405,8 @@ const sanityFaqSection = sanityPageBuilder.find((b: any) => b._type === "faqSect
 // Merge Sanity data with hardcoded fallback
 const data = {
   ...fallback,
+  title: sanityCountry?.heroTitle || fallback.title,
+  tagline: sanityCountry?.heroTagline || fallback.tagline,
   description: sanityCountry?.description || fallback.description,
   intro: sanityCountry?.intro || fallback.intro,
   comparison: {
@@ -466,6 +468,7 @@ const amenityLabels: Record<string, string> = {
   )}
   <Hero
     title={data.title}
+    tagline={data.tagline}
     backgroundImage={data.heroImage}
     backgroundImages={data.heroImages}
   >

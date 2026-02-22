@@ -36,6 +36,19 @@ export default defineType({
       of: [{ type: "image", options: { hotspot: true } }],
     }),
     defineField({
+      name: "heroTitle",
+      title: "Hero Title",
+      type: "string",
+      description:
+        'Override the hero headline. Defaults to "Surf Camps\\nin {Country}". Use \\n for line breaks.',
+    }),
+    defineField({
+      name: "heroTagline",
+      title: "Hero Tagline",
+      type: "string",
+      description: "Override the tagline shown above the hero headline.",
+    }),
+    defineField({
       name: "description",
       title: "Meta Description",
       type: "text",

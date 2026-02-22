@@ -70,6 +70,28 @@ export default defineType({
       group: "overview",
     }),
     defineField({
+      name: "heroTitle",
+      title: "Hero Title",
+      type: "string",
+      description:
+        'Override the hero headline. Defaults to "Rapture Surf Camp {name}". Use \\n for line breaks.',
+      group: "overview",
+    }),
+    defineField({
+      name: "heroSubtitle",
+      title: "Hero Subtitle",
+      type: "string",
+      description: "Optional text below the hero headline.",
+      group: "overview",
+    }),
+    defineField({
+      name: "heroTagline",
+      title: "Hero Tagline",
+      type: "string",
+      description: "Optional small uppercase text above the hero headline.",
+      group: "overview",
+    }),
+    defineField({
       name: "rating",
       title: "Rating",
       type: "number",
@@ -134,6 +156,13 @@ export default defineType({
       group: "overview",
     }),
     defineField({
+      name: "surfHeroTitle",
+      title: "Surf Hero Title",
+      type: "string",
+      description: 'Override the hero headline on the Surf page. Defaults to "Surf".',
+      group: "surfPage",
+    }),
+    defineField({
       name: "surfPageBuilder",
       title: "Surf Page",
       type: "array",
@@ -153,6 +182,13 @@ export default defineType({
       group: "surfPage",
     }),
     defineField({
+      name: "roomsHeroTitle",
+      title: "Rooms Hero Title",
+      type: "string",
+      description: 'Override the hero headline on the Rooms page. Defaults to "Rooms".',
+      group: "roomsPage",
+    }),
+    defineField({
       name: "roomsPageBuilder",
       title: "Rooms Page",
       type: "array",
@@ -167,6 +203,13 @@ export default defineType({
         { type: "faqSection" },
       ],
       group: "roomsPage",
+    }),
+    defineField({
+      name: "foodHeroTitle",
+      title: "Food Hero Title",
+      type: "string",
+      description: 'Override the hero headline on the Food page. Defaults to "Food".',
+      group: "foodPage",
     }),
     defineField({
       name: "foodPageBuilder",
