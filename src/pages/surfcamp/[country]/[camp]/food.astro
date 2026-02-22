@@ -167,17 +167,17 @@ const dietary = (sanityData?.dietary || [
 
   <!-- Image Break -->
   <ImageBreak
-    src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1920&h=800&fit=crop"
-    alt="Fresh food preparation"
-    caption="Fresh, local ingredients — prepared daily by our chefs"
+    src={sanityData?.imageBreakUrl || "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1920&h=800&fit=crop"}
+    alt={sanityData?.imageBreakAlt || "Fresh food preparation"}
+    caption={sanityData?.imageBreakCaption || "Fresh, local ingredients — prepared daily by our chefs"}
     height="short"
   />
 
   <!-- Sample Weekly Menu -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Sample Weekly Menu</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Our menu rotates weekly to keep things fresh. Here's a taste of what a typical dinner week looks like.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.menuHeading || "Sample Weekly Menu"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.menuSubtext || "Our menu rotates weekly to keep things fresh. Here's a taste of what a typical dinner week looks like."}</p>
 
       <!-- Desktop table -->
       <div class="hidden md:block overflow-hidden rounded-xl border border-white/5">
@@ -231,8 +231,8 @@ const dietary = (sanityData?.dietary || [
   <!-- Dietary Requirements -->
   <section class="py-16 sm:py-20 bg-dark-lighter">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Dietary Requirements</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Everyone eats well here. Let us know your needs when booking and our chefs will take care of the rest.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.dietaryHeading || "Dietary Requirements"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.dietarySubtext || "Everyone eats well here. Let us know your needs when booking and our chefs will take care of the rest."}</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {dietary.map((d) => (
           <div class="flex items-start gap-4 p-5 rounded-xl bg-dark border border-white/5">
@@ -254,14 +254,14 @@ const dietary = (sanityData?.dietary || [
   <!-- Food Gallery Strip -->
   <section class="bg-dark">
     <div class="grid grid-cols-2 sm:grid-cols-4">
-      {[
-        { src: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&h=400&fit=crop", alt: "Breakfast spread" },
-        { src: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&h=400&fit=crop", alt: "Plated dinner" },
-        { src: "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?w=500&h=400&fit=crop", alt: "Tropical smoothie bowls" },
-        { src: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&h=400&fit=crop", alt: "BBQ night" },
-      ].map((img) => (
+      {(sanityData?.galleryImages || [
+        { url: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&h=400&fit=crop", alt: "Breakfast spread" },
+        { url: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&h=400&fit=crop", alt: "Plated dinner" },
+        { url: "https://images.unsplash.com/photo-1494597564530-871f2b93ac55?w=500&h=400&fit=crop", alt: "Tropical smoothie bowls" },
+        { url: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500&h=400&fit=crop", alt: "BBQ night" },
+      ]).map((img: any) => (
         <div class="aspect-square overflow-hidden">
-          <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+          <img src={img.url} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
         </div>
       ))}
     </div>

@@ -82,12 +82,22 @@ const levels = (sanityData?.levels || [
   ...(levelColors[l.level] || { color: "text-white", bgColor: "bg-white/10" }),
 }));
 
-const equipment = [
-  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level", icon: "M17.5 2.5c1 1 1.5 3.5.5 7s-3.5 7-6.5 9.5c-1 .8-2 1.2-2.5 1.5-.5-.3-1.5-.7-2.5-1.5-3-2.5-5.5-6-6.5-9.5s-.5-6 .5-7 3-.5 5.5.5 4 2.5 5.5 2.5 3.5-1.5 5.5-2.5 4.5-1.5 5.5-.5z" },
-  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature", icon: "M16 2l-4 3-4-3-3.46 1.46a2 2 0 0 0-.54 1.37V10l-1 1v5h2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4h2v-5l-1-1V4.83a2 2 0 0 0-.54-1.37z" },
-  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit", icon: "M20.38 3.46L16 2l-4 3.5L8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z" },
-  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral", icon: "M5 22h4a2 2 0 0 0 2-2v-3a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v3a2 2 0 0 0 2 2h4v-5a7 7 0 0 0-7-7h0a7 7 0 0 0-7 7z" },
-];
+const equipmentIcons: Record<string, string> = {
+  "Surfboards": "M17.5 2.5c1 1 1.5 3.5.5 7s-3.5 7-6.5 9.5c-1 .8-2 1.2-2.5 1.5-.5-.3-1.5-.7-2.5-1.5-3-2.5-5.5-6-6.5-9.5s-.5-6 .5-7 3-.5 5.5.5 4 2.5 5.5 2.5 3.5-1.5 5.5-2.5 4.5-1.5 5.5-.5z",
+  "Wetsuits": "M16 2l-4 3-4-3-3.46 1.46a2 2 0 0 0-.54 1.37V10l-1 1v5h2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4h2v-5l-1-1V4.83a2 2 0 0 0-.54-1.37z",
+  "Rash Vests": "M20.38 3.46L16 2l-4 3.5L8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z",
+  "Reef Booties": "M5 22h4a2 2 0 0 0 2-2v-3a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v3a2 2 0 0 0 2 2h4v-5a7 7 0 0 0-7-7h0a7 7 0 0 0-7 7z",
+};
+
+const equipment = (sanityData?.equipment || [
+  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level" },
+  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature" },
+  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit" },
+  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral" },
+]).map((e: any) => ({
+  ...e,
+  icon: equipmentIcons[e.item] || "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",
+}));
 ---
 
 <CampLayout
@@ -211,17 +221,17 @@ const equipment = [
 
   <!-- Image break -->
   <ImageBreak
-    src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1920&h=800&fit=crop"
-    alt={`Surfer riding a wave near ${campTitle}`}
-    caption={`The lineup near ${campTitle}`}
+    src={sanityData?.imageBreakUrl || "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1920&h=800&fit=crop"}
+    alt={sanityData?.imageBreakAlt || `Surfer riding a wave near ${campTitle}`}
+    caption={sanityData?.imageBreakCaption || `The lineup near ${campTitle}`}
     height="short"
   />
 
   <!-- Surf Spots -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Surf Spots Nearby</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">We rotate between 15+ breaks depending on conditions. Here are some of the highlights.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.spotsHeading || "Surf Spots Nearby"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.spotsSubtext || "We rotate between 15+ breaks depending on conditions. Here are some of the highlights."}</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {surfSpots.map((spot) => (
           <div class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter">
@@ -251,18 +261,20 @@ const equipment = [
 
   <!-- Surf Lessons -->
   <ContentBlock
-    heading="Surf Lessons & Coaching"
-    body="<p>Every session starts with a plan. Our ISA-certified instructors analyse the conditions, match you to the right break, and set goals for the session. In the water, they're right there with you — correcting your stance, helping you read the waves, pushing you just enough.</p><p>We keep groups to a maximum of 5 surfers per instructor, so you get genuine one-on-one attention. After each session, we review video footage together so you can see exactly what to work on. It's the fastest way to improve.</p>"
-    image="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&h=600&fit=crop"
-    imageAlt={`Surf coaching at ${campTitle}`}
+    heading={sanityData?.lessonsHeading || "Surf Lessons & Coaching"}
+    body={sanityData?.lessonsBody
+      ? sanityData.lessonsBody.split("\n\n").map((p: string) => `<p>${p}</p>`).join("")
+      : "<p>Every session starts with a plan. Our ISA-certified instructors analyse the conditions, match you to the right break, and set goals for the session. In the water, they're right there with you — correcting your stance, helping you read the waves, pushing you just enough.</p><p>We keep groups to a maximum of 5 surfers per instructor, so you get genuine one-on-one attention. After each session, we review video footage together so you can see exactly what to work on. It's the fastest way to improve.</p>"}
+    image={sanityData?.lessonsImageUrl || "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=800&h=600&fit=crop"}
+    imageAlt={sanityData?.lessonsImageAlt || `Surf coaching at ${campTitle}`}
     background="dark-lighter"
   />
 
   <!-- Surf Levels -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Your Surf Level</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Whether it's your first wave or your thousandth, we have a programme tailored for you.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.levelsHeading || "Your Surf Level"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.levelsSubtext || "Whether it's your first wave or your thousandth, we have a programme tailored for you."}</p>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         {levels.map((item, i) => (
           <div class="surf-level-card rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col" data-level={i}>
@@ -339,8 +351,8 @@ const equipment = [
   <!-- A Typical Surf Day -->
   <section class="py-16 sm:py-20 bg-dark-lighter">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">A Typical Surf Day</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Every day is different depending on conditions, but here's what a standard day at {campTitle} looks like.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.scheduleHeading || "A Typical Surf Day"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.scheduleSubtext || `Every day is different depending on conditions, but here's what a standard day at ${campTitle} looks like.`}</p>
       <div class="max-w-2xl">
         <div class="relative">
           <div class="absolute left-[19px] top-3 bottom-3 w-px bg-white/10" />
@@ -367,8 +379,8 @@ const equipment = [
   <!-- Boards & Equipment -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Boards & Equipment</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Everything you need is included. Just bring yourself and a sense of adventure.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.equipmentHeading || "Boards & Equipment"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.equipmentSubtext || "Everything you need is included. Just bring yourself and a sense of adventure."}</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {equipment.map((e) => (
           <div class="p-5 rounded-xl bg-dark-lighter border border-white/5">

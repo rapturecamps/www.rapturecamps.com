@@ -46,14 +46,26 @@ const rooms = (sanityData?.rooms || [
   image: r.image?.asset?.url || fallbackImages[i] || fallbackImages[0],
 }));
 
-const roomInclusions = [
-  { item: "Daily surf lessons", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
-  { item: "Three-course breakfast", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" },
-  { item: "Dinner (Mon – Fri)", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" },
-  { item: "Beach transfers", icon: "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" },
-  { item: "Yoga sessions", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6" },
-  { item: "Free WiFi", icon: "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" },
-];
+const inclusionIcons: Record<string, string> = {
+  "Daily surf lessons": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "Three-course breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z",
+  "Dinner (Mon – Fri)": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Beach transfers": "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
+  "Yoga sessions": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6",
+  "Free WiFi": "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01",
+};
+
+const roomInclusions = (sanityData?.inclusions || [
+  { item: "Daily surf lessons" },
+  { item: "Three-course breakfast" },
+  { item: "Dinner (Mon – Fri)" },
+  { item: "Beach transfers" },
+  { item: "Yoga sessions" },
+  { item: "Free WiFi" },
+]).map((inc: any) => ({
+  ...inc,
+  icon: inclusionIcons[inc.item] || "M20 6 9 17l-5-5",
+}));
 
 const facilityIcons: Record<string, string> = {
   "Swimming Pool": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
@@ -150,17 +162,17 @@ const facilities = (sanityData?.facilities || [
 
   <!-- Image Break -->
   <ImageBreak
-    src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=800&fit=crop"
-    alt={`Pool area at ${campTitle}`}
-    caption={`The pool & lounge area at ${campTitle}`}
+    src={sanityData?.imageBreakUrl || "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=800&fit=crop"}
+    alt={sanityData?.imageBreakAlt || `Pool area at ${campTitle}`}
+    caption={sanityData?.imageBreakCaption || `The pool & lounge area at ${campTitle}`}
     height="short"
   />
 
   <!-- Every Room Includes -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Every Booking Includes</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">No matter which room you choose, these are always part of the package.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.inclusionsHeading || "Every Booking Includes"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.inclusionsSubtext || "No matter which room you choose, these are always part of the package."}</p>
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
         {roomInclusions.map((inc) => (
           <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark-lighter border border-white/5">
@@ -179,8 +191,8 @@ const facilities = (sanityData?.facilities || [
   <!-- Camp Facilities -->
   <section class="py-16 sm:py-20 bg-dark-lighter">
     <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Camp Facilities</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Our camps are designed to feel like home — with a few upgrades.</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.facilitiesHeading || "Camp Facilities"}</h2>
+      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.facilitiesSubtext || "Our camps are designed to feel like home — with a few upgrades."}</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {facilities.map((f) => (
           <div class="flex items-start gap-4 p-5 rounded-xl bg-dark border border-white/5">
@@ -202,14 +214,14 @@ const facilities = (sanityData?.facilities || [
   <!-- Gallery Strip -->
   <section class="bg-dark">
     <div class="grid grid-cols-2 sm:grid-cols-4">
-      {[
-        { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&h=400&fit=crop", alt: "Lounge area" },
-        { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=500&h=400&fit=crop", alt: "Outdoor bathroom" },
-        { src: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=500&h=400&fit=crop", alt: "Pool at sunset" },
-        { src: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=500&h=400&fit=crop", alt: "Tropical surroundings" },
-      ].map((img) => (
+      {(sanityData?.galleryImages || [
+        { url: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&h=400&fit=crop", alt: "Lounge area" },
+        { url: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=500&h=400&fit=crop", alt: "Outdoor bathroom" },
+        { url: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=500&h=400&fit=crop", alt: "Pool at sunset" },
+        { url: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=500&h=400&fit=crop", alt: "Tropical surroundings" },
+      ]).map((img: any) => (
         <div class="aspect-square overflow-hidden">
-          <img src={img.src} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+          <img src={img.url} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
         </div>
       ))}
     </div>
