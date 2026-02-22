@@ -1,0 +1,46 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Eat Well, Surf Better";
+const body = block.body || "";
+const paragraphs = body ? body.split("\n\n") : [];
+const glanceItems = block.glanceItems || [];
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      <div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</h1>
+        <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-xl">
+          {paragraphs.map((p) => (
+            <p>{p}</p>
+          ))}
+        </div>
+      </div>
+      <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-5">At a Glance</h3>
+        <div class="space-y-0">
+          {glanceItems.map((item: any, i: number) => (
+            <div
+              class:list={[
+                "flex justify-between items-start py-3",
+                i < glanceItems.length - 1 ? "border-b border-white/5" : "",
+              ]}
+            >
+              <span class="text-sm text-white/40">{item.label}</span>
+              <div class="text-right">
+                {item.note && <span class="text-white/30 text-sm block">{item.note}</span>}
+                <span class="text-sm text-white font-medium">{item.value}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -16,11 +16,21 @@ import inclusionsGrid from "./blocks/inclusionsGrid";
 import faqSection from "./blocks/faqSection";
 import ctaSection from "./blocks/ctaSection";
 import surfSpots from "./blocks/surfSpots";
+import surfIntro from "./blocks/surfIntro";
+import surfForecast from "./blocks/surfForecast";
+import surfLevels from "./blocks/surfLevels";
+import surfSchedule from "./blocks/surfSchedule";
+import surfEquipment from "./blocks/surfEquipment";
+import foodIntro from "./blocks/foodIntro";
+import mealCards from "./blocks/mealCards";
+import menuTable from "./blocks/menuTable";
+import dietaryOptions from "./blocks/dietaryOptions";
+import roomTypes from "./blocks/roomTypes";
+import roomInclusions from "./blocks/roomInclusions";
+import roomFacilities from "./blocks/roomFacilities";
+import imageGallery from "./blocks/imageGallery";
 
 import seo from "./objects/seo";
-import surfPage from "./objects/surfPage";
-import roomsPage from "./objects/roomsPage";
-import foodPage from "./objects/foodPage";
 
 export const schemaTypes = [
   // Documents
@@ -31,7 +41,7 @@ export const schemaTypes = [
   faq,
   siteSettings,
 
-  // Page builder blocks
+  // Page builder blocks — shared
   contentBlock,
   imageGrid,
   imageBreak,
@@ -42,11 +52,27 @@ export const schemaTypes = [
   inclusionsGrid,
   faqSection,
   ctaSection,
+  imageGallery,
+
+  // Page builder blocks — surf
+  surfIntro,
   surfSpots,
+  surfForecast,
+  surfLevels,
+  surfSchedule,
+  surfEquipment,
+
+  // Page builder blocks — food
+  foodIntro,
+  mealCards,
+  menuTable,
+  dietaryOptions,
+
+  // Page builder blocks — rooms
+  roomTypes,
+  roomInclusions,
+  roomFacilities,
 
   // Objects
   seo,
-  surfPage,
-  roomsPage,
-  foodPage,
 ];

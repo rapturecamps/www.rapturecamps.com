@@ -1,0 +1,26 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const images = block.images || [];
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {images.map((img: any) => (
+        <div class="aspect-square overflow-hidden rounded-lg">
+          <img
+            src={img.url || ""}
+            alt={img.alt || ""}
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

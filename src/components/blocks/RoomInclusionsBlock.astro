@@ -1,0 +1,49 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Every Booking Includes";
+const subtext = block.subtext || "";
+const inclusions = block.inclusions || [];
+
+const inclusionIcons: Record<string, string> = {
+  "Daily surf lessons": "M2 6c.6.5 1 2 1.2 3.5.8 2 2 2.5 3.5 2.5 5.5 0 4-2.5 5.5-5 5.5-2.5 0-4-1.5-5.5-4.5",
+  "Three-course breakfast": "M8 2h8l2 4H6l2-4zM6 6h12v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6z",
+  "Dinner (Mon – Fri)": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Beach transfers": "M14 18v2a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-4h14M14 2v8h2a2 2 0 0 1 2 2v4h2",
+  "Yoga sessions": "M12 2v20M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z",
+  "Free WiFi": "M3 9a9 9 0 0 1 18 0M8.5 13.5a5 5 0 0 1 7 0M5 17a2.5 2.5 0 0 1 5 0",
+};
+
+const defaultIcon = "M20 6 9 17l-5-5";
+
+function getInclusionIcon(item: string): string {
+  return inclusionIcons[item] || defaultIcon;
+}
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    {subtext && <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>}
+    {!subtext && <div class="mb-10" />}
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+      {inclusions.map((inc: any) => {
+        const itemStr = inc.item || "";
+        return (
+          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark-lighter border border-white/5">
+            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-3">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={getInclusionIcon(itemStr)} />
+              </svg>
+            </div>
+            <span class="text-sm font-medium text-white">{itemStr}</span>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

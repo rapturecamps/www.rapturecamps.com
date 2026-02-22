@@ -1,0 +1,94 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const rooms = block.rooms || [];
+
+const tagStyles: Record<string, string> = {
+  "Most Popular": "text-ocean-light bg-ocean-light/10",
+  Premium: "text-amber-400 bg-amber-400/10",
+  Unique: "text-green-400 bg-green-400/10",
+};
+
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?w=800&h=500&fit=crop",
+];
+
+function getTagClass(tag: string): string {
+  return tagStyles[tag] || "text-white/40 bg-white/5";
+}
+
+function getRoomImage(room: any, i: number): string {
+  const url = room.image?.asset?.url || room.image;
+  return url || fallbackImages[i % fallbackImages.length];
+}
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">Room Types</h2>
+    <div class="space-y-8 lg:space-y-12">
+      {rooms.map((room: any, i: number) => {
+        const isOdd = i % 2 === 1;
+        return (
+          <div
+            class:list={[
+              "grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center",
+              isOdd ? "lg:flex-row-reverse" : "",
+            ]}
+          >
+            <div class:list={[isOdd ? "lg:order-2" : ""]}>
+              <div class="aspect-[4/3] rounded-xl overflow-hidden relative">
+                <div
+                  class="room-fomo absolute inset-0 z-10"
+                  data-room-index={i}
+                  data-room-type={room.type || ""}
+                />
+                <img
+                  src={getRoomImage(room, i)}
+                  alt={room.type || "Room"}
+                  class="h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div class:list={[isOdd ? "lg:order-1" : ""]}>
+              <div class="flex flex-wrap items-center gap-2 mb-3">
+                <h3 class="text-xl font-semibold text-white">{room.type}</h3>
+                {room.tag && (
+                  <span class:list={["text-[10px] font-semibold uppercase tracking-wider rounded-full px-2.5 py-0.5", getTagClass(room.tag)]}>
+                    {room.tag}
+                  </span>
+                )}
+              </div>
+              {(room.price || room.capacity) && (
+                <p class="text-ocean-light text-sm mb-3">
+                  {[room.price, room.capacity].filter(Boolean).join(" • ")}
+                </p>
+              )}
+              {room.desc && <p class="text-white/50 text-base leading-relaxed mb-4">{room.desc}</p>}
+              {(room.features || []).length > 0 && (
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {room.features.map((f: string) => (
+                    <div class="flex items-start gap-2 text-sm text-white/60">
+                      <svg class="h-4 w-4 mt-0.5 text-ocean-light flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      {f}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

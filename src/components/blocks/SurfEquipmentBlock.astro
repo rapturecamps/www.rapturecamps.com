@@ -1,0 +1,49 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Boards & Equipment";
+const subtext = block.subtext || "Everything you need is included. Just bring yourself and a sense of adventure.";
+const equipment = block.equipment || [
+  { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level" },
+  { item: "Wetsuits", desc: "Premium wetsuits in all sizes. Thickness matched to water temperature" },
+  { item: "Rash Vests", desc: "Sun protection for warm-water sessions when you don't need a full suit" },
+  { item: "Reef Booties", desc: "Available for reef sessions — protects your feet on sharp coral" },
+];
+
+const equipmentIcons: Record<string, string> = {
+  "Surfboards": "M17.5 2.5c1 1 1.5 3.5.5 7s-3.5 7-6.5 9.5c-1 .8-2 1.2-2.5 1.5-.5-.3-1.5-.7-2.5-1.5-3-2.5-5.5-6-6.5-9.5s-.5-6 .5-7 3-.5 5.5.5 4 2.5 5.5 2.5 3.5-1.5 5.5-2.5 4.5-1.5 5.5-.5z",
+  "Wetsuits": "M16 2l-4 3-4-3-3.46 1.46a2 2 0 0 0-.54 1.37V10l-1 1v5h2v4a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-4h2v-5l-1-1V4.83a2 2 0 0 0-.54-1.37z",
+  "Rash Vests": "M20.38 3.46L16 2l-4 3.5L8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z",
+  "Reef Booties": "M5 22h4a2 2 0 0 0 2-2v-3a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v3a2 2 0 0 0 2 2h4v-5a7 7 0 0 0-7-7h0a7 7 0 0 0-7 7z",
+};
+
+const defaultIcon = "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4";
+
+function getEquipmentIcon(itemName: string): string {
+  return equipmentIcons[itemName] || defaultIcon;
+}
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      {equipment.map((e: any) => (
+        <div class="p-5 rounded-xl bg-dark-lighter border border-white/5">
+          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-4">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d={getEquipmentIcon(e.item)} />
+            </svg>
+          </div>
+          <h3 class="text-sm font-semibold text-white mb-1">{e.item}</h3>
+          <p class="text-xs text-white/40 leading-relaxed">{e.desc}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -2,6 +2,7 @@
 import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
 import ContactWidget from "@/components/layout/ContactWidget.astro";
+import CookieBanner from "@/components/layout/CookieBanner.astro";
 import ExitIntentPopup from "@/components/popups/ExitIntentPopup.astro";
 import SpinningWheelPopup from "@/components/popups/SpinningWheelPopup.astro";
 import SpecialOfferPopup from "@/components/popups/SpecialOfferPopup.astro";
@@ -90,6 +91,7 @@ const resolvedOgImage = ogImage || defaultOgImage;
     </main>
     <Footer />
     <ContactWidget />
+    <CookieBanner />
 
     {/* --- Popup system --- */}
     {!disablePopups && (

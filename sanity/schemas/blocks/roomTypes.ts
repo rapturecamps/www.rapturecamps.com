@@ -1,42 +1,43 @@
 import { defineType, defineField } from "sanity";
 
 export default defineType({
-  name: "surfSpots",
-  title: "Surf Spots",
+  name: "roomTypes",
+  title: "Room Types",
   type: "object",
   fields: [
     defineField({
-      name: "heading",
-      title: "Heading",
-      type: "string",
-    }),
-    defineField({
-      name: "subtext",
-      title: "Subtext",
-      type: "text",
-      rows: 2,
-    }),
-    defineField({
-      name: "surfSpots",
-      title: "Spots",
+      name: "rooms",
+      title: "Rooms",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             defineField({
-              name: "name",
-              title: "Name",
+              name: "type",
+              title: "Type",
               type: "string",
               validation: (r) => r.required(),
             }),
-            defineField({ name: "level", title: "Level", type: "string" }),
-            defineField({ name: "type", title: "Break Type", type: "string" }),
+            defineField({
+              name: "tag",
+              title: "Tag",
+              type: "string",
+              description: "e.g. Most Popular or Premium",
+            }),
+            defineField({ name: "price", title: "Price", type: "string" }),
+            defineField({ name: "capacity", title: "Capacity", type: "string" }),
             defineField({
               name: "desc",
               title: "Description",
               type: "text",
               rows: 3,
+            }),
+            defineField({
+              name: "features",
+              title: "Features",
+              type: "array",
+              of: [{ type: "string" }],
             }),
             defineField({
               name: "image",
@@ -46,7 +47,7 @@ export default defineType({
             }),
           ],
           preview: {
-            select: { title: "name", subtitle: "level", media: "image" },
+            select: { title: "type", subtitle: "price" },
           },
         },
       ],
@@ -65,12 +66,8 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "heading", spots: "surfSpots" },
-    prepare({ title, spots }) {
-      return {
-        title: title || "Surf Spots",
-        subtitle: `${spots?.length || 0} spots`,
-      };
+    prepare() {
+      return { title: "Room Types", subtitle: "Accommodation" };
     },
   },
 });

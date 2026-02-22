@@ -53,8 +53,10 @@ const jsonLd = schema ? JSON.stringify({
   if (window.__elfsightLazyInit) return;
   window.__elfsightLazyInit = true;
   var loaded = false;
+
   function load() {
     if (loaded) return;
+    if (!window.rcConsent || !window.rcConsent.has("marketing")) return;
     loaded = true;
     document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
       var id = el.getAttribute("data-elfsight-id");
@@ -71,16 +73,24 @@ const jsonLd = schema ? JSON.stringify({
     s.async = true;
     document.body.appendChild(s);
   }
-  var observer = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        load();
-        observer.disconnect();
-      }
+
+  function initObserver() {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { load(); observer.disconnect(); }
+      });
+    }, { rootMargin: "400px" });
+    document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
+      observer.observe(el);
     });
-  }, { rootMargin: "400px" });
-  document.querySelectorAll("[data-elfsight-lazy]").forEach(function (el) {
-    observer.observe(el);
+  }
+
+  if (window.rcConsent && window.rcConsent.has("marketing")) {
+    initObserver();
+  }
+
+  window.addEventListener("rc:consent-updated", function (e) {
+    if (e.detail && e.detail.marketing) initObserver();
   });
 })();
 </script>

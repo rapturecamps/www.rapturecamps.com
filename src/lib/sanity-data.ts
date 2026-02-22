@@ -81,10 +81,9 @@ export async function getCampBySlug(slug: string) {
     const camp = await sanityClient.fetch(CAMP_BY_SLUG, { slug });
     if (camp) {
       const merged = mergeWithHardcoded(camp);
-      // Attach raw Sanity sub-page data for surf/rooms/food pages
-      (merged as any).surfPage = camp.surfPage || null;
-      (merged as any).roomsPage = camp.roomsPage || null;
-      (merged as any).foodPage = camp.foodPage || null;
+      (merged as any).surfPageBuilder = camp.surfPageBuilder || null;
+      (merged as any).roomsPageBuilder = camp.roomsPageBuilder || null;
+      (merged as any).foodPageBuilder = camp.foodPageBuilder || null;
       return merged;
     }
   } catch (e) {

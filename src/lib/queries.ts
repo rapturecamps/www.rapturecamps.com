@@ -82,9 +82,21 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug][0] {
   heroImages,
   "image": image.asset->url,
   pageBuilder,
-  surfPage,
-  roomsPage,
-  foodPage,
+  surfPageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
+  },
+  roomsPageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    rooms[] { ..., "resolvedImageUrl": image.asset->url }
+  },
+  foodPageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    meals[] { ..., "resolvedImageUrl": image.asset->url }
+  },
   seo
 }`;
 

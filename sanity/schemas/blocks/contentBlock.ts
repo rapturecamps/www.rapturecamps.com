@@ -6,6 +6,12 @@ export default defineType({
   type: "object",
   fields: [
     defineField({
+      name: "label",
+      title: "Internal Label",
+      type: "string",
+      description: "Optional — only shown in the Studio list, not on the website.",
+    }),
+    defineField({
       name: "heading",
       title: "Heading",
       type: "string",
@@ -48,9 +54,16 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "heading" },
-    prepare({ title }) {
-      return { title: title || "Content Block", subtitle: "Content Block" };
+    select: { label: "label", heading: "heading", body: "body" },
+    prepare({ label, heading, body }) {
+      const snippet = (body || [])
+        .flatMap((b: any) => (b.children || []).map((c: any) => c.text))
+        .join(" ")
+        .slice(0, 80);
+      return {
+        title: label || heading || "Content Block",
+        subtitle: snippet ? `${snippet}…` : "Content Block",
+      };
     },
   },
 });

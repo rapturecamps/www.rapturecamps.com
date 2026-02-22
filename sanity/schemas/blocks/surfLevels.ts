@@ -1,8 +1,8 @@
 import { defineType, defineField } from "sanity";
 
 export default defineType({
-  name: "surfSpots",
-  title: "Surf Spots",
+  name: "surfLevels",
+  title: "Surf Levels",
   type: "object",
   fields: [
     defineField({
@@ -17,37 +17,28 @@ export default defineType({
       rows: 2,
     }),
     defineField({
-      name: "surfSpots",
-      title: "Spots",
+      name: "levels",
+      title: "Levels",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
-            defineField({
-              name: "name",
-              title: "Name",
-              type: "string",
-              validation: (r) => r.required(),
-            }),
             defineField({ name: "level", title: "Level", type: "string" }),
-            defineField({ name: "type", title: "Break Type", type: "string" }),
+            defineField({ name: "subtitle", title: "Subtitle", type: "string" }),
             defineField({
-              name: "desc",
-              title: "Description",
-              type: "text",
-              rows: 3,
+              name: "features",
+              title: "Features",
+              type: "array",
+              of: [{ type: "string" }],
             }),
             defineField({
-              name: "image",
-              title: "Image",
-              type: "image",
-              options: { hotspot: true },
+              name: "outcome",
+              title: "Outcome",
+              type: "text",
+              rows: 2,
             }),
           ],
-          preview: {
-            select: { title: "name", subtitle: "level", media: "image" },
-          },
         },
       ],
     }),
@@ -65,12 +56,9 @@ export default defineType({
     }),
   ],
   preview: {
-    select: { title: "heading", spots: "surfSpots" },
-    prepare({ title, spots }) {
-      return {
-        title: title || "Surf Spots",
-        subtitle: `${spots?.length || 0} spots`,
-      };
+    select: { title: "heading" },
+    prepare({ title }) {
+      return { title: title || "Surf Levels", subtitle: "Surf Levels" };
     },
   },
 });

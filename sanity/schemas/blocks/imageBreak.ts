@@ -10,7 +10,13 @@ export default defineType({
       title: "Image",
       type: "image",
       options: { hotspot: true },
-      validation: (r) => r.required(),
+      description: "Upload an image here, or use the External URL field below.",
+    }),
+    defineField({
+      name: "imageUrl",
+      title: "External Image URL",
+      type: "url",
+      description: "Fallback if no uploaded image. Will be replaced by Sanity image when available.",
     }),
     defineField({
       name: "alt",
@@ -29,6 +35,11 @@ export default defineType({
         ],
       },
       initialValue: "md",
+    }),
+    defineField({
+      name: "caption",
+      title: "Caption",
+      type: "string",
     }),
   ],
   preview: {

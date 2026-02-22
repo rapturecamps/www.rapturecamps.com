@@ -1,0 +1,66 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Sample Weekly Menu";
+const subtext = block.subtext || "";
+const menu = block.menu || [];
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    {subtext && <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>}
+    {!subtext && <div class="mb-10" />}
+
+    {/* Desktop table */}
+    <div class="hidden md:block overflow-hidden rounded-xl border border-white/5">
+      <table class="w-full">
+        <thead>
+          <tr class="bg-white/5">
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Day</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Starter</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Main</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Dessert</th>
+          </tr>
+        </thead>
+        <tbody>
+          {menu.map((row: any, i: number) => (
+            <tr class:list={[i % 2 === 1 ? "bg-white/5" : ""]}>
+              <td class="px-6 py-4 text-sm font-medium text-white">{row.day}</td>
+              <td class="px-6 py-4 text-sm text-white/70">{row.starter}</td>
+              <td class="px-6 py-4 text-sm text-white/70">{row.main}</td>
+              <td class="px-6 py-4 text-sm text-white/70">{row.dessert}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    {/* Mobile cards */}
+    <div class="md:hidden space-y-4">
+      {menu.map((row: any) => (
+        <div class="rounded-xl border border-white/5 bg-dark-lighter p-5">
+          <h3 class="text-base font-semibold text-white mb-4">{row.day}</h3>
+          <div class="space-y-2">
+            <div class="flex justify-between text-sm">
+              <span class="text-white/40">Starter</span>
+              <span class="text-white/80">{row.starter}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-white/40">Main</span>
+              <span class="text-white/80">{row.main}</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-white/40">Dessert</span>
+              <span class="text-white/80">{row.dessert}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

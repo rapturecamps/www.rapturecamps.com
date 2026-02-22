@@ -1,0 +1,100 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Your Surf Level";
+const subtext = block.subtext || "Whether it's your first wave or your thousandth, we have a programme tailored for you.";
+const levels = block.levels || [
+  { level: "Beginner", subtitle: "Never surfed or still learning to stand", features: ["Pop-up technique on the beach", "Paddling and wave selection", "Riding whitewater to green waves", "Ocean safety & etiquette"], outcome: "By the end of the week, you'll be standing up and riding unbroken green waves." },
+  { level: "Intermediate", subtitle: "You can stand up and ride the wave face", features: ["Bottom turns & top turns", "Reading the lineup & positioning", "Generating speed on the face", "Duck diving & wave selection"], outcome: "You'll leave with cleaner turns, better wave reading, and the confidence to surf new spots." },
+  { level: "Advanced", subtitle: "Experienced surfer looking for the best waves", features: ["Guided sessions at reef and point breaks", "Barrel riding techniques", "Aerial progression", "Swell and wind forecasting"], outcome: "Our instructors take you to the best breaks for the conditions — spots you'd never find on your own." },
+];
+
+const levelStyles: Record<string, { dot: string; color: string; bgColor: string }> = {
+  Beginner: { dot: "bg-green-400", color: "text-green-400", bgColor: "bg-green-400/10" },
+  Intermediate: { dot: "bg-ocean-light", color: "text-ocean-light", bgColor: "bg-ocean-light/10" },
+  Advanced: { dot: "bg-amber-400", color: "text-amber-400", bgColor: "bg-amber-400/10" },
+};
+
+function getLevelStyle(levelName: string) {
+  return levelStyles[levelName] || { dot: "bg-white/40", color: "text-white", bgColor: "bg-white/10" };
+}
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {levels.map((item: any, i: number) => {
+        const style = getLevelStyle(item.level);
+        return (
+          <div class="surf-level-card rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col" data-level={i}>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <span class:list={["inline-block h-2 w-2 rounded-full", style.dot]} />
+                <h3 class="text-lg font-semibold text-white">{item.level}</h3>
+              </div>
+              <button class="surf-level-toggle flex h-8 w-8 items-center justify-center rounded-full bg-white/5 text-white/40 hover:bg-white/10 hover:text-white transition-colors" aria-label={`Expand ${item.level} details`}>
+                <svg class="surf-level-chevron h-4 w-4 transition-transform duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+            </div>
+            <p class:list={["text-xs mt-1", style.color]}>{item.subtitle}</p>
+            <ul class="space-y-2.5 mt-5 mb-5 flex-1">
+              {(item.features || []).map((f: string) => (
+                <li class="flex items-start gap-2.5 text-sm text-white/50">
+                  <svg class="h-4 w-4 mt-0.5 text-white/20 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <div class:list={["rounded-lg p-3 text-xs leading-relaxed", style.bgColor, style.color]}>
+              {item.outcome}
+            </div>
+            <div class="surf-level-body overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
+              <div class="pt-5 border-t border-white/5 mt-5">
+                <p class="text-sm text-white/50 leading-relaxed">{item.extra || "More details coming soon — including typical session breakdowns, recommended board types, and progression milestones."}</p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  <script is:inline>
+  (function () {
+    document.querySelectorAll(".surf-level-card").forEach(function (card) {
+      var toggle = card.querySelector(".surf-level-toggle");
+      var body = card.querySelector(".surf-level-body");
+      var chevron = card.querySelector(".surf-level-chevron");
+      if (!toggle || !body) return;
+
+      var open = false;
+
+      function expand() {
+        body.style.maxHeight = body.scrollHeight + "px";
+        body.style.opacity = "1";
+        if (chevron) chevron.style.transform = "rotate(180deg)";
+        card.style.borderColor = "rgba(255,255,255,0.1)";
+        open = true;
+      }
+
+      function collapse() {
+        body.style.maxHeight = "0";
+        body.style.opacity = "0";
+        if (chevron) chevron.style.transform = "rotate(0deg)";
+        card.style.borderColor = "";
+        open = false;
+      }
+
+      toggle.addEventListener("click", function () {
+        if (open) collapse(); else expand();
+      });
+    });
+  })();
+  </script>
+</section>

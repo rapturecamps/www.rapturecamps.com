@@ -1,0 +1,50 @@
+---
+interface Props {
+  block: any;
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Dietary Requirements";
+const subtext = block.subtext || "";
+const dietary = block.dietary || [];
+
+const dietaryIcons: Record<string, { icon: string; color: string; bg: string }> = {
+  Vegetarian: { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z", color: "text-green-400", bg: "bg-green-400/10" },
+  Vegan: { icon: "M17 8C8 10 5.9 16.17 3.82 21.34M2 11.5C7 11.5 11.17 7.67 12 2", color: "text-green-400", bg: "bg-green-400/10" },
+  "Gluten-Free": { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400", bg: "bg-amber-400/10" },
+  "Lactose-Free": { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400", bg: "bg-amber-400/10" },
+  Halal: { icon: "M20 6 9 17l-5-5", color: "text-ocean-light", bg: "bg-ocean-light/10" },
+  "Nut-Free": { icon: "M20 6 9 17l-5-5", color: "text-ocean-light", bg: "bg-ocean-light/10" },
+};
+
+const defaultIcon = { icon: "M20 6 9 17l-5-5", color: "text-white", bg: "bg-white/10" };
+
+function getDietaryIcon(name: string) {
+  return dietaryIcons[name] || defaultIcon;
+}
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+    {subtext && <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>}
+    {!subtext && <div class="mb-10" />}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {dietary.map((item: any) => {
+        const { icon, color, bg } = getDietaryIcon(item.name || "");
+        return (
+          <div class="p-5 rounded-xl bg-dark-lighter border border-white/5">
+            <div class:list={["flex h-10 w-10 items-center justify-center rounded-lg mb-4", bg]}>
+              <svg class:list={["h-5 w-5", color]} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d={icon} />
+              </svg>
+            </div>
+            <h3 class="text-sm font-semibold text-white mb-1">{item.name}</h3>
+            {item.desc && <p class="text-xs text-white/40 leading-relaxed">{item.desc}</p>}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

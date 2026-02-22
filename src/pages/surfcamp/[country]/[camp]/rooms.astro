@@ -1,7 +1,7 @@
 ---
 import CampLayout from "@/components/layout/CampLayout.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
-import ImageBreak from "@/components/sections/ImageBreak.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
 
@@ -20,73 +20,7 @@ const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + 
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const sanityData = (campData as any)?.roomsPage;
-
-const tagColors: Record<string, string> = {
-  "Most Popular": "text-ocean-light bg-ocean-light/10",
-  "Premium": "text-amber-400 bg-amber-400/10",
-  "Unique": "text-green-400 bg-green-400/10",
-};
-
-const fallbackImages = [
-  "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
-  "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?w=800&h=500&fit=crop",
-];
-
-const rooms = (sanityData?.rooms || [
-  { type: "Shared Room", tag: "Most Popular", price: "From €45 / night", capacity: "4–6 guests", desc: "Our shared rooms are spacious, clean, and designed for the social surfer.", features: ["Personal locker & shelf space", "Air conditioning", "Fresh linen & towels", "Shared bathroom"] },
-  { type: "Twin / Double", tag: "", price: "From €75 / night", capacity: "2 guests", desc: "A room for two — ideal for couples or friends travelling together.", features: ["Private ensuite bathroom", "Air conditioning", "Balcony or terrace", "Fresh linen & towels"] },
-  { type: "Private Room", tag: "Premium", price: "From €95 / night", capacity: "1–2 guests", desc: "Your own space at the camp with extra touches.", features: ["King-size bed", "Private terrace", "Mini-fridge", "Premium bathroom amenities"] },
-  { type: "Glamping Tent", tag: "Unique", price: "From €55 / night", capacity: "2 guests", desc: "Sleep under the stars without roughing it.", features: ["Real mattress & bedding", "Fairy lights & lanterns", "Shared facilities nearby", "Surrounded by nature"] },
-]).map((r: any, i: number) => ({
-  ...r,
-  tagColor: tagColors[r.tag] || "",
-  image: r.image?.asset?.url || fallbackImages[i] || fallbackImages[0],
-}));
-
-const inclusionIcons: Record<string, string> = {
-  "Daily surf lessons": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
-  "Three-course breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z",
-  "Dinner (Mon – Fri)": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
-  "Beach transfers": "M8 6v6h7M15.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM5.5 17a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z",
-  "Yoga sessions": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6",
-  "Free WiFi": "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01",
-};
-
-const roomInclusions = (sanityData?.inclusions || [
-  { item: "Daily surf lessons" },
-  { item: "Three-course breakfast" },
-  { item: "Dinner (Mon – Fri)" },
-  { item: "Beach transfers" },
-  { item: "Yoga sessions" },
-  { item: "Free WiFi" },
-]).map((inc: any) => ({
-  ...inc,
-  icon: inclusionIcons[inc.item] || "M20 6 9 17l-5-5",
-}));
-
-const facilityIcons: Record<string, string> = {
-  "Swimming Pool": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
-  "Yoga Shala": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22",
-  "Outdoor Lounge": "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",
-  "Surf Storage": "M4 22V4c0-.5.2-1 .6-1.4C5 2.2 5.5 2 6 2h12c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v18",
-  "Communal Kitchen": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
-  "Laundry Service": "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z",
-};
-
-const facilities = (sanityData?.facilities || [
-  { name: "Swimming Pool", desc: "Open-air pool with sun loungers" },
-  { name: "Yoga Shala", desc: "Dedicated space for daily classes" },
-  { name: "Outdoor Lounge", desc: "Hammocks, daybeds & chill areas" },
-  { name: "Surf Storage", desc: "Secure board racks & rinse station" },
-  { name: "Communal Kitchen", desc: "For those in-between snack cravings" },
-  { name: "Laundry Service", desc: "Wash & fold available daily" },
-]).map((f: any) => ({
-  ...f,
-  icon: facilityIcons[f.name] || "M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
-}));
+const blocks = (campData as any)?.roomsPageBuilder;
 ---
 
 <CampLayout
@@ -99,135 +33,13 @@ const facilities = (sanityData?.facilities || [
   title={`Rooms at ${campTitle} | Rapture Surfcamps`}
   description={`Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
 >
-  <!-- Intro -->
-  <section class="py-16 sm:py-20 bg-dark">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{sanityData?.introHeading || "Where You'll Stay"}</h1>
-      <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-3xl">
-        {(sanityData?.introBody || `Every room at ${campTitle} is designed with one thing in mind: recharging after a day in the water. Whether you're going social in a shared room or treating yourself to a private suite, you'll wake up refreshed and ready for the next session.\n\nAll accommodation options include daily surf lessons, meals, yoga, and access to every camp facility. The only difference is how much privacy you want.`).split("\n\n").map((p: string) => <p>{p}</p>)}
-      </div>
-    </div>
-  </section>
+  {blocks?.length ? (
+    <BlockRenderer blocks={blocks} campData={campData} />
+  ) : (
+    <CTASection />
+  )}
 
-  <!-- Room Types -->
-  <section class="py-16 sm:py-20 bg-dark-lighter">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">Room Types</h2>
-      <div class="space-y-8">
-        {rooms.map((room, i) => (
-          <div class:list={[
-            "grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-xl border border-white/5 bg-dark overflow-hidden",
-          ]}>
-            <div class:list={["aspect-[16/10] lg:aspect-auto overflow-hidden", i % 2 === 1 && "lg:order-2"]}>
-              <img
-                src={room.image}
-                alt={room.type}
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div class:list={["p-6 sm:p-8 flex flex-col justify-center", i % 2 === 1 && "lg:order-1"]}>
-              <!-- FOMO banner -->
-              <div class="room-fomo mb-4 flex items-center gap-2 rounded-lg bg-amber-500/10 border border-amber-500/20 px-3 py-2" data-room-index={i} data-room-type={room.type}>
-                <span class="relative flex h-2 w-2 flex-shrink-0">
-                  <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
-                  <span class="relative inline-flex h-2 w-2 rounded-full bg-amber-500"></span>
-                </span>
-                <span class="room-fomo-text text-xs text-amber-300/90 font-medium"></span>
-              </div>
-
-              <div class="flex items-center gap-3 mb-1">
-                <h3 class="text-xl font-semibold text-white">{room.type}</h3>
-                {room.tag && <span class:list={["text-[10px] uppercase tracking-wider rounded-full px-2.5 py-0.5", room.tagColor]}>{room.tag}</span>}
-              </div>
-              <div class="flex items-center gap-4 mb-4">
-                <span class="text-sm text-ocean-light font-medium">{room.price}</span>
-                <span class="text-xs text-white/30">{room.capacity}</span>
-              </div>
-              <p class="text-sm text-white/50 leading-relaxed mb-5">{room.desc}</p>
-              <ul class="grid grid-cols-2 gap-2">
-                {room.features.map((f) => (
-                  <li class="flex items-center gap-2 text-xs text-white/40">
-                    <svg class="h-3.5 w-3.5 text-ocean-light/60 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Image Break -->
-  <ImageBreak
-    src={sanityData?.imageBreakUrl || "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=800&fit=crop"}
-    alt={sanityData?.imageBreakAlt || `Pool area at ${campTitle}`}
-    caption={sanityData?.imageBreakCaption || `The pool & lounge area at ${campTitle}`}
-    height="short"
-  />
-
-  <!-- Every Room Includes -->
-  <section class="py-16 sm:py-20 bg-dark">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.inclusionsHeading || "Every Booking Includes"}</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.inclusionsSubtext || "No matter which room you choose, these are always part of the package."}</p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-        {roomInclusions.map((inc) => (
-          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark-lighter border border-white/5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-3">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d={inc.icon} />
-              </svg>
-            </div>
-            <span class="text-xs font-medium text-white/60">{inc.item}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Camp Facilities -->
-  <section class="py-16 sm:py-20 bg-dark-lighter">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{sanityData?.facilitiesHeading || "Camp Facilities"}</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">{sanityData?.facilitiesSubtext || "Our camps are designed to feel like home — with a few upgrades."}</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {facilities.map((f) => (
-          <div class="flex items-start gap-4 p-5 rounded-xl bg-dark border border-white/5">
-            <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d={f.icon} />
-              </svg>
-            </div>
-            <div>
-              <h3 class="text-sm font-semibold text-white mb-0.5">{f.name}</h3>
-              <p class="text-xs text-white/40">{f.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- Gallery Strip -->
-  <section class="bg-dark">
-    <div class="grid grid-cols-2 sm:grid-cols-4">
-      {(sanityData?.galleryImages || [
-        { url: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&h=400&fit=crop", alt: "Lounge area" },
-        { url: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=500&h=400&fit=crop", alt: "Outdoor bathroom" },
-        { url: "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=500&h=400&fit=crop", alt: "Pool at sunset" },
-        { url: "https://images.unsplash.com/photo-1596178065887-1198b6148b2b?w=500&h=400&fit=crop", alt: "Tropical surroundings" },
-      ]).map((img: any) => (
-        <div class="aspect-square overflow-hidden">
-          <img src={img.url} alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- Accepted Payment Methods -->
+  <!-- Payment Methods (structural, not CMS-driven) -->
   <section class="py-12 sm:py-16 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="flex flex-col items-center text-center">
@@ -236,80 +48,27 @@ const facilities = (sanityData?.facilities || [
           <span class="text-xs uppercase tracking-wider text-white/30 font-medium">Secure payments</span>
         </div>
         <div class="flex flex-wrap items-center justify-center gap-3">
-          <!-- Visa -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#1A1F71"/>
-              <path d="M19.5 21h-3l1.9-11h3l-1.9 11zm13.6-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.6 3.1 1.2.6 1.5.9 1.5 1.4 0 .8-.9 1.1-1.8 1.1-1.2 0-1.8-.2-2.8-.6l-.4-.2-.4 2.5c.7.3 2 .6 3.3.6 3.2 0 5.2-1.5 5.2-3.8 0-1.3-.8-2.3-2.5-3.1-1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 1 0 1.7.2 2.2.4l.3.1.6-2.3zm7.9-.3h-2.3c-.7 0-1.3.2-1.6.9l-4.5 10.1h3.2s.5-1.4.6-1.7h3.9c.1.4.4 1.7.4 1.7H43l-2-11zm-3.7 7.1c.3-.7 1.2-3.2 1.2-3.2s.3-.7.4-1.1l.2 1 .7 3.3h-2.5zM17.2 10h-4.7l-.1.2c3.7.9 6.2 3.1 7.2 5.8l-1-4.9c-.2-.8-.8-1-1.4-1.1z" fill="#fff"/>
-            </svg>
-          </div>
-          <!-- Mastercard -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#252525"/>
-              <circle cx="19" cy="16" r="8" fill="#EB001B"/>
-              <circle cx="29" cy="16" r="8" fill="#F79E1B"/>
-              <path d="M24 10.3a8 8 0 0 1 0 11.4 8 8 0 0 1 0-11.4z" fill="#FF5F00"/>
-            </svg>
-          </div>
-          <!-- Amex -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#006FCF"/>
-              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial, sans-serif">AMEX</text>
-            </svg>
-          </div>
-          <!-- PayPal -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#003087"/>
-              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6.5" font-weight="bold" font-family="Arial, sans-serif">PayPal</text>
-            </svg>
-          </div>
-          <!-- Klarna -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#FFB3C7"/>
-              <text x="24" y="18.5" text-anchor="middle" fill="#0A0B09" font-size="7" font-weight="bold" font-family="Arial, sans-serif">Klarna</text>
-            </svg>
-          </div>
-          <!-- Apple Pay -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#000"/>
-              <text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="Arial, sans-serif"> Pay</text>
-              <path d="M15.2 13.2c.3-.4.5-.9.5-1.4-.5 0-1.1.3-1.5.7-.3.3-.6.9-.5 1.4.5 0 1.1-.3 1.5-.7zm.4.8c-.8 0-1.5.5-1.9.5s-1-.4-1.7-.4c-.8 0-1.6.5-2.1 1.3-.9 1.5-.2 3.7.6 4.9.4.6.9 1.3 1.6 1.2.6 0 .9-.4 1.6-.4.7 0 1 .4 1.6.4.7 0 1.1-.6 1.5-1.2.5-.7.7-1.4.7-1.4-.7-.3-1.3-1.2-1.3-2.2 0-.9.5-1.7 1.2-2.1-.5-.7-1.2-1-1.8-1.1z" fill="white"/>
-            </svg>
-          </div>
-          <!-- Google Pay -->
-          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5">
-            <svg class="h-5 w-8" viewBox="0 0 48 32" fill="none">
-              <rect width="48" height="32" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width=".5"/>
-              <text x="30" y="18.5" text-anchor="middle" fill="#5f6368" font-size="6" font-weight="500" font-family="Arial, sans-serif">Pay</text>
-              <path d="M14.5 17.5c0-2.5 2-4.5 4.4-4.5 1.3 0 2.2.5 2.9 1.2l-.8.8c-.5-.5-1.2-.8-2.1-.8-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1.2 0 1.8-.5 2.2-.9.3-.3.5-.8.6-1.5h-2.8v-1.1h3.9c0 .3.1.5.1.9 0 1.1-.3 2.4-1.2 3.3-.9.9-2 1.4-3.4 1.4-2.6.1-4.8-1.9-4.8-4.2z" fill="#4285F4"/>
-            </svg>
-          </div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#1A1F71"/><path d="M19.5 21h-3l1.9-11h3l-1.9 11zm13.6-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.6 3.1 1.2.6 1.5.9 1.5 1.4 0 .8-.9 1.1-1.8 1.1-1.2 0-1.8-.2-2.8-.6l-.4-.2-.4 2.5c.7.3 2 .6 3.3.6 3.2 0 5.2-1.5 5.2-3.8 0-1.3-.8-2.3-2.5-3.1-1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 1 0 1.7.2 2.2.4l.3.1.6-2.3zm7.9-.3h-2.3c-.7 0-1.3.2-1.6.9l-4.5 10.1h3.2s.5-1.4.6-1.7h3.9c.1.4.4 1.7.4 1.7H43l-2-11zm-3.7 7.1c.3-.7 1.2-3.2 1.2-3.2s.3-.7.4-1.1l.2 1 .7 3.3h-2.5zM17.2 10h-4.7l-.1.2c3.7.9 6.2 3.1 7.2 5.8l-1-4.9c-.2-.8-.8-1-1.4-1.1z" fill="#fff"/></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#252525"/><circle cx="19" cy="16" r="8" fill="#EB001B"/><circle cx="29" cy="16" r="8" fill="#F79E1B"/><path d="M24 10.3a8 8 0 0 1 0 11.4 8 8 0 0 1 0-11.4z" fill="#FF5F00"/></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#006FCF"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial, sans-serif">AMEX</text></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#003087"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6.5" font-weight="bold" font-family="Arial, sans-serif">PayPal</text></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#FFB3C7"/><text x="24" y="18.5" text-anchor="middle" fill="#0A0B09" font-size="7" font-weight="bold" font-family="Arial, sans-serif">Klarna</text></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#000"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="Arial, sans-serif"> Pay</text><path d="M15.2 13.2c.3-.4.5-.9.5-1.4-.5 0-1.1.3-1.5.7-.3.3-.6.9-.5 1.4.5 0 1.1-.3 1.5-.7zm.4.8c-.8 0-1.5.5-1.9.5s-1-.4-1.7-.4c-.8 0-1.6.5-2.1 1.3-.9 1.5-.2 3.7.6 4.9.4.6.9 1.3 1.6 1.2.6 0 .9-.4 1.6-.4.7 0 1 .4 1.6.4.7 0 1.1-.6 1.5-1.2.5-.7.7-1.4.7-1.4-.7-.3-1.3-1.2-1.3-2.2 0-.9.5-1.7 1.2-2.1-.5-.7-1.2-1-1.8-1.1z" fill="white"/></svg></div>
+          <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width=".5"/><text x="30" y="18.5" text-anchor="middle" fill="#5f6368" font-size="6" font-weight="500" font-family="Arial, sans-serif">Pay</text><path d="M14.5 17.5c0-2.5 2-4.5 4.4-4.5 1.3 0 2.2.5 2.9 1.2l-.8.8c-.5-.5-1.2-.8-2.1-.8-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1.2 0 1.8-.5 2.2-.9.3-.3.5-.8.6-1.5h-2.8v-1.1h3.9c0 .3.1.5.1.9 0 1.1-.3 2.4-1.2 3.3-.9.9-2 1.4-3.4 1.4-2.6.1-4.8-1.9-4.8-4.2z" fill="#4285F4"/></svg></div>
         </div>
         <p class="text-[11px] text-white/20 mt-4">Pay securely with your preferred method. Klarna buy-now-pay-later available at checkout.</p>
       </div>
     </div>
   </section>
 
-  <CTASection />
-
   <script is:inline>
   (function () {
     var SK = "rc_room_fomo";
     var stored = null;
     try { stored = JSON.parse(sessionStorage.getItem(SK)); } catch(e) {}
-
     var hour = new Date().getHours();
     var busy = (hour >= 9 && hour <= 20) ? 1 : (hour >= 7 && hour <= 22) ? 0.6 : 0.3;
-
-    function r(min, max) {
-      return Math.round(min + Math.random() * (max - min) * busy);
-    }
-
+    function r(min, max) { return Math.round(min + Math.random() * (max - min) * busy); }
     var messages = [
       function (d) { return "Booked " + d.bookings + "x today \u2014 " + d.viewing + " people viewing now"; },
       function (d) { return d.viewing + " people looking at this room right now"; },
@@ -317,29 +76,21 @@ const facilities = (sanityData?.facilities || [
       function (d) { return "Booked " + d.bookings + " times in the last 24h"; },
       function (d) { return d.left + " rooms left \u2014 " + d.bookings + " booked today"; },
     ];
-
     var roomProfiles = [
       { minBook: 3, maxBook: 9, minView: 4, maxView: 14, minLeft: 2, maxLeft: 6, msgPool: [0, 1, 4] },
-      { minBook: 2, maxBook: 6, minView: 2, maxView: 8,  minLeft: 3, maxLeft: 8, msgPool: [0, 3, 1] },
+      { minBook: 2, maxBook: 6, minView: 2, maxView: 8, minLeft: 3, maxLeft: 8, msgPool: [0, 3, 1] },
       { minBook: 1, maxBook: 4, minView: 3, maxView: 10, minLeft: 1, maxLeft: 4, msgPool: [2, 4, 3] },
-      { minBook: 1, maxBook: 5, minView: 2, maxView: 7,  minLeft: 2, maxLeft: 5, msgPool: [2, 0, 1] },
+      { minBook: 1, maxBook: 5, minView: 2, maxView: 7, minLeft: 2, maxLeft: 5, msgPool: [2, 0, 1] },
     ];
-
     if (!stored || (Date.now() - stored.ts > 300000)) {
       stored = { ts: Date.now(), rooms: [] };
       for (var i = 0; i < roomProfiles.length; i++) {
         var p = roomProfiles[i];
         var pick = p.msgPool[Math.floor(Math.random() * p.msgPool.length)];
-        stored.rooms.push({
-          bookings: r(p.minBook, p.maxBook),
-          viewing: r(p.minView, p.maxView),
-          left: r(p.minLeft, p.maxLeft),
-          msgIdx: pick,
-        });
+        stored.rooms.push({ bookings: r(p.minBook, p.maxBook), viewing: r(p.minView, p.maxView), left: r(p.minLeft, p.maxLeft), msgIdx: pick });
       }
       try { sessionStorage.setItem(SK, JSON.stringify(stored)); } catch(e) {}
     }
-
     document.querySelectorAll(".room-fomo").forEach(function (el) {
       var idx = parseInt(el.getAttribute("data-room-index"), 10);
       if (isNaN(idx) || !stored.rooms[idx]) return;
@@ -347,19 +98,13 @@ const facilities = (sanityData?.facilities || [
       var textEl = el.querySelector(".room-fomo-text");
       if (textEl) textEl.textContent = messages[d.msgIdx](d);
     });
-
-    // Slowly tick viewing count on one random room every ~45-70s
     setInterval(function () {
       var idx = Math.floor(Math.random() * stored.rooms.length);
       stored.rooms[idx].viewing = Math.min(stored.rooms[idx].viewing + 1, 20);
       stored.ts = Date.now();
       try { sessionStorage.setItem(SK, JSON.stringify(stored)); } catch(e) {}
       var el = document.querySelector('.room-fomo[data-room-index="' + idx + '"]');
-      if (el) {
-        var d = stored.rooms[idx];
-        var textEl = el.querySelector(".room-fomo-text");
-        if (textEl) textEl.textContent = messages[d.msgIdx](d);
-      }
+      if (el) { var d = stored.rooms[idx]; var textEl = el.querySelector(".room-fomo-text"); if (textEl) textEl.textContent = messages[d.msgIdx](d); }
     }, 45000 + Math.random() * 25000);
   })();
   </script>

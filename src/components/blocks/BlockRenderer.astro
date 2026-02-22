@@ -1,0 +1,84 @@
+---
+import ContentBlock from "@/components/sections/ContentBlock.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import SurfIntroBlock from "./SurfIntroBlock.astro";
+import SurfForecastBlock from "./SurfForecastBlock.astro";
+import SurfSpotsBlock from "./SurfSpotsBlock.astro";
+import SurfLevelsBlock from "./SurfLevelsBlock.astro";
+import SurfScheduleBlock from "./SurfScheduleBlock.astro";
+import SurfEquipmentBlock from "./SurfEquipmentBlock.astro";
+import FoodIntroBlock from "./FoodIntroBlock.astro";
+import MealCardsBlock from "./MealCardsBlock.astro";
+import MenuTableBlock from "./MenuTableBlock.astro";
+import DietaryOptionsBlock from "./DietaryOptionsBlock.astro";
+import RoomTypesBlock from "./RoomTypesBlock.astro";
+import RoomInclusionsBlock from "./RoomInclusionsBlock.astro";
+import RoomFacilitiesBlock from "./RoomFacilitiesBlock.astro";
+import ImageGalleryBlock from "./ImageGalleryBlock.astro";
+
+interface Props {
+  blocks: any[];
+  campData?: any;
+}
+
+const { blocks = [], campData } = Astro.props;
+---
+
+{blocks.map((block) => {
+  const type = block._type;
+
+  if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} />;
+  if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} />;
+  if (type === "surfSpots") return <SurfSpotsBlock block={block} />;
+  if (type === "surfLevels") return <SurfLevelsBlock block={block} />;
+  if (type === "surfSchedule") return <SurfScheduleBlock block={block} />;
+  if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
+
+  if (type === "foodIntro") return <FoodIntroBlock block={block} />;
+  if (type === "mealCards") return <MealCardsBlock block={block} />;
+  if (type === "menuTable") return <MenuTableBlock block={block} />;
+  if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;
+
+  if (type === "roomTypes") return <RoomTypesBlock block={block} />;
+  if (type === "roomInclusions") return <RoomInclusionsBlock block={block} />;
+  if (type === "roomFacilities") return <RoomFacilitiesBlock block={block} />;
+
+  if (type === "imageGallery") return <ImageGalleryBlock block={block} />;
+
+  if (type === "imageBreak") {
+    return <ImageBreak
+      src={block.resolvedImageUrl || block.imageUrl || block.image?.asset?.url || ""}
+      alt={block.alt || ""}
+      caption={block.caption || ""}
+      height={block.height === "sm" ? "short" : block.height === "lg" ? "tall" : "medium"}
+    />;
+  }
+
+  if (type === "contentBlock") {
+    const body = Array.isArray(block.body)
+      ? block.body.map((b: any) => b.children?.map((c: any) => c.text).join("")).map((t: string) => `<p>${t}</p>`).join("")
+      : typeof block.body === "string"
+        ? block.body.split("\n\n").map((p: string) => `<p>${p}</p>`).join("")
+        : "";
+    return <ContentBlock
+      heading={block.heading || ""}
+      body={body}
+      image={block.image?.asset?.url || ""}
+      imageAlt={block.imageAlt || ""}
+      reverse={block.reverse || false}
+      background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+    />;
+  }
+
+  if (type === "ctaSection") return <CTASection
+    heading={block.heading}
+    text={block.text}
+    buttonText={block.buttonText}
+    buttonUrl={block.buttonUrl || campData?.bookingUrl}
+    faqSlug={campData?.slug}
+    blogCategory={campData?.countrySlug}
+  />;
+
+  return null;
+})}

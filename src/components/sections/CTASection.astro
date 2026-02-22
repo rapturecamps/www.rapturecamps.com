@@ -1,4 +1,22 @@
 ---
+interface Props {
+  heading?: string;
+  text?: string;
+  buttonText?: string;
+  buttonUrl?: string;
+  faqSlug?: string;
+  blogCategory?: string;
+}
+
+const props = Astro.props;
+const heading = props.heading || "All You Have Is Now.\nStart Surfing Today.";
+const text = props.text || "Book your surf camp experience today and join thousands of happy surfers who chose Rapture as their gateway to the perfect wave.";
+const buttonText = props.buttonText || "Book Your Trip";
+const buttonUrl = props.buttonUrl || "https://bookings.rapturecamps.com";
+const faqSlug = props.faqSlug;
+const blogCategory = props.blogCategory;
+
+const headingParts = heading.split("\n");
 ---
 
 <section class="relative py-20 overflow-hidden bg-dark">
@@ -6,20 +24,21 @@
 
   <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-tight">
-      Ride the Waves.<br />Find Your Zen.
+      {headingParts.map((part, i) => (
+        i < headingParts.length - 1 ? <>{part}<br /></> : <>{part}</>
+      ))}
     </h2>
     <p class="mt-6 text-base text-white/50 max-w-2xl mx-auto">
-      Book your surf camp experience today and join thousands of happy
-      surfers who chose Rapture as their gateway to the perfect wave.
+      {text}
     </p>
     <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
       <a
-        href="https://bookings.rapturecamps.com"
+        href={buttonUrl}
         target="_blank"
         rel="noopener noreferrer"
         class="rounded-full bg-ocean px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-ocean-light"
       >
-        Book Your Trip
+        {buttonText}
       </a>
       <a
         href="/contact"
@@ -28,5 +47,13 @@
         Get in Touch
       </a>
     </div>
+    {(faqSlug || blogCategory) && (
+      <p class="mt-8 text-sm text-white/30">
+        Got questions?{" "}
+        {faqSlug && <><a href={`/faq/${faqSlug}`} class="text-ocean-light hover:underline">FAQ</a>, </>}
+        {blogCategory && <>browse our <a href={`/blog/category/${blogCategory}`} class="text-ocean-light hover:underline">Blog</a>, or </>}
+        <a href="/contact" class="text-ocean-light hover:underline">message us</a> directly.
+      </p>
+    )}
   </div>
 </section>
