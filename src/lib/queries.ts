@@ -82,6 +82,9 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug][0] {
   heroImages,
   "image": image.asset->url,
   pageBuilder,
+  surfPage,
+  roomsPage,
+  foodPage,
   seo
 }`;
 

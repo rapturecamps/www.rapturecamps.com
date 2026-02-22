@@ -90,7 +90,7 @@ export default defineType({
     }),
     defineField({
       name: "pageBuilder",
-      title: "Page Content",
+      title: "Overview Page Content",
       type: "array",
       of: [
         { type: "contentBlock" },
@@ -104,6 +104,21 @@ export default defineType({
         { type: "faqSection" },
         { type: "ctaSection" },
       ],
+    }),
+    defineField({
+      name: "surfPage",
+      title: "Surf Page",
+      type: "surfPage",
+    }),
+    defineField({
+      name: "roomsPage",
+      title: "Rooms Page",
+      type: "roomsPage",
+    }),
+    defineField({
+      name: "foodPage",
+      title: "Food Page",
+      type: "foodPage",
     }),
     defineField({
       name: "seo",

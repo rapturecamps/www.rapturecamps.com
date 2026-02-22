@@ -20,34 +20,31 @@ const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + 
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const meals = [
-  {
-    meal: "Breakfast",
-    time: "7:30 – 9:30",
-    icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
-    image: "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=600&h=400&fit=crop",
-    desc: "A proper spread to fuel your morning session. Fresh tropical fruit, eggs any way you like, homemade granola, smoothie bowls, pancakes, toast with local jams, and unlimited coffee and tea.",
-    highlights: ["Fresh tropical fruit", "Eggs & pancakes to order", "Smoothie bowls", "Unlimited coffee & tea"],
-  },
-  {
-    meal: "Lunch",
-    time: "On the go",
-    icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
-    image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop",
-    desc: "Between surf sessions, we keep it light and energising. Packed snacks, fresh fruit, and energy bars come with you to the beach. Some camps offer an optional light lunch at the camp.",
-    highlights: ["Beach snack packs", "Fresh fruit & energy bars", "Hydration station", "Optional camp lunch"],
-  },
-  {
-    meal: "Dinner",
-    time: "19:00 – 20:30",
-    icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop",
-    desc: "The highlight of the day. Three-course dinners Monday through Friday, featuring a rotating menu of local and international dishes. Think fresh-caught fish, fragrant curries, pasta nights, and BBQ Fridays.",
-    highlights: ["Three courses", "Rotating menu", "Local & international", "Mon – Fri"],
-  },
+const sanityData = (campData as any)?.foodPage;
+
+const mealIcons: Record<string, string> = {
+  "Breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Lunch": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Dinner": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20",
+};
+
+const mealImages = [
+  "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop",
+  "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop",
 ];
 
-const sampleMenu = [
+const meals = (sanityData?.meals || [
+  { meal: "Breakfast", time: "7:30 – 9:30", desc: "A proper spread to fuel your morning session. Fresh tropical fruit, eggs any way you like, homemade granola, smoothie bowls, pancakes, toast with local jams, and unlimited coffee and tea.", highlights: ["Fresh tropical fruit", "Eggs & pancakes to order", "Smoothie bowls", "Unlimited coffee & tea"] },
+  { meal: "Lunch", time: "On the go", desc: "Between surf sessions, we keep it light and energising. Packed snacks, fresh fruit, and energy bars come with you to the beach.", highlights: ["Beach snack packs", "Fresh fruit & energy bars", "Hydration station", "Optional camp lunch"] },
+  { meal: "Dinner", time: "19:00 – 20:30", desc: "The highlight of the day. Three-course dinners Monday through Friday, featuring a rotating menu of local and international dishes.", highlights: ["Three courses", "Rotating menu", "Local & international", "Mon – Fri"] },
+]).map((m: any, i: number) => ({
+  ...m,
+  icon: mealIcons[m.meal] || mealIcons["Dinner"],
+  image: m.image?.asset?.url || mealImages[i] || mealImages[0],
+}));
+
+const sampleMenu = sanityData?.sampleMenu?.length ? sanityData.sampleMenu : [
   { day: "Monday", starter: "Watermelon & feta salad", main: "Grilled mahi-mahi with lime rice", dessert: "Coconut panna cotta" },
   { day: "Tuesday", starter: "Tom kha soup", main: "Chicken satay with peanut noodles", dessert: "Mango sticky rice" },
   { day: "Wednesday", starter: "Bruschetta trio", main: "Homemade pasta with pesto & roast veg", dessert: "Tiramisu" },
@@ -55,14 +52,26 @@ const sampleMenu = [
   { day: "Friday", starter: "Garden salad with tahini", main: "BBQ mixed grill with grilled corn & slaw", dessert: "Chocolate fondant" },
 ];
 
-const dietary = [
-  { name: "Vegetarian", desc: "Full veggie options at every meal", icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z", color: "text-green-400" },
-  { name: "Vegan", desc: "Plant-based dishes always available", icon: "M17 8C8 10 5.9 16.17 3.82 21.34M2 11.5C7 11.5 11.17 7.67 12 2", color: "text-green-400" },
-  { name: "Gluten-Free", desc: "GF alternatives for every course", icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400" },
-  { name: "Lactose-Free", desc: "Dairy-free options on request", icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400" },
-  { name: "Halal", desc: "Halal-prepared meals available", icon: "M20 6 9 17l-5-5", color: "text-ocean-light" },
-  { name: "Nut-Free", desc: "Strict nut-free preparation possible", icon: "M20 6 9 17l-5-5", color: "text-ocean-light" },
-];
+const dietaryIcons: Record<string, { icon: string; color: string }> = {
+  "Vegetarian": { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z", color: "text-green-400" },
+  "Vegan": { icon: "M17 8C8 10 5.9 16.17 3.82 21.34M2 11.5C7 11.5 11.17 7.67 12 2", color: "text-green-400" },
+  "Gluten-Free": { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400" },
+  "Lactose-Free": { icon: "M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M4.93 4.93l14.14 14.14", color: "text-amber-400" },
+  "Halal": { icon: "M20 6 9 17l-5-5", color: "text-ocean-light" },
+  "Nut-Free": { icon: "M20 6 9 17l-5-5", color: "text-ocean-light" },
+};
+
+const dietary = (sanityData?.dietary || [
+  { name: "Vegetarian", desc: "Full veggie options at every meal" },
+  { name: "Vegan", desc: "Plant-based dishes always available" },
+  { name: "Gluten-Free", desc: "GF alternatives for every course" },
+  { name: "Lactose-Free", desc: "Dairy-free options on request" },
+  { name: "Halal", desc: "Halal-prepared meals available" },
+  { name: "Nut-Free", desc: "Strict nut-free preparation possible" },
+]).map((d: any) => ({
+  ...d,
+  ...(dietaryIcons[d.name] || { icon: "M20 6 9 17l-5-5", color: "text-white" }),
+}));
 ---
 
 <CampLayout

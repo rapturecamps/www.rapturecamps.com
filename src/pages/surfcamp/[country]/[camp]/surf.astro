@@ -21,83 +21,66 @@ const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + 
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const surfSpots = [
-  {
-    name: "Main Beach Break",
-    level: "All Levels",
-    type: "Beach Break",
-    image: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=600&h=400&fit=crop",
-    desc: "Our go-to spot for daily lessons. Consistent, forgiving waves with a sandy bottom — perfect for building confidence and progressing fast.",
-  },
-  {
-    name: "The Reef",
-    level: "Intermediate+",
-    type: "Reef Break",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
-    desc: "A fast, hollow right-hander breaking over coral. Best on mid-tide with a south swell. Booties recommended.",
-  },
-  {
-    name: "Secret Point",
-    level: "Advanced",
-    type: "Point Break",
-    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop",
-    desc: "Long, peeling left-hander wrapping around the headland. Can hold overhead swells and offers 200m+ rides on the right day.",
-  },
+const sanityData = (campData as any)?.surfPage;
+
+const fallbackSpots = [
+  { name: "Main Beach Break", level: "All Levels", type: "Beach Break", image: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=600&h=400&fit=crop", desc: "Our go-to spot for daily lessons. Consistent, forgiving waves with a sandy bottom — perfect for building confidence and progressing fast." },
+  { name: "The Reef", level: "Intermediate+", type: "Reef Break", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop", desc: "A fast, hollow right-hander breaking over coral. Best on mid-tide with a south swell. Booties recommended." },
+  { name: "Secret Point", level: "Advanced", type: "Point Break", image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop", desc: "Long, peeling left-hander wrapping around the headland. Can hold overhead swells and offers 200m+ rides on the right day." },
 ];
 
-const schedule = [
-  { time: "06:30", activity: "Wake-up & light stretch", icon: "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z M6.34 17.66 4 22 M17.66 17.66 20 22" },
-  { time: "07:00", activity: "Breakfast buffet", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" },
-  { time: "08:00", activity: "Surf theory & video analysis", icon: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" },
-  { time: "08:30", activity: "Morning surf session (2–3 hrs)", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
-  { time: "12:00", activity: "Lunch & free time", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" },
-  { time: "14:00", activity: "Yoga or recovery session", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6" },
-  { time: "15:00", activity: "Afternoon surf session (2 hrs)", icon: "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
-  { time: "17:30", activity: "Sunset beers & video review", icon: "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z" },
-  { time: "19:00", activity: "Dinner", icon: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" },
-];
+const surfSpots = sanityData?.surfSpots?.length
+  ? sanityData.surfSpots.map((s: any, i: number) => ({
+      ...s,
+      image: s.image?.asset?.url || fallbackSpots[i]?.image || "",
+    }))
+  : fallbackSpots;
 
-const levels = [
-  {
-    level: "Beginner",
-    subtitle: "Never surfed or still learning to stand",
-    features: [
-      "Pop-up technique on the beach",
-      "Paddling and wave selection",
-      "Riding whitewater to green waves",
-      "Ocean safety & etiquette",
-    ],
-    outcome: "By the end of the week, you'll be standing up and riding unbroken green waves.",
-    color: "text-green-400",
-    bgColor: "bg-green-400/10",
-  },
-  {
-    level: "Intermediate",
-    subtitle: "You can stand up and ride the wave face",
-    features: [
-      "Bottom turns & top turns",
-      "Reading the lineup & positioning",
-      "Generating speed on the face",
-      "Duck diving & wave selection",
-    ],
-    outcome: "You'll leave with cleaner turns, better wave reading, and the confidence to surf new spots.",
-    color: "text-ocean-light",
-    bgColor: "bg-ocean-light/10",
-  },
-  {
-    level: "Advanced",
-    subtitle: "Experienced surfer looking for the best waves",
-    features: [
-      "Guided sessions at reef and point breaks",
-      "Barrel riding techniques",
-      "Aerial progression",
-      "Swell and wind forecasting",
-    ],
-    outcome: "Our instructors take you to the best breaks for the conditions — spots you'd never find on your own.",
-    color: "text-amber-400",
-    bgColor: "bg-amber-400/10",
-  },
-];
+const scheduleIcons: Record<string, string> = {
+  "Wake-up": "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z M6.34 17.66 4 22 M17.66 17.66 20 22",
+  "Breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z",
+  "Surf theory": "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z",
+  "Morning surf": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "Lunch": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
+  "Yoga": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6",
+  "Afternoon surf": "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "Sunset": "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z",
+  "Dinner": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2",
+};
+
+function getScheduleIcon(activity: string): string {
+  for (const [key, icon] of Object.entries(scheduleIcons)) {
+    if (activity.toLowerCase().includes(key.toLowerCase())) return icon;
+  }
+  return "M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+}
+
+const schedule = (sanityData?.schedule || [
+  { time: "06:30", activity: "Wake-up & light stretch" },
+  { time: "07:00", activity: "Breakfast buffet" },
+  { time: "08:00", activity: "Surf theory & video analysis" },
+  { time: "08:30", activity: "Morning surf session (2–3 hrs)" },
+  { time: "12:00", activity: "Lunch & free time" },
+  { time: "14:00", activity: "Yoga or recovery session" },
+  { time: "15:00", activity: "Afternoon surf session (2 hrs)" },
+  { time: "17:30", activity: "Sunset beers & video review" },
+  { time: "19:00", activity: "Dinner" },
+]).map((s: any) => ({ ...s, icon: getScheduleIcon(s.activity) }));
+
+const levelColors: Record<string, { color: string; bgColor: string }> = {
+  "Beginner": { color: "text-green-400", bgColor: "bg-green-400/10" },
+  "Intermediate": { color: "text-ocean-light", bgColor: "bg-ocean-light/10" },
+  "Advanced": { color: "text-amber-400", bgColor: "bg-amber-400/10" },
+};
+
+const levels = (sanityData?.levels || [
+  { level: "Beginner", subtitle: "Never surfed or still learning to stand", features: ["Pop-up technique on the beach", "Paddling and wave selection", "Riding whitewater to green waves", "Ocean safety & etiquette"], outcome: "By the end of the week, you'll be standing up and riding unbroken green waves." },
+  { level: "Intermediate", subtitle: "You can stand up and ride the wave face", features: ["Bottom turns & top turns", "Reading the lineup & positioning", "Generating speed on the face", "Duck diving & wave selection"], outcome: "You'll leave with cleaner turns, better wave reading, and the confidence to surf new spots." },
+  { level: "Advanced", subtitle: "Experienced surfer looking for the best waves", features: ["Guided sessions at reef and point breaks", "Barrel riding techniques", "Aerial progression", "Swell and wind forecasting"], outcome: "Our instructors take you to the best breaks for the conditions — spots you'd never find on your own." },
+]).map((l: any) => ({
+  ...l,
+  ...(levelColors[l.level] || { color: "text-white", bgColor: "bg-white/10" }),
+}));
 
 const equipment = [
   { item: "Surfboards", desc: "Soft-tops, funboards, shortboards, and longboards — matched to your level", icon: "M17.5 2.5c1 1 1.5 3.5.5 7s-3.5 7-6.5 9.5c-1 .8-2 1.2-2.5 1.5-.5-.3-1.5-.7-2.5-1.5-3-2.5-5.5-6-6.5-9.5s-.5-6 .5-7 3-.5 5.5.5 4 2.5 5.5 2.5 3.5-1.5 5.5-2.5 4.5-1.5 5.5-.5z" },

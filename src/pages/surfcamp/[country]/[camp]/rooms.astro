@@ -20,48 +20,31 @@ const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + 
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const rooms = [
-  {
-    type: "Shared Room",
-    tag: "Most Popular",
-    tagColor: "text-ocean-light bg-ocean-light/10",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=500&fit=crop",
-    price: "From €45 / night",
-    capacity: "4–6 guests",
-    desc: "Our shared rooms are spacious, clean, and designed for the social surfer. Each bed comes with a privacy curtain, reading light, and personal power outlet. The quickest way to make friends you'll keep for life.",
-    features: ["Personal locker & shelf space", "Air conditioning", "Fresh linen & towels", "Shared bathroom"],
-  },
-  {
-    type: "Twin / Double",
-    tag: "",
-    tagColor: "",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
-    price: "From €75 / night",
-    capacity: "2 guests",
-    desc: "A room for two — ideal for couples or friends travelling together. The same Rapture atmosphere with a bit more privacy. All rooms have their own ensuite bathroom.",
-    features: ["Private ensuite bathroom", "Air conditioning", "Balcony or terrace", "Fresh linen & towels"],
-  },
-  {
-    type: "Private Room",
-    tag: "Premium",
-    tagColor: "text-amber-400 bg-amber-400/10",
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
-    price: "From €95 / night",
-    capacity: "1–2 guests",
-    desc: "Your own space at the camp. These rooms come with extra touches — a minibar, premium bedding, and a private terrace with a view. Limited availability, so book early.",
-    features: ["King-size bed", "Private terrace", "Mini-fridge", "Premium bathroom amenities"],
-  },
-  {
-    type: "Glamping Tent",
-    tag: "Unique",
-    tagColor: "text-green-400 bg-green-400/10",
-    image: "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?w=800&h=500&fit=crop",
-    price: "From €55 / night",
-    capacity: "2 guests",
-    desc: "Sleep under the stars without roughing it. Our glamping tents have proper beds, fairy lights, and all the romance of camping with none of the discomfort. Wake up to birdsong and ocean sounds.",
-    features: ["Real mattress & bedding", "Fairy lights & lanterns", "Shared facilities nearby", "Surrounded by nature"],
-  },
+const sanityData = (campData as any)?.roomsPage;
+
+const tagColors: Record<string, string> = {
+  "Most Popular": "text-ocean-light bg-ocean-light/10",
+  "Premium": "text-amber-400 bg-amber-400/10",
+  "Unique": "text-green-400 bg-green-400/10",
+};
+
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=500&fit=crop",
+  "https://images.unsplash.com/photo-1499696010180-025ef6e1a8f9?w=800&h=500&fit=crop",
 ];
+
+const rooms = (sanityData?.rooms || [
+  { type: "Shared Room", tag: "Most Popular", price: "From €45 / night", capacity: "4–6 guests", desc: "Our shared rooms are spacious, clean, and designed for the social surfer.", features: ["Personal locker & shelf space", "Air conditioning", "Fresh linen & towels", "Shared bathroom"] },
+  { type: "Twin / Double", tag: "", price: "From €75 / night", capacity: "2 guests", desc: "A room for two — ideal for couples or friends travelling together.", features: ["Private ensuite bathroom", "Air conditioning", "Balcony or terrace", "Fresh linen & towels"] },
+  { type: "Private Room", tag: "Premium", price: "From €95 / night", capacity: "1–2 guests", desc: "Your own space at the camp with extra touches.", features: ["King-size bed", "Private terrace", "Mini-fridge", "Premium bathroom amenities"] },
+  { type: "Glamping Tent", tag: "Unique", price: "From €55 / night", capacity: "2 guests", desc: "Sleep under the stars without roughing it.", features: ["Real mattress & bedding", "Fairy lights & lanterns", "Shared facilities nearby", "Surrounded by nature"] },
+]).map((r: any, i: number) => ({
+  ...r,
+  tagColor: tagColors[r.tag] || "",
+  image: r.image?.asset?.url || fallbackImages[i] || fallbackImages[0],
+}));
 
 const roomInclusions = [
   { item: "Daily surf lessons", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
@@ -72,14 +55,26 @@ const roomInclusions = [
   { item: "Free WiFi", icon: "M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" },
 ];
 
-const facilities = [
-  { name: "Swimming Pool", desc: "Open-air pool with sun loungers", icon: "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" },
-  { name: "Yoga Shala", desc: "Dedicated space for daily classes", icon: "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22" },
-  { name: "Outdoor Lounge", desc: "Hammocks, daybeds & chill areas", icon: "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" },
-  { name: "Surf Storage", desc: "Secure board racks & rinse station", icon: "M4 22V4c0-.5.2-1 .6-1.4C5 2.2 5.5 2 6 2h12c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v18" },
-  { name: "Communal Kitchen", desc: "For those in-between snack cravings", icon: "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4" },
-  { name: "Laundry Service", desc: "Wash & fold available daily", icon: "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" },
-];
+const facilityIcons: Record<string, string> = {
+  "Swimming Pool": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  "Yoga Shala": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6 M6.34 17.66 4 22 M17.66 17.66 20 22",
+  "Outdoor Lounge": "M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4",
+  "Surf Storage": "M4 22V4c0-.5.2-1 .6-1.4C5 2.2 5.5 2 6 2h12c.5 0 1 .2 1.4.6.4.4.6.9.6 1.4v18",
+  "Communal Kitchen": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z M6 2v4 M10 2v4 M14 2v4",
+  "Laundry Service": "M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z",
+};
+
+const facilities = (sanityData?.facilities || [
+  { name: "Swimming Pool", desc: "Open-air pool with sun loungers" },
+  { name: "Yoga Shala", desc: "Dedicated space for daily classes" },
+  { name: "Outdoor Lounge", desc: "Hammocks, daybeds & chill areas" },
+  { name: "Surf Storage", desc: "Secure board racks & rinse station" },
+  { name: "Communal Kitchen", desc: "For those in-between snack cravings" },
+  { name: "Laundry Service", desc: "Wash & fold available daily" },
+]).map((f: any) => ({
+  ...f,
+  icon: facilityIcons[f.name] || "M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z",
+}));
 ---
 
 <CampLayout

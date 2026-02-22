@@ -18,6 +18,9 @@ import ctaSection from "./blocks/ctaSection";
 import surfSpots from "./blocks/surfSpots";
 
 import seo from "./objects/seo";
+import surfPage from "./objects/surfPage";
+import roomsPage from "./objects/roomsPage";
+import foodPage from "./objects/foodPage";
 
 export const schemaTypes = [
   // Documents
@@ -43,4 +46,7 @@ export const schemaTypes = [
 
   // Objects
   seo,
+  surfPage,
+  roomsPage,
+  foodPage,
 ];

@@ -79,7 +79,14 @@ export async function getCampsByCountry(countrySlug: string) {
 export async function getCampBySlug(slug: string) {
   try {
     const camp = await sanityClient.fetch(CAMP_BY_SLUG, { slug });
-    if (camp) return mergeWithHardcoded(camp);
+    if (camp) {
+      const merged = mergeWithHardcoded(camp);
+      // Attach raw Sanity sub-page data for surf/rooms/food pages
+      (merged as any).surfPage = camp.surfPage || null;
+      (merged as any).roomsPage = camp.roomsPage || null;
+      (merged as any).foodPage = camp.foodPage || null;
+      return merged;
+    }
   } catch (e) {
     console.warn(`[sanity] Failed to fetch camp ${slug}`, e);
   }
