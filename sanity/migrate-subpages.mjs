@@ -36,6 +36,13 @@ const client = createClient({
 
 // Shared data across all camps (will be customized per-camp later in Studio)
 const surfPage = {
+  introHeading: "The Waves",
+  introBody: "The coastline around our camp is stacked with surf breaks for every level. From gentle beach breaks perfect for your first pop-up to fast reef passes that'll get your heart pumping — there's a wave for every day and every surfer.\n\nOur instructors have been surfing these waters for years. They know exactly where to go based on the swell, wind, and tide — so you're always in the right spot at the right time.",
+  conditionsCard: [
+    { _key: "cc1", label: "Wave Type", value: "Beach, Reef & Point" },
+    { _key: "cc2", label: "Peak Season", value: "May – October" },
+    { _key: "cc3", label: "Surf Spots Within Reach", value: "15+" },
+  ],
   surfSpots: [
     { _key: "sp1", name: "Main Beach Break", level: "All Levels", type: "Beach Break", desc: "Our go-to spot for daily lessons. Consistent, forgiving waves with a sandy bottom — perfect for building confidence and progressing fast." },
     { _key: "sp2", name: "The Reef", level: "Intermediate+", type: "Reef Break", desc: "A fast, hollow right-hander breaking over coral. Best on mid-tide with a south swell. Booties recommended." },
@@ -78,6 +85,8 @@ const surfPage = {
 };
 
 const roomsPage = {
+  introHeading: "Where You'll Stay",
+  introBody: "Every room at our camp is designed with one thing in mind: recharging after a day in the water. Whether you're going social in a shared room or treating yourself to a private suite, you'll wake up refreshed and ready for the next session.\n\nAll accommodation options include daily surf lessons, meals, yoga, and access to every camp facility. The only difference is how much privacy you want.",
   rooms: [
     {
       _key: "rm1",
@@ -127,6 +136,17 @@ const roomsPage = {
 };
 
 const foodPage = {
+  introHeading: "Eat Well, Surf Better",
+  introBody: "Surfing burns serious energy — 400+ calories per session. That's why we take food as seriously as we take waves. Our chefs prepare fresh, nutritious meals daily using local ingredients, so you're always fuelled up and ready to paddle back out.\n\nEvery dietary requirement is catered for. Just let us know when you book and we'll make sure you're sorted from day one.",
+  glanceItems: [
+    { _key: "gl1", label: "Meals Included", value: "Breakfast & Dinner", note: "" },
+    { _key: "gl2", label: "Dinner Nights", value: "Monday – Friday", note: "" },
+    { _key: "gl3", label: "Saturday Night", value: "Pizza Night", note: "(at extra cost)" },
+    { _key: "gl4", label: "Sunday Night", value: "BBQ", note: "(at extra cost)" },
+    { _key: "gl5", label: "Cuisine Style", value: "Local & International", note: "" },
+    { _key: "gl6", label: "Special Diets", value: "All catered for", note: "" },
+    { _key: "gl7", label: "Drinks", value: "Coffee, tea & water all day", note: "" },
+  ],
   meals: [
     {
       _key: "ml1",

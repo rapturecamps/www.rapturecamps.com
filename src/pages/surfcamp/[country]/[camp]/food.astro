@@ -89,43 +89,31 @@ const dietary = (sanityData?.dietary || [
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
         <div>
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">Eat Well, Surf Better</h1>
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{sanityData?.introHeading || "Eat Well, Surf Better"}</h1>
           <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-xl">
-            <p>Surfing burns serious energy — 400+ calories per session. That's why we take food as seriously as we take waves. Our chefs prepare fresh, nutritious meals daily using local ingredients, so you're always fuelled up and ready to paddle back out.</p>
-            <p>Every dietary requirement is catered for. Just let us know when you book and we'll make sure you're sorted from day one.</p>
+            {(sanityData?.introBody || "Surfing burns serious energy — 400+ calories per session. That's why we take food as seriously as we take waves. Our chefs prepare fresh, nutritious meals daily using local ingredients, so you're always fuelled up and ready to paddle back out.\n\nEvery dietary requirement is catered for. Just let us know when you book and we'll make sure you're sorted from day one.").split("\n\n").map((p: string) => <p>{p}</p>)}
           </div>
         </div>
         <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
           <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-5">At a Glance</h3>
           <div class="space-y-4">
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Meals Included</span>
-              <span class="text-sm text-white font-medium">Breakfast & Dinner</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Dinner Nights</span>
-              <span class="text-sm text-white font-medium">Monday – Friday</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Saturday Night</span>
-              <span class="text-sm text-white font-medium"><span class="text-white/30 font-normal">(at extra cost)</span> Pizza Night</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Sunday Night</span>
-              <span class="text-sm text-white font-medium"><span class="text-white/30 font-normal">(at extra cost)</span> BBQ</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Cuisine Style</span>
-              <span class="text-sm text-white font-medium">Local & International</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">Special Diets</span>
-              <span class="text-sm text-white font-medium">All catered for</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-sm text-white/40">Drinks</span>
-              <span class="text-sm text-white font-medium">Coffee, tea & water all day</span>
-            </div>
+            {(sanityData?.glanceItems || [
+              { label: "Meals Included", value: "Breakfast & Dinner" },
+              { label: "Dinner Nights", value: "Monday – Friday" },
+              { label: "Saturday Night", value: "Pizza Night", note: "(at extra cost)" },
+              { label: "Sunday Night", value: "BBQ", note: "(at extra cost)" },
+              { label: "Cuisine Style", value: "Local & International" },
+              { label: "Special Diets", value: "All catered for" },
+              { label: "Drinks", value: "Coffee, tea & water all day" },
+            ]).map((item: any, i: number, arr: any[]) => (
+              <div class:list={["flex justify-between items-center pb-3", i < arr.length - 1 && "border-b border-white/5"]}>
+                <span class="text-sm text-white/40">{item.label}</span>
+                <span class="text-sm text-white font-medium">
+                  {item.note && <span class="text-white/30 font-normal">{item.note} </span>}
+                  {item.value}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>

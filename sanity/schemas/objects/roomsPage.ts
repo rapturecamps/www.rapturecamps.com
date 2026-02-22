@@ -6,6 +6,17 @@ export default defineType({
   type: "object",
   fields: [
     defineField({
+      name: "introHeading",
+      title: "Intro Heading",
+      type: "string",
+    }),
+    defineField({
+      name: "introBody",
+      title: "Intro Body",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
       name: "rooms",
       title: "Room Types",
       type: "array",
