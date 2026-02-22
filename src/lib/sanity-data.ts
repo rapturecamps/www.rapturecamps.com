@@ -14,6 +14,7 @@ import {
   SITE_SETTINGS,
   PAGE_BY_SLUG,
   HOMEPAGE,
+  LINKIN_BIO,
 } from "./queries";
 import {
   destinations as hardcodedDestinations,
@@ -163,6 +164,18 @@ export async function getHomepage(lang = "en") {
     if (homepage) return homepage;
   } catch (e) {
     console.warn("[sanity] Failed to fetch homepage", e);
+  }
+  return null;
+}
+
+// ─── Link in Bio ───────────────────────────────────────────────────────────
+
+export async function getLinkinBio(lang = "en") {
+  try {
+    const bio = await sanityClient.fetch(LINKIN_BIO, { lang });
+    if (bio) return bio;
+  } catch (e) {
+    console.warn("[sanity] Failed to fetch linkin bio", e);
   }
   return null;
 }

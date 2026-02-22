@@ -148,6 +148,17 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
   }
 }`;
 
+export const LINKIN_BIO = `*[_type == "linkinBio" && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  profileName,
+  profileTagline,
+  ctaText,
+  ctaUrl,
+  updates,
+  blogPosts,
+  extraLinks
+}`;
+
 export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug][0] {
   _id,
   title,

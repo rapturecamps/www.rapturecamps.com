@@ -14,7 +14,7 @@ const LANGUAGES = [
   { id: "de", title: "German" },
 ];
 
-const I18N_SCHEMA_TYPES = ["camp", "country", "blogPost", "faq", "page", "homepage"];
+const I18N_SCHEMA_TYPES = ["camp", "country", "blogPost", "faq", "page", "homepage", "linkinBio"];
 
 export default defineConfig({
   name: "rapturecamps",
@@ -33,6 +33,11 @@ export default defineConfig({
                 S.documentTypeList("homepage").title("Homepage")
               ),
             S.documentTypeListItem("page").title("Pages"),
+            S.listItem()
+              .title("Link in Bio")
+              .child(
+                S.documentTypeList("linkinBio").title("Link in Bio")
+              ),
             S.divider(),
             S.documentTypeListItem("country").title("Countries"),
             S.listItem()

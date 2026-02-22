@@ -5,6 +5,7 @@ import blogCategory from "./blogCategory";
 import faq from "./faq";
 import page from "./page";
 import homepage from "./homepage";
+import linkinBio from "./linkinBio";
 import siteSettings from "./siteSettings";
 
 import contentBlock from "./blocks/contentBlock";
@@ -43,6 +44,7 @@ export const schemaTypes = [
   faq,
   page,
   homepage,
+  linkinBio,
   siteSettings,
 
   // Page builder blocks — shared
