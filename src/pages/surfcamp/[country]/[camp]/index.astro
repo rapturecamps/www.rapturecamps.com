@@ -8,6 +8,7 @@ import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import VideoBlock from "@/components/sections/VideoBlock.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
 import { destinations } from "@/lib/data";
+import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
 
 const inclusionIcons: Record<string, string> = {
   "Surf guiding": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
@@ -33,15 +34,16 @@ const defaultInclusions = [
   { title: "Yoga for Surfers", description: "Daily" },
 ];
 
-export function getStaticPaths() {
-  return destinations.map((d) => {
+export async function getStaticPaths() {
+  const allCamps = await getDestinations();
+  return allCamps.map((d) => {
     const parts = d.slug.replace("/surfcamp/", "").split("/");
     return { params: { country: parts[0], camp: parts[1] } };
   });
 }
 
 const { country, camp } = Astro.params;
-const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
+const campData = await getCampBySlug(camp!) || destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
 const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;

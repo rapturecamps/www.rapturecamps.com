@@ -1,11 +1,16 @@
 ---
-import { navigation, countries, destinations } from "@/lib/data";
+import { navigation as fallbackNav, countries as fallbackCountries, destinations as fallbackDests } from "@/lib/data";
+import { getCountries, getDestinations, getSiteSettings } from "@/lib/sanity-data";
 
-const navItems = navigation.main.slice(1);
+const settings = await getSiteSettings();
+const countries = await getCountries();
+const allDestinations = await getDestinations();
 
-const campsByCountry = countries.map((country) => ({
+const navItems = (settings.navigation?.main || fallbackNav.main).slice(1);
+
+const campsByCountry = countries.map((country: any) => ({
   ...country,
-  camps: destinations.filter((d) => d.country === country.name),
+  camps: allDestinations.filter((d) => d.country === country.name),
 }));
 ---
 

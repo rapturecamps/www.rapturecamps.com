@@ -8,6 +8,7 @@ import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ContentBlock from "@/components/sections/ContentBlock.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import { destinations, countries } from "@/lib/data";
+import { getCountries, getCountryBySlug, getCampsByCountry } from "@/lib/sanity-data";
 
 const countryContent: Record<string, {
   title: string;
@@ -382,20 +383,54 @@ const countryContent: Record<string, {
   },
 };
 
-export function getStaticPaths() {
-  return countries.map((c) => ({ params: { country: c.slug } }));
+export async function getStaticPaths() {
+  const sanityCountries = await getCountries();
+  return sanityCountries.map((c: any) => ({ params: { country: c.slug } }));
 }
 
 const { country } = Astro.params;
-const data = countryContent[country!];
-if (!data) return Astro.redirect("/404");
+const fallback = countryContent[country!];
+if (!fallback) return Astro.redirect("/404");
 
-const countryInfo = countries.find((c) => c.slug === country);
-const countryName = countryInfo?.name || country!;
+const sanityCountry = await getCountryBySlug(country!);
+const countryCamps = await getCampsByCountry(country!);
 
-const countryCamps = destinations.filter(
-  (d) => d.country.toLowerCase().replace(" ", "-") === country
-);
+const countryName = sanityCountry?.name || countries.find((c) => c.slug === country)?.name || country!;
+
+// Extract surfSpots and FAQs from Sanity pageBuilder when available
+const sanityPageBuilder = sanityCountry?.pageBuilder || [];
+const sanitySurfSpots = sanityPageBuilder.find((b: any) => b._type === "surfSpots");
+const sanityFaqSection = sanityPageBuilder.find((b: any) => b._type === "faqSection");
+
+// Merge Sanity data with hardcoded fallback
+const data = {
+  ...fallback,
+  description: sanityCountry?.description || fallback.description,
+  intro: sanityCountry?.intro || fallback.intro,
+  comparison: {
+    ...fallback.comparison,
+    heading: sanityCountry?.comparison?.heading || fallback.comparison.heading,
+    subtitle: sanityCountry?.comparison?.subtitle || fallback.comparison.subtitle,
+    features: sanityCountry?.comparison?.features?.length
+      ? sanityCountry.comparison.features
+      : fallback.comparison.features,
+  },
+  surfSpots: sanitySurfSpots
+    ? {
+        heading: sanitySurfSpots.heading || fallback.surfSpots?.heading || "",
+        subtitle: fallback.surfSpots?.subtitle || "",
+        spots: sanitySurfSpots.spots?.map((s: any) => ({
+          name: s.name,
+          level: s.level || "",
+          type: fallback.surfSpots?.spots?.find((fs: any) => fs.name === s.name)?.type || "",
+          description: s.description || "",
+        })) || [],
+      }
+    : fallback.surfSpots,
+  faqs: sanityFaqSection?.faqs?.length
+    ? sanityFaqSection.faqs.map((f: any) => ({ question: f.question, answer: f.answer }))
+    : fallback.faqs,
+};
 
 const amenityLabels: Record<string, string> = {
   "pool": "Pool",

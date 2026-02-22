@@ -2,7 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import { countries } from "@/lib/data";
+import { countries as fallbackCountries } from "@/lib/data";
+import { getCountries } from "@/lib/sanity-data";
+
+const countries = await getCountries();
 ---
 
 <BaseLayout

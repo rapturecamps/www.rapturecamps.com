@@ -4,16 +4,18 @@ import CTASection from "@/components/sections/CTASection.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ContentBlock from "@/components/sections/ContentBlock.astro";
 import { destinations } from "@/lib/data";
+import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
 
-export function getStaticPaths() {
-  return destinations.map((d) => {
+export async function getStaticPaths() {
+  const allCamps = await getDestinations();
+  return allCamps.map((d) => {
     const parts = d.slug.replace("/surfcamp/", "").split("/");
     return { params: { country: parts[0], camp: parts[1] } };
   });
 }
 
 const { country, camp } = Astro.params;
-const campData = destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
+const campData = await getCampBySlug(camp!) || destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
 const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
