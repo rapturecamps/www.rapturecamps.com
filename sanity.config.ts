@@ -28,15 +28,23 @@ export default defineConfig({
           .title("Content")
           .items([
             S.listItem()
-              .title("Homepage")
+              .title("Pages")
               .child(
-                S.documentTypeList("homepage").title("Homepage")
-              ),
-            S.documentTypeListItem("page").title("Pages"),
-            S.listItem()
-              .title("Link in Bio")
-              .child(
-                S.documentTypeList("linkinBio").title("Link in Bio")
+                S.list()
+                  .title("Pages")
+                  .items([
+                    S.listItem()
+                      .title("Homepage")
+                      .child(
+                        S.documentTypeList("homepage").title("Homepage")
+                      ),
+                    S.documentTypeListItem("page").title("Content Pages"),
+                    S.listItem()
+                      .title("Link in Bio")
+                      .child(
+                        S.documentTypeList("linkinBio").title("Link in Bio")
+                      ),
+                  ])
               ),
             S.divider(),
             S.documentTypeListItem("country").title("Countries"),
