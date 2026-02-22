@@ -3,7 +3,7 @@ import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
-// import storyblok from "@storyblok/astro";
+import sanity from "@sanity/astro";
 
 export default defineConfig({
   site: "https://www.rapturecamps.com",
@@ -11,14 +11,16 @@ export default defineConfig({
   adapter: vercel(),
   integrations: [
     react(),
-    // Enable once Storyblok token is configured:
-    // storyblok({
-    //   accessToken: process.env.PUBLIC_STORYBLOK_TOKEN || "",
-    //   apiOptions: { region: "eu" },
-    // }),
+    sanity({
+      projectId: "ypmt1bmc",
+      dataset: "production",
+      useCdn: true,
+      studioBasePath: "/studio",
+    }),
     sitemap({
       changefreq: "weekly",
       priority: 0.7,
+      filter: (page) => !page.includes("/studio"),
     }),
   ],
   vite: {
@@ -28,7 +30,7 @@ export default defineConfig({
     domains: [
       "images.unsplash.com",
       "www.rapturecamps.com",
-      "a.storyblok.com",
+      "cdn.sanity.io",
     ],
   },
   i18n: {
