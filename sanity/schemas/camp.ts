@@ -4,12 +4,20 @@ export default defineType({
   name: "camp",
   title: "Camp",
   type: "document",
+  groups: [
+    { name: "overview", title: "Overview & Settings", default: true },
+    { name: "surfPage", title: "Surf Page" },
+    { name: "roomsPage", title: "Rooms Page" },
+    { name: "foodPage", title: "Food Page" },
+    { name: "seo", title: "SEO" },
+  ],
   fields: [
     defineField({
       name: "name",
       title: "Name",
       type: "string",
       validation: (r) => r.required(),
+      group: "overview",
     }),
     defineField({
       name: "slug",
@@ -17,6 +25,7 @@ export default defineType({
       type: "slug",
       options: { source: "name", maxLength: 96 },
       validation: (r) => r.required(),
+      group: "overview",
     }),
     defineField({
       name: "country",
@@ -24,23 +33,27 @@ export default defineType({
       type: "reference",
       to: [{ type: "country" }],
       validation: (r) => r.required(),
+      group: "overview",
     }),
     defineField({
       name: "location",
       title: "Location Label",
       type: "string",
       description: "e.g. 'Bukit Peninsula, Bali'",
+      group: "overview",
     }),
     defineField({
       name: "tagline",
       title: "Tagline",
       type: "string",
+      group: "overview",
     }),
     defineField({
       name: "image",
       title: "Card Image",
       type: "image",
       options: { hotspot: true },
+      group: "overview",
     }),
     defineField({
       name: "heroImages",
@@ -48,17 +61,20 @@ export default defineType({
       type: "array",
       of: [{ type: "image", options: { hotspot: true } }],
       description: "Rotating hero background images. First image is shown initially.",
+      group: "overview",
     }),
     defineField({
       name: "rating",
       title: "Rating",
       type: "number",
       validation: (r) => r.min(0).max(5).precision(1),
+      group: "overview",
     }),
     defineField({
       name: "reviewCount",
       title: "Review Count",
       type: "number",
+      group: "overview",
     }),
     defineField({
       name: "amenities",
@@ -66,27 +82,32 @@ export default defineType({
       type: "array",
       of: [{ type: "string" }],
       options: { layout: "tags" },
+      group: "overview",
     }),
     defineField({
       name: "bookingUrl",
       title: "Booking URL",
       type: "url",
+      group: "overview",
     }),
     defineField({
       name: "latitude",
       title: "Latitude",
       type: "number",
+      group: "overview",
     }),
     defineField({
       name: "longitude",
       title: "Longitude",
       type: "number",
+      group: "overview",
     }),
     defineField({
       name: "elfsightId",
       title: "Elfsight App ID",
       type: "string",
       description: "Elfsight reviews widget App ID",
+      group: "overview",
     }),
     defineField({
       name: "pageBuilder",
@@ -104,26 +125,31 @@ export default defineType({
         { type: "faqSection" },
         { type: "ctaSection" },
       ],
+      group: "overview",
     }),
     defineField({
       name: "surfPage",
       title: "Surf Page",
       type: "surfPage",
+      group: "surfPage",
     }),
     defineField({
       name: "roomsPage",
       title: "Rooms Page",
       type: "roomsPage",
+      group: "roomsPage",
     }),
     defineField({
       name: "foodPage",
       title: "Food Page",
       type: "foodPage",
+      group: "foodPage",
     }),
     defineField({
       name: "seo",
       title: "SEO",
       type: "seo",
+      group: "seo",
     }),
   ],
   preview: {
