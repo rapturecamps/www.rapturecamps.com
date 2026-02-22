@@ -2,6 +2,10 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { destinations } from "@/lib/data";
+import { getDestinations } from "@/lib/sanity-data";
+
+const camps = await getDestinations();
+const campList = camps?.length ? camps : destinations;
 ---
 
 <BaseLayout
@@ -19,7 +23,7 @@ import { destinations } from "@/lib/data";
   <section class="pb-16 sm:pb-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-        {destinations.map((camp) => {
+        {campList.map((camp) => {
           const faqSlug = camp.slug.split("/").pop();
           return (
             <a

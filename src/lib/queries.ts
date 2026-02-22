@@ -167,6 +167,22 @@ export const LINKIN_BIO = `*[_type == "linkinBio" && (language == $lang || (!def
   extraLinks
 }`;
 
+export const FAQ_CATEGORIES = `*[_type == "faqCategory" && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) {
+  _id,
+  name,
+  "slug": slug.current,
+  order
+}`;
+
+export const FAQS_BY_CAMP = `*[_type == "faq" && (
+  $campRef in camps[]._ref || count(camps) == 0
+) && (language == $lang || (!defined(language) && $lang == "en"))] | order(category->order asc, order asc) {
+  question,
+  answer,
+  "categoryName": category->name,
+  "categoryOrder": category->order
+}`;
+
 export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug][0] {
   _id,
   title,

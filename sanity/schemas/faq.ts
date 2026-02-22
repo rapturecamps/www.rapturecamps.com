@@ -27,33 +27,40 @@ export default defineType({
     defineField({
       name: "category",
       title: "Category",
-      type: "string",
-      options: {
-        list: [
-          { title: "General", value: "general" },
-          { title: "Booking", value: "booking" },
-          { title: "Surfing", value: "surfing" },
-          { title: "Accommodation", value: "accommodation" },
-          { title: "Food", value: "food" },
-          { title: "Travel", value: "travel" },
-        ],
-      },
+      type: "reference",
+      to: [{ type: "faqCategory" }],
+      validation: (r) => r.required(),
     }),
     defineField({
       name: "camps",
       title: "Related Camps",
       type: "array",
       of: [{ type: "reference", to: [{ type: "camp" }] }],
-      description: "Link this FAQ to specific camps. Leave empty for global FAQs.",
+      description:
+        "Link this FAQ to specific camps. Leave empty for global FAQs shown on all camp pages.",
     }),
     defineField({
-      name: "countries",
-      title: "Related Countries",
-      type: "array",
-      of: [{ type: "reference", to: [{ type: "country" }] }],
+      name: "order",
+      title: "Display Order",
+      type: "number",
+      description: "Order within the category. Lower numbers appear first.",
+      initialValue: 0,
     }),
   ],
+  orderings: [
+    {
+      title: "Category, then Order",
+      name: "categoryOrder",
+      by: [
+        { field: "category.name", direction: "asc" },
+        { field: "order", direction: "asc" },
+      ],
+    },
+  ],
   preview: {
-    select: { title: "question", subtitle: "category" },
+    select: {
+      title: "question",
+      subtitle: "category.name",
+    },
   },
 });

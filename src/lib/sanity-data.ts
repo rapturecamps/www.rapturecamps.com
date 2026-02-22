@@ -15,6 +15,7 @@ import {
   PAGE_BY_SLUG,
   HOMEPAGE,
   LINKIN_BIO,
+  FAQS_BY_CAMP,
 } from "./queries";
 import {
   destinations as hardcodedDestinations,
@@ -176,6 +177,38 @@ export async function getLinkinBio(lang = "en") {
     if (bio) return bio;
   } catch (e) {
     console.warn("[sanity] Failed to fetch linkin bio", e);
+  }
+  return null;
+}
+
+// ─── FAQs by Camp ───────────────────────────────────────────────────────────
+
+export async function getFaqsByCamp(
+  campSlug: string,
+  lang = "en"
+): Promise<Record<string, { question: string; answer: string }[]> | null> {
+  try {
+    const campDoc = await sanityClient.fetch(
+      `*[_type == "camp" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0]{ _id }`,
+      { slug: campSlug, lang }
+    );
+    if (!campDoc?._id) return null;
+
+    const faqs = await sanityClient.fetch(FAQS_BY_CAMP, {
+      campRef: campDoc._id,
+      lang,
+    });
+    if (!faqs?.length) return null;
+
+    const grouped: Record<string, { question: string; answer: string }[]> = {};
+    for (const faq of faqs) {
+      const cat = faq.categoryName || "Other";
+      if (!grouped[cat]) grouped[cat] = [];
+      grouped[cat].push({ question: faq.question, answer: faq.answer });
+    }
+    return grouped;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch FAQs for camp ${campSlug}`, e);
   }
   return null;
 }

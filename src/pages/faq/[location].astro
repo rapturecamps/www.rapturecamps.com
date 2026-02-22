@@ -3,20 +3,28 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import FAQSection from "@/components/sections/FAQSection.astro";
 import { destinations } from "@/lib/data";
+import { getDestinations, getFaqsByCamp } from "@/lib/sanity-data";
 
-export function getStaticPaths() {
-  const locations = destinations.map((d) => d.slug.split("/").pop()!);
-  return locations.map((location) => ({ params: { location } }));
+export async function getStaticPaths() {
+  const camps = await getDestinations();
+  const slugs = camps?.length
+    ? camps.map((d: any) => d.slug.split("/").pop()!)
+    : destinations.map((d) => d.slug.split("/").pop()!);
+  return slugs.map((location: string) => ({ params: { location } }));
 }
 
 const { location } = Astro.params;
-const campData = destinations.find((d) => d.slug.split("/").pop() === location);
-const campName = campData?.name || location!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const camps = await getDestinations();
+const campList = camps?.length ? camps : destinations;
+const campData = campList.find((d: any) => d.slug.split("/").pop() === location);
+const campName = campData?.name || location!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const countryName = campData?.country || "";
 const campImage = campData?.image || "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=600&fit=crop";
 const campSlug = campData?.slug || `/surfcamp`;
 
-const faqData: Record<string, { question: string; answer: string }[]> = {
+const sanityFaqs = await getFaqsByCamp(location!);
+
+const hardcodedFaqs: Record<string, { question: string; answer: string }[]> = {
   "Booking & Prices": [
     { question: "How do I book a surf camp?", answer: "You can book directly through our website by selecting your preferred camp and dates. A deposit is required to secure your spot, with the remaining balance due 30 days before arrival." },
     { question: "What is the cancellation policy?", answer: "Free cancellation up to 30 days before check-in. Between 30 and 14 days, a 50% refund applies. Within 14 days of check-in, bookings are non-refundable." },
@@ -40,6 +48,8 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
     { question: "How do I get to the surf camp?", answer: "Each camp page has detailed directions. Most locations are accessible by taxi, shuttle, or public transport from the nearest international airport." },
   ],
 };
+
+const faqData = sanityFaqs || hardcodedFaqs;
 ---
 
 <BaseLayout
@@ -47,7 +57,6 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
   description={`Frequently asked questions about Rapture Surf Camp ${campName} in ${countryName}. Booking, surf lessons, rooms, food, and more.`}
   ogImage={campImage}
 >
-  <!-- Hero banner with camp image -->
   <div class="relative h-[280px] sm:h-[320px] overflow-hidden">
     <div
       class="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -65,7 +74,6 @@ const faqData: Record<string, { question: string; answer: string }[]> = {
 
   <FAQSection grouped={faqData} />
 
-  <!-- Link to camp page -->
   <section class="pb-16 sm:pb-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-6 sm:p-8 text-center">

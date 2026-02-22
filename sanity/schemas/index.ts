@@ -3,6 +3,7 @@ import country from "./country";
 import blogPost from "./blogPost";
 import blogCategory from "./blogCategory";
 import faq from "./faq";
+import faqCategory from "./faqCategory";
 import page from "./page";
 import homepage from "./homepage";
 import linkinBio from "./linkinBio";
@@ -42,6 +43,7 @@ export const schemaTypes = [
   blogPost,
   blogCategory,
   faq,
+  faqCategory,
   page,
   homepage,
   linkinBio,
