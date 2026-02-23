@@ -1,0 +1,82 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import BlogPostCard from "@/components/BlogPostCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import { sanityClient } from "@/lib/sanity";
+import { ALL_BLOG_POSTS, ALL_BLOG_CATEGORIES } from "@/lib/queries";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await sanityClient.fetch(ALL_BLOG_POSTS, { lang: "de" });
+  return paginate(posts, { pageSize: 12 });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const categories = await sanityClient.fetch(ALL_BLOG_CATEGORIES);
+
+const currentPage = page.currentPage;
+const pageTitle = currentPage > 1
+  ? `Blog - Seite ${currentPage} | Rapture Surfcamps`
+  : "Blog - Waves for Days | Rapture Surfcamps";
+
+const baseUrl = "/de/blog";
+const prevUrl = currentPage === 2 ? baseUrl : currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : undefined;
+const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : undefined;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description="Surf-Destinationen, Tipps und Reise-Inspiration von Rapture Surfcamps."
+  prevPage={prevUrl}
+  nextPage={nextUrl}
+>
+  <Hero
+    title="Waves for Days"
+    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/0f4699ad7ef6f2461c02fb321f9743ad8e649d06-1920x1080.jpg?w=1920&h=1080&fit=crop&auto=format"
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Blog" }]} />
+  </Hero>
+
+  <section class="py-12 bg-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-2 mb-12 justify-center">
+        <a
+          href="/de/blog"
+          class="rounded-full px-4 py-1.5 text-xs font-medium transition-colors bg-white/10 text-white border border-white/20"
+        >
+          Alle
+        </a>
+        {categories.map((cat: any) => (
+          <a
+            href={`/de/blog/category/${cat.slug}`}
+            class="rounded-full px-4 py-1.5 text-xs font-medium transition-colors border border-white/10 text-white/50 hover:bg-white/10 hover:text-white"
+          >
+            {cat.name}
+          </a>
+        ))}
+      </div>
+
+      {page.data.length === 0 ? (
+        <p class="text-center text-sm text-white/30">Keine Blogbeiträge gefunden.</p>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {page.data.map((post: any) => (
+            <BlogPostCard
+              slug={post.slug}
+              title={post.title}
+              featuredImage={post.featuredImage}
+              excerpt={post.excerpt}
+              publishedAt={post.publishedAt}
+              categories={post.categories}
+              blogPrefix="/de/blog"
+            />
+          ))}
+        </div>
+      )}
+
+      <Pagination currentPage={page.currentPage} lastPage={page.lastPage} baseUrl="/de/blog" />
+    </div>
+  </section>
+</BaseLayout>

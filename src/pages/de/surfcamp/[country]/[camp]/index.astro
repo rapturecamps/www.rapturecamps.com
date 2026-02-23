@@ -1,5 +1,6 @@
 ---
 import CampLayout from "@/components/layout/CampLayout.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
@@ -111,6 +112,9 @@ const subPages = [
     icon: "M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z M6 1v3 M10 1v3 M14 1v3",
   },
 ];
+
+const blocks = (campData as any)?.pageBuilder;
+const hasSanityBlocks = blocks?.length > 0;
 
 const videoTestimonials = [
   {
@@ -229,68 +233,97 @@ const videoTestimonials = [
     </div>
   </section>
 
-  <ImageGrid
-    images={[
-      { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=500&fit=crop", alt: `Camp Bereich ${campTitle}` },
-      { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=450&fit=crop", alt: `Lounge Bereich ${campTitle}` },
-      { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=600&h=225&fit=crop", alt: `Außenbereiche ${campTitle}` },
-      { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=225&fit=crop", alt: `Luftbild ${campTitle}` },
-    ]}
-    variant="collage"
-  />
+  {hasSanityBlocks ? (
+    <BlockRenderer blocks={blocks} campData={campData} />
+  ) : (
+    <>
+      <ImageGrid
+        images={[
+          { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=500&fit=crop", alt: `Camp Bereich ${campTitle}` },
+          { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=600&h=450&fit=crop", alt: `Lounge Bereich ${campTitle}` },
+          { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=600&h=225&fit=crop", alt: `Außenbereiche ${campTitle}` },
+          { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=600&h=225&fit=crop", alt: `Luftbild ${campTitle}` },
+        ]}
+        variant="collage"
+      />
 
-  <section class="py-16 sm:py-20 bg-dark">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Warum Rapture {campTitle}</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Das macht dieses Camp einzigartig — und warum unsere Gäste immer wiederkommen.</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {highlights.map((h) => (
-          <div class="p-6 rounded-xl bg-dark-lighter border border-white/5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ocean-light mb-4">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d={h.icon} />
-              </svg>
-            </div>
-            <h3 class="text-base font-semibold text-white mb-2">{h.title}</h3>
-            <p class="text-sm text-white/40 leading-relaxed">{h.desc}</p>
+      <section class="py-16 sm:py-20 bg-dark">
+        <div class="px-6 sm:px-12 lg:px-20">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Warum Rapture {campTitle}</h2>
+          <p class="text-base text-white/40 mb-10 max-w-2xl">Das macht dieses Camp einzigartig — und warum unsere Gäste immer wiederkommen.</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {highlights.map((h) => (
+              <div class="p-6 rounded-xl bg-dark-lighter border border-white/5">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-ocean-light mb-4">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={h.icon} />
+                  </svg>
+                </div>
+                <h3 class="text-base font-semibold text-white mb-2">{h.title}</h3>
+                <p class="text-sm text-white/40 leading-relaxed">{h.desc}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
-  </section>
+        </div>
+      </section>
 
-  <VideoBlock
-    type="youtube"
-    src="gFiIesECPrA"
-    title="Leben im Camp"
-    description={`Ein Einblick in den Alltag im Rapture Surf Camp ${campTitle}.`}
-    aspect="16:9"
-    controls
-    background="dark-lighter"
-  />
+      <VideoBlock
+        type="youtube"
+        src="gFiIesECPrA"
+        title="Leben im Camp"
+        description={`Ein Einblick in den Alltag im Rapture Surf Camp ${campTitle}.`}
+        aspect="16:9"
+        controls
+        background="dark-lighter"
+      />
 
-  <ImageCarousel
-    title={`${campTitle} Galerie`}
-    description="Entdecke das Camp, den Surf und die Vibes."
-    images={[
-      { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=675&fit=crop", alt: `Surf-Session bei ${campTitle}`, caption: "Morgens surfen mit der Crew" },
-      { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=1200&h=675&fit=crop", alt: `Entspannen im ${campTitle}`, caption: "Chillige Vibes in der Camp-Lounge" },
-      { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&h=675&fit=crop", alt: `Luftbild bei ${campTitle}` },
-      { src: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1200&h=675&fit=crop", alt: `Sonnenuntergang surfen ${campTitle}`, caption: "Golden Hour im Line-Up" },
-      { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=1200&h=675&fit=crop", alt: `Strand bei ${campTitle}`, caption: "Der Strand ist nur wenige Schritte entfernt" },
-      { src: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1200&h=675&fit=crop", alt: `Wellen bei ${campTitle}` },
-    ]}
-    aspect="16:9"
-    background="dark"
-  />
+      <ImageCarousel
+        title={`${campTitle} Galerie`}
+        description="Entdecke das Camp, den Surf und die Vibes."
+        images={[
+          { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=675&fit=crop", alt: `Surf-Session bei ${campTitle}`, caption: "Morgens surfen mit der Crew" },
+          { src: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=1200&h=675&fit=crop", alt: `Entspannen im ${campTitle}`, caption: "Chillige Vibes in der Camp-Lounge" },
+          { src: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200&h=675&fit=crop", alt: `Luftbild bei ${campTitle}` },
+          { src: "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1200&h=675&fit=crop", alt: `Sonnenuntergang surfen ${campTitle}`, caption: "Golden Hour im Line-Up" },
+          { src: "https://images.unsplash.com/photo-1582610116397-edb318620f90?w=1200&h=675&fit=crop", alt: `Strand bei ${campTitle}`, caption: "Der Strand ist nur wenige Schritte entfernt" },
+          { src: "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1200&h=675&fit=crop", alt: `Wellen bei ${campTitle}` },
+        ]}
+        aspect="16:9"
+        background="dark"
+      />
 
-  <ImageBreak
-    src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=800&fit=crop"
-    alt={`Sonnenuntergang surfen ${campTitle}`}
-    caption={`Golden Hour in ${campTitle}, ${countryTitle}`}
-    height="short"
-  />
+      <ImageBreak
+        src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=800&fit=crop"
+        alt={`Sonnenuntergang surfen ${campTitle}`}
+        caption={`Golden Hour in ${campTitle}, ${countryTitle}`}
+        height="short"
+      />
 
+      <section class="py-16 sm:py-20 bg-dark-lighter">
+        <div class="px-6 sm:px-12 lg:px-20">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Deine Buchung enthält immer</h2>
+          <p class="text-base text-white/40 mb-10 max-w-2xl">Keine versteckten Kosten. Alles unten ist bei jeder Buchung in {campTitle} inklusive.</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {defaultInclusions.map((item) => (
+              <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark border border-white/5">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-3">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d={inclusionIcons[item.title] || ""} />
+                  </svg>
+                </div>
+                <h3 class="text-xs font-semibold text-white">{item.title}</h3>
+                <p class="mt-1 text-[10px] text-white/30">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <VideoTestimonials heading="Geschichten unserer Gäste" testimonials={videoTestimonials} />
+    </>
+  )}
+
+  <!-- Explore Sub-Pages -->
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Entdecke das Camp</h2>
@@ -323,26 +356,6 @@ const videoTestimonials = [
     </div>
   </section>
 
-  <section class="py-16 sm:py-20 bg-dark-lighter">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Deine Buchung enthält immer</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Keine versteckten Kosten. Alles unten ist bei jeder Buchung in {campTitle} inklusive.</p>
-      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {defaultInclusions.map((item) => (
-          <div class="flex flex-col items-center text-center p-5 rounded-xl bg-dark border border-white/5">
-            <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light mb-3">
-              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d={inclusionIcons[item.title] || ""} />
-              </svg>
-            </div>
-            <h3 class="text-xs font-semibold text-white">{item.title}</h3>
-            <p class="mt-1 text-[10px] text-white/30">{item.description}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   {campData?.elfsightId && (
     <ElfsightReviews
       heading={`Was Gäste über ${campTitle} sagen`}
@@ -356,36 +369,12 @@ const videoTestimonials = [
     />
   )}
 
-  <VideoTestimonials heading="Geschichten unserer Gäste" testimonials={videoTestimonials} />
-
-  <section class="relative py-20 overflow-hidden bg-dark">
-    <div class="absolute inset-0 bg-gradient-to-r from-ocean/20 to-dark"></div>
-    <div class="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold text-white leading-tight">
-        {t("cta.headline", lang)}
-      </h2>
-      <p class="mt-6 text-base text-white/50 max-w-2xl mx-auto">{t("cta.text", lang)}</p>
-      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-        <a
-          href="https://bookings.rapturecamps.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-full bg-ocean px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-ocean-light"
-        >
-          {t("cta.book", lang)}
-        </a>
-        <a
-          href="/de/contact"
-          class="rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
-        >
-          Kontakt aufnehmen
-        </a>
-      </div>
-      <p class="mt-8 text-sm text-white/30">
-        Fragen? Lies unsere <a href={`/de/faq/${camp}`} class="text-ocean-light hover:underline">FAQ</a>,
-        stöbere im <a href={`/de/blog/category/${country}`} class="text-ocean-light hover:underline">Blog</a>,
-        oder <a href="/de/contact" class="text-ocean-light hover:underline">schreib uns</a> direkt.
-      </p>
-    </div>
-  </section>
+  <CTASection
+    heading={`${t("cta.headline", lang)}`}
+    text={t("cta.text", lang)}
+    buttonText={t("cta.book", lang)}
+    buttonUrl={bookingUrl}
+    faqSlug={camp}
+    blogCategory={country}
+  />
 </CampLayout>

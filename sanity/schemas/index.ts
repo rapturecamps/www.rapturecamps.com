@@ -8,6 +8,7 @@ import page from "./page";
 import homepage from "./homepage";
 import linkinBio from "./linkinBio";
 import siteSettings from "./siteSettings";
+import redirect from "./redirect";
 
 import contentBlock from "./blocks/contentBlock";
 import imageGrid from "./blocks/imageGrid";
@@ -48,6 +49,7 @@ export const schemaTypes = [
   homepage,
   linkinBio,
   siteSettings,
+  redirect,
 
   // Page builder blocks — shared
   contentBlock,

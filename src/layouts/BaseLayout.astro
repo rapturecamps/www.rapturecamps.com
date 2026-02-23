@@ -33,6 +33,14 @@ interface Props {
   noindex?: boolean;
   /** Preload a hero/LCP image for faster rendering */
   preloadImage?: string;
+  /** SEO: link rel="prev" for paginated pages */
+  prevPage?: string;
+  /** SEO: link rel="next" for paginated pages */
+  nextPage?: string;
+  /** Translation metadata for building correct alternate-language URLs */
+  translations?: { slug: string; language: string }[];
+  /** Base path for building translated URLs (e.g. "/blog") */
+  translationBasePath?: string;
 }
 
 const {
@@ -45,10 +53,32 @@ const {
   disablePopups = false,
   noindex = false,
   preloadImage,
+  prevPage,
+  nextPage,
+  translations = [],
+  translationBasePath,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
-const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
+const pathname = Astro.url.pathname;
+const isDE = pathname.startsWith("/de/") || pathname === "/de";
+const pathWithoutLang = isDE ? (pathname.replace(/^\/de/, "") || "/") : pathname;
+const canonicalUrl = new URL(pathname, siteUrl);
+
+function getTranslatedPath(lang: string): string {
+  if (translations.length > 0 && translationBasePath) {
+    const t = translations.find((tr) => tr?.language === lang);
+    if (t) {
+      const base = lang === "en" ? translationBasePath : `/de${translationBasePath}`;
+      return `${base}/${t.slug}`;
+    }
+  }
+  return lang === "en" ? pathWithoutLang : `/de${pathWithoutLang === "/" ? "/" : pathWithoutLang}`;
+}
+
+const enUrl = new URL(getTranslatedPath("en"), siteUrl);
+const deUrl = new URL(getTranslatedPath("de"), siteUrl);
+const alternatePathForHeader = isDE ? getTranslatedPath("en") : getTranslatedPath("de");
 const defaultOgImage = `${siteUrl}/images/og-default.jpg`;
 const resolvedOgImage = ogImage || defaultOgImage;
 ---
@@ -60,9 +90,9 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/images/rapturecamps-logo.svg" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" hreflang="en" href={canonicalUrl} />
-    <link rel="alternate" hreflang="de" href={new URL(`/de${Astro.url.pathname}`, siteUrl)} />
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="de" href={deUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -81,11 +111,13 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={resolvedOgImage} />
 
+    {prevPage && <link rel="prev" href={prevPage} />}
+    {nextPage && <link rel="next" href={nextPage} />}
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
   </head>
   <body class="font-sans antialiased bg-dark text-white" data-booking-url={bookingUrl}>
-    <Header />
+    <Header alternatePath={alternatePathForHeader} />
     <main>
       <slot />
     </main>

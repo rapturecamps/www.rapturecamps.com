@@ -1,7 +1,14 @@
 ---
 import ContentBlock from "@/components/sections/ContentBlock.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
+import ImageGrid from "@/components/sections/ImageGrid.astro";
+import ImageCarousel from "@/components/sections/ImageCarousel.astro";
+import VideoBlock from "@/components/sections/VideoBlock.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import HighlightsGridBlock from "./HighlightsGridBlock.astro";
+import InclusionsGridBlock from "./InclusionsGridBlock.astro";
+import FaqSectionBlock from "./FaqSectionBlock.astro";
+import VideoTestimonialsBlock from "./VideoTestimonialsBlock.astro";
 import SurfIntroBlock from "./SurfIntroBlock.astro";
 import SurfForecastBlock from "./SurfForecastBlock.astro";
 import SurfSpotsBlock from "./SurfSpotsBlock.astro";
@@ -23,6 +30,22 @@ interface Props {
 }
 
 const { blocks = [], campData } = Astro.props;
+
+const ASPECT_MAP = { "16/9": "16:9", "4/3": "4:3", "3/2": "3:2", "1/1": "1:1" } as Record<string, string>;
+const VIDEO_TYPE_MAP = { youtube: "youtube", vimeo: "vimeo", wistia: "wistia", file: "file" } as Record<string, string>;
+
+function portableTextToHtml(body: any): string {
+  if (Array.isArray(body)) {
+    return body
+      .map((b: any) => b.children?.map((c: any) => c.text).join("") || "")
+      .map((t: string) => "<p>" + t + "</p>")
+      .join("");
+  }
+  if (typeof body === "string") {
+    return body.split("\n\n").map((p: string) => "<p>" + p + "</p>").join("");
+  }
+  return "";
+}
 ---
 
 {blocks.map((block) => {
@@ -46,6 +69,42 @@ const { blocks = [], campData } = Astro.props;
 
   if (type === "imageGallery") return <ImageGalleryBlock block={block} />;
 
+  if (type === "imageGrid") {
+    const images = (block.images || []).map((img: any) => ({
+      src: img.resolvedUrl || "",
+      alt: img.alt || "",
+    }));
+    if (images.length >= 3) return <ImageGrid images={images} variant="collage" />;
+    if (images.length >= 2) return <ImageGrid images={images} variant="two-up" />;
+    return null;
+  }
+
+  if (type === "imageCarousel") {
+    const images = (block.images || []).map((img: any) => ({
+      src: img.resolvedUrl || "",
+      alt: img.alt || "",
+      caption: img.caption,
+    }));
+    return <ImageCarousel images={images} aspect={ASPECT_MAP[block.aspect] || "16:9"} />;
+  }
+
+  if (type === "videoBlock") {
+    return <VideoBlock
+      type={VIDEO_TYPE_MAP[block.type] || "youtube"}
+      src={block.videoId || ""}
+      title={block.title}
+      poster={block.resolvedPosterUrl}
+      autoplay={block.autoplay || false}
+      aspect={block.aspect === "4/3" ? "4:3" : block.aspect === "21/9" ? "21:9" : "16:9"}
+      controls
+    />;
+  }
+
+  if (type === "videoTestimonials") return <VideoTestimonialsBlock block={block} />;
+  if (type === "highlightsGrid") return <HighlightsGridBlock block={block} />;
+  if (type === "inclusionsGrid") return <InclusionsGridBlock block={block} />;
+  if (type === "faqSection") return <FaqSectionBlock block={block} />;
+
   if (type === "imageBreak") {
     return <ImageBreak
       src={block.resolvedImageUrl || block.imageUrl || block.image?.asset?.url || ""}
@@ -56,11 +115,7 @@ const { blocks = [], campData } = Astro.props;
   }
 
   if (type === "contentBlock") {
-    const body = Array.isArray(block.body)
-      ? block.body.map((b: any) => b.children?.map((c: any) => c.text).join("")).map((t: string) => `<p>${t}</p>`).join("")
-      : typeof block.body === "string"
-        ? block.body.split("\n\n").map((p: string) => `<p>${p}</p>`).join("")
-        : "";
+    const body = portableTextToHtml(block.body);
     return <ContentBlock
       heading={block.heading || ""}
       body={body}

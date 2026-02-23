@@ -1,0 +1,95 @@
+---
+interface Props {
+  currentPage: number;
+  lastPage: number;
+  baseUrl: string;
+}
+
+const { currentPage, lastPage, baseUrl } = Astro.props;
+
+if (lastPage <= 1) return;
+
+const prevUrl = currentPage === 2 ? baseUrl : currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : null;
+const nextUrl = currentPage < lastPage ? `${baseUrl}/${currentPage + 1}` : null;
+
+function pageUrl(page: number) {
+  return page === 1 ? baseUrl : `${baseUrl}/${page}`;
+}
+
+// Build a window of page numbers to show
+const pages: (number | "ellipsis")[] = [];
+const WINDOW = 2;
+
+for (let i = 1; i <= lastPage; i++) {
+  if (i === 1 || i === lastPage || (i >= currentPage - WINDOW && i <= currentPage + WINDOW)) {
+    pages.push(i);
+  } else if (pages[pages.length - 1] !== "ellipsis") {
+    pages.push("ellipsis");
+  }
+}
+---
+
+<nav aria-label="Blog pagination" class="mt-16 flex items-center justify-center gap-2">
+  {prevUrl ? (
+    <a
+      href={prevUrl}
+      class="flex items-center gap-1.5 rounded-lg border border-white/10 px-4 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+      rel="prev"
+    >
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Previous
+    </a>
+  ) : (
+    <span class="flex items-center gap-1.5 rounded-lg border border-white/5 px-4 py-2 text-sm text-white/20 cursor-not-allowed">
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+      Previous
+    </span>
+  )}
+
+  <div class="hidden sm:flex items-center gap-1">
+    {pages.map((p) =>
+      p === "ellipsis" ? (
+        <span class="px-2 text-sm text-white/20">...</span>
+      ) : p === currentPage ? (
+        <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-sm font-medium text-white border border-white/20">
+          {p}
+        </span>
+      ) : (
+        <a
+          href={pageUrl(p)}
+          class="flex h-9 w-9 items-center justify-center rounded-lg text-sm text-white/40 hover:bg-white/5 hover:text-white transition-colors"
+        >
+          {p}
+        </a>
+      )
+    )}
+  </div>
+
+  <span class="sm:hidden text-sm text-white/40">
+    Page {currentPage} of {lastPage}
+  </span>
+
+  {nextUrl ? (
+    <a
+      href={nextUrl}
+      class="flex items-center gap-1.5 rounded-lg border border-white/10 px-4 py-2 text-sm text-white/60 hover:bg-white/5 hover:text-white transition-colors"
+      rel="next"
+    >
+      Next
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  ) : (
+    <span class="flex items-center gap-1.5 rounded-lg border border-white/5 px-4 py-2 text-sm text-white/20 cursor-not-allowed">
+      Next
+      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </span>
+  )}
+</nav>

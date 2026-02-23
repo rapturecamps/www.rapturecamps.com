@@ -1,0 +1,18 @@
+---
+const { node } = Astro.props;
+const url = node.url || node.asset?.url;
+const alt = node.altText || node.alt || "";
+---
+
+{url && (
+  <figure class="my-8">
+    <img
+      src={url + "?w=1200&auto=format"}
+      alt={alt}
+      class="w-full rounded-xl"
+      loading="lazy"
+      width="1200"
+    />
+    {alt && <figcaption class="mt-2 text-center text-sm text-white/30">{alt}</figcaption>}
+  </figure>
+)}

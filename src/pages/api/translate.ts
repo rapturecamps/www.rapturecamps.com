@@ -31,6 +31,8 @@ const TRANSLATABLE_STRING_FIELDS = [
   "question",
   "answer",
   "title",
+  "metaTitle",
+  "metaDescription",
   "heroTagline",
   "heroTitle",
   "heroSubtitle",
@@ -270,9 +272,55 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const sourceDoc = await sanityClient.fetch(`*[_id == $id][0]`, {
-      id: documentId,
-    });
+    async function fetchDoc(id: string) {
+      return (
+        await sanityClient.fetch(`*[_id == $id || _id == "drafts." + $id][0]`, { id })
+      );
+    }
+
+    const currentDoc = await fetchDoc(documentId);
+    if (!currentDoc) {
+      return new Response(
+        JSON.stringify({ error: "Document not found" }),
+        { status: 404 }
+      );
+    }
+
+    const currentDocLang = currentDoc.language || "en";
+    const isTargetDoc = currentDocLang === targetLang;
+
+    let sourceDoc: any;
+    let targetDocId: string | null = null;
+
+    const metaDoc = await sanityClient.fetch(
+      `*[_type == "translation.metadata" && (references($id) || references("drafts." + $id))][0]`,
+      { id: documentId }
+    );
+
+    if (isTargetDoc) {
+      let sourceId: string | null = null;
+      if (metaDoc?.translations) {
+        const sourceRef = metaDoc.translations.find((t: any) => t._key === "en");
+        if (sourceRef?.value?._ref) sourceId = sourceRef.value._ref;
+      }
+
+      if (!sourceId) {
+        return new Response(
+          JSON.stringify({ error: "English source document not found in translation metadata" }),
+          { status: 404 }
+        );
+      }
+
+      sourceDoc = await fetchDoc(sourceId);
+      targetDocId = documentId;
+    } else {
+      sourceDoc = currentDoc;
+      if (metaDoc?.translations) {
+        const targetRef = metaDoc.translations.find((t: any) => t._key === targetLang);
+        if (targetRef?.value?._ref) targetDocId = targetRef.value._ref;
+      }
+    }
+
     if (!sourceDoc) {
       return new Response(
         JSON.stringify({ error: "Source document not found" }),
@@ -281,6 +329,10 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const translatableContent = extractTranslatableContent(sourceDoc);
+
+    const sourceSlug = sourceDoc.slug?.current;
+    const sourceTitle = sourceDoc.title;
+
     const prompt = buildTranslationPrompt(translatableContent, targetLang);
 
     if (!prompt) {
@@ -290,11 +342,15 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
+    const slugPrompt = sourceTitle
+      ? `\n\nAlso translate this page title into a URL-friendly slug in ${targetLang === "de" ? "German" : targetLang}. Use only lowercase letters, numbers, and hyphens. No special characters (ä→ae, ö→oe, ü→ue, ß→ss). Return it as the LAST element in the JSON array with index 9999 and key "slug".\nTitle: ${sourceTitle}`
+      : "";
+
     const anthropic = new Anthropic({ apiKey });
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: 8192,
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user", content: prompt + slugPrompt }],
     });
 
     const responseText =
@@ -302,13 +358,25 @@ export const POST: APIRoute = async ({ request }) => {
     let translations: { index: number; translation: string }[];
 
     try {
-      translations = JSON.parse(responseText.trim());
+      const cleaned = responseText.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim();
+      translations = JSON.parse(cleaned);
     } catch {
       return new Response(
         JSON.stringify({ error: "Failed to parse translation response", raw: responseText }),
         { status: 500 }
       );
     }
+
+    let translatedSlug: string | null = null;
+    const slugEntry = translations.find((t) => t.index === 9999);
+    if (slugEntry?.translation) {
+      translatedSlug = slugEntry.translation
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/(^-|-$)/g, "");
+    }
+    translations = translations.filter((t) => t.index !== 9999);
 
     const entries: { key: string; value: string }[] = [];
     for (const [path, value] of Object.entries(translatableContent)) {
@@ -341,21 +409,6 @@ export const POST: APIRoute = async ({ request }) => {
       translationMap
     );
 
-    const metaDoc = await sanityClient.fetch(
-      `*[_type == "translation.metadata" && references($id)][0]`,
-      { id: documentId }
-    );
-
-    let targetDocId: string | null = null;
-    if (metaDoc?.translations) {
-      const targetRef = metaDoc.translations.find(
-        (t: any) => t._key === targetLang
-      );
-      if (targetRef?.value?._ref) {
-        targetDocId = targetRef.value._ref;
-      }
-    }
-
     if (targetDocId) {
       const fieldsToUpdate = { ...translatedDoc };
       delete fieldsToUpdate._id;
@@ -363,9 +416,19 @@ export const POST: APIRoute = async ({ request }) => {
       delete fieldsToUpdate._createdAt;
       delete fieldsToUpdate._updatedAt;
       delete fieldsToUpdate._type;
+      delete fieldsToUpdate.language;
+
+      if (translatedSlug) {
+        fieldsToUpdate.slug = { _type: "slug", current: translatedSlug };
+      }
+
+      const patchId = (await sanityClient.fetch(
+        `*[_id == $id || _id == "drafts." + $id][0]._id`,
+        { id: targetDocId }
+      )) || targetDocId;
 
       await sanityClient
-        .patch(targetDocId)
+        .patch(patchId)
         .set(fieldsToUpdate)
         .commit();
 
@@ -374,6 +437,7 @@ export const POST: APIRoute = async ({ request }) => {
           success: true,
           targetDocId,
           fieldsTranslated: translationMap.size,
+          slugTranslated: translatedSlug || undefined,
         })
       );
     }

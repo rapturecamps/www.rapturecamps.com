@@ -26,3 +26,12 @@ yarn-debug.log*
 # editor
 .vscode/
 .idea/
+
+# migration artifacts
+sanity/wp-image-map.json
+sanity/wp-image-checkpoint.json
+sanity/wp-redirect-map.json
+sanity/image-size-report.csv
+sanity/migration-errors.log
+sanity/stripped-embeds.log
+sanity/unmatched-links.log

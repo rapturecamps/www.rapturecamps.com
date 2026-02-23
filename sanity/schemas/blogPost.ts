@@ -21,7 +21,21 @@ export default defineType({
       name: "slug",
       title: "Slug",
       type: "slug",
-      options: { source: "title", maxLength: 96 },
+      options: {
+        source: "title",
+        maxLength: 96,
+        isUnique: async (value, context) => {
+          const { document, getClient } = context;
+          const client = getClient({ apiVersion: "2024-01-01" });
+          const lang = (document as any)?.language || "en";
+          const id = document?._id?.replace(/^drafts\./, "");
+          const count = await client.fetch(
+            `count(*[_type == "blogPost" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en")) && !(_id in [$pubId, $draftId])])`,
+            { slug: value, lang, pubId: id, draftId: `drafts.${id}` }
+          );
+          return count === 0;
+        },
+      },
       validation: (r) => r.required(),
     }),
     defineField({
@@ -61,7 +75,16 @@ export default defineType({
                 type: "object",
                 title: "Link",
                 fields: [
-                  { name: "href", type: "url", title: "URL" },
+                  {
+                    name: "href",
+                    type: "url",
+                    title: "URL",
+                    validation: (Rule: any) =>
+                      Rule.uri({
+                        allowRelative: true,
+                        scheme: ["http", "https", "mailto", "tel"],
+                      }),
+                  },
                   {
                     name: "blank",
                     type: "boolean",
@@ -89,6 +112,17 @@ export default defineType({
             },
           ],
         },
+        { type: "imageGrid" },
+        { type: "imageBreak" },
+        { type: "imageCarousel" },
+        { type: "imageGallery" },
+        { type: "videoBlock" },
+        { type: "videoTestimonials" },
+        { type: "highlightsGrid" },
+        { type: "inclusionsGrid" },
+        { type: "faqSection" },
+        { type: "ctaSection" },
+        { type: "contentBlock" },
       ],
     }),
     defineField({

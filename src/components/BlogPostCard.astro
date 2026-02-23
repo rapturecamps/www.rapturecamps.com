@@ -1,0 +1,56 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  featuredImage?: string;
+  excerpt?: string;
+  publishedAt?: string;
+  categories?: { name: string; slug: string }[];
+  blogPrefix?: string;
+}
+
+const { slug, title, featuredImage, excerpt, publishedAt, categories, blogPrefix = "/blog" } = Astro.props;
+
+function formatDate(dateStr: string) {
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+<a href={`${blogPrefix}/${slug}`} class="group">
+  <article class="overflow-hidden rounded-xl bg-dark-lighter border border-white/5 transition-all hover:border-white/10">
+    {featuredImage && (
+      <div class="relative aspect-[16/10] overflow-hidden">
+        <img
+          src={featuredImage + "?w=600&h=375&fit=crop&auto=format"}
+          alt={title}
+          class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+          width="600"
+          height="375"
+        />
+        {categories?.[0] && (
+          <div class="absolute top-3 left-3">
+            <span class="rounded-full bg-white/10 backdrop-blur-sm border border-white/10 px-2.5 py-0.5 text-[10px] font-medium text-white/80">
+              {categories[0].name}
+            </span>
+          </div>
+        )}
+      </div>
+    )}
+    <div class="p-5">
+      {publishedAt && (
+        <time class="text-[11px] text-white/30">{formatDate(publishedAt)}</time>
+      )}
+      <h3 class="mt-1.5 text-base font-semibold text-white line-clamp-2 group-hover:text-ocean-light transition-colors">
+        {title}
+      </h3>
+      {excerpt && (
+        <p class="mt-2 text-xs text-white/40 line-clamp-2">{excerpt}</p>
+      )}
+    </div>
+  </article>
+</a>

@@ -86,6 +86,7 @@ export async function getCampBySlug(slug: string, lang = "en") {
     const camp = await sanityClient.fetch(CAMP_BY_SLUG, { slug, lang });
     if (camp) {
       const merged = mergeWithHardcoded(camp);
+      (merged as any).pageBuilder = camp.pageBuilder || null;
       (merged as any).surfPageBuilder = camp.surfPageBuilder || null;
       (merged as any).roomsPageBuilder = camp.roomsPageBuilder || null;
       (merged as any).foodPageBuilder = camp.foodPageBuilder || null;
@@ -188,9 +189,11 @@ export async function getFaqsByCamp(
   lang = "en"
 ): Promise<Record<string, { question: string; answer: string }[]> | null> {
   try {
+    // Always look up the English camp doc for the reference ID —
+    // German FAQs reference the same camp documents
     const campDoc = await sanityClient.fetch(
-      `*[_type == "camp" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0]{ _id }`,
-      { slug: campSlug, lang }
+      `*[_type == "camp" && slug.current == $slug && (language == "en" || !defined(language))][0]{ _id }`,
+      { slug: campSlug }
     );
     if (!campDoc?._id) return null;
 

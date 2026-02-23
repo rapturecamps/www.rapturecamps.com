@@ -90,20 +90,34 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
   roomsHeroTitle,
   foodHeroTitle,
   "image": image.asset->url,
-  pageBuilder,
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedPosterUrl": poster.asset->url,
+    images[] {
+      ...,
+      "resolvedUrl": asset->url
+    }
+  },
   surfPageBuilder[] {
     _key, _type, ...,
     "resolvedImageUrl": image.asset->url,
+    "resolvedPosterUrl": poster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url },
     surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
   },
   roomsPageBuilder[] {
     _key, _type, ...,
     "resolvedImageUrl": image.asset->url,
+    "resolvedPosterUrl": poster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url },
     rooms[] { ..., "resolvedImageUrl": image.asset->url }
   },
   foodPageBuilder[] {
     _key, _type, ...,
     "resolvedImageUrl": image.asset->url,
+    "resolvedPosterUrl": poster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url },
     meals[] { ..., "resolvedImageUrl": image.asset->url }
   },
   seo,
@@ -123,7 +137,7 @@ export const SITE_SETTINGS = `*[_type == "siteSettings" && _id == "siteSettings"
   "ogImage": ogImage.asset->url
 }`;
 
-export const ALL_BLOG_POSTS = `*[_type == "blogPost"] | order(publishedAt desc) {
+export const ALL_BLOG_POSTS = `*[_type == "blogPost" && (language == $lang || (!defined(language) && $lang == "en"))] | order(publishedAt desc) {
   _id,
   title,
   "slug": slug.current,
@@ -131,6 +145,22 @@ export const ALL_BLOG_POSTS = `*[_type == "blogPost"] | order(publishedAt desc) 
   "featuredImage": featuredImage.asset->url,
   publishedAt,
   "categories": categories[]->{ name, "slug": slug.current }
+}`;
+
+export const BLOG_POSTS_BY_CATEGORY = `*[_type == "blogPost" && (language == $lang || (!defined(language) && $lang == "en")) && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  "featuredImage": featuredImage.asset->url,
+  publishedAt,
+  "categories": categories[]->{ name, "slug": slug.current }
+}`;
+
+export const ALL_BLOG_CATEGORIES = `*[_type == "blogCategory"] | order(name asc) {
+  _id,
+  name,
+  "slug": slug.current
 }`;
 
 export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
@@ -183,15 +213,43 @@ export const FAQS_BY_CAMP = `*[_type == "faq" && (
   "categoryOrder": category->order
 }`;
 
-export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug][0] {
+export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
   title,
   "slug": slug.current,
   excerpt,
-  "featuredImage": featuredImage.asset->url,
-  body,
+  featuredImage,
+  "featuredImageUrl": featuredImage.asset->url,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      "url": asset->url,
+      "altText": asset->altText
+    },
+    _type in ["imageGrid", "imageCarousel", "imageGallery"] => {
+      ...,
+      images[] { ..., "resolvedUrl": asset->url }
+    },
+    _type in ["imageBreak", "contentBlock"] => {
+      ...,
+      "resolvedImageUrl": image.asset->url
+    },
+    _type == "videoBlock" => {
+      ...,
+      "resolvedPosterUrl": poster.asset->url
+    },
+    _type == "ctaSection" => {
+      ...,
+      "resolvedImageUrl": image.asset->url
+    }
+  },
   publishedAt,
   tags,
   "categories": categories[]->{ name, "slug": slug.current },
-  seo
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    "slug": slug.current,
+    language
+  }
 }`;

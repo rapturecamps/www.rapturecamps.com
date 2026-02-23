@@ -1,0 +1,130 @@
+---
+interface Props {
+  block: {
+    heading?: string;
+    videos?: {
+      youtubeId: string;
+      guestName?: string;
+      caption?: string;
+    }[];
+  };
+}
+
+const { block } = Astro.props;
+const heading = block.heading || "Stories from Our Guests";
+const videos = block.videos || [];
+---
+
+{videos.length > 0 && (
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="px-6 sm:px-12 lg:px-20 mb-8 flex items-end justify-between gap-4">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
+      {videos.length > 1 && (
+        <div class="hidden sm:flex items-center gap-2">
+          <button
+            class="vtb-prev flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+            aria-label="Previous"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button
+            class="vtb-next flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+            aria-label="Next"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+        </div>
+      )}
+    </div>
+
+    <div class="vtb-track relative">
+      <div class="vtb-slider flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory vtb-no-scrollbar">
+        {videos.map((v) => (
+          <div class="vtb-card flex-shrink-0 w-[320px] sm:w-[400px] lg:w-[480px] snap-center rounded-xl overflow-hidden border border-white/5 bg-dark-lighter">
+            <div class="relative aspect-video cursor-pointer" data-yt-id={v.youtubeId}>
+              <img
+                src={`https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`}
+                alt={v.guestName ? `Video testimonial by ${v.guestName}` : "Video testimonial"}
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-colors">
+                <svg class="h-14 w-14 text-white drop-shadow-lg" viewBox="0 0 68 48">
+                  <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/>
+                  <path d="M45 24L27 14v20" fill="white"/>
+                </svg>
+              </div>
+            </div>
+            {(v.guestName || v.caption) && (
+              <div class="p-4">
+                {v.guestName && <p class="text-sm font-semibold text-white">{v.guestName}</p>}
+                {v.caption && <p class="text-xs text-white/40 mt-1">{v.caption}</p>}
+              </div>
+            )}
+          </div>
+        ))}
+        <div class="flex-shrink-0 w-px" aria-hidden="true" />
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .vtb-no-scrollbar::-webkit-scrollbar { display: none; }
+  .vtb-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .vtb-slider {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 640px) {
+    .vtb-slider { padding-left: 3rem; padding-right: 3rem; }
+  }
+  @media (min-width: 1024px) {
+    .vtb-slider { padding-left: 5rem; padding-right: 5rem; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll(".vtb-track").forEach(function (track) {
+    var slider = track.querySelector(".vtb-slider");
+    if (!slider) return;
+
+    var cards = track.querySelectorAll(".vtb-card");
+    var cardWidth = 0;
+    function getCardWidth() {
+      if (cards[0]) cardWidth = cards[0].offsetWidth + 16;
+    }
+    getCardWidth();
+    window.addEventListener("resize", getCardWidth);
+
+    function scrollBy(dir) {
+      slider.scrollBy({ left: dir * cardWidth, behavior: "smooth" });
+    }
+
+    var section = track.closest("section");
+    if (section) {
+      section.querySelectorAll(".vtb-prev").forEach(function (btn) {
+        btn.addEventListener("click", function () { scrollBy(-1); });
+      });
+      section.querySelectorAll(".vtb-next").forEach(function (btn) {
+        btn.addEventListener("click", function () { scrollBy(1); });
+      });
+    }
+
+    track.querySelectorAll("[data-yt-id]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var id = el.getAttribute("data-yt-id");
+        if (!id) return;
+        var iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
+        iframe.className = "absolute inset-0 h-full w-full";
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        el.innerHTML = "";
+        el.appendChild(iframe);
+      });
+    });
+  });
+})();
+</script>

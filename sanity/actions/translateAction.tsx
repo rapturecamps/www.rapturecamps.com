@@ -19,8 +19,10 @@ export function TranslateAction(props: DocumentActionProps) {
   const [message, setMessage] = useState("");
 
   const currentLang = (doc as any)?.language || "en";
-
-  const targetLangs = Object.keys(LANGUAGES).filter((l) => l !== currentLang);
+  const isNonEnglish = currentLang !== "en";
+  const targetLangs = isNonEnglish
+    ? [currentLang]
+    : Object.keys(LANGUAGES).filter((l) => l !== "en");
 
   const handleTranslate = useCallback(
     async (targetLang: string) => {
@@ -71,7 +73,9 @@ export function TranslateAction(props: DocumentActionProps) {
         ? "Translating..."
         : status === "success"
           ? "Translated!"
-          : "Translate with AI",
+          : isNonEnglish
+            ? "Translate from English"
+            : "Translate with AI",
     icon: () => (
       <span style={{ fontSize: "1.1em" }} role="img" aria-label="translate">
         🌐

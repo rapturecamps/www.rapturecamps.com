@@ -1,0 +1,108 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import BlogPostCard from "@/components/BlogPostCard.astro";
+import Pagination from "@/components/Pagination.astro";
+import { sanityClient } from "@/lib/sanity";
+import { ALL_BLOG_CATEGORIES, BLOG_POSTS_BY_CATEGORY } from "@/lib/queries";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const categories = await sanityClient.fetch(ALL_BLOG_CATEGORIES);
+  const pages = await Promise.all(
+    categories.map(async (cat: any) => {
+      const posts = await sanityClient.fetch(BLOG_POSTS_BY_CATEGORY, {
+        lang: "en",
+        categorySlug: cat.slug,
+      });
+      return paginate(posts, {
+        params: { category: cat.slug },
+        pageSize: 12,
+        props: { categoryName: cat.name },
+      });
+    })
+  );
+  return pages.flat();
+}) satisfies GetStaticPaths;
+
+const { page, categoryName } = Astro.props;
+const { category } = Astro.params;
+const categories = await sanityClient.fetch(ALL_BLOG_CATEGORIES);
+
+const title = categoryName || category!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const currentPage = page.currentPage;
+const baseUrl = `/blog/category/${category}`;
+
+const pageTitle = currentPage > 1
+  ? `${title} - Page ${currentPage} | Blog | Rapture Surfcamps`
+  : `${title} - Blog | Rapture Surfcamps`;
+
+const prevUrl = currentPage === 2 ? baseUrl : currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : undefined;
+const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : undefined;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={`All blog posts about ${title} from Rapture Surfcamps.`}
+  prevPage={prevUrl}
+  nextPage={nextUrl}
+>
+  <Hero
+    title={title}
+    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/0f4699ad7ef6f2461c02fb321f9743ad8e649d06-1920x1080.jpg?w=1920&h=1080&fit=crop&auto=format"
+  >
+    <p class="mt-3 text-base text-white/40">
+      {page.total} {page.total === 1 ? "post" : "posts"} about {title}
+    </p>
+    <Breadcrumbs inline crumbs={[
+      { label: "Blog", href: "/blog" },
+      { label: title },
+    ]} />
+  </Hero>
+
+  <section class="py-12 bg-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap gap-2 mb-12 justify-center">
+        <a
+          href="/blog"
+          class="rounded-full px-4 py-1.5 text-xs font-medium transition-colors border border-white/10 text-white/50 hover:bg-white/10 hover:text-white"
+        >
+          All
+        </a>
+        {categories.map((cat: any) => (
+          <a
+            href={`/blog/category/${cat.slug}`}
+            class:list={[
+              "rounded-full px-4 py-1.5 text-xs font-medium transition-colors border",
+              cat.slug === category
+                ? "bg-white/10 text-white border-white/20"
+                : "border-white/10 text-white/50 hover:bg-white/10 hover:text-white",
+            ]}
+          >
+            {cat.name}
+          </a>
+        ))}
+      </div>
+
+      {page.data.length === 0 ? (
+        <p class="text-center text-sm text-white/30">No posts found in this category.</p>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {page.data.map((post: any) => (
+            <BlogPostCard
+              slug={post.slug}
+              title={post.title}
+              featuredImage={post.featuredImage}
+              excerpt={post.excerpt}
+              publishedAt={post.publishedAt}
+              categories={post.categories}
+            />
+          ))}
+        </div>
+      )}
+
+      <Pagination currentPage={page.currentPage} lastPage={page.lastPage} baseUrl={baseUrl} />
+    </div>
+  </section>
+</BaseLayout>

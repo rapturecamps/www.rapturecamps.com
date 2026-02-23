@@ -1,0 +1,111 @@
+---
+/**
+ * Portable Text handler for rich block types embedded inline in the body editor.
+ * Uses a CSS breakout to escape the narrow prose container and render full-width.
+ */
+import ImageGrid from "@/components/sections/ImageGrid.astro";
+import ImageBreak from "@/components/sections/ImageBreak.astro";
+import ImageCarousel from "@/components/sections/ImageCarousel.astro";
+import VideoBlock from "@/components/sections/VideoBlock.astro";
+import ImageGalleryBlock from "@/components/blocks/ImageGalleryBlock.astro";
+import HighlightsGridBlock from "@/components/blocks/HighlightsGridBlock.astro";
+import InclusionsGridBlock from "@/components/blocks/InclusionsGridBlock.astro";
+import FaqSectionBlock from "@/components/blocks/FaqSectionBlock.astro";
+import VideoTestimonialsBlock from "@/components/blocks/VideoTestimonialsBlock.astro";
+import ContentBlock from "@/components/sections/ContentBlock.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+
+const { node } = Astro.props;
+const t = node._type;
+
+const ASPECT_MAP: Record<string, string> = {
+  "16/9": "16:9", "4/3": "4:3", "3/2": "3:2", "1/1": "1:1",
+};
+const VIDEO_TYPE_MAP: Record<string, string> = {
+  youtube: "youtube", vimeo: "vimeo", wistia: "wistia", file: "file",
+};
+
+function portableTextToHtml(body: any): string {
+  if (Array.isArray(body)) {
+    return body
+      .map((b: any) => b.children?.map((c: any) => c.text).join("") || "")
+      .map((text: string) => "<p>" + text + "</p>")
+      .join("");
+  }
+  if (typeof body === "string") {
+    return body.split("\n\n").map((p: string) => "<p>" + p + "</p>").join("");
+  }
+  return "";
+}
+---
+
+<div class="blog-block-breakout">
+  {t === "imageGrid" && (() => {
+    const images = (node.images || []).map((img: any) => ({
+      src: img.resolvedUrl || "",
+      alt: img.alt || "",
+    }));
+    if (images.length >= 3) return <ImageGrid images={images} variant="collage" />;
+    if (images.length >= 2) return <ImageGrid images={images} variant="two-up" />;
+    return null;
+  })()}
+
+  {t === "imageCarousel" && (
+    <ImageCarousel
+      images={(node.images || []).map((img: any) => ({
+        src: img.resolvedUrl || "",
+        alt: img.alt || "",
+        caption: img.caption,
+      }))}
+      aspect={ASPECT_MAP[node.aspect] || "16:9"}
+    />
+  )}
+
+  {t === "imageGallery" && <ImageGalleryBlock block={node} />}
+
+  {t === "imageBreak" && (
+    <ImageBreak
+      src={node.resolvedImageUrl || node.imageUrl || ""}
+      alt={node.alt || ""}
+      caption={node.caption || ""}
+      height={node.height === "sm" ? "short" : node.height === "lg" ? "tall" : "medium"}
+    />
+  )}
+
+  {t === "videoBlock" && (
+    <VideoBlock
+      type={VIDEO_TYPE_MAP[node.type] || "youtube"}
+      src={node.videoId || ""}
+      title={node.title}
+      poster={node.resolvedPosterUrl}
+      autoplay={node.autoplay || false}
+      aspect={node.aspect === "4/3" ? "4:3" : node.aspect === "21/9" ? "21:9" : "16:9"}
+      controls
+    />
+  )}
+
+  {t === "videoTestimonials" && <VideoTestimonialsBlock block={node} />}
+  {t === "highlightsGrid" && <HighlightsGridBlock block={node} />}
+  {t === "inclusionsGrid" && <InclusionsGridBlock block={node} />}
+  {t === "faqSection" && <FaqSectionBlock block={node} />}
+
+  {t === "ctaSection" && (
+    <CTASection
+      heading={node.heading}
+      text={node.text}
+      buttonText={node.buttonText}
+      buttonUrl={node.buttonUrl}
+    />
+  )}
+
+  {t === "contentBlock" && (
+    <ContentBlock
+      heading={node.heading || ""}
+      body={portableTextToHtml(node.body)}
+      image={node.resolvedImageUrl || ""}
+      imageAlt={node.imageAlt || ""}
+      reverse={node.reverse || false}
+      background={node.background === "dark-lighter" ? "dark-lighter" : "dark"}
+    />
+  )}
+</div>

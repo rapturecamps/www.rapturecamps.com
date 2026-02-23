@@ -127,6 +127,11 @@
 
   var existing = getConsent();
 
+  // Notify other scripts (e.g. Elfsight loader) that consent state is available
+  if (existing) {
+    window.dispatchEvent(new CustomEvent("rc:consent-updated", { detail: existing }));
+  }
+
   // Show banner if no consent stored
   if (!existing) {
     requestAnimationFrame(function () {
