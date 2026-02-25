@@ -17,7 +17,6 @@ const countryContent: Record<string, {
   description: string;
   heroImage: string;
   heroImages?: string[];
-  intro: string;
   campsSectionTitle: string;
   imageGrid: { src: string; alt: string }[];
   contentBlocks: { heading: string; body: string; image?: string; imageAlt?: string; reverse?: boolean; background?: "dark" | "dark-lighter" }[];
@@ -37,7 +36,6 @@ const countryContent: Record<string, {
       "https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1920&h=1080&fit=crop",
     ],
-    intro: "From the legendary barrels of Padang Padang to the beginner-friendly breaks of Green Bowl, Bali's Bukit Peninsula has it all. We run two camps here — each with its own character, but both sharing that unmistakable Rapture spirit.",
     campsSectionTitle: "Stay at Our Surf Camps in Bali",
     imageGrid: [
       { src: "https://images.unsplash.com/photo-1559628233-100c798642d4?w=1200&h=500&fit=crop", alt: "Tropical pool area at Rapture surf camp Bali" },
@@ -113,7 +111,6 @@ const countryContent: Record<string, {
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1920&h=1080&fit=crop",
     ],
-    intro: "Playa Avellanas is one of Costa Rica's best-kept secrets: perfect waves, zero crowds, and a jungle backdrop that feels like a movie set. Our freshly renovated camp sits right in the middle of it all.",
     campsSectionTitle: "Stay at Our Surf Camp in Costa Rica",
     imageGrid: [
       { src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=500&fit=crop", alt: "Costa Rica tropical beach" },
@@ -180,7 +177,6 @@ const countryContent: Record<string, {
       "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
     ],
-    intro: "Portugal is Europe's surfing capital and for good reason. World-class waves, charming coastal villages, incredible food, and affordable prices make it the perfect destination whether you're learning to surf or chasing your best barrel.",
     campsSectionTitle: "Stay at Our Surf Camps in Portugal",
     imageGrid: [
       { src: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=1200&h=500&fit=crop", alt: "Portuguese coastline with dramatic cliffs" },
@@ -257,7 +253,6 @@ const countryContent: Record<string, {
       "https://images.unsplash.com/photo-1517821099606-cef63a9bcda6?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1920&h=1080&fit=crop",
     ],
-    intro: "Sidi Ifni is where it all began. More than 20 years ago, our founders fell in love with Morocco's waves and culture — and started the very first Rapture camp right here. That same spirit lives on in our Banana Village surf house.",
     campsSectionTitle: "Stay at Our Surf Camp in Morocco",
     imageGrid: [
       { src: "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200&h=500&fit=crop", alt: "Morocco coastline with surf" },
@@ -324,7 +319,6 @@ const countryContent: Record<string, {
       "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1920&h=1080&fit=crop",
       "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1920&h=1080&fit=crop",
     ],
-    intro: "Playa Maderas is pure magic — a jungle-fringed bay with consistent surf, warm water, and a vibe that makes you never want to leave. We run two properties here: our hilltop surf camp with infinity pool and glamping tents, and the boutique Maderas Surf Resort.",
     campsSectionTitle: "Stay at Our Surf Camps in Nicaragua",
     imageGrid: [
       { src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=500&fit=crop", alt: "Nicaragua tropical coast" },
@@ -409,13 +403,29 @@ const faqsForSchema = sanityFaqBlock?.faqs?.length
   ? sanityFaqBlock.faqs.map((f: any) => ({ question: f.question, answer: f.answer }))
   : fallback.faqs || [];
 
-// Merge Sanity data with hardcoded fallback (for hero, comparison, and fallback sections)
+// Build comparison camps from Sanity or fallback
+const sanityCamps = sanityCountry?.comparison?.camps;
+const comparisonCamps = sanityCamps?.length
+  ? sanityCamps.map((c: any) => ({
+      slug: `/surfcamp/${country}/${c.campSlug}`,
+      values: c.values || [],
+      campName: c.campName,
+      campImage: c.campImage,
+      campLocation: c.campLocation,
+      campTagline: c.campTagline,
+      campRating: c.campRating,
+      campReviewCount: c.campReviewCount,
+      campAmenities: c.campAmenities,
+    }))
+  : fallback.comparison.camps;
+
 const data = {
   ...fallback,
   title: sanityCountry?.heroTitle || fallback.title,
   tagline: sanityCountry?.heroTagline || fallback.tagline,
   description: sanityCountry?.description || fallback.description,
-  intro: sanityCountry?.intro || fallback.intro,
+  heroImage: sanityCountry?.heroImages?.[0] || fallback.heroImage,
+  heroImages: sanityCountry?.heroImages?.length ? sanityCountry.heroImages : fallback.heroImages,
   comparison: {
     ...fallback.comparison,
     heading: sanityCountry?.comparison?.heading || fallback.comparison.heading,
@@ -423,6 +433,7 @@ const data = {
     features: sanityCountry?.comparison?.features?.length
       ? sanityCountry.comparison.features
       : fallback.comparison.features,
+    camps: comparisonCamps,
   },
 };
 
@@ -439,8 +450,8 @@ const amenityLabels: Record<string, string> = {
 ---
 
 <BaseLayout
-  title={`${data.title.replace("\n", " ")} | Rapture Surfcamps`}
-  description={data.description}
+  title={sanityCountry?.seo?.metaTitle || `${data.title.replace("\n", " ")} | Rapture Surfcamps`}
+  description={sanityCountry?.seo?.metaDescription || data.description}
   ogImage={data.heroImage}
   preloadImage={data.heroImages?.[0] || data.heroImage}
 >
@@ -481,28 +492,36 @@ const amenityLabels: Record<string, string> = {
       {/* Desktop layout */}
       <div class={`hidden md:block ${data.comparison.camps.length === 1 ? "max-w-2xl mx-auto" : ""}`}>
         <div class="grid gap-6 mb-6" style={`grid-template-columns: repeat(${data.comparison.camps.length}, 1fr)`}>
-          {data.comparison.camps.map((compCamp) => {
-            const camp = countryCamps.find((d) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
-            if (!camp) return null;
+          {data.comparison.camps.map((compCamp: any) => {
+            const lookup = countryCamps.find((d: any) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
+            const name = compCamp.campName || lookup?.name;
+            const image = compCamp.campImage || lookup?.image;
+            const location = compCamp.campLocation || lookup?.location;
+            const tagline = compCamp.campTagline || lookup?.tagline;
+            const rating = compCamp.campRating ?? lookup?.rating;
+            const reviewCount = compCamp.campReviewCount ?? lookup?.reviewCount;
+            const amenities = compCamp.campAmenities || lookup?.amenities;
+            const href = lookup?.slug || compCamp.slug;
+            if (!name) return null;
             return (
-              <a href={camp.slug} class="group overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
+              <a href={href} class="group overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15">
                 <div class="relative aspect-[16/10] overflow-hidden">
-                  <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                  {camp.rating && (
+                  <img src={image} alt={`${name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                  {rating && (
                     <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
                       <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                      <span class="text-white text-xs font-semibold">{camp.rating}</span>
-                      {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
+                      <span class="text-white text-xs font-semibold">{rating}</span>
+                      {reviewCount && <span class="text-white/50 text-[11px]">({reviewCount})</span>}
                     </div>
                   )}
                 </div>
                 <div class="p-5">
-                  <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
-                  <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
-                  {camp.tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{camp.tagline}</p>}
-                  {camp.amenities && camp.amenities.length > 0 && (
+                  <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{location}</p>
+                  <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{name}</h3>
+                  {tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{tagline}</p>}
+                  {amenities && amenities.length > 0 && (
                     <div class="mt-3 flex flex-wrap gap-1.5">
-                      {camp.amenities.map((amenity) => (
+                      {amenities.map((amenity: string) => (
                         <span class="inline-flex items-center gap-1 text-[10px] text-white/40 bg-white/5 rounded-full px-2 py-0.5">
                           {amenityLabels[amenity] || amenity}
                         </span>
@@ -531,28 +550,36 @@ const amenityLabels: Record<string, string> = {
 
       {/* Mobile layout */}
       <div class="md:hidden space-y-6">
-        {data.comparison.camps.map((compCamp) => {
-          const camp = countryCamps.find((d) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
-          if (!camp) return null;
+        {data.comparison.camps.map((compCamp: any) => {
+          const lookup = countryCamps.find((d: any) => compCamp.slug.endsWith(d.slug.split("/").pop()!));
+          const name = compCamp.campName || lookup?.name;
+          const image = compCamp.campImage || lookup?.image;
+          const location = compCamp.campLocation || lookup?.location;
+          const tagline = compCamp.campTagline || lookup?.tagline;
+          const rating = compCamp.campRating ?? lookup?.rating;
+          const reviewCount = compCamp.campReviewCount ?? lookup?.reviewCount;
+          const amenities = compCamp.campAmenities || lookup?.amenities;
+          const href = lookup?.slug || compCamp.slug;
+          if (!name) return null;
           return (
-            <a href={camp.slug} class="block overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15 group">
+            <a href={href} class="block overflow-hidden rounded-2xl bg-dark-lighter border border-white/5 transition-all hover:border-white/15 group">
               <div class="relative aspect-[16/10] overflow-hidden">
-                <img src={camp.image} alt={`${camp.name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
-                {camp.rating && (
+                <img src={image} alt={`${name} surf camp`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                {rating && (
                   <div class="absolute top-4 left-4 flex items-center gap-1.5 bg-black/50 backdrop-blur-sm rounded-full px-3 py-1.5">
                     <svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                    <span class="text-white text-xs font-semibold">{camp.rating}</span>
-                    {camp.reviewCount && <span class="text-white/50 text-[11px]">({camp.reviewCount})</span>}
+                    <span class="text-white text-xs font-semibold">{rating}</span>
+                    {reviewCount && <span class="text-white/50 text-[11px]">({reviewCount})</span>}
                   </div>
                 )}
               </div>
               <div class="p-5">
-                <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{camp.location}</p>
-                <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{camp.name}</h3>
-                {camp.tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{camp.tagline}</p>}
-                {camp.amenities && camp.amenities.length > 0 && (
+                <p class="text-[11px] uppercase tracking-wider text-white/30 mb-1">{location}</p>
+                <h3 class="text-lg font-semibold text-white group-hover:text-ocean-light transition-colors">{name}</h3>
+                {tagline && <p class="text-sm text-white/45 mt-1 leading-snug">{tagline}</p>}
+                {amenities && amenities.length > 0 && (
                   <div class="mt-3 flex flex-wrap gap-1.5">
-                    {camp.amenities.map((amenity) => (
+                    {amenities.map((amenity: string) => (
                       <span class="inline-flex items-center gap-1 text-[10px] text-white/40 bg-white/5 rounded-full px-2 py-0.5">
                         {amenityLabels[amenity] || amenity}
                       </span>

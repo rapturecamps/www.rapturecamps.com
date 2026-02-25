@@ -129,6 +129,8 @@ const h1BlockIndex = blocks?.findIndex((b: any) => b._type === "contentBlock") ?
   heroTitle={campData?.heroTitle}
   heroSubtitle={campData?.heroSubtitle}
   heroTagline={campData?.heroTagline}
+  title={campData?.seo?.metaTitle}
+  description={campData?.seo?.metaDescription}
 >
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">

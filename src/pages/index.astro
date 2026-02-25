@@ -17,7 +17,10 @@ const blocks = hp?.pageBuilder;
 const hasSanityBlocks = blocks?.length > 0;
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={hp?.seo?.metaTitle}
+  description={hp?.seo?.metaDescription}
+>
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -44,7 +47,8 @@ const hasSanityBlocks = blocks?.length > 0;
     tagline={heroTagline}
     title={heroTitle}
     subtitle={heroSubtitle}
-    backgroundVideo="/videos/background-video.mp4"
+    backgroundVideo="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/play_720p.mp4"
+    videoPoster="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/thumbnail.jpg"
     titleSize="large"
     fullHeight
   />

@@ -35,8 +35,8 @@ const blocks = surfPage?.pageBuilder;
   bookingUrl={bookingUrl}
   heroImages={surfPage?.heroImages || campData?.heroImages}
   heroTitle={surfPage?.heroTitle}
-  title={`${t("camp.surf_title", lang)} ${campTitle} | Rapture Surfcamps`}
-  description={`${t("camp.surf_title", lang)} ${campTitle} ${countryTitle}.`}
+  title={surfPage?.seo?.metaTitle || `${t("camp.surf_title", lang)} ${campTitle} | Rapture Surfcamps`}
+  description={surfPage?.seo?.metaDescription || `${t("camp.surf_title", lang)} ${campTitle} ${countryTitle}.`}
 >
   {blocks?.length ? (
     <BlockRenderer blocks={blocks} campData={campData} />

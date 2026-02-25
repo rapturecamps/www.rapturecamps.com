@@ -17,7 +17,6 @@ const TRANSLATABLE_STRING_FIELDS = [
   "tagline",
   "location",
   "description",
-  "intro",
   "heading",
   "text",
   "body",

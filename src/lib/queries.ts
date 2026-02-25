@@ -18,8 +18,23 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
   "slug": slug.current,
   flag,
   description,
-  intro,
-  comparison,
+  comparison {
+    heading,
+    subtitle,
+    features,
+    camps[] {
+      values,
+      "campSlug": camp->slug.current,
+      "campName": camp->name,
+      "campImage": camp->image.asset->url,
+      "campLocation": camp->location,
+      "campTagline": camp->tagline,
+      "campRating": camp->rating,
+      "campReviewCount": camp->reviewCount,
+      "campAmenities": camp->amenities,
+      "campBookingUrl": camp->bookingUrl
+    }
+  },
   pageBuilder[] {
     ...,
     _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid"] => {

@@ -32,8 +32,8 @@ const blocks = roomsPage?.pageBuilder;
   bookingUrl={bookingUrl}
   heroImages={roomsPage?.heroImages || campData?.heroImages}
   heroTitle={roomsPage?.heroTitle}
-  title={`Rooms at ${campTitle} | Rapture Surfcamps`}
-  description={`Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
+  title={roomsPage?.seo?.metaTitle || `Rooms at ${campTitle} | Rapture Surfcamps`}
+  description={roomsPage?.seo?.metaDescription || `Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
 >
   {blocks?.length ? (
     <BlockRenderer blocks={blocks} campData={campData} />

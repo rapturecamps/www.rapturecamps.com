@@ -50,16 +50,11 @@ export default defineType({
     }),
     defineField({
       name: "description",
-      title: "Meta Description",
+      title: "Short Description",
       type: "text",
       rows: 3,
-    }),
-    defineField({
-      name: "intro",
-      title: "Intro Text",
-      type: "text",
-      rows: 4,
-      description: "Introductory paragraph shown below the camp cards.",
+      description:
+        "Brief page description. Used as fallback meta description if the SEO section below is empty.",
     }),
     defineField({
       name: "comparison",
@@ -73,6 +68,40 @@ export default defineType({
           title: "Feature Labels",
           type: "array",
           of: [{ type: "string" }],
+          description: "Row labels for the comparison table (e.g. Vibe, Best For, Pool).",
+        }),
+        defineField({
+          name: "camps",
+          title: "Camps",
+          type: "array",
+          of: [
+            {
+              type: "object",
+              fields: [
+                defineField({
+                  name: "camp",
+                  title: "Camp",
+                  type: "reference",
+                  to: [{ type: "camp" }],
+                  options: { filter: 'language == "en" || !defined(language)' },
+                  validation: (r) => r.required(),
+                }),
+                defineField({
+                  name: "values",
+                  title: "Feature Values",
+                  type: "array",
+                  of: [{ type: "string" }],
+                  description: "One value per feature label, in the same order.",
+                }),
+              ],
+              preview: {
+                select: { title: "camp.name" },
+                prepare({ title }) {
+                  return { title: title || "Camp" };
+                },
+              },
+            },
+          ],
         }),
       ],
     }),

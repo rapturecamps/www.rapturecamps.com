@@ -32,8 +32,8 @@ const blocks = foodPage?.pageBuilder;
   bookingUrl={bookingUrl}
   heroImages={foodPage?.heroImages || campData?.heroImages}
   heroTitle={foodPage?.heroTitle}
-  title={`Food at ${campTitle} | Rapture Surfcamps`}
-  description={`Discover the dining experience at Rapture Surf Camp ${campTitle}. Fresh, healthy meals prepared daily.`}
+  title={foodPage?.seo?.metaTitle || `Food at ${campTitle} | Rapture Surfcamps`}
+  description={foodPage?.seo?.metaDescription || `Discover the dining experience at Rapture Surf Camp ${campTitle}. Fresh, healthy meals prepared daily.`}
 >
   {blocks?.length ? (
     <BlockRenderer blocks={blocks} campData={campData} />

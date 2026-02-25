@@ -6,6 +6,7 @@ interface Props {
   backgroundImage?: string;
   backgroundImages?: string[];
   backgroundVideo?: string;
+  videoPoster?: string;
   showScrollIndicator?: boolean;
   ctaText?: string;
   ctaHref?: string;
@@ -24,6 +25,7 @@ const {
   backgroundImage = "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
   backgroundImages,
   backgroundVideo,
+  videoPoster,
   showScrollIndicator = false,
   ctaText,
   ctaHref,
@@ -53,7 +55,7 @@ const hasRotation = !hasVideo && images.length > 1;
       muted
       playsinline
       class="absolute inset-0 h-full w-full object-cover"
-      poster={backgroundImage}
+      poster={videoPoster || backgroundImage}
     >
       <source src={backgroundVideo} type="video/mp4" />
     </video>
