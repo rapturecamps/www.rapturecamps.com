@@ -1,0 +1,19 @@
+---
+import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
+
+interface Props {
+  block: {
+    heading?: string;
+    elfsightAppId: string;
+  };
+}
+
+const { block } = Astro.props;
+---
+
+{block.elfsightAppId && (
+  <ElfsightReviews
+    heading={block.heading}
+    appId={block.elfsightAppId}
+  />
+)}

@@ -1,36 +1,60 @@
 ---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
 interface Props {
   block: {
     heading?: string;
-    faqs?: {
-      question: string;
-      answer: string;
-    }[];
+    subtitle?: string;
+    source?: string;
+    faqs?: FaqItem[];
+    resolvedFaqs?: FaqItem[];
+    resolvedCategoryFaqs?: FaqItem[];
   };
 }
 
 const { block } = Astro.props;
 const heading = block.heading || "Frequently Asked Questions";
-const faqs = block.faqs || [];
-const uid = "faq-" + Math.random().toString(36).slice(2, 8);
+const subtitle = block.subtitle || "";
+
+let faqs: FaqItem[] = [];
+
+if (block.source === "library") {
+  faqs = block.resolvedFaqs?.length
+    ? block.resolvedFaqs
+    : block.resolvedCategoryFaqs || [];
+} else {
+  faqs = block.faqs || [];
+}
+
+faqs = faqs.filter((f) => f.question && f.answer);
 ---
 
 {faqs.length > 0 && (
-  <section class="py-16 sm:py-20 bg-dark">
-    <div class="px-6 sm:px-12 lg:px-20 max-w-4xl">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">{heading}</h2>
-      <div class="space-y-3" data-faq-group={uid}>
-        {faqs.map((faq, i) => (
-          <details class="group rounded-xl border border-white/5 bg-dark-lighter">
-            <summary class="flex cursor-pointer items-center justify-between gap-4 p-5 text-left">
-              <span class="text-sm font-semibold text-white group-open:text-ocean-light transition-colors">{faq.question}</span>
-              <svg class="h-4 w-4 flex-shrink-0 text-white/30 transition-transform duration-200 group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </summary>
-            <div class="px-5 pb-5 text-sm text-white/50 leading-relaxed">{faq.answer}</div>
-          </details>
-        ))}
+  <section class="py-16 sm:py-24 bg-dark-lighter" id="faq">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-3">{heading}</h2>
+        {subtitle && <p class="text-base text-white/40 mb-12">{subtitle}</p>}
+        {!subtitle && <div class="mb-12" />}
+
+        <div class="space-y-0 divide-y divide-white/5">
+          {faqs.map((faq, i) => (
+            <details class="group py-5 first:pt-0 last:pb-0" data-faq-index={i}>
+              <summary class="flex items-center justify-between cursor-pointer list-none select-none">
+                <h3 class="text-sm sm:text-base font-medium text-white pr-8 group-open:text-ocean-light transition-colors">{faq.question}</h3>
+                <span class="shrink-0 text-white/30 group-open:text-ocean-light transition-transform duration-300 group-open:rotate-45">
+                  <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                </span>
+              </summary>
+              <div class="pt-3 pr-12">
+                <p class="text-sm text-white/55 leading-relaxed">{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   </section>

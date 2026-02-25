@@ -6,15 +6,18 @@ import AboutSection from "@/components/sections/AboutSection.astro";
 import BlogFeed from "@/components/sections/BlogFeed";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import SocialGrid from "@/components/sections/SocialGrid.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import { getHomepage } from "@/lib/sanity-data";
 
 const hp = await getHomepage();
 const heroTagline = hp?.heroTagline || "Rapture Surfcamps";
 const heroTitle = hp?.heroTitle || "All you have is now.";
 const heroSubtitle = hp?.heroSubtitle || "Unparalleled Surf Camp Experience at the Best Surf Spots!";
+const blocks = hp?.pageBuilder;
+const hasSanityBlocks = blocks?.length > 0;
 ---
 
-<BaseLayout showWheel>
+<BaseLayout>
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -45,9 +48,14 @@ const heroSubtitle = hp?.heroSubtitle || "Unparalleled Surf Camp Experience at t
     titleSize="large"
     fullHeight
   />
-  <DestinationGrid client:visible />
+  <DestinationGrid
+    client:visible
+    heading={hp?.destinationHeading}
+    destinations={hp?.featuredDestinations}
+  />
   <AboutSection heading={hp?.aboutHeading} subtext={hp?.aboutSubtext} linkText={hp?.aboutLinkText} />
+  {hasSanityBlocks && <BlockRenderer blocks={blocks} />}
   <BlogFeed client:visible />
-  <StatsSection />
+  <StatsSection stats={hp?.stats} />
   <SocialGrid />
 </BaseLayout>

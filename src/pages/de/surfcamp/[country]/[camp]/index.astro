@@ -4,7 +4,7 @@ import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
-import VideoTestimonials from "@/components/sections/VideoTestimonials.astro";
+
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import VideoBlock from "@/components/sections/VideoBlock.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
@@ -115,51 +115,8 @@ const subPages = [
 
 const blocks = (campData as any)?.pageBuilder;
 const hasSanityBlocks = blocks?.length > 0;
+const h1BlockIndex = blocks?.findIndex((b: any) => b._type === "contentBlock") ?? -1;
 
-const videoTestimonials = [
-  {
-    name: "Marco",
-    date: "22.08.2025",
-    location: "Bali Green Bowl",
-    quote: "Ich habe in einer Woche surfen gelernt.",
-    posterImage: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=400&h=620&fit=crop",
-  },
-  {
-    name: "Fabiola",
-    date: "15.06.2024",
-    location: "Portugal Ericeira",
-    quote: "Die beste Erfahrung meines Lebens, ehrlich.",
-    posterImage: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=620&fit=crop",
-  },
-  {
-    name: "Jonas",
-    date: "03.09.2025",
-    location: "Costa Rica Avellanas",
-    quote: "Besser hätte es nicht sein können.",
-    posterImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=620&fit=crop",
-  },
-  {
-    name: "Lina",
-    date: "28.07.2025",
-    location: "Morocco Banana Village",
-    quote: "Die Vibes, die Wellen, die Leute — pure Magie.",
-    posterImage: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=620&fit=crop",
-  },
-  {
-    name: "Tom",
-    date: "11.04.2025",
-    location: "Nicaragua Maderas",
-    quote: "Eine Woche geplant, drei geblieben.",
-    posterImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=620&fit=crop",
-  },
-  {
-    name: "Amelie",
-    date: "19.01.2025",
-    location: "Bali Padang Padang",
-    quote: "Ich habe meinen Happy Place gefunden. Komme nächstes Jahr wieder.",
-    posterImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=620&fit=crop",
-  },
-];
 ---
 
 <CampLayout
@@ -178,10 +135,11 @@ const videoTestimonials = [
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
         <div class="lg:col-span-3">
           <p class="text-sm text-ocean-light font-medium mb-4">{campData?.location || countryTitle}</p>
-          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{tagline}</h1>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{tagline}</h2>
           <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-2xl">
-            <p>Rapture Surf Camp {campTitle} ist mehr als nur ein Surfcamp — es ist eine Gemeinschaft von Ozean-Liebhabern, ein Ort zum Abschalten und um sich auf das Wesentliche zu besinnen. Ob du zum ersten Mal auf einem Surfbrett stehst oder deinen tausendsten Barrel jagst — hier passiert es.</p>
-            <p>Gelegen in {countryTitle}s berühmtester Surfregion bietet unser Camp tägliche Surfstunden, Yoga, fantastisches Essen und eine Crew von Gleichgesinnten aus aller Welt. Wir machen das seit 2003 — und haben alles perfektioniert.</p>
+            {(campData?.introText || `Rapture Surf Camp ${campTitle} ist mehr als nur ein Surfcamp — es ist eine Gemeinschaft von Ozean-Liebhabern, ein Ort zum Abschalten und um sich auf das Wesentliche zu besinnen. Ob du zum ersten Mal auf einem Surfbrett stehst oder deinen tausendsten Barrel jagst — hier passiert es.\n\nGelegen in ${countryTitle}s berühmtester Surfregion bietet unser Camp tägliche Surfstunden, Yoga, fantastisches Essen und eine Crew von Gleichgesinnten aus aller Welt. Wir machen das seit 2003 — und haben alles perfektioniert.`).split(/\n\n+/).map((paragraph: string) => (
+              <p>{paragraph}</p>
+            ))}
           </div>
         </div>
         <div class="lg:col-span-2">
@@ -204,21 +162,33 @@ const videoTestimonials = [
               </div>
               <div class="flex justify-between items-center border-b border-white/5 pb-3">
                 <span class="text-sm text-white/40">Surf-Level</span>
-                <span class="text-sm text-white font-medium">Alle Level</span>
+                <span class="text-sm text-white font-medium">{campData?.surfLevels || "Alle Level"}</span>
               </div>
               <div class="flex justify-between items-center border-b border-white/5 pb-3">
                 <span class="text-sm text-white/40">Mindestaufenthalt</span>
-                <span class="text-sm text-white font-medium">3 Nächte</span>
+                <span class="text-sm text-white font-medium">{campData?.minStay || "3 Nächte"}</span>
               </div>
               <div class="flex justify-between items-center border-b border-white/5 pb-3">
                 <span class="text-sm text-white/40">Gruppengröße</span>
-                <span class="text-sm text-white font-medium">Max 5:1 Ratio</span>
+                <span class="text-sm text-white font-medium">{campData?.groupSize || "Max 5:1 Ratio"}</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-sm text-white/40">Sprachen</span>
-                <span class="text-sm text-white font-medium">DE, EN, PT, ES</span>
+                <span class="text-sm text-white font-medium">{campData?.spokenLanguages || "DE, EN, PT, ES"}</span>
               </div>
             </div>
+            {campData?.amenities && campData.amenities.length > 0 && (
+              <div class="flex justify-between items-start border-t border-white/5 pt-3 mt-3">
+                <span class="text-sm text-white/40 shrink-0 pt-0.5">Ausstattung</span>
+                <div class="flex flex-wrap justify-end gap-1.5 ml-4">
+                  {campData.amenities.map((amenity: string) => (
+                    <span class="inline-flex items-center text-[11px] text-white/40 bg-white/5 rounded-full px-2.5 py-1">
+                      {amenity}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
             <a
               href={bookingUrl}
               target="_blank"
@@ -234,7 +204,7 @@ const videoTestimonials = [
   </section>
 
   {hasSanityBlocks ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
+    <BlockRenderer blocks={blocks} campData={campData} h1BlockIndex={h1BlockIndex >= 0 ? h1BlockIndex : undefined} />
   ) : (
     <>
       <ImageGrid
@@ -319,54 +289,38 @@ const videoTestimonials = [
         </div>
       </section>
 
-      <VideoTestimonials heading="Geschichten unserer Gäste" testimonials={videoTestimonials} />
-    </>
-  )}
-
-  <!-- Explore Sub-Pages -->
-  <section class="py-16 sm:py-20 bg-dark">
-    <div class="px-6 sm:px-12 lg:px-20">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Entdecke das Camp</h2>
-      <p class="text-base text-white/40 mb-10 max-w-2xl">Tauche tiefer ein in das, was dich in {campTitle} erwartet.</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {subPages.map((page) => (
-          <a href={page.href} class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors">
-            <div class="aspect-[16/10] overflow-hidden">
-              <img
-                src={page.image}
-                alt={page.title}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-              />
-            </div>
-            <div class="p-5">
-              <div class="flex items-center gap-3 mb-2">
-                <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white/40">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d={page.icon} />
-                  </svg>
+      <section class="py-16 sm:py-20 bg-dark">
+        <div class="px-6 sm:px-12 lg:px-20">
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">Entdecke das Camp</h2>
+          <p class="text-base text-white/40 mb-10 max-w-2xl">Tauche tiefer ein in das, was dich in {campTitle} erwartet.</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {subPages.map((page) => (
+              <a href={page.href} class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors">
+                <div class="aspect-[16/10] overflow-hidden">
+                  <img
+                    src={page.image}
+                    alt={page.title}
+                    class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
                 </div>
-                <h3 class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{page.title}</h3>
-              </div>
-              <p class="text-sm text-white/40 leading-relaxed">{page.desc}</p>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  {campData?.elfsightId && (
-    <ElfsightReviews
-      heading={`Was Gäste über ${campTitle} sagen`}
-      appId={campData.elfsightId}
-      schema={{
-        businessName: `Rapture Surf Camp ${campTitle}`,
-        ratingValue: campData.rating || 4.7,
-        reviewCount: campData.reviewCount || 100,
-        url: `https://www.rapturecamps.com${basePath}`,
-      }}
-    />
+                <div class="p-5">
+                  <div class="flex items-center gap-3 mb-2">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white/40">
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d={page.icon} />
+                      </svg>
+                    </div>
+                    <h3 class="text-base font-semibold text-white group-hover:text-ocean-light transition-colors">{page.title}</h3>
+                  </div>
+                  <p class="text-sm text-white/40 leading-relaxed">{page.desc}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   )}
 
   <CTASection

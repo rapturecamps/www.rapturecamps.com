@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "videoBlock",
-  title: "Video Block",
+  title: "Video",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "title",
@@ -56,12 +58,13 @@ export default defineType({
       },
       initialValue: "16/9",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { title: "title", subtitle: "type" },
     prepare({ title, subtitle }) {
       return {
-        title: title || "Video Block",
+        title: title || "Video",
         subtitle: `Video (${subtitle || "unknown"})`,
       };
     },

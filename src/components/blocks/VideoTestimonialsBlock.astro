@@ -1,99 +1,199 @@
 ---
+interface VideoItem {
+  bunnyVideoId: string;
+  posterImageUrl?: string;
+  guestName?: string;
+  date?: string;
+  location?: string;
+  quote?: string;
+}
+
 interface Props {
   block: {
+    source?: string;
     heading?: string;
-    videos?: {
-      youtubeId: string;
-      guestName?: string;
-      caption?: string;
-    }[];
+    headingOverride?: string;
+    bunnyLibraryId?: string;
+    bunnyPullZone?: string;
+    videos?: VideoItem[];
+    resolvedSet?: {
+      heading?: string;
+      bunnyLibraryId?: string;
+      bunnyPullZone?: string;
+      videos?: VideoItem[];
+    };
+    background?: string;
   };
 }
 
 const { block } = Astro.props;
-const heading = block.heading || "Stories from Our Guests";
-const videos = block.videos || [];
+
+const isLibrary = block.source === "library" && block.resolvedSet;
+const set = isLibrary ? block.resolvedSet! : block;
+
+const heading = (isLibrary ? block.headingOverride : null) || set.heading || "Stories from Our Guests";
+const pullZone = set.bunnyPullZone || "";
+const videos = (set.videos || []).filter((v) => v.bunnyVideoId);
+const bgClass = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 ---
 
 {videos.length > 0 && (
-  <section class="py-16 sm:py-20 bg-dark">
+  <section class:list={["py-16 sm:py-20", bgClass]}>
     <div class="px-6 sm:px-12 lg:px-20 mb-8 flex items-end justify-between gap-4">
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
-      {videos.length > 1 && (
-        <div class="hidden sm:flex items-center gap-2">
-          <button
-            class="vtb-prev flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-            aria-label="Previous"
-          >
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <button
-            class="vtb-next flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-            aria-label="Next"
-          >
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
-      )}
+      <div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
+      </div>
+      <div class="hidden sm:flex items-center gap-2">
+        <button
+          class="vt-prev flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+          aria-label="Previous"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <button
+          class="vt-next flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+          aria-label="Next"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
     </div>
 
-    <div class="vtb-track relative">
-      <div class="vtb-slider flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory vtb-no-scrollbar">
-        {videos.map((v) => (
-          <div class="vtb-card flex-shrink-0 w-[320px] sm:w-[400px] lg:w-[480px] snap-center rounded-xl overflow-hidden border border-white/5 bg-dark-lighter">
-            <div class="relative aspect-video cursor-pointer" data-yt-id={v.youtubeId}>
-              <img
-                src={`https://i.ytimg.com/vi/${v.youtubeId}/hqdefault.jpg`}
-                alt={v.guestName ? `Video testimonial by ${v.guestName}` : "Video testimonial"}
-                class="h-full w-full object-cover"
-                loading="lazy"
-              />
-              <div class="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-colors">
-                <svg class="h-14 w-14 text-white drop-shadow-lg" viewBox="0 0 68 48">
-                  <path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55C3.97 2.33 2.27 4.81 1.48 7.74.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="red"/>
-                  <path d="M45 24L27 14v20" fill="white"/>
-                </svg>
+    <div class="vt-track relative">
+      <div class="vt-slider flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar">
+        {videos.map((v, i) => {
+          const poster = v.posterImageUrl
+            || (pullZone && v.bunnyVideoId ? `https://${pullZone}/${v.bunnyVideoId}/thumbnail.jpg` : "");
+          const videoSrc = pullZone && v.bunnyVideoId
+            ? `https://${pullZone}/${v.bunnyVideoId}/play_720p.mp4`
+            : "";
+
+          return (
+            <div
+              class="vt-card group relative flex-shrink-0 w-[260px] sm:w-[280px] lg:w-[300px] snap-center rounded-2xl overflow-hidden cursor-pointer select-none"
+              data-index={i}
+              data-video-src={videoSrc}
+            >
+              <div class="relative aspect-[9/14]">
+                {poster && (
+                  <img
+                    src={poster}
+                    alt={`Video review by ${v.guestName || "Guest"}`}
+                    class="vt-poster absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                )}
+
+                {videoSrc && (
+                  <video
+                    class="vt-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300"
+                    preload="none"
+                    loop
+                    playsinline
+                    poster={poster}
+                  >
+                    <source src={videoSrc} type="video/mp4" />
+                  </video>
+                )}
+
+                {v.location && (
+                  <div class="absolute top-4 left-4 z-20">
+                    <span class="inline-block rounded-full bg-green-400 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-dark">
+                      {v.location}
+                    </span>
+                  </div>
+                )}
+
+                <div class="vt-overlay absolute inset-0 z-10 flex flex-col justify-end transition-opacity duration-300">
+                  <div class="bg-gradient-to-t from-dark/90 via-dark/40 to-transparent p-5 pt-24">
+                    {v.quote && (
+                      <p class="vt-quote text-lg sm:text-xl font-semibold text-white leading-snug mb-3 transition-all duration-300">
+                        {v.quote}
+                      </p>
+                    )}
+                    <div class="vt-meta flex items-center gap-2 transition-all duration-300">
+                      {v.guestName && <span class="text-sm font-medium text-white">{v.guestName}</span>}
+                      {v.date && <span class="text-xs text-white/40">{v.date}</span>}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="vt-controls absolute inset-x-0 bottom-0 z-20 flex justify-center pb-6 opacity-0 transition-opacity duration-300 pointer-events-none">
+                  <button class="vt-play-btn pointer-events-auto flex items-center gap-2.5 rounded-full bg-white/95 px-5 py-3 shadow-lg backdrop-blur-sm transition-transform duration-200 hover:scale-105 active:scale-95">
+                    <svg class="vt-icon-play h-5 w-5 text-brand-blue" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <svg class="vt-icon-pause h-5 w-5 text-brand-blue hidden" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+                    </svg>
+                    <span class="vt-btn-text text-sm font-semibold text-dark/90">Play Story</span>
+                  </button>
+                </div>
               </div>
             </div>
-            {(v.guestName || v.caption) && (
-              <div class="p-4">
-                {v.guestName && <p class="text-sm font-semibold text-white">{v.guestName}</p>}
-                {v.caption && <p class="text-xs text-white/40 mt-1">{v.caption}</p>}
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
         <div class="flex-shrink-0 w-px" aria-hidden="true" />
       </div>
+
+      <button
+        class="vt-prev-mobile sm:hidden absolute left-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
+        aria-label="Previous"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button
+        class="vt-next-mobile sm:hidden absolute right-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
+        aria-label="Next"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
     </div>
   </section>
 )}
 
 <style>
-  .vtb-no-scrollbar::-webkit-scrollbar { display: none; }
-  .vtb-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  .vtb-slider {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .vt-slider {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
   @media (min-width: 640px) {
-    .vtb-slider { padding-left: 3rem; padding-right: 3rem; }
+    .vt-slider { padding-left: 3rem; padding-right: 3rem; }
   }
   @media (min-width: 1024px) {
-    .vtb-slider { padding-left: 5rem; padding-right: 5rem; }
+    .vt-slider { padding-left: 5rem; padding-right: 5rem; }
   }
+
+  .vt-card:hover .vt-controls,
+  .vt-card[data-playing] .vt-controls { opacity: 1; }
+
+  .vt-card:hover .vt-quote,
+  .vt-card:hover .vt-meta { opacity: 0; transform: translateY(8px); }
+
+  .vt-card[data-playing] .vt-quote,
+  .vt-card[data-playing] .vt-meta { opacity: 0; transform: translateY(8px); }
+
+  .vt-card:hover .vt-overlay { background: rgba(0, 0, 0, 0.15); }
+
+  .vt-card[data-playing] .vt-video { opacity: 1; }
 </style>
 
 <script is:inline>
 (function () {
-  document.querySelectorAll(".vtb-track").forEach(function (track) {
-    var slider = track.querySelector(".vtb-slider");
+  var tracks = document.querySelectorAll(".vt-track");
+  tracks.forEach(function (track) {
+    var slider = track.querySelector(".vt-slider");
     if (!slider) return;
 
-    var cards = track.querySelectorAll(".vtb-card");
+    var cards = track.querySelectorAll(".vt-card");
     var cardWidth = 0;
+
     function getCardWidth() {
-      if (cards[0]) cardWidth = cards[0].offsetWidth + 16;
+      var first = cards[0];
+      if (first) cardWidth = first.offsetWidth + 16;
     }
     getCardWidth();
     window.addEventListener("resize", getCardWidth);
@@ -104,25 +204,67 @@ const videos = block.videos || [];
 
     var section = track.closest("section");
     if (section) {
-      section.querySelectorAll(".vtb-prev").forEach(function (btn) {
+      section.querySelectorAll(".vt-prev").forEach(function (btn) {
         btn.addEventListener("click", function () { scrollBy(-1); });
       });
-      section.querySelectorAll(".vtb-next").forEach(function (btn) {
+      section.querySelectorAll(".vt-next").forEach(function (btn) {
         btn.addEventListener("click", function () { scrollBy(1); });
       });
     }
+    track.querySelectorAll(".vt-prev-mobile").forEach(function (btn) {
+      btn.addEventListener("click", function () { scrollBy(-1); });
+    });
+    track.querySelectorAll(".vt-next-mobile").forEach(function (btn) {
+      btn.addEventListener("click", function () { scrollBy(1); });
+    });
 
-    track.querySelectorAll("[data-yt-id]").forEach(function (el) {
-      el.addEventListener("click", function () {
-        var id = el.getAttribute("data-yt-id");
-        if (!id) return;
-        var iframe = document.createElement("iframe");
-        iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&rel=0&modestbranding=1";
-        iframe.className = "absolute inset-0 h-full w-full";
-        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
-        iframe.allowFullscreen = true;
-        el.innerHTML = "";
-        el.appendChild(iframe);
+    var currentlyPlaying = null;
+
+    function stopCard(card) {
+      var video = card.querySelector(".vt-video");
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+      card.removeAttribute("data-playing");
+      var iconPlay = card.querySelector(".vt-icon-play");
+      var iconPause = card.querySelector(".vt-icon-pause");
+      var btnText = card.querySelector(".vt-btn-text");
+      if (iconPlay) iconPlay.classList.remove("hidden");
+      if (iconPause) iconPause.classList.add("hidden");
+      if (btnText) btnText.textContent = "Play Story";
+    }
+
+    function playCard(card) {
+      if (currentlyPlaying && currentlyPlaying !== card) {
+        stopCard(currentlyPlaying);
+      }
+
+      var video = card.querySelector(".vt-video");
+      if (video) video.play();
+
+      card.setAttribute("data-playing", "");
+      var iconPlay = card.querySelector(".vt-icon-play");
+      var iconPause = card.querySelector(".vt-icon-pause");
+      var btnText = card.querySelector(".vt-btn-text");
+      if (iconPlay) iconPlay.classList.add("hidden");
+      if (iconPause) iconPause.classList.remove("hidden");
+      if (btnText) btnText.textContent = "Pause Story";
+      currentlyPlaying = card;
+    }
+
+    cards.forEach(function (card) {
+      var playBtn = card.querySelector(".vt-play-btn");
+      if (!playBtn) return;
+
+      playBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (card.hasAttribute("data-playing")) {
+          stopCard(card);
+          currentlyPlaying = null;
+        } else {
+          playCard(card);
+        }
       });
     });
   });

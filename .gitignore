@@ -12,6 +12,10 @@ dist/
 .env
 .env.*
 
+# sanity
+.sanity/
+schema.json
+
 # misc
 .DS_Store
 *.pem

@@ -65,6 +65,15 @@ export const onRequest = defineMiddleware(async (context, next) => {
   }
 
   if (redirect) {
+    if (redirect.statusCode === 404) {
+      return new Response(null, { status: 404 });
+    }
+    if (redirect.statusCode === 410) {
+      return new Response("This page has been permanently removed.", {
+        status: 410,
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
     return context.redirect(redirect.toPath, redirect.statusCode);
   }
 

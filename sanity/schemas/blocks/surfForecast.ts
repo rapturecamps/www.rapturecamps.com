@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "surfForecast",
   title: "Surf Forecast",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "background",
@@ -17,6 +19,7 @@ export default defineType({
       },
       initialValue: "dark",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     prepare() {

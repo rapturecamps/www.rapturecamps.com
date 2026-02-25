@@ -287,8 +287,16 @@ const segmentAngle = 360 / segmentCount;
     var email = emailInput.value.trim();
     if (!email) return;
 
-    // TODO: Send email to backend/webhook
-    console.log("[SpinWheel] Email captured:", email);
+    var evt = window._rcPopupEvent || {};
+    var listKey = evt.zohoListKey || "";
+    var source = evt.zohoSource || "Spinning Wheel";
+    if (listKey) {
+      fetch("/api/popup-submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, listKey: listKey, source: source }),
+      }).catch(function () {});
+    }
 
     // Switch to spinning state
     stepEmail.classList.add("hidden");
@@ -334,7 +342,10 @@ const segmentAngle = 360 / segmentCount;
   }
 
   window.addEventListener("rc:show-popup", function (e) {
-    if (e.detail && e.detail.type === "spinning-wheel") show();
+    if (e.detail && e.detail.type === "spinning-wheel") {
+      window._rcPopupEvent = e.detail;
+      show();
+    }
   });
 })();
 </script>

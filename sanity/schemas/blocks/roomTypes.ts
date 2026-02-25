@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "roomTypes",
   title: "Room Types",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "rooms",
@@ -64,6 +66,7 @@ export default defineType({
       },
       initialValue: "dark",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     prepare() {

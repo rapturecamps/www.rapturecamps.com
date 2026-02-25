@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "imageGrid",
   title: "Image Grid",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "images",
@@ -14,13 +16,13 @@ export default defineType({
           type: "image",
           options: { hotspot: true },
           fields: [
-            { name: "alt", type: "string", title: "Alt Text" },
             { name: "caption", type: "string", title: "Caption" },
           ],
         },
       ],
       validation: (r) => r.min(3).max(5),
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { images: "images" },

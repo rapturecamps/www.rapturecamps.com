@@ -3,7 +3,7 @@ import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
 import { destinations } from "@/lib/data";
-import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
+import { getDestinations, getCampBySlug, getCampRoomsPage } from "@/lib/sanity-data";
 
 export async function getStaticPaths() {
   const allCamps = await getDestinations();
@@ -15,12 +15,13 @@ export async function getStaticPaths() {
 
 const { country, camp } = Astro.params;
 const campData = await getCampBySlug(camp!) || destinations.find((d) => d.slug === `/surfcamp/${country}/${camp}`);
-const campTitle = campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-const countryTitle = country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
-const bookingUrl = campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
+const roomsPage = await getCampRoomsPage(camp!);
+const campTitle = roomsPage?.campName || campData?.name || camp!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const countryTitle = roomsPage?.countryName || country!.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const bookingUrl = roomsPage?.bookingUrl || campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const blocks = (campData as any)?.roomsPageBuilder;
+const blocks = roomsPage?.pageBuilder;
 ---
 
 <CampLayout
@@ -29,8 +30,8 @@ const blocks = (campData as any)?.roomsPageBuilder;
   basePath={basePath}
   activePage="rooms"
   bookingUrl={bookingUrl}
-  heroImages={campData?.heroImages}
-  heroTitle={campData?.roomsHeroTitle}
+  heroImages={roomsPage?.heroImages || campData?.heroImages}
+  heroTitle={roomsPage?.heroTitle}
   title={`Rooms at ${campTitle} | Rapture Surfcamps`}
   description={`Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
 >

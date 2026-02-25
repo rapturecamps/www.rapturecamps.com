@@ -6,6 +6,7 @@ import CTASection from "@/components/sections/CTASection.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ContentBlock from "@/components/sections/ContentBlock.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import { destinations, countries } from "@/lib/data";
 import { getCountries, getCountryBySlug, getCampsByCountry } from "@/lib/sanity-data";
@@ -397,12 +398,18 @@ const countryCamps = await getCampsByCountry(country!);
 
 const countryName = sanityCountry?.name || countries.find((c) => c.slug === country)?.name || country!;
 
-// Extract surfSpots and FAQs from Sanity pageBuilder when available
+// Sanity pageBuilder blocks (rendered in order via BlockRenderer when available)
 const sanityPageBuilder = sanityCountry?.pageBuilder || [];
-const sanitySurfSpots = sanityPageBuilder.find((b: any) => b._type === "surfSpots");
-const sanityFaqSection = sanityPageBuilder.find((b: any) => b._type === "faqSection");
+const hasSanityBlocks = sanityPageBuilder.length > 0;
+const h1BlockIndex = sanityPageBuilder.findIndex((b: any) => b._type === "contentBlock");
 
-// Merge Sanity data with hardcoded fallback
+// Extract FAQs for schema.org structured data (from Sanity or fallback)
+const sanityFaqBlock = sanityPageBuilder.find((b: any) => b._type === "faqSection");
+const faqsForSchema = sanityFaqBlock?.faqs?.length
+  ? sanityFaqBlock.faqs.map((f: any) => ({ question: f.question, answer: f.answer }))
+  : fallback.faqs || [];
+
+// Merge Sanity data with hardcoded fallback (for hero, comparison, and fallback sections)
 const data = {
   ...fallback,
   title: sanityCountry?.heroTitle || fallback.title,
@@ -417,21 +424,6 @@ const data = {
       ? sanityCountry.comparison.features
       : fallback.comparison.features,
   },
-  surfSpots: sanitySurfSpots
-    ? {
-        heading: sanitySurfSpots.heading || fallback.surfSpots?.heading || "",
-        subtitle: fallback.surfSpots?.subtitle || "",
-        spots: sanitySurfSpots.spots?.map((s: any) => ({
-          name: s.name,
-          level: s.level || "",
-          type: fallback.surfSpots?.spots?.find((fs: any) => fs.name === s.name)?.type || "",
-          description: s.description || "",
-        })) || [],
-      }
-    : fallback.surfSpots,
-  faqs: sanityFaqSection?.faqs?.length
-    ? sanityFaqSection.faqs.map((f: any) => ({ question: f.question, answer: f.answer }))
-    : fallback.faqs,
 };
 
 const amenityLabels: Record<string, string> = {
@@ -452,11 +444,11 @@ const amenityLabels: Record<string, string> = {
   ogImage={data.heroImage}
   preloadImage={data.heroImages?.[0] || data.heroImage}
 >
-  {data.faqs && data.faqs.length > 0 && (
+  {faqsForSchema.length > 0 && (
     <script type="application/ld+json" slot="head" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": data.faqs.map(faq => ({
+      "mainEntity": faqsForSchema.map(faq => ({
         "@type": "Question",
         "name": faq.question,
         "acceptedAnswer": {
@@ -482,7 +474,7 @@ const amenityLabels: Record<string, string> = {
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="mb-14">
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h1>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h2>
         <p class="text-base sm:text-lg text-white/50 max-w-3xl leading-relaxed">{data.comparison.subtitle}</p>
       </div>
 
@@ -587,85 +579,82 @@ const amenityLabels: Record<string, string> = {
     </div>
   </section>
 
-  <!-- Image Grid Break -->
-  <ImageGrid images={data.imageGrid} variant="collage" />
+  {hasSanityBlocks ? (
+    <!-- Sanity-driven: all blocks render in the order set in the Studio -->
+    <BlockRenderer blocks={sanityPageBuilder} h1BlockIndex={h1BlockIndex >= 0 ? h1BlockIndex : undefined} />
+  ) : (
+    <!-- Fallback: hardcoded content for countries without Sanity data -->
+    <Fragment>
+      <ImageGrid images={data.imageGrid} variant="collage" />
+      {data.contentBlocks.map((block) => (
+        <ContentBlock
+          heading={block.heading}
+          body={block.body}
+          image={block.image}
+          imageAlt={block.imageAlt}
+          reverse={block.reverse}
+          background={block.background}
+        />
+      ))}
 
-  <!-- Content Blocks -->
-  {data.contentBlocks.map((block) => (
-    <ContentBlock
-      heading={block.heading}
-      body={block.body}
-      image={block.image}
-      imageAlt={block.imageAlt}
-      reverse={block.reverse}
-      background={block.background}
-    />
-  ))}
+      {data.surfSpots && (
+        <section class="py-16 sm:py-24 bg-dark" id="surf-spots">
+          <div class="px-6 sm:px-12 lg:px-20">
+            <div class="max-w-4xl mb-12">
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.surfSpots.heading}</h2>
+              <p class="text-base text-white/45 max-w-3xl leading-relaxed">{data.surfSpots.subtitle}</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {data.surfSpots.spots.map((spot) => {
+                const levelColor = spot.level === "Advanced"
+                  ? "text-red-400 bg-red-400/10 border-red-400/20"
+                  : spot.level === "Beginner" || spot.level === "All levels"
+                    ? "text-green-400 bg-green-400/10 border-green-400/20"
+                    : "text-amber-400 bg-amber-400/10 border-amber-400/20";
+                return (
+                  <div class="rounded-xl border border-white/5 bg-dark-lighter p-5 hover:border-white/10 transition-colors">
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                      <h3 class="text-base font-semibold text-white">{spot.name}</h3>
+                      <span class={`shrink-0 text-[10px] font-semibold uppercase tracking-wider rounded-full border px-2 py-0.5 ${levelColor}`}>{spot.level}</span>
+                    </div>
+                    <p class="text-[11px] uppercase tracking-wider text-white/25 mb-3">{spot.type}</p>
+                    <p class="text-sm text-white/50 leading-relaxed">{spot.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
-  {/* Surf Spots Section */}
-  {data.surfSpots && (
-    <section class="py-16 sm:py-24 bg-dark" id="surf-spots">
-      <div class="px-6 sm:px-12 lg:px-20">
-        <div class="max-w-4xl mb-12">
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.surfSpots.heading}</h2>
-          <p class="text-base text-white/45 max-w-3xl leading-relaxed">{data.surfSpots.subtitle}</p>
-        </div>
+      <ImageBreak
+        src={data.imageBreak.src}
+        alt={data.imageBreak.alt}
+        caption={data.imageBreak.caption}
+      />
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {data.surfSpots.spots.map((spot) => {
-            const levelColor = spot.level === "Advanced"
-              ? "text-red-400 bg-red-400/10 border-red-400/20"
-              : spot.level === "Beginner" || spot.level === "All levels"
-                ? "text-green-400 bg-green-400/10 border-green-400/20"
-                : "text-amber-400 bg-amber-400/10 border-amber-400/20";
-
-            return (
-              <div class="rounded-xl border border-white/5 bg-dark-lighter p-5 hover:border-white/10 transition-colors">
-                <div class="flex items-start justify-between gap-3 mb-3">
-                  <h3 class="text-base font-semibold text-white">{spot.name}</h3>
-                  <span class={`shrink-0 text-[10px] font-semibold uppercase tracking-wider rounded-full border px-2 py-0.5 ${levelColor}`}>
-                    {spot.level}
-                  </span>
-                </div>
-                <p class="text-[11px] uppercase tracking-wider text-white/25 mb-3">{spot.type}</p>
-                <p class="text-sm text-white/50 leading-relaxed">{spot.description}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
+      {countryCamps[0]?.elfsightId && (
+        <ElfsightReviews
+          heading={`What Guests Say About ${countryName}`}
+          appId={countryCamps[0].elfsightId}
+          schema={{
+            businessName: `Rapture Surfcamps ${countryName}`,
+            ratingValue: countryCamps[0].rating || 4.7,
+            reviewCount: countryCamps.reduce((sum, c) => sum + (c.reviewCount || 0), 0),
+            url: `https://www.rapturecamps.com/surfcamp/${country}`,
+          }}
+        />
+      )}
+    </Fragment>
   )}
 
-  <!-- Full-width Image Break -->
-  <ImageBreak
-    src={data.imageBreak.src}
-    alt={data.imageBreak.alt}
-    caption={data.imageBreak.caption}
-  />
-
-  <!-- Customer Reviews -->
-  {countryCamps[0]?.elfsightId && (
-    <ElfsightReviews
-      heading={`What Guests Say About ${countryName}`}
-      appId={countryCamps[0].elfsightId}
-      schema={{
-        businessName: `Rapture Surfcamps ${countryName}`,
-        ratingValue: countryCamps[0].rating || 4.7,
-        reviewCount: countryCamps.reduce((sum, c) => sum + (c.reviewCount || 0), 0),
-        url: `https://www.rapturecamps.com/surfcamp/${country}`,
-      }}
-    />
-  )}
-
-  {/* FAQ Section */}
-  {data.faqs && data.faqs.length > 0 && (
+  {/* Fallback FAQ for countries without Sanity data */}
+  {!hasSanityBlocks && data.faqs && data.faqs.length > 0 && (
     <section class="py-16 sm:py-24 bg-dark-lighter" id="faq">
       <div class="px-6 sm:px-12 lg:px-20">
         <div class="max-w-3xl mx-auto">
           <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-3">Frequently Asked Questions</h2>
           <p class="text-base text-white/40 mb-12">Everything you need to know about surfing in {data.title.replace("Surf Camps\nin ", "").replace("Surf Camp\nin ", "")}.</p>
-
           <div class="space-y-0 divide-y divide-white/5">
             {data.faqs.map((faq, i) => (
               <details class="group py-5 first:pt-0 last:pb-0" data-faq-index={i}>
@@ -687,5 +676,5 @@ const amenityLabels: Record<string, string> = {
   )}
 
   <!-- CTA -->
-  <CTASection />
+  <CTASection faqSlug={country} blogCategory={country} />
 </BaseLayout>

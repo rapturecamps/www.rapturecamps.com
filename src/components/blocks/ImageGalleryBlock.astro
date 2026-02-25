@@ -14,8 +14,8 @@ const images = block.images || [];
       {images.map((img: any) => (
         <div class="aspect-square overflow-hidden rounded-lg">
           <img
-            src={img.url || ""}
-            alt={img.alt || ""}
+            src={img.resolvedUrl || img.asset?.url || ""}
+            alt={img.resolvedAlt || ""}
             class="h-full w-full object-cover"
             loading="lazy"
           />

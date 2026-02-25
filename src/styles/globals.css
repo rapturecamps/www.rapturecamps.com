@@ -100,3 +100,9 @@ body {
 #camp-subnav {
   top: 5rem; /* h-20 = 80px = 5rem, sits right below the main header */
 }
+
+/* Rich text inside content blocks */
+.space-y-4 strong {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}

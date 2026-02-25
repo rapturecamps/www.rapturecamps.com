@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "imageBreak",
-  title: "Full-Width Image",
+  title: "Image Divider",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "image",
@@ -17,11 +19,6 @@ export default defineType({
       title: "External Image URL",
       type: "url",
       description: "Fallback if no uploaded image. Will be replaced by Sanity image when available.",
-    }),
-    defineField({
-      name: "alt",
-      title: "Alt Text",
-      type: "string",
     }),
     defineField({
       name: "height",
@@ -41,11 +38,12 @@ export default defineType({
       title: "Caption",
       type: "string",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
-    select: { media: "image", title: "alt" },
-    prepare({ title, media }) {
-      return { title: title || "Full-Width Image", subtitle: "Image Break", media };
+    select: { media: "image", caption: "caption" },
+    prepare({ caption, media }) {
+      return { title: caption || "Image Divider", subtitle: "Image Divider", media };
     },
   },
 });

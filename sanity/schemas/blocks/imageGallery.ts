@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "imageGallery",
   title: "Image Gallery",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "images",
@@ -11,10 +13,10 @@ export default defineType({
       type: "array",
       of: [
         {
-          type: "object",
+          type: "image",
+          options: { hotspot: true },
           fields: [
-            defineField({ name: "url", title: "URL", type: "url" }),
-            defineField({ name: "alt", title: "Alt", type: "string" }),
+            { name: "caption", type: "string", title: "Caption" },
           ],
         },
       ],
@@ -31,6 +33,7 @@ export default defineType({
       },
       initialValue: "dark",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { images: "images" },

@@ -1,5 +1,7 @@
 ---
 import ContentBlock from "@/components/sections/ContentBlock.astro";
+import ContentBlockGrid from "@/components/sections/ContentBlockGrid.astro";
+import ContentBlockVideo from "@/components/sections/ContentBlockVideo.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
@@ -15,6 +17,8 @@ import SurfSpotsBlock from "./SurfSpotsBlock.astro";
 import SurfLevelsBlock from "./SurfLevelsBlock.astro";
 import SurfScheduleBlock from "./SurfScheduleBlock.astro";
 import SurfEquipmentBlock from "./SurfEquipmentBlock.astro";
+import SurfSeasonsBlock from "./SurfSeasonsBlock.astro";
+import ClimateInfoBlock from "./ClimateInfoBlock.astro";
 import FoodIntroBlock from "./FoodIntroBlock.astro";
 import MealCardsBlock from "./MealCardsBlock.astro";
 import MenuTableBlock from "./MenuTableBlock.astro";
@@ -23,117 +27,246 @@ import RoomTypesBlock from "./RoomTypesBlock.astro";
 import RoomInclusionsBlock from "./RoomInclusionsBlock.astro";
 import RoomFacilitiesBlock from "./RoomFacilitiesBlock.astro";
 import ImageGalleryBlock from "./ImageGalleryBlock.astro";
+import FeatureBlock from "./FeatureBlock.astro";
+import ElfsightReviewsBlock from "./ElfsightReviewsBlock.astro";
+import CampSubPagesBlock from "./CampSubPagesBlock.astro";
 
 interface Props {
   blocks: any[];
   campData?: any;
+  h1BlockIndex?: number;
 }
 
-const { blocks = [], campData } = Astro.props;
+const { blocks = [], campData, h1BlockIndex } = Astro.props;
 
 const ASPECT_MAP = { "16/9": "16:9", "4/3": "4:3", "3/2": "3:2", "1/1": "1:1" } as Record<string, string>;
 const VIDEO_TYPE_MAP = { youtube: "youtube", vimeo: "vimeo", wistia: "wistia", file: "file" } as Record<string, string>;
 
+function getLayoutClasses(block: any): string {
+  const classes: string[] = [];
+  if (block.topDivider) classes.push("rc-divider-top");
+  if (block.spacingTop && block.spacingTop !== "default") classes.push(`rc-spacing-top-${block.spacingTop}`);
+  if (block.spacingBottom && block.spacingBottom !== "default") classes.push(`rc-spacing-bottom-${block.spacingBottom}`);
+  return classes.join(" ");
+}
+
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel}>${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
 function portableTextToHtml(body: any): string {
-  if (Array.isArray(body)) {
-    return body
-      .map((b: any) => b.children?.map((c: any) => c.text).join("") || "")
-      .map((t: string) => "<p>" + t + "</p>")
-      .join("");
-  }
   if (typeof body === "string") {
-    return body.split("\n\n").map((p: string) => "<p>" + p + "</p>").join("");
+    return body.split("\n\n").map((p: string) => `<p>${p}</p>`).join("");
   }
-  return "";
+  if (!Array.isArray(body)) return "";
+
+  let html = "";
+  let openList: string | null = null;
+
+  for (const b of body) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+
+    if (openList && (!li || li !== openList)) {
+      html += openList === "bullet" ? "</ul>" : "</ol>";
+      openList = null;
+    }
+
+    if (li) {
+      if (!openList) {
+        html += li === "bullet"
+          ? '<ul class="list-disc pl-5 space-y-1.5">'
+          : '<ol class="list-decimal pl-5 space-y-1.5">';
+        openList = li;
+      }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+
+    if (style === "h2") html += `<h2>${text}</h2>`;
+    else if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else if (style === "blockquote") html += `<blockquote class="border-l-2 border-ocean-light pl-4 italic">${text}</blockquote>`;
+    else html += `<p>${text}</p>`;
+  }
+
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
 }
 ---
 
-{blocks.map((block) => {
+{blocks.map((block, blockIndex) => {
   const type = block._type;
+  const isH1 = h1BlockIndex != null && blockIndex === h1BlockIndex;
+  const layoutClass = getLayoutClasses(block);
 
-  if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} />;
-  if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} />;
-  if (type === "surfSpots") return <SurfSpotsBlock block={block} />;
-  if (type === "surfLevels") return <SurfLevelsBlock block={block} />;
-  if (type === "surfSchedule") return <SurfScheduleBlock block={block} />;
-  if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
+  const renderBlock = () => {
+    if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} />;
+    if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} />;
+    if (type === "surfSpots") return <SurfSpotsBlock block={block} />;
+    if (type === "surfLevels") return <SurfLevelsBlock block={block} />;
+    if (type === "surfSchedule") return <SurfScheduleBlock block={block} />;
+    if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
+    if (type === "surfSeasons") return <SurfSeasonsBlock block={block} />;
+    if (type === "climateInfo") return <ClimateInfoBlock block={block} />;
 
-  if (type === "foodIntro") return <FoodIntroBlock block={block} />;
-  if (type === "mealCards") return <MealCardsBlock block={block} />;
-  if (type === "menuTable") return <MenuTableBlock block={block} />;
-  if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;
+    if (type === "foodIntro") return <FoodIntroBlock block={block} />;
+    if (type === "mealCards") return <MealCardsBlock block={block} />;
+    if (type === "menuTable") return <MenuTableBlock block={block} />;
+    if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;
 
-  if (type === "roomTypes") return <RoomTypesBlock block={block} />;
-  if (type === "roomInclusions") return <RoomInclusionsBlock block={block} />;
-  if (type === "roomFacilities") return <RoomFacilitiesBlock block={block} />;
+    if (type === "roomTypes") return <RoomTypesBlock block={block} />;
+    if (type === "roomInclusions") return <RoomInclusionsBlock block={block} />;
+    if (type === "roomFacilities") return <RoomFacilitiesBlock block={block} />;
 
-  if (type === "imageGallery") return <ImageGalleryBlock block={block} />;
+    if (type === "featureBlock") return <FeatureBlock block={block} />;
+    if (type === "imageGallery") return <ImageGalleryBlock block={block} />;
 
-  if (type === "imageGrid") {
-    const images = (block.images || []).map((img: any) => ({
-      src: img.resolvedUrl || "",
-      alt: img.alt || "",
-    }));
-    if (images.length >= 3) return <ImageGrid images={images} variant="collage" />;
-    if (images.length >= 2) return <ImageGrid images={images} variant="two-up" />;
+    if (type === "imageGrid") {
+      const images = (block.images || []).map((img: any) => ({
+        src: img.resolvedUrl || "",
+        alt: img.resolvedAlt || img.alt || "",
+      }));
+      if (images.length >= 3) return <ImageGrid images={images} variant="collage" />;
+      if (images.length >= 2) return <ImageGrid images={images} variant="two-up" />;
+      return null;
+    }
+
+    if (type === "imageCarousel") {
+      const images = (block.images || []).map((img: any) => ({
+        src: img.resolvedUrl || "",
+        alt: img.resolvedAlt || img.alt || "",
+        caption: img.caption,
+      }));
+      return <ImageCarousel images={images} aspect={ASPECT_MAP[block.aspect] || "16:9"} />;
+    }
+
+    if (type === "videoBlock") {
+      return <VideoBlock
+        type={VIDEO_TYPE_MAP[block.type] || "youtube"}
+        src={block.videoId || ""}
+        title={block.title}
+        poster={block.resolvedPosterUrl}
+        autoplay={block.autoplay || false}
+        aspect={block.aspect === "4/3" ? "4:3" : block.aspect === "21/9" ? "21:9" : "16:9"}
+        controls
+      />;
+    }
+
+    if (type === "videoTestimonials") return <VideoTestimonialsBlock block={block} />;
+    if (type === "highlightsGrid") return <HighlightsGridBlock block={block} />;
+    if (type === "inclusionsGrid") return <InclusionsGridBlock block={block} />;
+    if (type === "faqSection") return <FaqSectionBlock block={block} />;
+    if (type === "elfsightReviews") return <ElfsightReviewsBlock block={block} />;
+    if (type === "campSubPages") return <CampSubPagesBlock block={block} campData={campData} />;
+
+    if (type === "imageBreak") {
+      return <ImageBreak
+        src={block.resolvedImageUrl || block.imageUrl || block.image?.asset?.url || ""}
+        alt={block.resolvedImageAlt || block.alt || ""}
+        caption={block.caption || ""}
+        height={block.height === "sm" ? "short" : block.height === "lg" ? "tall" : "medium"}
+      />;
+    }
+
+    if (type === "contentBlock") {
+      const body = portableTextToHtml(block.body);
+      return <ContentBlock
+        heading={block.heading || ""}
+        body={body}
+        image={block.resolvedImageUrl || ""}
+        imageAlt={block.resolvedImageAlt || block.imageAlt || ""}
+        reverse={block.reverse || false}
+        background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+        headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}
+      />;
+    }
+
+    if (type === "contentBlockGrid") {
+      const body = portableTextToHtml(block.body);
+      const images = (block.images || []).map((img: any) => ({
+        src: img.resolvedUrl || "",
+        alt: img.resolvedAlt || img.alt || "",
+      }));
+      return <ContentBlockGrid
+        heading={block.heading || ""}
+        body={body}
+        images={images}
+        reverse={block.reverse || false}
+        background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+        headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}
+      />;
+    }
+
+    if (type === "contentBlockVideo") {
+      const body = portableTextToHtml(block.body);
+      return <ContentBlockVideo
+        heading={block.heading || ""}
+        body={body}
+        videoType={block.videoType || "youtube"}
+        videoSrc={block.videoId || ""}
+        videoPoster={block.resolvedVideoPosterUrl}
+        reverse={block.reverse || false}
+        background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+        headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}
+      />;
+    }
+
+    if (type === "ctaSection") return <CTASection
+      heading={block.heading}
+      text={block.text}
+      buttonText={block.buttonText}
+      buttonUrl={block.buttonUrl || campData?.bookingUrl}
+      faqSlug={campData?.slug}
+      blogCategory={campData?.countrySlug}
+    />;
+
     return null;
-  }
+  };
 
-  if (type === "imageCarousel") {
-    const images = (block.images || []).map((img: any) => ({
-      src: img.resolvedUrl || "",
-      alt: img.alt || "",
-      caption: img.caption,
-    }));
-    return <ImageCarousel images={images} aspect={ASPECT_MAP[block.aspect] || "16:9"} />;
-  }
-
-  if (type === "videoBlock") {
-    return <VideoBlock
-      type={VIDEO_TYPE_MAP[block.type] || "youtube"}
-      src={block.videoId || ""}
-      title={block.title}
-      poster={block.resolvedPosterUrl}
-      autoplay={block.autoplay || false}
-      aspect={block.aspect === "4/3" ? "4:3" : block.aspect === "21/9" ? "21:9" : "16:9"}
-      controls
-    />;
-  }
-
-  if (type === "videoTestimonials") return <VideoTestimonialsBlock block={block} />;
-  if (type === "highlightsGrid") return <HighlightsGridBlock block={block} />;
-  if (type === "inclusionsGrid") return <InclusionsGridBlock block={block} />;
-  if (type === "faqSection") return <FaqSectionBlock block={block} />;
-
-  if (type === "imageBreak") {
-    return <ImageBreak
-      src={block.resolvedImageUrl || block.imageUrl || block.image?.asset?.url || ""}
-      alt={block.alt || ""}
-      caption={block.caption || ""}
-      height={block.height === "sm" ? "short" : block.height === "lg" ? "tall" : "medium"}
-    />;
-  }
-
-  if (type === "contentBlock") {
-    const body = portableTextToHtml(block.body);
-    return <ContentBlock
-      heading={block.heading || ""}
-      body={body}
-      image={block.image?.asset?.url || ""}
-      imageAlt={block.imageAlt || ""}
-      reverse={block.reverse || false}
-      background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
-    />;
-  }
-
-  if (type === "ctaSection") return <CTASection
-    heading={block.heading}
-    text={block.text}
-    buttonText={block.buttonText}
-    buttonUrl={block.buttonUrl || campData?.bookingUrl}
-    faqSlug={campData?.slug}
-    blogCategory={campData?.countrySlug}
-  />;
-
-  return null;
+  const content = renderBlock();
+  if (!content) return null;
+  return layoutClass
+    ? <div class={layoutClass}>{content}</div>
+    : content;
 })}
+
+<style is:global>
+  .rc-divider-top > :first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .rc-spacing-top-none > :first-child { padding-top: 0 !important; }
+  .rc-spacing-top-xs > :first-child { padding-top: 1rem !important; }
+  .rc-spacing-top-small > :first-child { padding-top: 2rem !important; }
+  .rc-spacing-top-large > :first-child { padding-top: 5rem !important; }
+
+  .rc-spacing-bottom-none > :first-child { padding-bottom: 0 !important; }
+  .rc-spacing-bottom-xs > :first-child { padding-bottom: 1rem !important; }
+  .rc-spacing-bottom-small > :first-child { padding-bottom: 2rem !important; }
+  .rc-spacing-bottom-large > :first-child { padding-bottom: 5rem !important; }
+
+  @media (min-width: 640px) {
+    .rc-spacing-top-xs > :first-child { padding-top: 1.25rem !important; }
+    .rc-spacing-top-small > :first-child { padding-top: 2.5rem !important; }
+    .rc-spacing-top-large > :first-child { padding-top: 7rem !important; }
+    .rc-spacing-bottom-xs > :first-child { padding-bottom: 1.25rem !important; }
+    .rc-spacing-bottom-small > :first-child { padding-bottom: 2.5rem !important; }
+    .rc-spacing-bottom-large > :first-child { padding-bottom: 7rem !important; }
+  }
+</style>

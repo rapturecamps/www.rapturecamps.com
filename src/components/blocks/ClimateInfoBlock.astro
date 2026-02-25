@@ -1,0 +1,259 @@
+---
+interface MonthData {
+  month: number;
+  airTempHigh: number;
+  airTempLow: number;
+  waterTemp: number;
+  rainyDays?: number;
+}
+
+interface Props {
+  block: {
+    heading?: string;
+    body?: any[];
+    months?: MonthData[];
+    wetsuitNote?: string;
+    background?: string;
+  };
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Air & Water Temperatures";
+const body = block.body;
+const months = (block.months || []).sort((a, b) => a.month - b.month);
+const wetsuitNote = block.wetsuitNote;
+
+const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+// Calculate chart bounds
+const allTemps = months.flatMap((m) => [m.airTempHigh, m.airTempLow, m.waterTemp]);
+const minTemp = allTemps.length ? Math.floor(Math.min(...allTemps) / 5) * 5 - 5 : 10;
+const maxTemp = allTemps.length ? Math.ceil(Math.max(...allTemps) / 5) * 5 + 5 : 40;
+const range = maxTemp - minTemp || 1;
+
+function tempToPercent(t: number): number {
+  return ((t - minTemp) / range) * 100;
+}
+
+// Grid lines for the Y-axis
+const gridLines: number[] = [];
+for (let t = Math.ceil(minTemp / 5) * 5; t <= maxTemp; t += 5) {
+  gridLines.push(t);
+}
+
+// Summary stats
+const avgAirHigh = months.length ? Math.round(months.reduce((s, m) => s + m.airTempHigh, 0) / months.length) : null;
+const avgAirLow = months.length ? Math.round(months.reduce((s, m) => s + m.airTempLow, 0) / months.length) : null;
+const avgWater = months.length ? Math.round(months.reduce((s, m) => s + m.waterTemp, 0) / months.length) : null;
+const totalRainyDays = months.reduce((s, m) => s + (m.rainyDays || 0), 0);
+
+// Portable text → HTML
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel}>${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function bodyToHtml(blocks: any[]): string {
+  if (!Array.isArray(blocks)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of blocks) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) {
+      html += openList === "bullet" ? "</ul>" : "</ol>";
+      openList = null;
+    }
+    if (li) {
+      if (!openList) {
+        html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">';
+        openList = li;
+      }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
+const bodyHtml = body ? bodyToHtml(body) : "";
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+      <!-- Left: SEO text content -->
+      <div>
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</h2>
+        {bodyHtml ? (
+          <div class="text-base text-white/50 leading-relaxed space-y-4" set:html={bodyHtml} />
+        ) : (
+          <p class="text-base text-white/50 leading-relaxed">
+            Learn about the climate and water conditions at this destination.
+          </p>
+        )}
+      </div>
+
+      <!-- Right: Temperature chart -->
+      {months.length > 0 && (
+        <div class="lg:sticky lg:top-28">
+          <div class="rounded-2xl border border-white/5 bg-dark-lighter/50 p-6">
+            <!-- Legend -->
+            <div class="flex flex-wrap gap-4 mb-6">
+              <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
+                <span class="h-2 w-6 rounded-full bg-gradient-to-r from-amber-400/40 to-amber-400"></span>
+                Air temp range
+              </span>
+              <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
+                <span class="h-0.5 w-6 bg-sky-400"></span>
+                Water temp
+              </span>
+              {months.some((m) => m.rainyDays) && (
+                <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
+                  <span class="h-2 w-2 rounded-full bg-sky-400/30"></span>
+                  Rainy days
+                </span>
+              )}
+            </div>
+
+            <!-- Chart area -->
+            <div class="relative h-48 mb-1">
+              <!-- Grid lines -->
+              {gridLines.map((t) => (
+                <div
+                  class="absolute left-0 right-0 border-t border-white/5"
+                  style={`bottom: ${tempToPercent(t)}%`}
+                >
+                  <span class="absolute -left-0.5 -translate-y-1/2 text-[9px] text-white/20 -ml-1" style="transform: translateX(-100%) translateY(-50%)">{t}°</span>
+                </div>
+              ))}
+
+              <!-- Month columns -->
+              <div class="absolute inset-0 flex gap-1 pl-6">
+                {months.map((m) => {
+                  const lowPct = tempToPercent(m.airTempLow);
+                  const highPct = tempToPercent(m.airTempHigh);
+                  const waterPct = tempToPercent(m.waterTemp);
+                  return (
+                    <div class="flex-1 relative group">
+                      {/* Air temp range bar */}
+                      <div
+                        class="absolute left-1/2 -translate-x-1/2 w-3/4 rounded-full bg-gradient-to-t from-amber-400/30 to-amber-400/70 transition-all group-hover:from-amber-400/50 group-hover:to-amber-400"
+                        style={`bottom: ${lowPct}%; height: ${highPct - lowPct}%`}
+                      ></div>
+                      {/* Water temp dot + line */}
+                      <div
+                        class="absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-sky-400 border border-sky-300 z-10 transition-all group-hover:scale-125"
+                        style={`bottom: ${waterPct}%; transform: translateX(-50%) translateY(50%)`}
+                      ></div>
+                      {/* Tooltip on hover */}
+                      <div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-20 pointer-events-none">
+                        <div class="bg-dark border border-white/10 rounded-lg px-2.5 py-1.5 text-[10px] text-white whitespace-nowrap shadow-lg">
+                          <p class="font-semibold mb-0.5">{MONTH_LABELS[m.month - 1]}</p>
+                          <p class="text-amber-400">Air: {m.airTempLow}–{m.airTempHigh}°C</p>
+                          <p class="text-sky-400">Water: {m.waterTemp}°C</p>
+                          {m.rainyDays != null && <p class="text-white/40">Rain: {m.rainyDays} days</p>}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <!-- Month labels -->
+            <div class="flex gap-1 pl-6 mb-5">
+              {months.map((m) => (
+                <div class="flex-1 text-center">
+                  <span class="text-[9px] text-white/30">{MONTH_LABELS[m.month - 1]?.[0]}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Rainy days row */}
+            {months.some((m) => m.rainyDays) && (
+              <div>
+                <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">Rainfall</p>
+                <div class="flex gap-1 pl-6 h-8">
+                  {months.map((m) => {
+                    const rain = m.rainyDays || 0;
+                    const maxRain = Math.max(...months.map((x) => x.rainyDays || 0), 1);
+                    const pct = Math.max(8, (rain / maxRain) * 100);
+                    return (
+                      <div class="flex-1 flex flex-col items-center justify-end">
+                        <div
+                          class="w-full rounded-t-sm bg-sky-400/20"
+                          style={`height: ${pct}%`}
+                        ></div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div class="flex gap-1 pl-6 mt-0.5">
+                  {months.map((m) => (
+                    <div class="flex-1 text-center">
+                      <span class="text-[8px] text-white/20">{m.rainyDays || 0}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Summary stats */}
+            <div class="mt-5 pt-4 border-t border-white/5 grid grid-cols-3 gap-3">
+              {avgAirHigh != null && avgAirLow != null && (
+                <div class="text-center">
+                  <p class="text-lg font-semibold text-amber-400">{avgAirLow}–{avgAirHigh}°C</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Avg Air Temp</p>
+                </div>
+              )}
+              {avgWater != null && (
+                <div class="text-center">
+                  <p class="text-lg font-semibold text-sky-400">{avgWater}°C</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Avg Water</p>
+                </div>
+              )}
+              {totalRainyDays > 0 ? (
+                <div class="text-center">
+                  <p class="text-lg font-semibold text-white/60">{totalRainyDays}</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Rainy Days/Year</p>
+                </div>
+              ) : wetsuitNote ? (
+                <div class="text-center">
+                  <p class="text-xs text-white/40 leading-snug">{wetsuitNote}</p>
+                </div>
+              ) : null}
+            </div>
+
+            {/* Wetsuit note */}
+            {wetsuitNote && totalRainyDays > 0 && (
+              <div class="mt-3 flex items-center gap-2 text-xs text-white/35">
+                <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>{wetsuitNote}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

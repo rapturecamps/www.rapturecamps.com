@@ -1,0 +1,121 @@
+---
+interface Props {
+  block: {
+    tagline?: string;
+    heading?: string;
+    body?: any[];
+    image?: any;
+    resolvedImageUrl?: string;
+    resolvedImageAlt?: string;
+    ctaText?: string;
+    ctaUrl?: string;
+    imagePosition?: "left" | "right";
+    background?: string;
+  };
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const imageRight = block.imagePosition !== "left";
+const imageSrc = block.resolvedImageUrl || block.image?.asset?.url || "";
+
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}" class="text-ocean-light hover:text-white transition-colors"${rel}>${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function bodyToHtml(blocks: any[]): string {
+  if (!Array.isArray(blocks)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of blocks) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) {
+      html += openList === "bullet" ? "</ul>" : "</ol>";
+      openList = null;
+    }
+    if (li) {
+      if (!openList) {
+        html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">';
+        openList = li;
+      }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
+const bodyHtml = block.body ? bodyToHtml(block.body) : "";
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class:list={[
+      "grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center",
+    ]}>
+      <!-- Text column -->
+      <div class:list={[imageRight ? "lg:order-1" : "lg:order-2"]}>
+        {block.tagline && (
+          <p class:list={[
+            "text-[11px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-ocean-light mb-3",
+            !imageRight && "lg:text-right"
+          ]}>{block.tagline}</p>
+        )}
+        <h2 class:list={[
+          "text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6 leading-tight",
+          !imageRight && "lg:text-right"
+        ]}>{block.heading}</h2>
+        {bodyHtml && (
+          <div class:list={[
+            "text-base text-white/50 leading-relaxed space-y-4",
+            !imageRight && "lg:text-right"
+          ]} set:html={bodyHtml} />
+        )}
+        {block.ctaText && block.ctaUrl && (
+          <a
+            href={block.ctaUrl}
+            class:list={[
+              "inline-block mt-6 text-xs sm:text-sm uppercase tracking-wider font-bold text-ocean-light hover:text-white transition-colors",
+              !imageRight && "lg:float-right"
+            ]}
+          >
+            {block.ctaText} →
+          </a>
+        )}
+        {block.ctaText && block.ctaUrl && !imageRight && <div class="clear-both"></div>}
+      </div>
+
+      <!-- Image column -->
+      <div class:list={[imageRight ? "lg:order-2" : "lg:order-1"]}>
+        <div class="aspect-[4/3] overflow-hidden rounded-2xl">
+          <img
+            src={imageSrc}
+            alt={block.resolvedImageAlt || block.heading || ""}
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

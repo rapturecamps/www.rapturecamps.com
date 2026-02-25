@@ -20,38 +20,87 @@ function parseUnsplash(src: string) {
 }
 
 /**
- * Generate responsive srcset for Unsplash images.
- * Preserves the original aspect ratio (w/h) across all breakpoints.
- * For non-Unsplash URLs, returns the original src unchanged.
+ * Check if a URL is a Sanity CDN image (cdn.sanity.io/images/...).
  */
-export function responsiveSrc(src: string, widths: number[] = [400, 800, 1200, 1920]) {
-  if (!src.includes("images.unsplash.com")) return { src, srcset: undefined, sizes: undefined };
-
-  const { base, origW, origH } = parseUnsplash(src);
-  const sep = base.includes("?") ? "&" : "?";
-  const ratio = origW && origH ? origH / origW : 0;
-
-  function buildUrl(w: number) {
-    const hParam = ratio ? `&h=${Math.round(w * ratio)}` : "";
-    return `${base}${sep}w=${w}${hParam}&fit=crop&auto=format`;
-  }
-
-  const srcset = widths.map((w) => `${buildUrl(w)} ${w}w`).join(", ");
-
-  return {
-    src: buildUrl(widths[widths.length - 1]),
-    srcset,
-  };
+function isSanityCdn(src: string): boolean {
+  return src.includes("cdn.sanity.io/images/");
 }
 
 /**
- * Rewrite an Unsplash URL to a specific width, preserving aspect ratio.
+ * Strip existing query params from a Sanity CDN URL and return the base.
  */
-export function unsplashWidth(src: string, width: number): string {
-  if (!src.includes("images.unsplash.com")) return src;
-  const { base, origW, origH } = parseUnsplash(src);
-  const sep = base.includes("?") ? "&" : "?";
-  const ratio = origW && origH ? origH / origW : 0;
-  const hParam = ratio ? `&h=${Math.round(width * ratio)}` : "";
-  return `${base}${sep}w=${width}${hParam}&fit=crop&auto=format`;
+function parseSanity(src: string) {
+  const [base] = src.split("?");
+  const dimMatch = base.match(/-(\d+)x(\d+)\.\w+$/);
+  const origW = dimMatch ? parseInt(dimMatch[1], 10) : 0;
+  const origH = dimMatch ? parseInt(dimMatch[2], 10) : 0;
+  return { base, origW, origH };
 }
+
+/**
+ * Generate responsive srcset for Unsplash and Sanity CDN images.
+ * Preserves the original aspect ratio across all breakpoints.
+ * For other URLs, returns the original src unchanged.
+ */
+export function responsiveSrc(src: string, widths: number[] = [400, 800, 1200, 1920]) {
+  if (src.includes("images.unsplash.com")) {
+    const { base, origW, origH } = parseUnsplash(src);
+    const sep = base.includes("?") ? "&" : "?";
+    const ratio = origW && origH ? origH / origW : 0;
+
+    function buildUrl(w: number) {
+      const hParam = ratio ? `&h=${Math.round(w * ratio)}` : "";
+      return `${base}${sep}w=${w}${hParam}&fit=crop&auto=format`;
+    }
+
+    return {
+      src: buildUrl(widths[widths.length - 1]),
+      srcset: widths.map((w) => `${buildUrl(w)} ${w}w`).join(", "),
+    };
+  }
+
+  if (isSanityCdn(src)) {
+    const { base, origW, origH } = parseSanity(src);
+    const ratio = origW && origH ? origH / origW : 0;
+
+    function buildUrl(w: number) {
+      const capped = origW ? Math.min(w, origW) : w;
+      const hParam = ratio ? `&h=${Math.round(capped * ratio)}` : "";
+      return `${base}?w=${capped}${hParam}&fit=crop&auto=format`;
+    }
+
+    return {
+      src: buildUrl(widths[widths.length - 1]),
+      srcset: widths.map((w) => `${buildUrl(w)} ${w}w`).join(", "),
+    };
+  }
+
+  return { src, srcset: undefined, sizes: undefined };
+}
+
+/**
+ * Rewrite an image URL to a specific width, preserving aspect ratio.
+ * Works with both Unsplash and Sanity CDN URLs.
+ */
+export function resizeWidth(src: string, width: number): string {
+  if (src.includes("images.unsplash.com")) {
+    const { base, origW, origH } = parseUnsplash(src);
+    const sep = base.includes("?") ? "&" : "?";
+    const ratio = origW && origH ? origH / origW : 0;
+    const hParam = ratio ? `&h=${Math.round(width * ratio)}` : "";
+    return `${base}${sep}w=${width}${hParam}&fit=crop&auto=format`;
+  }
+
+  if (isSanityCdn(src)) {
+    const { base, origW, origH } = parseSanity(src);
+    const capped = origW ? Math.min(width, origW) : width;
+    const ratio = origW && origH ? origH / origW : 0;
+    const hParam = ratio ? `&h=${Math.round(capped * ratio)}` : "";
+    return `${base}?w=${capped}${hParam}&fit=crop&auto=format`;
+  }
+
+  return src;
+}
+
+/** @deprecated Use resizeWidth instead */
+export const unsplashWidth = resizeWidth;

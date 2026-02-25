@@ -1,9 +1,23 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { destinations } from "@/lib/data";
+import { destinations as fallbackDestinations } from "@/lib/data";
 
-export default function DestinationGrid() {
+interface DestinationItem {
+  name: string;
+  slug: string;
+  image: string;
+  location: string;
+  country: string;
+}
+
+interface Props {
+  heading?: string;
+  destinations?: DestinationItem[];
+}
+
+export default function DestinationGrid({ heading, destinations: propDestinations }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const destinations = propDestinations?.length ? propDestinations : fallbackDestinations;
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -19,7 +33,7 @@ export default function DestinationGrid() {
       <div className="px-6 sm:px-12 lg:px-20">
         <div className="flex items-end justify-between mb-10">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
-            Choose Your Destination
+            {heading || "Choose Your Destination"}
           </h2>
           <div className="flex gap-3">
             <button

@@ -20,8 +20,46 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
   description,
   intro,
   comparison,
-  pageBuilder,
-  heroImages,
+  pageBuilder[] {
+    ...,
+    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid"] => {
+      ...,
+      images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText }
+    },
+    _type in ["imageBreak", "contentBlock", "featureBlock"] => {
+      ...,
+      "resolvedImageUrl": image.asset->url,
+      "resolvedImageAlt": image.asset->altText
+    },
+    _type == "videoBlock" => {
+      ...,
+      "resolvedPosterUrl": poster.asset->url
+    },
+    _type == "contentBlockVideo" => {
+      ...,
+      "resolvedVideoPosterUrl": videoPoster.asset->url
+    },
+    _type == "surfSpots" => {
+      ...,
+      surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
+    },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    }
+  },
+  "heroImages": heroImages[].asset->url,
   heroTitle,
   heroTagline,
   seo
@@ -42,7 +80,7 @@ export const ALL_CAMPS = `*[_type == "camp" && (language == $lang || (!defined(l
   latitude,
   longitude,
   elfsightId,
-  heroImages,
+  "heroImages": heroImages[].asset->url,
   "image": image.asset->url
 }`;
 
@@ -61,7 +99,7 @@ export const CAMPS_BY_COUNTRY = `*[_type == "camp" && country->slug.current == $
   latitude,
   longitude,
   elfsightId,
-  heroImages,
+  "heroImages": heroImages[].asset->url,
   "image": image.asset->url,
   pageBuilder,
   seo
@@ -75,6 +113,11 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
   "countrySlug": country->slug.current,
   location,
   tagline,
+  introText,
+  surfLevels,
+  minStay,
+  groupSize,
+  spokenLanguages,
   rating,
   reviewCount,
   amenities,
@@ -82,47 +125,165 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
   latitude,
   longitude,
   elfsightId,
-  heroImages,
+  "heroImages": heroImages[].asset->url,
   heroTitle,
   heroSubtitle,
   heroTagline,
-  surfHeroTitle,
-  roomsHeroTitle,
-  foodHeroTitle,
   "image": image.asset->url,
   pageBuilder[] {
     _key, _type, ...,
     "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
     "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] {
       ...,
-      "resolvedUrl": asset->url
+      "resolvedUrl": asset->url,
+      "resolvedAlt": asset->altText
+    },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    },
+    _type == "campSubPages" => {
+      ...,
+      "surfCard": { ...surfCard, "imageUrl": surfCard.image.asset->url },
+      "roomsCard": { ...roomsCard, "imageUrl": roomsCard.image.asset->url },
+      "foodCard": { ...foodCard, "imageUrl": foodCard.image.asset->url }
     }
-  },
-  surfPageBuilder[] {
-    _key, _type, ...,
-    "resolvedImageUrl": image.asset->url,
-    "resolvedPosterUrl": poster.asset->url,
-    images[] { ..., "resolvedUrl": asset->url },
-    surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
-  },
-  roomsPageBuilder[] {
-    _key, _type, ...,
-    "resolvedImageUrl": image.asset->url,
-    "resolvedPosterUrl": poster.asset->url,
-    images[] { ..., "resolvedUrl": asset->url },
-    rooms[] { ..., "resolvedImageUrl": image.asset->url }
-  },
-  foodPageBuilder[] {
-    _key, _type, ...,
-    "resolvedImageUrl": image.asset->url,
-    "resolvedPosterUrl": poster.asset->url,
-    images[] { ..., "resolvedUrl": asset->url },
-    meals[] { ..., "resolvedImageUrl": image.asset->url }
   },
   seo,
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     "slug": slug.current,
+    language
+  }
+}`;
+
+// ─── Sub-page shared projection for camp reference ─────────────────────────
+const campRefProjection = `
+  "campName": camp->name,
+  "campSlug": camp->slug.current,
+  "countryName": camp->country->name,
+  "countrySlug": camp->country->slug.current,
+  "heroImages": camp->heroImages[].asset->url,
+  "bookingUrl": camp->bookingUrl,
+  "latitude": camp->latitude,
+  "longitude": camp->longitude,
+  "elfsightId": camp->elfsightId,
+  "rating": camp->rating,
+  "reviewCount": camp->reviewCount,
+  "amenities": camp->amenities
+`;
+
+export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  heroTitle,
+  ${campRefProjection},
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
+    "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
+    surfSpots[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    }
+  },
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    language
+  }
+}`;
+
+export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  heroTitle,
+  ${campRefProjection},
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
+    "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
+    rooms[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    }
+  },
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    language
+  }
+}`;
+
+export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  heroTitle,
+  ${campRefProjection},
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
+    "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
+    meals[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    }
+  },
+  seo,
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
   }
 }`;
@@ -174,12 +335,51 @@ export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (lang
 
 export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
+  title,
+  description,
   heroTagline,
   heroTitle,
   heroSubtitle,
   aboutHeading,
   aboutSubtext,
   aboutLinkText,
+  destinationHeading,
+  stats,
+  "featuredDestinations": featuredDestinations[]->{
+    _id,
+    name,
+    "slug": "/surfcamp/" + country->slug.current + "/" + slug.current,
+    "image": image.asset->url,
+    location,
+    "country": country->name
+  },
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
+    "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
+    images[] {
+      ...,
+      "resolvedUrl": asset->url,
+      "resolvedAlt": asset->altText
+    },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "faqSection" => {
+      ...,
+      "resolvedFaqs": faqRefs[]->{ question, answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+    }
+  },
   seo,
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
@@ -227,17 +427,22 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
       "url": asset->url,
       "altText": asset->altText
     },
-    _type in ["imageGrid", "imageCarousel", "imageGallery"] => {
+    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid"] => {
       ...,
-      images[] { ..., "resolvedUrl": asset->url }
+      images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText }
     },
-    _type in ["imageBreak", "contentBlock"] => {
+    _type in ["imageBreak", "contentBlock", "featureBlock"] => {
       ...,
-      "resolvedImageUrl": image.asset->url
+      "resolvedImageUrl": image.asset->url,
+      "resolvedImageAlt": image.asset->altText
     },
     _type == "videoBlock" => {
       ...,
       "resolvedPosterUrl": poster.asset->url
+    },
+    _type == "contentBlockVideo" => {
+      ...,
+      "resolvedVideoPosterUrl": videoPoster.asset->url
     },
     _type == "ctaSection" => {
       ...,
@@ -252,4 +457,35 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
     "slug": slug.current,
     language
   }
+}`;
+
+// --- Popups ---
+
+export const ACTIVE_POPUPS = `*[_type == "popup" && enabled == true] | order(priority desc) {
+  _id,
+  internalName,
+  popupType,
+  priority,
+  language,
+  triggerMode,
+  delaySeconds,
+  targetMode,
+  urlPatterns,
+  urlContains,
+  "targetCampSlugs": targetCamps[]->slug.current,
+  excludePatterns,
+  startDate,
+  endDate,
+  headline,
+  body,
+  ctaText,
+  ctaHref,
+  voucherCode,
+  "offerImageUrl": offerImage.asset->url,
+  expiresAt,
+  wheelHeadline,
+  wheelSubheadline,
+  segments,
+  zohoListKey,
+  zohoSource
 }`;

@@ -26,6 +26,24 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        "sanity",
+        "sanity/structure",
+        "@sanity/vision",
+        "sanity-plugin-media",
+        "@sanity/document-internationalization",
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "react-compiler-runtime",
+        "react-is",
+        "styled-components",
+        "lucide-react",
+        "lodash/startCase.js",
+      ],
+    },
   },
   image: {
     domains: [

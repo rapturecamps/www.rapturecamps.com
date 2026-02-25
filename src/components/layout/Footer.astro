@@ -2,6 +2,14 @@
 import { countries as fallbackCountries, navigation as fallbackNav } from "@/lib/data";
 import { getCountries, getSiteSettings } from "@/lib/sanity-data";
 
+interface Props {
+  lang?: string;
+}
+
+const { lang = "en" } = Astro.props;
+const isDE = lang === "de";
+const prefix = isDE ? "/de" : "";
+
 const settings = await getSiteSettings();
 const countries = await getCountries();
 const navigation = settings.navigation || fallbackNav;
@@ -12,6 +20,27 @@ const socialLinks = [
   { label: "Telegram", href: "https://t.me/rapturecampsbot", icon: "m22 2-7 20-4-9-9-4Z M22 2 11 13" },
   { label: "WhatsApp", href: "https://wa.me/+447700177360", icon: "M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" },
 ];
+
+const t = {
+  tagline: isDE
+    ? "Ein Netzwerk von 8 einzigartigen Surfcamps in 5 Ländern auf 4 Kontinenten. Seit 2003 haben wir mehr als 85.000 Menschen das Surfen beigebracht."
+    : "A network of 8 unique surf camps in 5 countries on 4 continents. Helping more than 85k people learn to surf since 2003.",
+  destinations: isDE ? "Reiseziele" : "Destinations",
+  company: isDE ? "Unternehmen" : "Company",
+  getInTouch: isDE ? "Kontakt" : "Get in Touch",
+  contactUs: isDE ? "Kontaktiere uns" : "Contact Us",
+  bookNow: isDE ? "Jetzt buchen" : "Book Now",
+  newsletterTitle: isDE ? "Newsletter abonnieren" : "Join Our Newsletter",
+  newsletterDesc: isDE
+    ? "Surftipps, Reiseinspiration und exklusive Angebote. Kein Spam, versprochen."
+    : "Surf tips, travel inspiration, and exclusive deals. No spam, ever.",
+  join: isDE ? "Anmelden" : "Join",
+  rights: isDE ? "Alle Rechte vorbehalten." : "All rights reserved.",
+  legal: isDE ? "Impressum" : "Legal Notice",
+  terms: isDE ? "AGB" : "Terms & Conditions",
+  privacy: isDE ? "Datenschutz" : "Privacy Policy",
+  cookies: isDE ? "Cookies verwalten" : "Manage Cookies",
+};
 
 const currentYear = new Date().getFullYear();
 ---
@@ -25,12 +54,11 @@ const currentYear = new Date().getFullYear();
   <div class="relative z-10 px-6 sm:px-12 lg:px-20">
     <div class="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
       <div>
-        <a href="/" class="inline-flex items-center gap-3">
+        <a href={`${prefix}/`} class="inline-flex items-center gap-3">
           <img src="/images/rapturecamps-logo.svg" alt="Rapture Surfcamps" class="h-12 w-auto" />
         </a>
         <p class="mt-4 text-xs leading-relaxed text-white/30 max-w-xs">
-          A network of 8 unique surf camps in 5 countries on 4 continents.
-          Helping more than 85k people learn to surf since 2003.
+          {t.tagline}
         </p>
         <div class="mt-5 flex gap-3">
           {socialLinks.map(({ href, label, icon }) => (
@@ -50,11 +78,11 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Destinations</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">{t.destinations}</h3>
         <ul class="space-y-2.5">
           {countries.map((country) => (
             <li>
-              <a href={`/surfcamp/${country.slug}`} class="text-sm text-white/30 hover:text-white transition-colors">
+              <a href={`${prefix}/surfcamp/${country.slug}`} class="text-sm text-white/30 hover:text-white transition-colors">
                 {country.name}
               </a>
             </li>
@@ -63,11 +91,11 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Company</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">{t.company}</h3>
         <ul class="space-y-2.5">
           {navigation.main.map((item) => (
             <li>
-              <a href={item.href} class="text-sm text-white/30 hover:text-white transition-colors">
+              <a href={`${prefix}${item.href}`} class="text-sm text-white/30 hover:text-white transition-colors">
                 {item.label}
               </a>
             </li>
@@ -76,9 +104,9 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div>
-        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">Get in Touch</h3>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">{t.getInTouch}</h3>
         <ul class="space-y-2.5">
-          <li><a href="/contact" class="text-sm text-white/30 hover:text-white transition-colors">Contact Us</a></li>
+          <li><a href={`${prefix}/contact`} class="text-sm text-white/30 hover:text-white transition-colors">{t.contactUs}</a></li>
           <li><a href="https://wa.me/+447700177360" target="_blank" rel="noopener noreferrer" class="text-sm text-white/30 hover:text-white transition-colors">WhatsApp</a></li>
           <li><a href="https://t.me/rapturecampsbot" target="_blank" rel="noopener noreferrer" class="text-sm text-white/30 hover:text-white transition-colors">Telegram</a></li>
         </ul>
@@ -89,7 +117,7 @@ const currentYear = new Date().getFullYear();
             rel="noopener noreferrer"
             class="inline-block rounded-full bg-white/10 border border-white/20 px-5 py-2 text-xs font-medium text-white hover:bg-white/20 transition-all"
           >
-            Book Now
+            {t.bookNow}
           </a>
         </div>
       </div>
@@ -99,8 +127,8 @@ const currentYear = new Date().getFullYear();
     <div class="border-t border-white/5 py-10">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
         <div>
-          <h3 class="text-sm font-semibold text-white mb-1">Join Our Newsletter</h3>
-          <p class="text-xs text-white/30">Surf tips, travel inspiration, and exclusive deals. No spam, ever.</p>
+          <h3 class="text-sm font-semibold text-white mb-1">{t.newsletterTitle}</h3>
+          <p class="text-xs text-white/30">{t.newsletterDesc}</p>
         </div>
         <form
           method="POST"
@@ -122,7 +150,7 @@ const currentYear = new Date().getFullYear();
             id="zcWebOptin"
             class="flex-shrink-0 rounded-full bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors"
           >
-            Join
+            {t.join}
           </button>
           <input type="hidden" name="submitType" value="optinCustomView" />
           <input type="hidden" name="emailReportId" value="" />
@@ -141,12 +169,12 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div class="border-t border-white/5 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-      <p class="text-[11px] text-white/20">&copy; {currentYear} Rapture Surfcamps. All rights reserved.</p>
+      <p class="text-[11px] text-white/20">&copy; {currentYear} Rapture Surfcamps. {t.rights}</p>
       <div class="flex flex-wrap gap-x-6 gap-y-2">
-        <a href="/legal" class="text-[11px] text-white/20 hover:text-white/40 transition-colors">Legal Notice</a>
-        <a href="/terms" class="text-[11px] text-white/20 hover:text-white/40 transition-colors">Terms & Conditions</a>
-        <a href="/privacy-policy" class="text-[11px] text-white/20 hover:text-white/40 transition-colors">Privacy Policy</a>
-        <button data-manage-cookies class="text-[11px] text-white/20 hover:text-white/40 transition-colors cursor-pointer">Manage Cookies</button>
+        <a href={`${prefix}/legal`} class="text-[11px] text-white/20 hover:text-white/40 transition-colors">{t.legal}</a>
+        <a href={`${prefix}/terms`} class="text-[11px] text-white/20 hover:text-white/40 transition-colors">{t.terms}</a>
+        <a href={`${prefix}/privacy-policy`} class="text-[11px] text-white/20 hover:text-white/40 transition-colors">{t.privacy}</a>
+        <button data-manage-cookies class="text-[11px] text-white/20 hover:text-white/40 transition-colors cursor-pointer">{t.cookies}</button>
       </div>
     </div>
   </div>

@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "contentBlock",
-  title: "Content Block",
+  title: "Content Block Image",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "label",
@@ -17,6 +19,20 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "headingLevel",
+      title: "Heading Level",
+      type: "string",
+      options: {
+        list: [
+          { title: "H1", value: "h1" },
+          { title: "H2 (default)", value: "h2" },
+          { title: "H3", value: "h3" },
+          { title: "H4", value: "h4" },
+        ],
+      },
+      initialValue: "h2",
+    }),
+    defineField({
       name: "body",
       title: "Body",
       type: "array",
@@ -27,11 +43,6 @@ export default defineType({
       title: "Image",
       type: "image",
       options: { hotspot: true },
-    }),
-    defineField({
-      name: "imageAlt",
-      title: "Image Alt Text",
-      type: "string",
     }),
     defineField({
       name: "reverse",
@@ -52,6 +63,7 @@ export default defineType({
       },
       initialValue: "dark",
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { label: "label", heading: "heading", body: "body" },

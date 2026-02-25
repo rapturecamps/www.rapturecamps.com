@@ -6,6 +6,7 @@ interface Props {
   imageAlt?: string;
   reverse?: boolean;
   background?: "dark" | "dark-lighter";
+  headingTag?: "h1" | "h2" | "h3" | "h4";
 }
 
 const {
@@ -15,7 +16,10 @@ const {
   imageAlt = "",
   reverse = false,
   background = "dark",
+  headingTag = "h2",
 } = Astro.props;
+
+const HeadingTag = headingTag;
 
 const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 ---
@@ -28,7 +32,7 @@ const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
         reverse && "direction-rtl"
       ]}>
         <div class:list={[reverse && "lg:order-2"]}>
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</h2>
+          <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</HeadingTag>
           <div class="text-base text-white/50 leading-relaxed space-y-4" set:html={body} />
         </div>
         <div class:list={[reverse && "lg:order-1"]}>
@@ -38,8 +42,8 @@ const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
         </div>
       </div>
     ) : (
-      <div class="max-w-3xl">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</h2>
+      <div>
+        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</HeadingTag>
         <div class="text-base text-white/50 leading-relaxed space-y-4" set:html={body} />
       </div>
     )}

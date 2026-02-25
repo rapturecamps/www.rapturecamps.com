@@ -10,12 +10,16 @@ import {
   ALL_CAMPS,
   CAMPS_BY_COUNTRY,
   CAMP_BY_SLUG,
+  CAMP_SURF_PAGE,
+  CAMP_ROOMS_PAGE,
+  CAMP_FOOD_PAGE,
   COUNTRY_BY_SLUG,
   SITE_SETTINGS,
   PAGE_BY_SLUG,
   HOMEPAGE,
   LINKIN_BIO,
   FAQS_BY_CAMP,
+  ACTIVE_POPUPS,
 } from "./queries";
 import {
   destinations as hardcodedDestinations,
@@ -87,9 +91,6 @@ export async function getCampBySlug(slug: string, lang = "en") {
     if (camp) {
       const merged = mergeWithHardcoded(camp);
       (merged as any).pageBuilder = camp.pageBuilder || null;
-      (merged as any).surfPageBuilder = camp.surfPageBuilder || null;
-      (merged as any).roomsPageBuilder = camp.roomsPageBuilder || null;
-      (merged as any).foodPageBuilder = camp.foodPageBuilder || null;
       (merged as any)._translations = camp._translations || [];
       return merged;
     }
@@ -98,6 +99,38 @@ export async function getCampBySlug(slug: string, lang = "en") {
   }
   if (lang === "en") {
     return hardcodedDestinations.find((d) => d.slug.endsWith(slug)) || null;
+  }
+  return null;
+}
+
+// ─── Camp sub-pages ─────────────────────────────────────────────────────────
+
+export async function getCampSurfPage(campSlug: string, lang = "en") {
+  try {
+    const page = await sanityClient.fetch(CAMP_SURF_PAGE, { slug: campSlug, lang });
+    if (page) return page;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch surf page for ${campSlug}`, e);
+  }
+  return null;
+}
+
+export async function getCampRoomsPage(campSlug: string, lang = "en") {
+  try {
+    const page = await sanityClient.fetch(CAMP_ROOMS_PAGE, { slug: campSlug, lang });
+    if (page) return page;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch rooms page for ${campSlug}`, e);
+  }
+  return null;
+}
+
+export async function getCampFoodPage(campSlug: string, lang = "en") {
+  try {
+    const page = await sanityClient.fetch(CAMP_FOOD_PAGE, { slug: campSlug, lang });
+    if (page) return page;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch food page for ${campSlug}`, e);
   }
   return null;
 }
@@ -189,18 +222,26 @@ export async function getFaqsByCamp(
   lang = "en"
 ): Promise<Record<string, { question: string; answer: string }[]> | null> {
   try {
-    // Always look up the English camp doc for the reference ID —
-    // German FAQs reference the same camp documents
-    const campDoc = await sanityClient.fetch(
-      `*[_type == "camp" && slug.current == $slug && (language == "en" || !defined(language))][0]{ _id }`,
+    // Fetch all camp doc IDs for this slug (EN + DE translations)
+    // so FAQs linked to either version are found
+    const campDocs: { _id: string }[] = await sanityClient.fetch(
+      `*[_type == "camp" && slug.current == $slug]{ _id }`,
       { slug: campSlug }
     );
-    if (!campDoc?._id) return null;
+    const campIds = campDocs?.map((d) => d._id) || [];
+    if (!campIds.length) return null;
 
-    const faqs = await sanityClient.fetch(FAQS_BY_CAMP, {
-      campRef: campDoc._id,
-      lang,
-    });
+    const faqs = await sanityClient.fetch(
+      `*[_type == "faq" && (
+        count(camps) == 0 || count((camps[]._ref)[@ in $campIds]) > 0
+      ) && (language == $lang || (!defined(language) && $lang == "en"))] | order(category->order asc, order asc) {
+        question,
+        answer,
+        "categoryName": category->name,
+        "categoryOrder": category->order
+      }`,
+      { campIds, lang }
+    );
     if (!faqs?.length) return null;
 
     const grouped: Record<string, { question: string; answer: string }[]> = {};
@@ -250,4 +291,115 @@ function mergeWithHardcoded(sanityCamp: any): Destination {
     longitude: sanityCamp.longitude ?? hardcoded?.longitude,
     elfsightId: sanityCamp.elfsightId || hardcoded?.elfsightId,
   };
+}
+
+// --- Popups ---
+
+export interface PopupData {
+  _id: string;
+  internalName: string;
+  popupType: "special-offer" | "exit-intent" | "spinning-wheel";
+  priority: number;
+  language: string;
+  triggerMode: string;
+  delaySeconds?: number;
+  targetMode: string;
+  urlPatterns?: string[];
+  urlContains?: string[];
+  targetCampSlugs?: string[];
+  excludePatterns?: string[];
+  startDate?: string;
+  endDate?: string;
+  headline?: string;
+  body?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  voucherCode?: string;
+  offerImageUrl?: string;
+  expiresAt?: string;
+  wheelHeadline?: string;
+  wheelSubheadline?: string;
+  segments?: Array<{
+    label: string;
+    color: string;
+    prize: string;
+    probability: number;
+  }>;
+  zohoListKey?: string;
+  zohoSource?: string;
+}
+
+let popupCache: PopupData[] | null = null;
+
+export async function getActivePopups(): Promise<PopupData[]> {
+  if (popupCache) return popupCache;
+  try {
+    popupCache = await sanityClient.fetch<PopupData[]>(ACTIVE_POPUPS);
+    return popupCache || [];
+  } catch (e) {
+    console.warn("[sanity] Failed to fetch popups", e);
+    return [];
+  }
+}
+
+function globMatch(pattern: string, path: string): boolean {
+  const regex = new RegExp(
+    "^" +
+      pattern
+        .replace(/[.+^${}()|[\]\\]/g, "\\$&")
+        .replace(/\*/g, ".*") +
+      "$",
+  );
+  return regex.test(path);
+}
+
+export async function matchPopupForPath(
+  path: string,
+  lang = "en",
+): Promise<PopupData | null> {
+  const popups = await getActivePopups();
+  const now = new Date();
+
+  for (const popup of popups) {
+    if (popup.language !== "all" && popup.language !== lang) continue;
+
+    if (popup.startDate && new Date(popup.startDate) > now) continue;
+    if (popup.endDate && new Date(popup.endDate) < now) continue;
+
+    if (popup.excludePatterns?.length) {
+      const excluded = popup.excludePatterns.some((pat) =>
+        globMatch(pat, path),
+      );
+      if (excluded) continue;
+    }
+
+    let matches = false;
+
+    switch (popup.targetMode) {
+      case "all-pages":
+        matches = true;
+        break;
+
+      case "url-patterns":
+        matches =
+          popup.urlPatterns?.some((pat) => globMatch(pat, path)) ?? false;
+        break;
+
+      case "url-contains":
+        matches =
+          popup.urlContains?.some((kw) =>
+            path.toLowerCase().includes(kw.toLowerCase()),
+          ) ?? false;
+        break;
+
+      case "specific-camps":
+        matches =
+          popup.targetCampSlugs?.some((slug) => path.includes(slug)) ?? false;
+        break;
+    }
+
+    if (matches) return popup;
+  }
+
+  return null;
 }

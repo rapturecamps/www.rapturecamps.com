@@ -8,6 +8,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import { getCountries, getCountryBySlug, getCampsByCountry } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
 
@@ -22,6 +23,7 @@ const { country } = Astro.params;
 const countryData = await getCountryBySlug(country!, lang);
 const camps = await getCampsByCountry(country!, lang);
 const countryName = countryData?.name || country!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+const sanityPageBuilder = countryData?.pageBuilder || [];
 ---
 
 <BaseLayout
@@ -68,5 +70,9 @@ const countryName = countryData?.name || country!.split("-").map((w: string) => 
     </section>
   )}
 
-  <CTASection />
+  {sanityPageBuilder.length > 0 && (
+    <BlockRenderer blocks={sanityPageBuilder} />
+  )}
+
+  <CTASection faqSlug={country} blogCategory={country} />
 </BaseLayout>

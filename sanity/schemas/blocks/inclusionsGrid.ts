@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "inclusionsGrid",
   title: "Inclusions Grid",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "heading",
@@ -26,6 +28,7 @@ export default defineType({
         },
       ],
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { title: "heading", items: "items" },

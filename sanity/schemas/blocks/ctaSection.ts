@@ -1,9 +1,11 @@
 import { defineType, defineField } from "sanity";
+import { blockLayoutFields, blockLayoutFieldset } from "../objects/blockLayout";
 
 export default defineType({
   name: "ctaSection",
   title: "CTA Section",
   type: "object",
+  fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
       name: "heading",
@@ -33,6 +35,7 @@ export default defineType({
       type: "image",
       options: { hotspot: true },
     }),
+    ...blockLayoutFields,
   ],
   preview: {
     select: { title: "heading" },

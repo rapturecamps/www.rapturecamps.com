@@ -6,27 +6,14 @@ import CookieBanner from "@/components/layout/CookieBanner.astro";
 import ExitIntentPopup from "@/components/popups/ExitIntentPopup.astro";
 import SpinningWheelPopup from "@/components/popups/SpinningWheelPopup.astro";
 import SpecialOfferPopup from "@/components/popups/SpecialOfferPopup.astro";
+import { matchPopupForPath } from "@/lib/sanity-data";
 import "@/styles/globals.css";
-
-interface SpecialOffer {
-  headline: string;
-  body: string;
-  ctaText: string;
-  ctaHref: string;
-  image?: string;
-  voucherCode?: string;
-  expiresAt?: string;
-}
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
   bookingUrl?: string;
-  /** Enable spinning wheel popup on this page */
-  showWheel?: boolean;
-  /** Pass a special offer to show the highest-priority popup */
-  specialOffer?: SpecialOffer;
   /** Disable all popups on this page (e.g. legal pages) */
   disablePopups?: boolean;
   /** Prevent search engines from indexing this page */
@@ -48,8 +35,6 @@ const {
   description = "A network of 8 unique surf camps in 5 countries on 4 continents. Surf the world with Rapture in Bali, Costa Rica, Portugal, Morocco, and Nicaragua.",
   ogImage,
   bookingUrl,
-  showWheel = false,
-  specialOffer,
   disablePopups = false,
   noindex = false,
   preloadImage,
@@ -81,6 +66,16 @@ const deUrl = new URL(getTranslatedPath("de"), siteUrl);
 const alternatePathForHeader = isDE ? getTranslatedPath("en") : getTranslatedPath("de");
 const defaultOgImage = `${siteUrl}/images/og-default.jpg`;
 const resolvedOgImage = ogImage || defaultOgImage;
+
+const currentLang = Astro.currentLocale ?? "en";
+const activePopup = disablePopups ? null : await matchPopupForPath(pathname, currentLang);
+const popupConfig = activePopup ? JSON.stringify({
+  type: activePopup.popupType,
+  trigger: activePopup.triggerMode || "timed",
+  delay: activePopup.delaySeconds ?? 10,
+  zohoListKey: activePopup.zohoListKey || "",
+  zohoSource: activePopup.zohoSource || "",
+}) : null;
 ---
 
 <!doctype html>
@@ -121,80 +116,92 @@ const resolvedOgImage = ogImage || defaultOgImage;
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer lang={Astro.currentLocale ?? "en"} />
     <ContactWidget />
     <CookieBanner />
 
-    {/* --- Popup system --- */}
-    {!disablePopups && (
-      <>
-        <ExitIntentPopup />
-        <SpinningWheelPopup />
-        {specialOffer && (
-          <SpecialOfferPopup
-            headline={specialOffer.headline}
-            body={specialOffer.body}
-            ctaText={specialOffer.ctaText}
-            ctaHref={specialOffer.ctaHref}
-            image={specialOffer.image}
-            voucherCode={specialOffer.voucherCode}
-            expiresAt={specialOffer.expiresAt}
-          />
-        )}
-      </>
+    {/* --- CMS-driven popup system --- */}
+    {activePopup?.popupType === "exit-intent" && (
+      <ExitIntentPopup
+        headline={activePopup.headline}
+        body={activePopup.body}
+        ctaText={activePopup.ctaText}
+        ctaHref={activePopup.ctaHref}
+        voucherCode={activePopup.voucherCode}
+      />
+    )}
+    {activePopup?.popupType === "spinning-wheel" && (
+      <SpinningWheelPopup
+        headline={activePopup.wheelHeadline}
+        subheadline={activePopup.wheelSubheadline}
+        segments={activePopup.segments}
+      />
+    )}
+    {activePopup?.popupType === "special-offer" && (
+      <SpecialOfferPopup
+        headline={activePopup.headline}
+        body={activePopup.body}
+        ctaText={activePopup.ctaText}
+        ctaHref={activePopup.ctaHref}
+        image={activePopup.offerImageUrl}
+        voucherCode={activePopup.voucherCode}
+        expiresAt={activePopup.expiresAt}
+      />
     )}
 
-    <script is:inline
-      data-has-offer={!disablePopups && specialOffer ? "true" : "false"}
-      data-has-wheel={!disablePopups && showWheel ? "true" : "false"}
-      data-popups-disabled={disablePopups ? "true" : "false"}
-      id="popup-manager-script"
-    >
-    /* --- Popup Manager --- */
-    (function () {
-      var script = document.getElementById("popup-manager-script");
-      if (!script) return;
-      var disabled = script.getAttribute("data-popups-disabled") === "true";
-      if (disabled) return;
+    {popupConfig && (
+      <script is:inline id="popup-manager-script" data-config={popupConfig}>
+      (function () {
+        var script = document.getElementById("popup-manager-script");
+        if (!script) return;
+        var raw = script.getAttribute("data-config");
+        if (!raw) return;
 
-      var hasOffer = script.getAttribute("data-has-offer") === "true";
-      var hasWheel = script.getAttribute("data-has-wheel") === "true";
-      var SESSION_KEY = "rc_popup_shown";
+        var config;
+        try { config = JSON.parse(raw); } catch (e) { return; }
 
-      if (sessionStorage.getItem(SESSION_KEY)) return;
-
-      function firePopup(type) {
-        sessionStorage.setItem(SESSION_KEY, type);
-        window.dispatchEvent(new CustomEvent("rc:show-popup", { detail: { type: type } }));
-      }
-
-      // Priority: Special Offer > Spinning Wheel > Exit Intent
-      if (hasOffer) {
-        setTimeout(function () { firePopup("special-offer"); }, 5000);
-        return;
-      }
-
-      if (hasWheel) {
-        setTimeout(function () { firePopup("spinning-wheel"); }, 15000);
-        return;
-      }
-
-      var exitFired = false;
-
-      function onExitIntent() {
-        if (exitFired) return;
+        var SESSION_KEY = "rc_popup_shown";
         if (sessionStorage.getItem(SESSION_KEY)) return;
-        exitFired = true;
-        firePopup("exit-intent");
-      }
 
-      document.addEventListener("mouseleave", function (e) {
-        if (e.clientY <= 0) onExitIntent();
-      });
+        function firePopup(type) {
+          sessionStorage.setItem(SESSION_KEY, type);
+          window.dispatchEvent(new CustomEvent("rc:show-popup", { detail: { type: type, zohoListKey: config.zohoListKey, zohoSource: config.zohoSource } }));
+        }
 
-      setTimeout(function () { onExitIntent(); }, 45000);
-    })();
-    </script>
+        var trigger = config.trigger || "timed";
+        var delay = (config.delay || 10) * 1000;
+        var type = config.type;
+
+        if (trigger === "timed") {
+          setTimeout(function () { firePopup(type); }, delay);
+          return;
+        }
+
+        if (trigger === "exit-intent") {
+          var exitFired = false;
+          function onExit() {
+            if (exitFired || sessionStorage.getItem(SESSION_KEY)) return;
+            exitFired = true;
+            firePopup(type);
+          }
+          document.addEventListener("mouseleave", function (e) { if (e.clientY <= 0) onExit(); });
+          setTimeout(onExit, delay || 45000);
+          return;
+        }
+
+        if (trigger === "timed-or-exit") {
+          var fired = false;
+          function fire() {
+            if (fired || sessionStorage.getItem(SESSION_KEY)) return;
+            fired = true;
+            firePopup(type);
+          }
+          setTimeout(fire, delay);
+          document.addEventListener("mouseleave", function (e) { if (e.clientY <= 0) fire(); });
+        }
+      })();
+      </script>
+    )}
 
     <script is:inline>
       (function () {

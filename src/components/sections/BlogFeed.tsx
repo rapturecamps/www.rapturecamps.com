@@ -55,8 +55,15 @@ const recentPosts: BlogPost[] = [
   },
 ];
 
-export default function BlogFeed() {
+interface Props {
+  heading?: string;
+  viewAllText?: string;
+  blogBasePath?: string;
+}
+
+export default function BlogFeed({ heading, viewAllText, blogBasePath }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const basePath = blogBasePath || "/blog";
 
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -72,14 +79,14 @@ export default function BlogFeed() {
       <div className="px-6 sm:px-12 lg:px-20">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
-            Recent Posts
+            {heading || "Recent Posts"}
           </h2>
           <div className="flex items-center gap-3">
             <a
-              href="/blog"
+              href={basePath}
               className="text-xs text-white/40 hover:text-white/70 transition-colors hidden sm:block"
             >
-              View all
+              {viewAllText || "View all"}
             </a>
             <div className="flex gap-2">
               <button
@@ -108,7 +115,7 @@ export default function BlogFeed() {
           {recentPosts.map((post) => (
             <a
               key={post.slug}
-              href={`/blog/${post.slug}`}
+              href={`${basePath}/${post.slug}`}
               className="group flex-shrink-0 snap-start"
             >
               <article className="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-[3/4] overflow-hidden rounded-2xl">

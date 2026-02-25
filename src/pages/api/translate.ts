@@ -36,9 +36,6 @@ const TRANSLATABLE_STRING_FIELDS = [
   "heroTagline",
   "heroTitle",
   "heroSubtitle",
-  "surfHeroTitle",
-  "roomsHeroTitle",
-  "foodHeroTitle",
   "aboutHeading",
   "aboutSubtext",
   "aboutLinkText",
@@ -69,7 +66,14 @@ const SKIP_FIELDS = [
   "resolvedImageUrl",
   "icon",
   "video",
-  "videoUrl",
+  "bunnyVideoId",
+  "bunnyLibraryId",
+  "bunnyPullZone",
+  "spokenLanguages",
+  "amenities",
+  "videoType",
+  "videoId",
+  "videoPoster",
 ];
 
 function extractTranslatableContent(obj: any, path = ""): Record<string, any> {
@@ -94,9 +98,6 @@ function extractTranslatableContent(obj: any, path = ""): Record<string, any> {
         result[currentPath] = value;
       } else {
         const pageBuilderKeys = [
-          "surfPageBuilder",
-          "roomsPageBuilder",
-          "foodPageBuilder",
           "pageBuilder",
         ];
         if (pageBuilderKeys.includes(key)) {
@@ -255,7 +256,7 @@ function parsePath(path: string): (string | number)[] {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { documentId, targetLang } = await request.json();
+    const { documentId, targetLang, forceOverwrite = false } = await request.json();
 
     if (!documentId || !targetLang) {
       return new Response(
@@ -426,6 +427,29 @@ export const POST: APIRoute = async ({ request }) => {
         `*[_id == $id || _id == "drafts." + $id][0]._id`,
         { id: targetDocId }
       )) || targetDocId;
+
+      const existingTarget = await fetchDoc(targetDocId);
+
+      if (existingTarget && !forceOverwrite) {
+        const fieldsSkipped: string[] = [];
+        for (const [path, _] of Object.entries(translatableContent)) {
+          const existingVal = getNestedValue(existingTarget, path);
+          if (existingVal !== undefined && existingVal !== null && existingVal !== "") {
+            const isNonEmptyArray = Array.isArray(existingVal) && existingVal.length > 0;
+            const isNonEmptyString = typeof existingVal === "string" && existingVal.trim() !== "";
+            if (isNonEmptyString || isNonEmptyArray) {
+              const topField = path.split(".")[0].split("[")[0];
+              setNestedValue(fieldsToUpdate, path, existingVal);
+              fieldsSkipped.push(topField);
+            }
+          }
+        }
+
+        const uniqueSkipped = [...new Set(fieldsSkipped)];
+        if (uniqueSkipped.length > 0) {
+          console.log(`[translate] Preserved ${uniqueSkipped.length} already-translated fields: ${uniqueSkipped.join(", ")}`);
+        }
+      }
 
       await sanityClient
         .patch(patchId)

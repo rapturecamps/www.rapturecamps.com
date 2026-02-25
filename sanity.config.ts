@@ -15,7 +15,7 @@ const LANGUAGES = [
   { id: "de", title: "German" },
 ];
 
-const I18N_SCHEMA_TYPES = ["camp", "country", "blogPost", "faq", "faqCategory", "page", "homepage", "linkinBio"];
+const I18N_SCHEMA_TYPES = ["camp", "campSurfPage", "campRoomsPage", "campFoodPage", "country", "blogPost", "faq", "faqCategory", "page", "homepage", "linkinBio"];
 
 export default defineConfig({
   name: "rapturecamps",
@@ -67,6 +67,56 @@ export default defineConfig({
                   .schemaType("camp")
                   .apiVersion(API_V)
                   .filter('_type == "camp" && (language == "en" || !defined(language))')
+                  .child((campId) =>
+                    S.list()
+                      .title("Camp Pages")
+                      .items([
+                        S.listItem()
+                          .title("Overview")
+                          .child(
+                            S.document().schemaType("camp").documentId(campId)
+                          ),
+                        S.listItem()
+                          .title("Surf")
+                          .child(
+                            S.documentList()
+                              .title("Surf Page")
+                              .schemaType("campSurfPage")
+                              .apiVersion(API_V)
+                              .filter('_type == "campSurfPage" && camp._ref == $campId')
+                              .params({ campId })
+                              .initialValueTemplates([
+                                S.initialValueTemplateItem("campSurfPage-with-camp", { campId }),
+                              ])
+                          ),
+                        S.listItem()
+                          .title("Rooms")
+                          .child(
+                            S.documentList()
+                              .title("Rooms Page")
+                              .schemaType("campRoomsPage")
+                              .apiVersion(API_V)
+                              .filter('_type == "campRoomsPage" && camp._ref == $campId')
+                              .params({ campId })
+                              .initialValueTemplates([
+                                S.initialValueTemplateItem("campRoomsPage-with-camp", { campId }),
+                              ])
+                          ),
+                        S.listItem()
+                          .title("Food")
+                          .child(
+                            S.documentList()
+                              .title("Food Page")
+                              .schemaType("campFoodPage")
+                              .apiVersion(API_V)
+                              .filter('_type == "campFoodPage" && camp._ref == $campId')
+                              .params({ campId })
+                              .initialValueTemplates([
+                                S.initialValueTemplateItem("campFoodPage-with-camp", { campId }),
+                              ])
+                          ),
+                      ])
+                  )
               ),
             S.divider(),
             S.listItem()
@@ -213,6 +263,8 @@ export default defineConfig({
               ),
             S.divider(),
             S.documentTypeListItem("redirect").title("Redirects"),
+            S.documentTypeListItem("popup").title("Popups"),
+            S.documentTypeListItem("videoTestimonialSet").title("Video Testimonials"),
             S.divider(),
             S.listItem()
               .title("Site Settings")
@@ -225,9 +277,10 @@ export default defineConfig({
               (item) =>
                 !HIDDEN_TYPES.includes(item.getId() ?? "") &&
                 ![
-                  "camp", "country", "blogPost", "blogCategory",
+                  "camp", "campSurfPage", "campRoomsPage", "campFoodPage",
+                  "country", "blogPost", "blogCategory",
                   "faq", "faqCategory", "page", "homepage", "linkinBio",
-                  "siteSettings", "redirect",
+                  "siteSettings", "redirect", "popup", "videoTestimonialSet",
                 ].includes(item.getId() ?? "")
             ),
           ]);
@@ -255,5 +308,35 @@ export default defineConfig({
   },
   schema: {
     types: schemaTypes,
+    templates: (prev) => [
+      ...prev,
+      {
+        id: "campSurfPage-with-camp",
+        title: "Surf Page for Camp",
+        schemaType: "campSurfPage",
+        parameters: [{ name: "campId", type: "string" }],
+        value: (params: { campId: string }) => ({
+          camp: { _type: "reference", _ref: params.campId },
+        }),
+      },
+      {
+        id: "campRoomsPage-with-camp",
+        title: "Rooms Page for Camp",
+        schemaType: "campRoomsPage",
+        parameters: [{ name: "campId", type: "string" }],
+        value: (params: { campId: string }) => ({
+          camp: { _type: "reference", _ref: params.campId },
+        }),
+      },
+      {
+        id: "campFoodPage-with-camp",
+        title: "Food Page for Camp",
+        schemaType: "campFoodPage",
+        parameters: [{ name: "campId", type: "string" }],
+        value: (params: { campId: string }) => ({
+          camp: { _type: "reference", _ref: params.campId },
+        }),
+      },
+    ],
   },
 });

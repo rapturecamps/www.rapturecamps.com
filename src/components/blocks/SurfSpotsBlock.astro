@@ -6,55 +6,74 @@ interface Props {
 const { block } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const heading = block.heading || "Surf Spots Nearby";
-const subtext = block.subtext || block.subtitle || "We rotate between 15+ breaks depending on conditions. Here are some of the highlights.";
+const subtext = block.subtext || block.subtitle || "";
 const spots = block.spots || block.surfSpots || [];
+
+function hasAnyImages(items: any[]): boolean {
+  return items.some((s) => s.image?.asset?.url || s.resolvedImageUrl);
+}
+
+function getSpotImage(spot: any, i: number): string {
+  return spot.resolvedImageUrl || spot.image?.asset?.url || "";
+}
+
 const fallbackImages = [
   "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
   "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop",
 ];
 
-function getSpotImage(spot: any, i: number): string {
-  const url = spot.image?.asset?.url || spot.image;
-  return url || fallbackImages[i % fallbackImages.length];
+function getLevelColor(level: string): string {
+  const l = level.toLowerCase();
+  if (l === "advanced") return "text-red-400 bg-red-400/10 border-red-400/20";
+  if (l === "beginner" || l === "all levels") return "text-green-400 bg-green-400/10 border-green-400/20";
+  return "text-amber-400 bg-amber-400/10 border-amber-400/20";
 }
+
+const showImages = hasAnyImages(spots);
 ---
 
-<section class:list={["py-16 sm:py-20", bg]}>
+<section class:list={["py-16 sm:py-20", bg]} id="surf-spots">
   <div class="px-6 sm:px-12 lg:px-20">
-    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
-    <p class="text-base text-white/45 max-w-3xl leading-relaxed mb-10">{subtext}</p>
+    <div class="max-w-4xl mb-10">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">{heading}</h2>
+      {subtext && <p class="text-base text-white/45 max-w-3xl leading-relaxed">{subtext}</p>}
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {spots.map((spot: any, i: number) => (
-        <div class="rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors group">
-          <div class="aspect-[3/2] overflow-hidden">
-            <img
-              src={getSpotImage(spot, i)}
-              alt={spot.name || "Surf spot"}
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
-          <div class="p-5">
-            <h3 class="text-base font-semibold text-white mb-2">{spot.name}</h3>
-            <div class="flex gap-2 mb-3">
-              {spot.level && (
-                <span class="text-ocean-light bg-ocean-light/10 text-[10px] font-semibold uppercase tracking-wider rounded-full px-2.5 py-0.5">
-                  {spot.level}
-                </span>
+      {spots.map((spot: any, i: number) => {
+        const img = showImages ? (getSpotImage(spot, i) || fallbackImages[i % fallbackImages.length]) : "";
+        return (
+          <div class="rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors group">
+            {showImages && img && (
+              <div class="aspect-[3/2] overflow-hidden">
+                <img
+                  src={img}
+                  alt={spot.name || "Surf spot"}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <h3 class="text-base font-semibold text-white">{spot.name}</h3>
+                {spot.level && (
+                  <span class={`shrink-0 text-[10px] font-semibold uppercase tracking-wider rounded-full border px-2.5 py-0.5 ${getLevelColor(spot.level)}`}>
+                    {spot.level}
+                  </span>
+                )}
+              </div>
+              {(spot.type || spot.breakType) && (
+                <p class="text-[11px] uppercase tracking-wider text-white/25 mb-3">{spot.type || spot.breakType}</p>
               )}
-              {spot.type && (
-                <span class="text-white/30 bg-white/5 text-[10px] uppercase tracking-wider rounded-full px-2.5 py-0.5">
-                  {spot.type}
-                </span>
+              {(spot.description || spot.desc) && (
+                <p class="text-sm text-white/50 leading-relaxed">{spot.description || spot.desc}</p>
               )}
             </div>
-            {spot.description && (
-              <p class="text-sm text-white/50 leading-relaxed">{spot.description}</p>
-            )}
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>

@@ -6,15 +6,18 @@ import AboutSection from "@/components/sections/AboutSection.astro";
 import BlogFeed from "@/components/sections/BlogFeed";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import SocialGrid from "@/components/sections/SocialGrid.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import { getHomepage } from "@/lib/sanity-data";
 
 const hp = await getHomepage("de");
 const heroTagline = hp?.heroTagline || "Rapture Surfcamps";
 const heroTitle = hp?.heroTitle || "Alles was zählt ist jetzt.";
 const heroSubtitle = hp?.heroSubtitle || "Einzigartiges Surfcamp-Erlebnis an den besten Surfspots!";
+const blocks = hp?.pageBuilder;
+const hasSanityBlocks = blocks?.length > 0;
 ---
 
-<BaseLayout showWheel>
+<BaseLayout>
   <Hero
     tagline={heroTagline}
     title={heroTitle}
@@ -23,14 +26,28 @@ const heroSubtitle = hp?.heroSubtitle || "Einzigartiges Surfcamp-Erlebnis an den
     titleSize="large"
     fullHeight
   />
-  <DestinationGrid client:visible />
+  <DestinationGrid
+    client:visible
+    heading={hp?.destinationHeading || "Wähle dein Reiseziel"}
+    destinations={hp?.featuredDestinations}
+  />
   <AboutSection
     heading={hp?.aboutHeading || "Wir sind ein Netzwerk von 8 einzigartigen Surfcamps in 5 Ländern auf 4 Kontinenten. In den letzten 21 Jahren haben wir mehr als 85.000 Menschen aus aller Welt geholfen, surfen zu lernen und die besten Wellen zu finden."}
     subtext={hp?.aboutSubtext || "Surfe die Welt und besuche uns in"}
     linkText={hp?.aboutLinkText || "Mehr über uns erfahren"}
     aboutHref="/de/about"
   />
-  <BlogFeed client:visible />
-  <StatsSection />
-  <SocialGrid />
+  {hasSanityBlocks && <BlockRenderer blocks={blocks} />}
+  <BlogFeed
+    client:visible
+    heading="Neueste Beiträge"
+    viewAllText="Alle anzeigen"
+    blogBasePath="/de/blog"
+  />
+  <StatsSection stats={hp?.stats} />
+  <SocialGrid
+    heading="Entdecke unseren Social Feed"
+    consentText="Dieser Inhalt wird von einem Drittanbieter bereitgestellt. Um unseren Social-Media-Feed anzuzeigen, akzeptiere bitte Marketing-Cookies."
+    consentButton="Cookie-Einstellungen verwalten"
+  />
 </BaseLayout>
