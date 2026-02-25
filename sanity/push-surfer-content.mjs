@@ -3,10 +3,9 @@
  * Run: node sanity/push-surfer-content.mjs
  */
 
-const PROJECT_ID = "ypmt1bmc";
-const DATASET = "production";
-const TOKEN =
-  "skUqNEuGlMYcr8wHjbNVb8Zc6xU8ARLIUCvCY4XEhJdr19TVvuaAoUBjQ2IWoVL4pb5an0AqWLEGI87khdaQGNNlPDuPuhos7HRUoGAHH6HtPmaTbzNYfoaXWISiDX4bbnR4E4jv6E5j229fwTv0E4yXzYDdevzqNgpnwulzMz6wn1oQuB0A";
+const PROJECT_ID = process.env.PUBLIC_SANITY_PROJECT_ID || "ypmt1bmc";
+const DATASET = process.env.PUBLIC_SANITY_DATASET || "production";
+const TOKEN = process.env.SANITY_WRITE_TOKEN;
 const DOC_ID = "country-bali";
 
 let keyCounter = 0;
