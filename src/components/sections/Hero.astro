@@ -39,6 +39,13 @@ const titleClasses = titleSize === "large"
   : "text-4xl sm:text-6xl md:text-7xl lg:text-8xl";
 
 const hasVideo = !!backgroundVideo;
+const videoSources = hasVideo
+  ? [
+      { src: `${backgroundVideo}?v=hevc`, type: "video/mp4; codecs=hvc1" },
+      { src: `${backgroundVideo}?v=vp9`, type: "video/webm; codecs=vp9" },
+      { src: backgroundVideo, type: "video/mp4" },
+    ]
+  : [];
 const images = backgroundImages && backgroundImages.length > 1
   ? backgroundImages
   : [backgroundImage];
@@ -57,7 +64,9 @@ const hasRotation = !hasVideo && images.length > 1;
       class="absolute inset-0 h-full w-full object-cover"
       poster={videoPoster || backgroundImage}
     >
-      <source src={backgroundVideo} type="video/mp4" />
+      {videoSources.map(({ src, type }) => (
+        <source src={src} type={type} />
+      ))}
     </video>
   ) : hasRotation ? (
     <div class="hero-slideshow absolute inset-0" data-interval={rotationInterval}>
