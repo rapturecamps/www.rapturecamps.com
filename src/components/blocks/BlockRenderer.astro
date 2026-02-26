@@ -2,6 +2,7 @@
 import ContentBlock from "@/components/sections/ContentBlock.astro";
 import ContentBlockGrid from "@/components/sections/ContentBlockGrid.astro";
 import ContentBlockVideo from "@/components/sections/ContentBlockVideo.astro";
+import ContentBlockImageCarousel from "@/components/sections/ContentBlockImageCarousel.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
@@ -60,7 +61,7 @@ function renderSpans(children: any[], markDefs: any[] = []): string {
       const def = markDefs.find((d: any) => d._key === m);
       if (def?._type === "link") {
         const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
-        t = `<a href="${def.href}"${rel}>${t}</a>`;
+        t = `<a href="${def.href}"${rel} class="text-ocean-light underline decoration-ocean-light/40 underline-offset-2 hover:decoration-ocean-light transition-colors">${t}</a>`;
       }
     }
     return t;
@@ -221,6 +222,22 @@ function portableTextToHtml(body: any): string {
         videoType={block.videoType || "youtube"}
         videoSrc={block.videoId || ""}
         videoPoster={block.resolvedVideoPosterUrl}
+        reverse={block.reverse || false}
+        background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+        headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}
+      />;
+    }
+
+    if (type === "contentBlockImageCarousel") {
+      const body = portableTextToHtml(block.body);
+      const images = (block.images || []).map((img: any) => ({
+        src: img.resolvedUrl || "",
+        alt: img.resolvedAlt || img.alt || "",
+      }));
+      return <ContentBlockImageCarousel
+        heading={block.heading || ""}
+        body={body}
+        images={images}
         reverse={block.reverse || false}
         background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
         headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}

@@ -113,6 +113,7 @@ export default defineType({
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },
+        { type: "contentBlockImageCarousel" },
         { type: "imageGrid" },
         { type: "imageBreak" },
         { type: "imageCarousel" },

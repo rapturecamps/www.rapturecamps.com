@@ -18,6 +18,7 @@ import videoTestimonialSet from "./videoTestimonialSet";
 import contentBlock from "./blocks/contentBlock";
 import contentBlockGrid from "./blocks/contentBlockGrid";
 import contentBlockVideo from "./blocks/contentBlockVideo";
+import contentBlockImageCarousel from "./blocks/contentBlockImageCarousel";
 import imageGrid from "./blocks/imageGrid";
 import imageBreak from "./blocks/imageBreak";
 import imageCarousel from "./blocks/imageCarousel";
@@ -72,6 +73,7 @@ export const schemaTypes = [
   contentBlock,
   contentBlockGrid,
   contentBlockVideo,
+  contentBlockImageCarousel,
   imageGrid,
   imageBreak,
   imageCarousel,

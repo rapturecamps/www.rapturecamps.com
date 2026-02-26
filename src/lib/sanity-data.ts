@@ -278,6 +278,11 @@ function mergeWithHardcoded(sanityCamp: any): Destination {
     image: sanityCamp.image || hardcoded?.image || "",
     location: sanityCamp.location || hardcoded?.location || "",
     tagline: sanityCamp.tagline || hardcoded?.tagline,
+    introText: sanityCamp.introText || hardcoded?.introText,
+    surfLevels: sanityCamp.surfLevels || hardcoded?.surfLevels,
+    minStay: sanityCamp.minStay || hardcoded?.minStay,
+    groupSize: sanityCamp.groupSize || hardcoded?.groupSize,
+    spokenLanguages: sanityCamp.spokenLanguages || hardcoded?.spokenLanguages,
     rating: sanityCamp.rating ?? hardcoded?.rating,
     reviewCount: sanityCamp.reviewCount ?? hardcoded?.reviewCount,
     amenities: sanityCamp.amenities?.length

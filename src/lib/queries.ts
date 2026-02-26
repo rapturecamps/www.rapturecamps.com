@@ -37,7 +37,7 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
   },
   pageBuilder[] {
     ...,
-    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid"] => {
+    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid", "contentBlockImageCarousel"] => {
       ...,
       images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText }
     },
@@ -442,7 +442,7 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
       "url": asset->url,
       "altText": asset->altText
     },
-    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid"] => {
+    _type in ["imageGrid", "imageCarousel", "imageGallery", "contentBlockGrid", "contentBlockImageCarousel"] => {
       ...,
       images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText }
     },

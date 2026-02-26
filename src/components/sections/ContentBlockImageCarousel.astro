@@ -1,0 +1,206 @@
+---
+import { responsiveSrc } from "@/lib/image-utils";
+
+interface CarouselImage {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  heading: string;
+  body: string;
+  images: CarouselImage[];
+  reverse?: boolean;
+  background?: "dark" | "dark-lighter";
+  headingTag?: "h1" | "h2" | "h3" | "h4";
+}
+
+const {
+  heading,
+  body,
+  images,
+  reverse = false,
+  background = "dark",
+  headingTag = "h2",
+} = Astro.props;
+
+const HeadingTag = headingTag;
+const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
+const uid = "cbic-" + Math.random().toString(36).slice(2, 8);
+---
+
+<section class:list={["py-16 sm:py-20", bgClass]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    {rImages.length > 0 ? (
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-x-16 lg:gap-y-4">
+        <HeadingTag
+          class:list={[
+            "text-2xl sm:text-3xl lg:text-4xl font-semibold text-white",
+            "lg:row-start-1 lg:self-end lg:pb-0",
+            reverse ? "lg:col-start-2" : "lg:col-start-1",
+          ]}
+        >{heading}</HeadingTag>
+
+        <div class:list={[
+          "relative",
+          "lg:row-start-1 lg:row-span-2 lg:self-center",
+          reverse ? "lg:col-start-1" : "lg:col-start-2",
+        ]}>
+          <div class="cbic-wrap relative group rounded-xl overflow-hidden" data-uid={uid}>
+            <div class="cbic-slider flex overflow-x-auto scroll-smooth snap-x snap-mandatory cbic-no-scrollbar" style="-webkit-overflow-scrolling: touch;">
+              {rImages.map((img, i) => (
+                <div class="cbic-slide flex-shrink-0 w-full snap-center" data-index={i}>
+                  <div class="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={img.src}
+                      srcset={img.srcset}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      alt={img.alt}
+                      class="absolute inset-0 h-full w-full object-cover"
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding={i === 0 ? "sync" : "async"}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {rImages.length > 1 && (
+              <>
+                <button
+                  class="cbic-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+                  aria-label="Previous image"
+                >
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button
+                  class="cbic-next absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+                  aria-label="Next image"
+                >
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+
+                <div class="absolute top-3 right-3 z-20 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-1">
+                  <span class="cbic-counter text-[11px] text-white/80 font-medium tabular-nums">1 / {rImages.length}</span>
+                </div>
+              </>
+            )}
+          </div>
+
+          {rImages.length > 1 && (
+            <div class="cbic-dots flex items-center justify-center gap-1.5 mt-3" data-uid={uid}>
+              {rImages.map((_, i) => (
+                <button
+                  class:list={["cbic-dot h-1.5 rounded-full transition-all duration-300", i === 0 ? "w-5 bg-white/70" : "w-1.5 bg-white/20"]}
+                  data-index={i}
+                  aria-label={`Go to image ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div class:list={[
+          "text-base text-white/50 leading-relaxed space-y-4",
+          "lg:row-start-2 lg:self-start",
+          reverse ? "lg:col-start-2" : "lg:col-start-1",
+        ]} set:html={body} />
+      </div>
+    ) : (
+      <div>
+        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</HeadingTag>
+        <div class="text-base text-white/50 leading-relaxed space-y-4" set:html={body} />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .cbic-no-scrollbar::-webkit-scrollbar { display: none; }
+  .cbic-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @media (hover: none) {
+    .cbic-prev, .cbic-next { opacity: 1; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll(".cbic-wrap").forEach(function (wrap) {
+    var slider = wrap.querySelector(".cbic-slider");
+    if (!slider) return;
+
+    var slides = wrap.querySelectorAll(".cbic-slide");
+    if (slides.length < 2) return;
+
+    var uid = wrap.getAttribute("data-uid");
+    var dotsContainer = document.querySelector('.cbic-dots[data-uid="' + uid + '"]');
+    var allDots = dotsContainer ? dotsContainer.querySelectorAll(".cbic-dot") : [];
+    var counterEl = wrap.querySelector(".cbic-counter");
+    var total = slides.length;
+    var current = 0;
+
+    function goTo(idx) {
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      slides[idx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    }
+
+    function updateIndicators(idx) {
+      current = idx;
+      if (counterEl) counterEl.textContent = (idx + 1) + " / " + total;
+      allDots.forEach(function (dot, i) {
+        if (i === idx) {
+          dot.classList.remove("w-1.5", "bg-white/20");
+          dot.classList.add("w-5", "bg-white/70");
+        } else {
+          dot.classList.remove("w-5", "bg-white/70");
+          dot.classList.add("w-1.5", "bg-white/20");
+        }
+      });
+    }
+
+    var scrollTimer;
+    slider.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var sliderRect = slider.getBoundingClientRect();
+        var center = sliderRect.left + sliderRect.width / 2;
+        var closest = 0;
+        var closestDist = Infinity;
+        slides.forEach(function (slide, i) {
+          var rect = slide.getBoundingClientRect();
+          var dist = Math.abs(rect.left + rect.width / 2 - center);
+          if (dist < closestDist) { closestDist = dist; closest = i; }
+        });
+        if (closest !== current) updateIndicators(closest);
+      }, 60);
+    });
+
+    wrap.querySelector(".cbic-prev")?.addEventListener("click", function () { goTo(current - 1); });
+    wrap.querySelector(".cbic-next")?.addEventListener("click", function () { goTo(current + 1); });
+
+    allDots.forEach(function (dot) {
+      dot.addEventListener("click", function () {
+        var idx = parseInt(dot.getAttribute("data-index"), 10);
+        goTo(idx);
+      });
+    });
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    slider.addEventListener("touchstart", function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    slider.addEventListener("touchend", function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+  });
+})();
+</script>

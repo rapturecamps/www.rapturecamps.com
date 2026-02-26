@@ -129,6 +129,7 @@ export default defineType({
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },
+        { type: "contentBlockImageCarousel" },
       ],
     }),
     defineField({
