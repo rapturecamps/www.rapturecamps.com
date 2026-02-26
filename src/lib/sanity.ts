@@ -47,3 +47,29 @@ export function sanityImageProps(
  * Extend as needed when adding custom block types.
  */
 export type { SanityImageSource };
+
+export const BUNNY_CDN_PULL_ZONE = "vz-79cee76e-e6d.b-cdn.net";
+export const BUNNY_STREAM_LIBRARY_ID = "605576";
+
+export function bunnyVideoUrl(videoId: string, resolution = "720p") {
+  return `https://${BUNNY_CDN_PULL_ZONE}/${videoId}/play_${resolution}.mp4`;
+}
+
+export function bunnyThumbnailUrl(videoId: string) {
+  return `https://${BUNNY_CDN_PULL_ZONE}/${videoId}/thumbnail.jpg`;
+}
+
+export function bunnyEmbedUrl(videoId: string, options: {
+  autoplay?: boolean;
+  loop?: boolean;
+  muted?: boolean;
+} = {}) {
+  const params = new URLSearchParams({
+    autoplay: String(options.autoplay ?? false),
+    preload: "true",
+    responsive: "true",
+  });
+  if (options.loop) params.set("loop", "true");
+  if (options.muted) params.set("muted", "true");
+  return `https://iframe.mediadelivery.net/embed/${BUNNY_STREAM_LIBRARY_ID}/${videoId}?${params}`;
+}

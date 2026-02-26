@@ -21,6 +21,7 @@ export default defineType({
           { title: "YouTube", value: "youtube" },
           { title: "Vimeo", value: "vimeo" },
           { title: "Wistia", value: "wistia" },
+          { title: "Bunny CDN Stream", value: "bunny" },
           { title: "File (MP4)", value: "file" },
         ],
       },
@@ -30,7 +31,7 @@ export default defineType({
       name: "videoId",
       title: "Video ID / URL",
       type: "string",
-      description: "YouTube/Vimeo/Wistia ID, or MP4 URL",
+      description: "YouTube/Vimeo/Wistia/Bunny CDN video ID, or MP4 URL for File type",
       validation: (r) => r.required(),
     }),
     defineField({

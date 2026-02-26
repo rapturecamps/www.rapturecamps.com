@@ -40,7 +40,7 @@ interface Props {
 const { blocks = [], campData, h1BlockIndex } = Astro.props;
 
 const ASPECT_MAP = { "16/9": "16:9", "4/3": "4:3", "3/2": "3:2", "1/1": "1:1" } as Record<string, string>;
-const VIDEO_TYPE_MAP = { youtube: "youtube", vimeo: "vimeo", wistia: "wistia", file: "file" } as Record<string, string>;
+const VIDEO_TYPE_MAP = { youtube: "youtube", vimeo: "vimeo", wistia: "wistia", bunny: "bunny", file: "file" } as Record<string, string>;
 
 function getLayoutClasses(block: any): string {
   const classes: string[] = [];
@@ -98,7 +98,7 @@ function portableTextToHtml(body: any): string {
       continue;
     }
 
-    if (style === "h2") html += `<h2>${text}</h2>`;
+    if (style === "h2") html += `<h2 class="text-xl sm:text-2xl font-semibold text-white mt-8 mb-3">${text}</h2>`;
     else if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
     else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
     else if (style === "blockquote") html += `<blockquote class="border-l-2 border-ocean-light pl-4 italic">${text}</blockquote>`;

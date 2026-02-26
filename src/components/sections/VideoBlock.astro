@@ -1,7 +1,9 @@
 ---
+import { bunnyEmbedUrl } from "@/lib/sanity";
+
 export interface Props {
-  /** "file" for direct MP4/WebM URLs, or "youtube" | "vimeo" | "wistia" */
-  type: "file" | "youtube" | "vimeo" | "wistia";
+  /** "file" for direct MP4/WebM URLs, "bunny" for Bunny CDN Stream, or "youtube" | "vimeo" | "wistia" */
+  type: "file" | "bunny" | "youtube" | "vimeo" | "wistia";
   /** File URL, YouTube video ID, Vimeo video ID, or Wistia video ID */
   src: string;
   /** Optional heading above the video */
@@ -50,6 +52,8 @@ const aspectClass: Record<string, string> = {
 
 const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const ratio = aspectClass[aspect] || "aspect-video";
+
+const isBunny = type === "bunny";
 
 function youtubeEmbedUrl(id: string) {
   const params = new URLSearchParams({
@@ -108,6 +112,17 @@ function wistiaEmbedUrl(id: string) {
           playsinline
           poster={poster}
           preload={poster ? "none" : "metadata"}
+        />
+      )}
+
+      {isBunny && (
+        <iframe
+          src={bunnyEmbedUrl(src, { autoplay, loop, muted: autoplay })}
+          class="absolute inset-0 h-full w-full"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          style="border: none;"
         />
       )}
 
