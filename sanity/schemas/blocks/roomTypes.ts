@@ -8,6 +8,12 @@ export default defineType({
   fieldsets: [blockLayoutFieldset],
   fields: [
     defineField({
+      name: "heading",
+      title: "Heading",
+      type: "string",
+      initialValue: "Room Types",
+    }),
+    defineField({
       name: "rooms",
       title: "Rooms",
       type: "array",
@@ -42,10 +48,66 @@ export default defineType({
               of: [{ type: "string" }],
             }),
             defineField({
+              name: "media",
+              title: "Media (Images & Videos)",
+              type: "array",
+              description: "Add images and/or Bunny CDN videos. Displayed as a carousel if more than one.",
+              of: [
+                {
+                  type: "object",
+                  name: "mediaImage",
+                  title: "Image",
+                  fields: [
+                    defineField({
+                      name: "image",
+                      title: "Image",
+                      type: "image",
+                      options: { hotspot: true },
+                      validation: (r) => r.required(),
+                    }),
+                  ],
+                  preview: {
+                    select: { media: "image" },
+                    prepare({ media }) {
+                      return { title: "Image", media };
+                    },
+                  },
+                },
+                {
+                  type: "object",
+                  name: "mediaVideo",
+                  title: "Bunny CDN Video",
+                  fields: [
+                    defineField({
+                      name: "videoId",
+                      title: "Bunny CDN Video ID",
+                      type: "string",
+                      description: "The video GUID from Bunny CDN Stream.",
+                      validation: (r) => r.required(),
+                    }),
+                    defineField({
+                      name: "poster",
+                      title: "Poster Image",
+                      type: "image",
+                      options: { hotspot: true },
+                      description: "Optional thumbnail shown before the video plays.",
+                    }),
+                  ],
+                  preview: {
+                    select: { videoId: "videoId" },
+                    prepare({ videoId }) {
+                      return { title: `Video: ${videoId || "—"}` };
+                    },
+                  },
+                },
+              ],
+            }),
+            defineField({
               name: "image",
-              title: "Image",
+              title: "Image (legacy)",
               type: "image",
               options: { hotspot: true },
+              hidden: true,
             }),
           ],
           preview: {
@@ -69,8 +131,9 @@ export default defineType({
     ...blockLayoutFields,
   ],
   preview: {
-    prepare() {
-      return { title: "Room Types", subtitle: "Accommodation" };
+    select: { heading: "heading" },
+    prepare({ heading }) {
+      return { title: heading || "Room Types", subtitle: "Accommodation" };
     },
   },
 });

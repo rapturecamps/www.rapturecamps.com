@@ -19,6 +19,14 @@ export default defineType({
       validation: (r) => r.required(),
     }),
     defineField({
+      name: "heroImages",
+      title: "Hero Images",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+      description:
+        "Background images for the hero section. Falls back to the camp's hero images if empty.",
+    }),
+    defineField({
       name: "heroTitle",
       title: "Hero Title",
       type: "string",
@@ -31,7 +39,6 @@ export default defineType({
       of: [
         { type: "roomTypes" },
         { type: "roomInclusions" },
-        { type: "roomFacilities" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

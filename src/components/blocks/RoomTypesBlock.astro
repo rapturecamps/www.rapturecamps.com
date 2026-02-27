@@ -1,10 +1,14 @@
 ---
+import { bunnyEmbedUrl } from "@/lib/sanity";
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   block: any;
 }
 
 const { block } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "Room Types";
 const rooms = block.rooms || [];
 
 const tagStyles: Record<string, string> = {
@@ -24,39 +28,105 @@ function getTagClass(tag: string): string {
   return tagStyles[tag] || "text-white/40 bg-white/5";
 }
 
-function getRoomImage(room: any, i: number): string {
-  const url = room.image?.asset?.url || room.image;
-  return url || fallbackImages[i % fallbackImages.length];
+function buildMediaItems(room: any, roomIndex: number): { type: "image" | "video"; src: string; alt?: string; poster?: string }[] {
+  const media = room.media;
+  if (media?.length) {
+    return media.map((m: any) => {
+      if (m._type === "mediaVideo") {
+        return { type: "video" as const, src: m.videoId || "", poster: m.resolvedPosterUrl };
+      }
+      return { type: "image" as const, src: m.resolvedUrl || "", alt: room.type || "Room" };
+    }).filter((m: any) => m.src);
+  }
+  const legacyUrl = room.resolvedImageUrl || room.image?.asset?.url;
+  if (legacyUrl) return [{ type: "image" as const, src: legacyUrl, alt: room.type || "Room" }];
+  return [{ type: "image" as const, src: fallbackImages[roomIndex % fallbackImages.length], alt: room.type || "Room" }];
 }
+
+const uid = Math.random().toString(36).slice(2, 8);
 ---
 
 <section class:list={["py-16 sm:py-20", bg]}>
   <div class="px-6 sm:px-12 lg:px-20">
-    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">Room Types</h2>
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10">{heading}</h2>
     <div class="space-y-8 lg:space-y-12">
       {rooms.map((room: any, i: number) => {
         const isOdd = i % 2 === 1;
+        const mediaItems = buildMediaItems(room, i);
+        const carouselId = `rtc-${uid}-${i}`;
+        const hasCarousel = mediaItems.length > 1;
         return (
           <div
             class:list={[
               "grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center",
-              isOdd ? "lg:flex-row-reverse" : "",
             ]}
           >
             <div class:list={[isOdd ? "lg:order-2" : ""]}>
-              <div class="aspect-[4/3] rounded-xl overflow-hidden relative">
-                <div
-                  class="room-fomo absolute inset-0 z-10"
-                  data-room-index={i}
-                  data-room-type={room.type || ""}
-                />
-                <img
-                  src={getRoomImage(room, i)}
-                  alt={room.type || "Room"}
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
+              <div class="rtc-wrap relative group rounded-xl overflow-hidden" data-uid={carouselId}>
+                <div class="rtc-slider flex overflow-x-auto scroll-smooth snap-x snap-mandatory rtc-no-scrollbar" style="-webkit-overflow-scrolling: touch;">
+                  {mediaItems.map((m, mi) => {
+                    const rImg = m.type === "image" ? responsiveSrc(m.src) : null;
+                    return (
+                      <div class="rtc-slide flex-shrink-0 w-full snap-center" data-index={mi}>
+                        <div class="relative aspect-[4/3] overflow-hidden">
+                          {m.type === "image" ? (
+                            <img
+                              src={m.src}
+                              srcset={rImg?.srcset}
+                              sizes="(min-width: 1024px) 50vw, 100vw"
+                              alt={m.alt || ""}
+                              class="absolute inset-0 h-full w-full object-cover"
+                              loading={mi === 0 ? "eager" : "lazy"}
+                              decoding={mi === 0 ? "sync" : "async"}
+                            />
+                          ) : (
+                            <iframe
+                              src={bunnyEmbedUrl(m.src)}
+                              class="absolute inset-0 h-full w-full"
+                              allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                              allowfullscreen
+                              loading="lazy"
+                              style="border: none;"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {hasCarousel && (
+                  <>
+                    <button
+                      class="rtc-prev absolute left-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+                      aria-label="Previous"
+                    >
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                    <button
+                      class="rtc-next absolute right-3 top-1/2 -translate-y-1/2 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-black/70"
+                      aria-label="Next"
+                    >
+                      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                    </button>
+                    <div class="absolute top-3 right-3 z-20 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-1">
+                      <span class="rtc-counter text-[11px] text-white/80 font-medium tabular-nums">1 / {mediaItems.length}</span>
+                    </div>
+                  </>
+                )}
               </div>
+
+              {hasCarousel && (
+                <div class="rtc-dots flex items-center justify-center gap-1.5 mt-3" data-uid={carouselId}>
+                  {mediaItems.map((_, di) => (
+                    <button
+                      class:list={["rtc-dot h-1.5 rounded-full transition-all duration-300", di === 0 ? "w-5 bg-white/70" : "w-1.5 bg-white/20"]}
+                      data-index={di}
+                      aria-label={`Go to slide ${di + 1}`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
             <div class:list={[isOdd ? "lg:order-1" : ""]}>
               <div class="flex flex-wrap items-center gap-2 mb-3">
@@ -92,3 +162,92 @@ function getRoomImage(room: any, i: number): string {
     </div>
   </div>
 </section>
+
+<style>
+  .rtc-no-scrollbar::-webkit-scrollbar { display: none; }
+  .rtc-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @media (hover: none) {
+    .rtc-prev, .rtc-next { opacity: 1; }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  document.querySelectorAll(".rtc-wrap").forEach(function (wrap) {
+    var slider = wrap.querySelector(".rtc-slider");
+    if (!slider) return;
+
+    var slides = wrap.querySelectorAll(".rtc-slide");
+    if (slides.length < 2) return;
+
+    var uid = wrap.getAttribute("data-uid");
+    var dotsContainer = document.querySelector('.rtc-dots[data-uid="' + uid + '"]');
+    var allDots = dotsContainer ? dotsContainer.querySelectorAll(".rtc-dot") : [];
+    var counterEl = wrap.querySelector(".rtc-counter");
+    var total = slides.length;
+    var current = 0;
+
+    function goTo(idx) {
+      if (idx < 0) idx = total - 1;
+      if (idx >= total) idx = 0;
+      slides[idx].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    }
+
+    function updateIndicators(idx) {
+      current = idx;
+      if (counterEl) counterEl.textContent = (idx + 1) + " / " + total;
+      allDots.forEach(function (dot, i) {
+        if (i === idx) {
+          dot.classList.remove("w-1.5", "bg-white/20");
+          dot.classList.add("w-5", "bg-white/70");
+        } else {
+          dot.classList.remove("w-5", "bg-white/70");
+          dot.classList.add("w-1.5", "bg-white/20");
+        }
+      });
+    }
+
+    var scrollTimer;
+    slider.addEventListener("scroll", function () {
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(function () {
+        var sliderRect = slider.getBoundingClientRect();
+        var center = sliderRect.left + sliderRect.width / 2;
+        var closest = 0;
+        var closestDist = Infinity;
+        slides.forEach(function (slide, i) {
+          var rect = slide.getBoundingClientRect();
+          var dist = Math.abs(rect.left + rect.width / 2 - center);
+          if (dist < closestDist) { closestDist = dist; closest = i; }
+        });
+        if (closest !== current) updateIndicators(closest);
+      }, 60);
+    });
+
+    wrap.querySelector(".rtc-prev")?.addEventListener("click", function () { goTo(current - 1); });
+    wrap.querySelector(".rtc-next")?.addEventListener("click", function () { goTo(current + 1); });
+
+    allDots.forEach(function (dot) {
+      dot.addEventListener("click", function () {
+        var idx = parseInt(dot.getAttribute("data-index"), 10);
+        goTo(idx);
+      });
+    });
+
+    var touchStartX = 0;
+    var touchStartY = 0;
+    slider.addEventListener("touchstart", function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    slider.addEventListener("touchend", function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+  });
+})();
+</script>

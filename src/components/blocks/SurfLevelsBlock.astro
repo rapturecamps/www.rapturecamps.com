@@ -13,14 +13,20 @@ const levels = block.levels || [
   { level: "Advanced", subtitle: "Experienced surfer looking for the best waves", features: ["Guided sessions at reef and point breaks", "Barrel riding techniques", "Aerial progression", "Swell and wind forecasting"], outcome: "Our instructors take you to the best breaks for the conditions — spots you'd never find on your own." },
 ];
 
-const levelStyles: Record<string, { dot: string; color: string; bgColor: string }> = {
-  Beginner: { dot: "bg-green-400", color: "text-green-400", bgColor: "bg-green-400/10" },
-  Intermediate: { dot: "bg-ocean-light", color: "text-ocean-light", bgColor: "bg-ocean-light/10" },
-  Advanced: { dot: "bg-amber-400", color: "text-amber-400", bgColor: "bg-amber-400/10" },
-};
+const indexedStyles = [
+  { dot: "bg-green-400", color: "text-green-400", bgColor: "bg-green-400/10" },
+  { dot: "bg-ocean-light", color: "text-ocean-light", bgColor: "bg-ocean-light/10" },
+  { dot: "bg-amber-400", color: "text-amber-400", bgColor: "bg-amber-400/10" },
+];
 
-function getLevelStyle(levelName: string) {
-  return levelStyles[levelName] || { dot: "bg-white/40", color: "text-white", bgColor: "bg-white/10" };
+const fallbackStyle = { dot: "bg-white/40", color: "text-white", bgColor: "bg-white/10" };
+
+function getLevelStyle(levelName: string, index: number) {
+  const lower = levelName.toLowerCase();
+  if (lower.includes("beginner") || lower.includes("level 1")) return indexedStyles[0];
+  if (lower.includes("intermediate") || lower.includes("level 2")) return indexedStyles[1];
+  if (lower.includes("advanced") || lower.includes("level 3")) return indexedStyles[2];
+  return indexedStyles[index] || fallbackStyle;
 }
 ---
 
@@ -30,7 +36,7 @@ function getLevelStyle(levelName: string) {
     <p class="text-base text-white/40 mb-10 max-w-2xl">{subtext}</p>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {levels.map((item: any, i: number) => {
-        const style = getLevelStyle(item.level);
+        const style = getLevelStyle(item.level, i);
         return (
           <div class="surf-level-card rounded-xl border border-white/5 bg-dark-lighter p-6 flex flex-col" data-level={i}>
             <div class="flex items-center justify-between">

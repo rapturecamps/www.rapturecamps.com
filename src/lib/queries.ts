@@ -58,6 +58,10 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
       ...,
       surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
     },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -156,6 +160,14 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
       "resolvedUrl": asset->url,
       "resolvedAlt": asset->altText
     },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
+    _type == "roomInclusions" => {
+      ...,
+      inclusions[] { ..., "resolvedIconUrl": icon.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -191,7 +203,7 @@ const campRefProjection = `
   "campSlug": camp->slug.current,
   "countryName": camp->country->name,
   "countrySlug": camp->country->slug.current,
-  "heroImages": camp->heroImages[].asset->url,
+  "campHeroImages": camp->heroImages[].asset->url,
   "bookingUrl": camp->bookingUrl,
   "latitude": camp->latitude,
   "longitude": camp->longitude,
@@ -203,6 +215,7 @@ const campRefProjection = `
 
 export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
+  "heroImages": heroImages[].asset->url,
   heroTitle,
   ${campRefProjection},
   pageBuilder[] {
@@ -213,6 +226,10 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
     surfSpots[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -237,6 +254,7 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
 
 export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
+  "heroImages": heroImages[].asset->url,
   heroTitle,
   ${campRefProjection},
   pageBuilder[] {
@@ -246,7 +264,23 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
     "resolvedPosterUrl": poster.asset->url,
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
-    rooms[] { ..., "resolvedImageUrl": image.asset->url },
+    rooms[] {
+      ...,
+      "resolvedImageUrl": image.asset->url,
+      media[] {
+        ...,
+        _type == "mediaImage" => { ..., "resolvedUrl": image.asset->url },
+        _type == "mediaVideo" => { ..., "resolvedPosterUrl": poster.asset->url }
+      }
+    },
+    _type == "roomInclusions" => {
+      ...,
+      inclusions[] { ..., "resolvedIconUrl": icon.asset->url }
+    },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -271,6 +305,7 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
 
 export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
   _id,
+  "heroImages": heroImages[].asset->url,
   heroTitle,
   ${campRefProjection},
   pageBuilder[] {
@@ -281,6 +316,10 @@ export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current =
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
     meals[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -379,6 +418,10 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
       "resolvedUrl": asset->url,
       "resolvedAlt": asset->altText
     },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
     _type == "videoTestimonials" => {
       ...,
       videos[] { ..., "posterImageUrl": posterImage.asset->url },
@@ -458,6 +501,10 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
     _type == "contentBlockVideo" => {
       ...,
       "resolvedVideoPosterUrl": videoPoster.asset->url
+    },
+    _type == "inclusionsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
     },
     _type == "ctaSection" => {
       ...,

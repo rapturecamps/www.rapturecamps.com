@@ -21,7 +21,9 @@ const countryTitle = roomsPage?.countryName || country!.split("-").map((w) => w.
 const bookingUrl = roomsPage?.bookingUrl || campData?.bookingUrl || `https://bookings.rapturecamps.com/en/product/${country}-${camp}-surf-stay`;
 const basePath = `/surfcamp/${country}/${camp}`;
 
-const blocks = roomsPage?.pageBuilder;
+const allBlocks = roomsPage?.pageBuilder || [];
+const contentBlocks = allBlocks.filter((b: any) => b._type !== "ctaSection");
+const ctaBlock = allBlocks.find((b: any) => b._type === "ctaSection");
 ---
 
 <CampLayout
@@ -30,18 +32,16 @@ const blocks = roomsPage?.pageBuilder;
   basePath={basePath}
   activePage="rooms"
   bookingUrl={bookingUrl}
-  heroImages={roomsPage?.heroImages || campData?.heroImages}
+  heroImages={roomsPage?.heroImages?.length ? roomsPage.heroImages : (roomsPage?.campHeroImages || campData?.heroImages)}
   heroTitle={roomsPage?.heroTitle}
   title={roomsPage?.seo?.metaTitle || `Rooms at ${campTitle} | Rapture Surfcamps`}
   description={roomsPage?.seo?.metaDescription || `Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
 >
-  {blocks?.length ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
-  ) : (
-    <CTASection />
+  {contentBlocks.length > 0 && (
+    <BlockRenderer blocks={contentBlocks} campData={campData} />
   )}
 
-  <!-- Payment Methods (structural, not CMS-driven) -->
+  <!-- Payment Methods -->
   <section class="py-12 sm:py-16 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="flex flex-col items-center text-center">
@@ -62,6 +62,19 @@ const blocks = roomsPage?.pageBuilder;
       </div>
     </div>
   </section>
+
+  {ctaBlock ? (
+    <CTASection
+      heading={ctaBlock.heading}
+      text={ctaBlock.text}
+      buttonText={ctaBlock.buttonText}
+      buttonUrl={ctaBlock.buttonUrl || campData?.bookingUrl}
+      faqSlug={campData?.slug}
+      blogCategory={campData?.countrySlug}
+    />
+  ) : (
+    <CTASection />
+  )}
 
   <script is:inline>
   (function () {

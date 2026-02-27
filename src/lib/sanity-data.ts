@@ -264,7 +264,7 @@ function formatStatValue(value: number, suffix?: string): string {
   return String(value);
 }
 
-function mergeWithHardcoded(sanityCamp: any): Destination {
+function mergeWithHardcoded(sanityCamp: any): Destination & Record<string, any> {
   const hardcoded = hardcodedDestinations.find(
     (d) =>
       d.slug.endsWith(sanityCamp.slug) ||
@@ -272,6 +272,7 @@ function mergeWithHardcoded(sanityCamp: any): Destination {
   );
 
   return {
+    ...sanityCamp,
     name: sanityCamp.name || hardcoded?.name || "",
     country: sanityCamp.country || hardcoded?.country || "",
     slug: hardcoded?.slug || `/surfcamp/${sanityCamp.countrySlug}/${sanityCamp.slug}`,

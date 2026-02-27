@@ -42,7 +42,6 @@ import menuTable from "./blocks/menuTable";
 import dietaryOptions from "./blocks/dietaryOptions";
 import roomTypes from "./blocks/roomTypes";
 import roomInclusions from "./blocks/roomInclusions";
-import roomFacilities from "./blocks/roomFacilities";
 import imageGallery from "./blocks/imageGallery";
 import featureBlock from "./blocks/featureBlock";
 import elfsightReviews from "./blocks/elfsightReviews";
@@ -107,7 +106,6 @@ export const schemaTypes = [
   // Page builder blocks — rooms
   roomTypes,
   roomInclusions,
-  roomFacilities,
 
   // Objects
   seo,

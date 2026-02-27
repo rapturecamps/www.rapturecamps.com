@@ -27,9 +27,16 @@ export default defineType({
           type: "object",
           fields: [
             defineField({ name: "item", title: "Item", type: "string" }),
+            defineField({
+              name: "icon",
+              title: "Icon",
+              type: "image",
+              description: "SVG icon from the media library.",
+              options: { accept: "image/svg+xml,image/*" },
+            }),
           ],
           preview: {
-            select: { title: "item" },
+            select: { title: "item", media: "icon" },
           },
         },
       ],

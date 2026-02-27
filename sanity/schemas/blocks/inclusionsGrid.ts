@@ -21,10 +21,23 @@ export default defineType({
         {
           type: "object",
           fields: [
-            defineField({ name: "icon", title: "Icon Name", type: "string" }),
             defineField({ name: "label", title: "Label", type: "string" }),
+            defineField({
+              name: "iconImage",
+              title: "Icon",
+              type: "image",
+              description: "SVG icon from the media library.",
+              options: { accept: "image/svg+xml,image/*" },
+            }),
+            defineField({
+              name: "icon",
+              title: "Icon Path (legacy)",
+              type: "string",
+              description: "SVG path data — used as fallback if no icon image is set.",
+              hidden: ({ parent }: any) => !!parent?.iconImage,
+            }),
           ],
-          preview: { select: { title: "label" } },
+          preview: { select: { title: "label", media: "iconImage" } },
         },
       ],
     }),
