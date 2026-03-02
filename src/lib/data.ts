@@ -121,72 +121,13 @@ export const destinations: Destination[] = [
       "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
     ],
   },
-  {
-    name: "Banana Village",
-    country: "Morocco",
-    slug: "/surfcamp/morocco/banana-village",
-    image: "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=800&h=1000&fit=crop",
-    location: "Sidi Ifni",
-    tagline: "Intimate surf house with rooftop terrace and ocean panorama",
-    rating: 4.7,
-    reviewCount: 203,
-    amenities: ["surf-lessons", "yoga", "restaurant", "wifi"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/morocco-banana-village-surf-and-stay",
-    latitude: 29.38,
-    longitude: -10.17,
-    heroImages: [
-      "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1920&h=1080&fit=crop",
-    ],
-  },
-  {
-    name: "Playa Maderas",
-    country: "Nicaragua",
-    slug: "/surfcamp/nicaragua/maderas",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=1000&fit=crop",
-    location: "San Juan del Sur",
-    tagline: "Hilltop camp with infinity pool and glamping tents",
-    rating: 4.8,
-    reviewCount: 276,
-    amenities: ["pool", "surf-lessons", "yoga", "restaurant", "wifi", "bar"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-maderas-surf-stay",
-    latitude: 11.16,
-    longitude: -85.83,
-    elfsightId: "0e05f6aa-1dd8-4c38-9b40-529290504acf",
-    heroImages: [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1499002238440-d264edd596ec?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1920&h=1080&fit=crop",
-    ],
-  },
-  {
-    name: "Maderas Surf Resort",
-    country: "Nicaragua",
-    slug: "/surfcamp/nicaragua/maderas-surf-resort",
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=1000&fit=crop",
-    location: "Playa Maderas",
-    tagline: "Boutique resort with direct beach access",
-    rating: 4.7,
-    reviewCount: 134,
-    amenities: ["pool", "surf-lessons", "restaurant", "wifi", "bar"],
-    bookingUrl: "https://bookings.rapturecamps.com/en/product/nicaragua-surf-resort",
-    latitude: 11.16,
-    longitude: -85.83,
-    elfsightId: "0e05f6aa-1dd8-4c38-9b40-529290504acf",
-    heroImages: [
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?w=1920&h=1080&fit=crop",
-    ],
-  },
 ];
 
 export const stats: StatItem[] = [
   { label: "EST", value: "2003" },
   { label: "Happy Customers", value: "80k", prefix: "More than" },
   { label: "TripAdvisor Awards", value: "23" },
-  { label: "Destinations", value: "8" },
+  { label: "Destinations", value: "6" },
   { label: "Instagram Followers", value: "35k", prefix: "More than" },
 ];
 
@@ -194,8 +135,6 @@ export const countries = [
   { name: "Bali", slug: "bali", flag: "🇮🇩" },
   { name: "Costa Rica", slug: "costa-rica", flag: "🇨🇷" },
   { name: "Portugal", slug: "portugal", flag: "🇵🇹" },
-  { name: "Morocco", slug: "morocco", flag: "🇲🇦" },
-  { name: "Nicaragua", slug: "nicaragua", flag: "🇳🇮" },
 ];
 
 export const navigation = {
@@ -210,7 +149,5 @@ export const navigation = {
     { label: "Bali", href: "/surfcamp/bali" },
     { label: "Costa Rica", href: "/surfcamp/costa-rica" },
     { label: "Portugal", href: "/surfcamp/portugal" },
-    { label: "Morocco", href: "/surfcamp/morocco" },
-    { label: "Nicaragua", href: "/surfcamp/nicaragua" },
   ],
 };

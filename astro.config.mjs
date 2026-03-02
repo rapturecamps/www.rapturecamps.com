@@ -64,6 +64,5 @@ export default defineConfig({
     "/surfcamp/portugal/milfontes/": "/surfcamp/portugal/alentejo-milfontes",
     "/surfcamp/portugal/coxos-surf-villa/":
       "/surfcamp/portugal/ericeira-coxos-surf-villa",
-    "/surfcamp/nicaragua/playa-maderas/": "/surfcamp/nicaragua/maderas",
   },
 });
