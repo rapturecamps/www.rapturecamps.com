@@ -1,0 +1,208 @@
+---
+interface CardItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  block: {
+    category?: string;
+    heading?: string;
+    headingLevel?: string;
+    body?: any[];
+    cardTitle?: string;
+    cardItems?: CardItem[];
+    cardNote?: string;
+    reverse?: boolean;
+    background?: string;
+  };
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const reverse = block.reverse || false;
+const category = block.category || "";
+const headingLevel = block.headingLevel || "h2";
+
+const CATEGORY_DEFAULTS: Record<string, { title: string; items: CardItem[] }> = {
+  waveType: {
+    title: "Wave Summary",
+    items: [
+      { label: "Wave Type", value: "Exposed Reef Break (Right)" },
+      { label: "Size Range", value: "1ft – 1.5x Overhead" },
+      { label: "Best Section", value: "Inside Bowl / Barrel" },
+      { label: "Reef Depth", value: "Moderate (not shallow)" },
+      { label: "Hazards", value: "Strong currents, closeouts on larger swells" },
+    ],
+  },
+  skillLevel: {
+    title: "Skill Overview",
+    items: [
+      { label: "Recommended Level", value: "Confident Beginner+" },
+      { label: "Main Break", value: "Intermediate – Advanced" },
+      { label: "Coaching Available", value: "Yes, all levels" },
+      { label: "Beginner Options", value: "Jimbaran & nearby beach breaks" },
+      { label: "Best For", value: "Positioning & timing progression" },
+    ],
+  },
+  bestSeason: {
+    title: "Season Overview",
+    items: [
+      { label: "Peak Season", value: "April – October (Dry)" },
+      { label: "Swell Source", value: "Southern Hemisphere" },
+      { label: "Off-Season", value: "Less consistent, wind shifts" },
+      { label: "Year-Round Surfing", value: "Yes, multiple breaks nearby" },
+      { label: "Daily Spot Check", value: "By camp managers" },
+    ],
+  },
+  swellWind: {
+    title: "Swell & Wind",
+    items: [
+      { label: "Optimal Swell", value: "SW – W" },
+      { label: "Tide", value: "All stages (outgoing = stronger currents)" },
+      { label: "Offshore Wind", value: "Northerly (rare, early mornings best)" },
+      { label: "Best Window", value: "Dawn – mid morning glass" },
+      { label: "Backup Spots", value: "Catches swell others miss" },
+    ],
+  },
+  crowdFactor: {
+    title: "Crowd Overview",
+    items: [
+      { label: "Crowd Level", value: "5/10" },
+      { label: "Localism", value: "1/10" },
+      { label: "Access", value: "Cliff (deters casual visitors)" },
+      { label: "Camp Advantage", value: "2-min drive, early morning access" },
+      { label: "Atmosphere", value: "Welcoming" },
+    ],
+  },
+};
+
+const CATEGORY_COLORS: Record<string, { dot: string; title: string; border: string; noteBg: string }> = {
+  waveType:    { dot: "bg-sky-400",    title: "text-sky-400",    border: "border-sky-400/15",    noteBg: "bg-sky-400/5" },
+  skillLevel:  { dot: "bg-green-400",  title: "text-green-400",  border: "border-green-400/15",  noteBg: "bg-green-400/5" },
+  bestSeason:  { dot: "bg-amber-400",  title: "text-amber-400",  border: "border-amber-400/15",  noteBg: "bg-amber-400/5" },
+  swellWind:   { dot: "bg-violet-400", title: "text-violet-400", border: "border-violet-400/15", noteBg: "bg-violet-400/5" },
+  crowdFactor: { dot: "bg-rose-400",   title: "text-rose-400",   border: "border-rose-400/15",   noteBg: "bg-rose-400/5" },
+};
+
+const defaults = CATEGORY_DEFAULTS[category];
+const colors = CATEGORY_COLORS[category] || CATEGORY_COLORS.waveType;
+const heading = block.heading || "";
+const cardTitle = block.cardTitle || defaults?.title || "";
+const cardItems = block.cardItems?.length ? block.cardItems : defaults?.items || [];
+const cardNote = block.cardNote;
+
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel} class="text-ocean-light underline decoration-ocean-light/40 underline-offset-2 hover:decoration-ocean-light transition-colors">${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function bodyToHtml(blocks: any[]): string {
+  if (!Array.isArray(blocks)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of blocks) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) {
+      html += openList === "bullet" ? "</ul>" : "</ol>";
+      openList = null;
+    }
+    if (li) {
+      if (!openList) {
+        html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">';
+        openList = li;
+      }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    if (style === "h1") html += `<h1 class="text-2xl sm:text-3xl font-semibold text-white mt-8 mb-3">${text}</h1>`;
+    else if (style === "h2") html += `<h2 class="text-xl sm:text-2xl font-semibold text-white mt-8 mb-3">${text}</h2>`;
+    else if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
+const bodyHtml = block.body ? bodyToHtml(block.body) : "";
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-x-16 lg:gap-y-4">
+      {/* Heading — always first on mobile; text column on desktop */}
+      <div class:list={[reverse ? "lg:col-start-2" : "lg:col-start-1"]}>
+        {heading && (
+          headingLevel === "h1"
+            ? <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h1>
+            : headingLevel === "h3"
+              ? <h3 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h3>
+              : headingLevel === "h4"
+                ? <h4 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h4>
+                : <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
+        )}
+      </div>
+
+      {/* Card — after heading on mobile; right column spanning both rows on desktop */}
+      {cardItems.length > 0 && (
+        <div class:list={[
+          "lg:row-start-1 lg:row-span-2 lg:sticky lg:top-28",
+          reverse ? "lg:col-start-1" : "lg:col-start-2",
+        ]}>
+          <div class:list={["rounded-2xl border-t-2 border border-white/5 bg-dark-lighter/50 p-6", colors.border]}>
+            {cardTitle && (
+              <div class="flex items-center gap-2.5 mb-5">
+                <span class:list={["inline-block h-2 w-2 rounded-full", colors.dot]} />
+                <h3 class:list={["text-sm font-semibold uppercase tracking-wider", colors.title]}>{cardTitle}</h3>
+              </div>
+            )}
+            <div class="space-y-0">
+              {cardItems.map((item: CardItem, i: number) => (
+                <div class:list={[
+                  "flex justify-between items-center py-3",
+                  i < cardItems.length - 1 && "border-b border-white/5",
+                ]}>
+                  <span class="text-sm text-white/40">{item.label}</span>
+                  <span class="text-sm text-white font-medium text-right ml-4">{item.value}</span>
+                </div>
+              ))}
+            </div>
+            {cardNote && (
+              <div class:list={["mt-4 pt-4 border-t border-white/5 flex items-center gap-2 text-xs rounded-lg px-3 py-2.5 -mx-1", colors.title, colors.noteBg]}>
+                <svg class="h-3.5 w-3.5 shrink-0 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>{cardNote}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Body — after card on mobile; below heading in text column on desktop */}
+      <div class:list={[reverse ? "lg:col-start-2" : "lg:col-start-1"]}>
+        {bodyHtml ? (
+          <div class="text-base text-white/50 leading-relaxed space-y-4" set:html={bodyHtml} />
+        ) : (
+          <p class="text-base text-white/50 leading-relaxed">
+            Explore the surf conditions at this destination.
+          </p>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

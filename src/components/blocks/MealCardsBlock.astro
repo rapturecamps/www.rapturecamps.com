@@ -24,7 +24,7 @@ function getMealIcon(mealName: string): string {
 }
 
 function getMealImage(meal: any, i: number): string {
-  const url = meal.image?.asset?.url || meal.image;
+  const url = meal.resolvedImageUrl || meal.image?.asset?.url;
   return url || fallbackImages[i % fallbackImages.length];
 }
 ---

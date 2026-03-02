@@ -19,6 +19,7 @@ import SurfLevelsBlock from "./SurfLevelsBlock.astro";
 import SurfScheduleBlock from "./SurfScheduleBlock.astro";
 import SurfEquipmentBlock from "./SurfEquipmentBlock.astro";
 import SurfSeasonsBlock from "./SurfSeasonsBlock.astro";
+import SurfConditionsBlock from "./SurfConditionsBlock.astro";
 import ClimateInfoBlock from "./ClimateInfoBlock.astro";
 import FoodIntroBlock from "./FoodIntroBlock.astro";
 import MealCardsBlock from "./MealCardsBlock.astro";
@@ -124,6 +125,7 @@ function portableTextToHtml(body: any): string {
     if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
     if (type === "surfSeasons") return <SurfSeasonsBlock block={block} />;
     if (type === "climateInfo") return <ClimateInfoBlock block={block} />;
+    if (type === "surfConditions") return <SurfConditionsBlock block={block} />;
 
     if (type === "foodIntro") return <FoodIntroBlock block={block} />;
     if (type === "mealCards") return <MealCardsBlock block={block} />;

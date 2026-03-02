@@ -30,6 +30,11 @@ if (block.source === "library") {
 }
 
 faqs = faqs.filter((f) => f.question && f.answer);
+
+const VISIBLE_COUNT = 5;
+const visibleFaqs = faqs.slice(0, VISIBLE_COUNT);
+const hiddenFaqs = faqs.slice(VISIBLE_COUNT);
+const hasMore = hiddenFaqs.length > 0;
 ---
 
 {faqs.length > 0 && (
@@ -41,8 +46,8 @@ faqs = faqs.filter((f) => f.question && f.answer);
         {!subtitle && <div class="mb-12" />}
 
         <div class="space-y-0 divide-y divide-white/5">
-          {faqs.map((faq, i) => (
-            <details class="group py-5 first:pt-0 last:pb-0" data-faq-index={i}>
+          {visibleFaqs.map((faq, i) => (
+            <details class="group py-5 first:pt-0" data-faq-index={i}>
               <summary class="flex items-center justify-between cursor-pointer list-none select-none">
                 <h3 class="text-sm sm:text-base font-medium text-white pr-8 group-open:text-ocean-light transition-colors">{faq.question}</h3>
                 <span class="shrink-0 text-white/30 group-open:text-ocean-light transition-transform duration-300 group-open:rotate-45">
@@ -55,7 +60,59 @@ faqs = faqs.filter((f) => f.question && f.answer);
             </details>
           ))}
         </div>
+
+        {hasMore && (
+          <div class="faq-overflow" data-expanded="false">
+            <div class="faq-overflow-items divide-y divide-white/5 border-t border-white/5" style="display:none;">
+              {hiddenFaqs.map((faq, i) => (
+                <details class="group py-5" data-faq-index={VISIBLE_COUNT + i}>
+                  <summary class="flex items-center justify-between cursor-pointer list-none select-none">
+                    <h3 class="text-sm sm:text-base font-medium text-white pr-8 group-open:text-ocean-light transition-colors">{faq.question}</h3>
+                    <span class="shrink-0 text-white/30 group-open:text-ocean-light transition-transform duration-300 group-open:rotate-45">
+                      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+                    </span>
+                  </summary>
+                  <div class="pt-3 pr-12">
+                    <p class="text-sm text-white/55 leading-relaxed">{faq.answer}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+            <button class="faq-show-more mt-6 flex items-center gap-2 text-sm font-medium text-ocean-light hover:text-white transition-colors group">
+              <span class="faq-show-more-text">Show {hiddenFaqs.length} more questions</span>
+              <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 faq-show-more-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   </section>
 )}
+
+<script is:inline>
+(function () {
+  document.querySelectorAll(".faq-overflow").forEach(function (wrap) {
+    var btn = wrap.querySelector(".faq-show-more");
+    var items = wrap.querySelector(".faq-overflow-items");
+    var text = wrap.querySelector(".faq-show-more-text");
+    var icon = wrap.querySelector(".faq-show-more-icon");
+    if (!btn || !items) return;
+
+    btn.addEventListener("click", function () {
+      var expanded = wrap.getAttribute("data-expanded") === "true";
+      if (expanded) {
+        items.style.display = "none";
+        wrap.setAttribute("data-expanded", "false");
+        if (text) text.textContent = text.getAttribute("data-label") || "Show more questions";
+        if (icon) icon.style.transform = "";
+      } else {
+        if (!text.getAttribute("data-label")) text.setAttribute("data-label", text.textContent);
+        items.style.display = "";
+        wrap.setAttribute("data-expanded", "true");
+        if (text) text.textContent = "Show fewer questions";
+        if (icon) icon.style.transform = "rotate(180deg)";
+      }
+    });
+  });
+})();
+</script>

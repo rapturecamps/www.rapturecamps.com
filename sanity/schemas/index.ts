@@ -36,6 +36,7 @@ import surfSchedule from "./blocks/surfSchedule";
 import surfEquipment from "./blocks/surfEquipment";
 import surfSeasons from "./blocks/surfSeasons";
 import climateInfo from "./blocks/climateInfo";
+import surfConditions from "./blocks/surfConditions";
 import foodIntro from "./blocks/foodIntro";
 import mealCards from "./blocks/mealCards";
 import menuTable from "./blocks/menuTable";
@@ -96,6 +97,7 @@ export const schemaTypes = [
   surfEquipment,
   surfSeasons,
   climateInfo,
+  surfConditions,
 
   // Page builder blocks — food
   foodIntro,

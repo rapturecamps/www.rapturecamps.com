@@ -70,7 +70,6 @@ export interface Destination {
   image: string;
   location: string;
   tagline?: string;
-  introText?: string;
   surfLevels?: string;
   minStay?: string;
   groupSize?: string;

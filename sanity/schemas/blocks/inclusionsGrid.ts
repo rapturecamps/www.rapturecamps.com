@@ -41,6 +41,18 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: "background",
+      title: "Background",
+      type: "string",
+      options: {
+        list: [
+          { title: "Dark", value: "dark" },
+          { title: "Dark Lighter", value: "dark-lighter" },
+        ],
+      },
+      initialValue: "dark",
+    }),
     ...blockLayoutFields,
   ],
   preview: {

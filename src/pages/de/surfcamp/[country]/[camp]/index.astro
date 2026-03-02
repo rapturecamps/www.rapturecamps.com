@@ -54,7 +54,53 @@ const bookingUrl = campData.bookingUrl || `https://bookings.rapturecamps.com/de/
 const basePath = `/de/surfcamp/${country}/${camp}`;
 const rating = campData.rating || 4.7;
 const reviewCount = campData.reviewCount || 100;
-const tagline = campData.tagline || "Dein Zuhause fern von zuhause, direkt am Strand";
+const introHeading = campData?.introHeading;
+const introHeadingLevel = campData?.introHeadingLevel || "h2";
+
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel} class="text-ocean-light underline decoration-ocean-light/40 underline-offset-2 hover:decoration-ocean-light transition-colors">${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function portableTextToHtml(body: any): string {
+  if (typeof body === "string") return body.split("\n\n").map((p: string) => `<p>${p}</p>`).join("");
+  if (!Array.isArray(body)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of body) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) { html += openList === "bullet" ? "</ul>" : "</ol>"; openList = null; }
+    if (li) {
+      if (!openList) { html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">'; openList = li; }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    if (style === "h1") html += `<h1 class="text-2xl sm:text-3xl font-semibold text-white mt-8 mb-3">${text}</h1>`;
+    else if (style === "h2") html += `<h2 class="text-xl sm:text-2xl font-semibold text-white mt-8 mb-3">${text}</h2>`;
+    else if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
+const introHtml = portableTextToHtml(campData?.introBody);
 
 const highlights = [
   {
@@ -115,7 +161,6 @@ const subPages = [
 
 const blocks = (campData as any)?.pageBuilder;
 const hasSanityBlocks = blocks?.length > 0;
-const h1BlockIndex = blocks?.findIndex((b: any) => b._type === "contentBlock") ?? -1;
 
 ---
 
@@ -134,17 +179,8 @@ const h1BlockIndex = blocks?.findIndex((b: any) => b._type === "contentBlock") ?
 >
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-start">
-        <div class="lg:col-span-3">
-          <p class="text-sm text-ocean-light font-medium mb-4">{campData?.location || countryTitle}</p>
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{tagline}</h2>
-          <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-2xl">
-            {(campData?.introText || `Rapture Surf Camp ${campTitle} ist mehr als nur ein Surfcamp — es ist eine Gemeinschaft von Ozean-Liebhabern, ein Ort zum Abschalten und um sich auf das Wesentliche zu besinnen. Ob du zum ersten Mal auf einem Surfbrett stehst oder deinen tausendsten Barrel jagst — hier passiert es.\n\nGelegen in ${countryTitle}s berühmtester Surfregion bietet unser Camp tägliche Surfstunden, Yoga, fantastisches Essen und eine Crew von Gleichgesinnten aus aller Welt. Wir machen das seit 2003 — und haben alles perfektioniert.`).split(/\n\n+/).map((paragraph: string) => (
-              <p>{paragraph}</p>
-            ))}
-          </div>
-        </div>
-        <div class="lg:col-span-2">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-16 items-start">
+        <div class="lg:order-2">
           <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
             <div class="flex items-center gap-3 mb-5">
               <div class="flex items-center gap-1">
@@ -201,12 +237,26 @@ const h1BlockIndex = blocks?.findIndex((b: any) => b._type === "contentBlock") ?
             </a>
           </div>
         </div>
+        <div class="lg:order-1">
+          {introHeading && (
+            introHeadingLevel === "h1"
+              ? <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h1>
+              : introHeadingLevel === "h3"
+                ? <h3 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h3>
+                : introHeadingLevel === "h4"
+                  ? <h4 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h4>
+                  : <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h2>
+          )}
+          {introHtml && (
+            <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4" set:html={introHtml} />
+          )}
+        </div>
       </div>
     </div>
   </section>
 
   {hasSanityBlocks ? (
-    <BlockRenderer blocks={blocks} campData={campData} h1BlockIndex={h1BlockIndex >= 0 ? h1BlockIndex : undefined} />
+    <BlockRenderer blocks={blocks} campData={campData} />
   ) : (
     <>
       <ImageGrid

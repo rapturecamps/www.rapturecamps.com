@@ -278,8 +278,6 @@ function mergeWithHardcoded(sanityCamp: any): Destination & Record<string, any> 
     slug: hardcoded?.slug || `/surfcamp/${sanityCamp.countrySlug}/${sanityCamp.slug}`,
     image: sanityCamp.image || hardcoded?.image || "",
     location: sanityCamp.location || hardcoded?.location || "",
-    tagline: sanityCamp.tagline || hardcoded?.tagline,
-    introText: sanityCamp.introText || hardcoded?.introText,
     surfLevels: sanityCamp.surfLevels || hardcoded?.surfLevels,
     minStay: sanityCamp.minStay || hardcoded?.minStay,
     groupSize: sanityCamp.groupSize || hardcoded?.groupSize,

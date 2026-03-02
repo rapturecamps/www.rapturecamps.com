@@ -15,6 +15,7 @@ const sanityClient = createClient({
 const TRANSLATABLE_STRING_FIELDS = [
   "name",
   "tagline",
+  "introHeading",
   "location",
   "description",
   "heading",

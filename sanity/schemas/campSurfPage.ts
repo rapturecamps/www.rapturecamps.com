@@ -43,6 +43,7 @@ export default defineType({
         { type: "surfLevels" },
         { type: "surfSchedule" },
         { type: "surfEquipment" },
+        { type: "surfConditions" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

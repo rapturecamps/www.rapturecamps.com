@@ -51,6 +51,13 @@ export default defineType({
       hidden: ({ parent }) => parent?.source !== "custom",
     }),
     defineField({
+      name: "body",
+      title: "Body",
+      type: "array",
+      of: [{ type: "block" }],
+      description: "Optional rich text shown below the heading.",
+    }),
+    defineField({
       name: "bunnyLibraryId",
       title: "Bunny Library ID",
       type: "string",

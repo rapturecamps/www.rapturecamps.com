@@ -13,6 +13,7 @@ interface Props {
     source?: string;
     heading?: string;
     headingOverride?: string;
+    body?: any[];
     bunnyLibraryId?: string;
     bunnyPullZone?: string;
     videos?: VideoItem[];
@@ -35,6 +36,51 @@ const heading = (isLibrary ? block.headingOverride : null) || set.heading || "St
 const pullZone = set.bunnyPullZone || "";
 const videos = (set.videos || []).filter((v) => v.bunnyVideoId);
 const bgClass = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel} class="text-ocean-light underline decoration-ocean-light/40 underline-offset-2 hover:decoration-ocean-light transition-colors">${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function bodyToHtml(blocks: any[]): string {
+  if (!Array.isArray(blocks)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of blocks) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) {
+      html += openList === "bullet" ? "</ul>" : "</ol>";
+      openList = null;
+    }
+    if (li) {
+      if (!openList) {
+        html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">';
+        openList = li;
+      }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
+const bodyHtml = block.body ? bodyToHtml(block.body) : "";
 ---
 
 {videos.length > 0 && (
@@ -42,6 +88,9 @@ const bgClass = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-da
     <div class="px-6 sm:px-12 lg:px-20 mb-8 flex items-end justify-between gap-4">
       <div>
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</h2>
+        {bodyHtml && (
+          <div class="text-base text-white/50 leading-relaxed space-y-3 mt-3 max-w-3xl" set:html={bodyHtml} />
+        )}
       </div>
       <div class="hidden sm:flex items-center gap-2">
         <button
