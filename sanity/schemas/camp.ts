@@ -241,6 +241,8 @@ export default defineType({
       title: "Overview Page Content",
       type: "array",
       of: [
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },
@@ -253,6 +255,7 @@ export default defineType({
         { type: "videoTestimonials" },
         { type: "highlightsGrid" },
         { type: "inclusionsGrid" },
+        { type: "surfLevels" },
         { type: "surfSeasons" },
         { type: "climateInfo" },
         { type: "surfConditions" },

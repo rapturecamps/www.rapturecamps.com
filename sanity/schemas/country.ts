@@ -110,6 +110,8 @@ export default defineType({
       title: "Page Content",
       type: "array",
       of: [
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

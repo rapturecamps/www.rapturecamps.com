@@ -4,9 +4,10 @@ import { responsiveSrc } from "@/lib/image-utils";
 
 interface Props {
   block: any;
+  bookingUrl?: string;
 }
 
-const { block } = Astro.props;
+const { block, bookingUrl } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const heading = block.heading || "Room Types";
 const rooms = block.rooms || [];
@@ -152,6 +153,17 @@ const uid = Math.random().toString(36).slice(2, 8);
                       </div>
                     ))}
                   </div>
+                )}
+                {bookingUrl && (
+                  <a
+                    href={bookingUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 mt-5 rounded-full bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors w-fit"
+                  >
+                    Check Availability
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  </a>
                 )}
               </div>
             </div>

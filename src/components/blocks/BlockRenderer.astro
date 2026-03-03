@@ -29,6 +29,8 @@ import RoomTypesBlock from "./RoomTypesBlock.astro";
 import RoomInclusionsBlock from "./RoomInclusionsBlock.astro";
 import ImageGalleryBlock from "./ImageGalleryBlock.astro";
 import FeatureBlock from "./FeatureBlock.astro";
+import RichTextBlock from "./RichTextBlock.astro";
+import CardGridBlock from "./CardGridBlock.astro";
 import ElfsightReviewsBlock from "./ElfsightReviewsBlock.astro";
 import CampSubPagesBlock from "./CampSubPagesBlock.astro";
 
@@ -132,7 +134,7 @@ function portableTextToHtml(body: any): string {
     if (type === "menuTable") return <MenuTableBlock block={block} />;
     if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;
 
-    if (type === "roomTypes") return <RoomTypesBlock block={block} />;
+    if (type === "roomTypes") return <RoomTypesBlock block={block} bookingUrl={campData?.bookingUrl} />;
     if (type === "roomInclusions") return <RoomInclusionsBlock block={block} />;
 
     if (type === "featureBlock") return <FeatureBlock block={block} />;
@@ -183,6 +185,23 @@ function portableTextToHtml(body: any): string {
         caption={block.caption || ""}
         height={block.height === "sm" ? "short" : block.height === "lg" ? "tall" : "medium"}
       />;
+    }
+
+    if (type === "richText") {
+      const body = portableTextToHtml(block.body);
+      if (!block.heading && !body) return null;
+      return <RichTextBlock
+        heading={block.heading || ""}
+        headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}
+        body={body}
+        maxWidth={block.maxWidth || "4xl"}
+        background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
+      />;
+    }
+
+    if (type === "cardGrid") {
+      if (!(block.cards?.length)) return null;
+      return <CardGridBlock block={block} headingTag={isH1 ? "h1" : undefined} />;
     }
 
     if (type === "contentBlock") {

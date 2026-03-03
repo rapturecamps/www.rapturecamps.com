@@ -58,6 +58,10 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
       ...,
       surfSpots[] { ..., "resolvedImageUrl": image.asset->url }
     },
+    _type == "cardGrid" => {
+      ...,
+      cards[] { ..., "resolvedImageUrl": image.asset->url }
+    },
     _type == "inclusionsGrid" => {
       ...,
       items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
@@ -162,6 +166,7 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
       "resolvedUrl": asset->url,
       "resolvedAlt": asset->altText
     },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
     _type == "inclusionsGrid" => {
       ...,
       items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
@@ -228,6 +233,7 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
     surfSpots[] { ..., "resolvedImageUrl": image.asset->url },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
     _type == "inclusionsGrid" => {
       ...,
       items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
@@ -275,6 +281,7 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
         _type == "mediaVideo" => { ..., "resolvedPosterUrl": poster.asset->url }
       }
     },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
     _type == "roomInclusions" => {
       ...,
       inclusions[] { ..., "resolvedIconUrl": icon.asset->url }
@@ -318,6 +325,7 @@ export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current =
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
     meals[] { ..., "resolvedImageUrl": image.asset->url },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
     _type == "inclusionsGrid" => {
       ...,
       items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
@@ -420,6 +428,7 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
       "resolvedUrl": asset->url,
       "resolvedAlt": asset->altText
     },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
     _type == "inclusionsGrid" => {
       ...,
       items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
@@ -503,6 +512,10 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
     _type == "contentBlockVideo" => {
       ...,
       "resolvedVideoPosterUrl": videoPoster.asset->url
+    },
+    _type == "cardGrid" => {
+      ...,
+      cards[] { ..., "resolvedImageUrl": image.asset->url }
     },
     _type == "inclusionsGrid" => {
       ...,

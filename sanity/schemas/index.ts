@@ -15,6 +15,8 @@ import redirect from "./redirect";
 import popup from "./popup";
 import videoTestimonialSet from "./videoTestimonialSet";
 
+import richText from "./blocks/richText";
+import cardGrid from "./blocks/cardGrid";
 import contentBlock from "./blocks/contentBlock";
 import contentBlockGrid from "./blocks/contentBlockGrid";
 import contentBlockVideo from "./blocks/contentBlockVideo";
@@ -70,6 +72,8 @@ export const schemaTypes = [
   videoTestimonialSet,
 
   // Page builder blocks — shared
+  richText,
+  cardGrid,
   contentBlock,
   contentBlockGrid,
   contentBlockVideo,

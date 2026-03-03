@@ -126,6 +126,8 @@ export default defineType({
         { type: "elfsightReviews" },
         { type: "faqSection" },
         { type: "ctaSection" },
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

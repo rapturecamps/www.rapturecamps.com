@@ -1,0 +1,94 @@
+---
+interface Props {
+  block: any;
+  headingTag?: "h1" | "h2" | "h3";
+}
+
+const { block, headingTag } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const heading = block.heading || "";
+const HeadingTag = block.headingLevel || headingTag || "h2";
+const subtext = block.subtext || "";
+const cards = block.cards || [];
+const colSetting = block.columns || "auto";
+
+function hasAnyImages(items: any[]): boolean {
+  return items.some((c) => c.image?.asset?.url || c.resolvedImageUrl);
+}
+
+function getCardImage(card: any): string {
+  return card.resolvedImageUrl || card.image?.asset?.url || "";
+}
+
+const showImages = hasAnyImages(cards);
+
+const TAG_COLORS = [
+  { text: "text-ocean-light",  bg: "bg-ocean-light/10",  border: "border-ocean-light/20" },
+  { text: "text-green-400",    bg: "bg-green-400/10",    border: "border-green-400/20" },
+  { text: "text-amber-400",    bg: "bg-amber-400/10",    border: "border-amber-400/20" },
+  { text: "text-violet-400",   bg: "bg-violet-400/10",   border: "border-violet-400/20" },
+  { text: "text-rose-400",     bg: "bg-rose-400/10",     border: "border-rose-400/20" },
+  { text: "text-sky-400",      bg: "bg-sky-400/10",      border: "border-sky-400/20" },
+];
+
+const count = cards.length;
+const cols = colSetting !== "auto" ? colSetting : count >= 4 ? "4" : count === 2 ? "2" : "3";
+
+const gridClass: Record<string, string> = {
+  "2": "grid-cols-1 sm:grid-cols-2",
+  "3": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  "4": "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4",
+};
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    {(heading || subtext) && (
+      <div class="max-w-4xl mb-10">
+        {heading && (
+          <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-3">
+            {heading}
+          </HeadingTag>
+        )}
+        {subtext && <p class="text-base text-white/45 max-w-3xl leading-relaxed">{subtext}</p>}
+      </div>
+    )}
+
+    <div class:list={["grid gap-4", gridClass[cols] || gridClass["3"]]}>
+      {cards.map((card: any, i: number) => {
+        const img = showImages ? getCardImage(card) : "";
+        const tagColor = TAG_COLORS[i % TAG_COLORS.length];
+        return (
+          <div class="rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors group">
+            {showImages && img && (
+              <div class="aspect-[3/2] overflow-hidden">
+                <img
+                  src={img}
+                  alt={card.title || ""}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="p-5">
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <h3 class="text-base font-semibold text-white">{card.title}</h3>
+                {card.tag && (
+                  <span class={`shrink-0 text-[10px] font-semibold uppercase tracking-wider rounded-full border px-2.5 py-0.5 ${tagColor.text} ${tagColor.bg} ${tagColor.border}`}>
+                    {card.tag}
+                  </span>
+                )}
+              </div>
+              {card.subtitle && (
+                <p class="text-[11px] uppercase tracking-wider text-white/25 mb-3">{card.subtitle}</p>
+              )}
+              {card.body && (
+                <p class="text-sm text-white/50 leading-relaxed">{card.body}</p>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

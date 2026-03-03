@@ -39,6 +39,8 @@ export default defineType({
       of: [
         { type: "roomTypes" },
         { type: "roomInclusions" },
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

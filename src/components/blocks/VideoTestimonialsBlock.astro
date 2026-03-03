@@ -124,12 +124,18 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
               data-video-src={videoSrc}
             >
               <div class="relative aspect-[9/14]">
+                <div class="vt-fallback absolute inset-0 bg-gradient-to-br from-dark-lighter via-dark to-ocean/20">
+                  <div class="absolute inset-0 flex items-center justify-center opacity-[0.08]">
+                    <svg class="h-20 w-20 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
                 {poster && (
                   <img
                     src={poster}
                     alt={`Video review by ${v.guestName || "Guest"}`}
                     class="vt-poster absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
+                    onerror="this.remove()"
                   />
                 )}
 

@@ -1,0 +1,102 @@
+---
+interface Props {
+  heading?: string;
+  headingTag?: "h1" | "h2" | "h3";
+  body: string;
+  maxWidth?: "full" | "5xl" | "4xl" | "3xl";
+  background?: "dark" | "dark-lighter";
+}
+
+const {
+  heading,
+  headingTag = "h2",
+  body,
+  maxWidth = "4xl",
+  background = "dark",
+} = Astro.props;
+
+const HeadingTag = headingTag;
+const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+
+const widthClass: Record<string, string> = {
+  full: "",
+  "5xl": "max-w-5xl",
+  "4xl": "max-w-4xl",
+  "3xl": "max-w-3xl",
+};
+---
+
+<section class:list={["py-16 sm:py-20", bgClass]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class={widthClass[maxWidth] || ""}>
+      {heading && (
+        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-8">
+          {heading}
+        </HeadingTag>
+      )}
+      {body && (
+        <div class="rt-body text-base sm:text-lg text-white/50 leading-relaxed space-y-4" set:html={body} />
+      )}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .rt-body h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .rt-body h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .rt-body h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .rt-body h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .rt-body ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+  }
+  .rt-body ul li {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .rt-body ol {
+    list-style-type: decimal;
+    padding-left: 1.25rem;
+  }
+  .rt-body ol li {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .rt-body blockquote {
+    border-left: 2px solid var(--color-ocean-light, #38bdf8);
+    padding-left: 1rem;
+    font-style: italic;
+  }
+
+  .rt-body strong {
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
+</style>

@@ -41,6 +41,8 @@ export default defineType({
         { type: "mealCards" },
         { type: "menuTable" },
         { type: "dietaryOptions" },
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

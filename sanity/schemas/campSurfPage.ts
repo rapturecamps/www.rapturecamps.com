@@ -44,6 +44,8 @@ export default defineType({
         { type: "surfSchedule" },
         { type: "surfEquipment" },
         { type: "surfConditions" },
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },

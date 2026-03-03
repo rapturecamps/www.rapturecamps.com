@@ -131,6 +131,8 @@ export default defineType({
       type: "array",
       description: "Add content blocks below the main sections.",
       of: [
+        { type: "richText" },
+        { type: "cardGrid" },
         { type: "contentBlock" },
         { type: "contentBlockGrid" },
         { type: "contentBlockVideo" },
@@ -143,6 +145,7 @@ export default defineType({
         { type: "videoTestimonials" },
         { type: "highlightsGrid" },
         { type: "inclusionsGrid" },
+        { type: "surfLevels" },
         { type: "featureBlock" },
         { type: "faqSection" },
         { type: "ctaSection" },
