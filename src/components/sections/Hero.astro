@@ -52,9 +52,9 @@ const videoSources = hasVideo
     ]
   : [];
 const rawImages = backgroundImages && backgroundImages.length > 1
-  ? backgroundImages
-  : [backgroundImage];
-const images = rawImages.map((src) => resizeWidth(src, 1920));
+  ? backgroundImages.filter(Boolean)
+  : [backgroundImage].filter(Boolean);
+const images = rawImages.map((src) => resizeWidth(src, 1920)).filter(Boolean);
 const hasRotation = !hasVideo && images.length > 1;
 
 ---

@@ -42,7 +42,8 @@ function parseSanity(src: string) {
  * Preserves the original aspect ratio across all breakpoints.
  * For other URLs, returns the original src unchanged.
  */
-export function responsiveSrc(src: string, widths: number[] = [400, 800, 1200, 1920]) {
+export function responsiveSrc(src: string | null | undefined, widths: number[] = [400, 800, 1200, 1920]) {
+  if (!src) return { src: "", srcset: undefined, sizes: undefined };
   if (src.includes("images.unsplash.com")) {
     const { base, origW, origH } = parseUnsplash(src);
     const sep = base.includes("?") ? "&" : "?";
@@ -82,7 +83,8 @@ export function responsiveSrc(src: string, widths: number[] = [400, 800, 1200, 1
  * Rewrite an image URL to a specific width, preserving aspect ratio.
  * Works with both Unsplash and Sanity CDN URLs.
  */
-export function resizeWidth(src: string, width: number): string {
+export function resizeWidth(src: string | null | undefined, width: number): string {
+  if (!src) return "";
   if (src.includes("images.unsplash.com")) {
     const { base, origW, origH } = parseUnsplash(src);
     const sep = base.includes("?") ? "&" : "?";
