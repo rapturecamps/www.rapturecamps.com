@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   heading: string;
   body: string;
@@ -22,6 +24,7 @@ const {
 const HeadingTag = headingTag;
 
 const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const rImg = image ? responsiveSrc(image) : null;
 ---
 
 <section class:list={["py-16 sm:py-20", bgClass]}>
@@ -42,7 +45,7 @@ const bgClass = background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
           reverse ? "lg:col-start-1" : "lg:col-start-2",
         ]}>
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={image} alt={imageAlt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={rImg!.src} srcset={rImg!.srcset} sizes="(min-width: 1024px) 50vw, 100vw" alt={imageAlt} class="h-full w-full object-cover" loading="lazy" />
           </div>
         </div>
 

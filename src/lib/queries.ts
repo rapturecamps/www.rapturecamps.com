@@ -85,6 +85,8 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
   "heroImages": heroImages[].asset->url,
   heroTitle,
   heroTagline,
+  useHeroAsH1,
+  seoH1,
   seo
 }`;
 
@@ -197,7 +199,7 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
       "foodCard": { ...foodCard, "imageUrl": foodCard.image.asset->url }
     }
   },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     "slug": slug.current,
     language
@@ -254,7 +256,7 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
     }
   },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
   }
@@ -306,7 +308,7 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
     }
   },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
   }
@@ -346,7 +348,7 @@ export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current =
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
     }
   },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
   }
@@ -404,6 +406,8 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
   heroTagline,
   heroTitle,
   heroSubtitle,
+  useHeroAsH1,
+  seoH1,
   aboutHeading,
   aboutSubtext,
   aboutLinkText,
@@ -449,7 +453,7 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
     }
   },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
   }
@@ -527,9 +531,11 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
     }
   },
   publishedAt,
+  authorName,
+  authorUrl,
   tags,
   "categories": categories[]->{ name, "slug": slug.current },
-  seo,
+  seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     "slug": slug.current,
     language

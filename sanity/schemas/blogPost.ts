@@ -148,6 +148,26 @@ export default defineType({
       options: { layout: "tags" },
     }),
     defineField({
+      name: "topicCluster",
+      title: "Topic Cluster / Silo",
+      type: "reference",
+      to: [{ type: "country" }],
+      description:
+        "Assign this post to a country silo for internal linking. Leave empty for auto-detection based on content.",
+    }),
+    defineField({
+      name: "authorName",
+      title: "Author Name",
+      type: "string",
+      description: "Author of this post. Falls back to 'Rapture Surfcamps' if empty.",
+    }),
+    defineField({
+      name: "authorUrl",
+      title: "Author URL",
+      type: "url",
+      description: "Link to the author's profile or bio page (optional).",
+    }),
+    defineField({
       name: "publishedAt",
       title: "Published At",
       type: "datetime",

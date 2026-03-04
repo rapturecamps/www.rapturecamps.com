@@ -36,6 +36,8 @@ const ctaBlock = allBlocks.find((b: any) => b._type === "ctaSection");
   heroTitle={roomsPage?.heroTitle}
   title={roomsPage?.seo?.metaTitle || `Rooms at ${campTitle} | Rapture Surfcamps`}
   description={roomsPage?.seo?.metaDescription || `Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
+  ogImage={roomsPage?.seo?.ogImageUrl}
+  noindex={roomsPage?.seo?.noindex}
 >
   {contentBlocks.length > 0 && (
     <BlockRenderer blocks={contentBlocks} campData={campData} />

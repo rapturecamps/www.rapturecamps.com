@@ -34,6 +34,8 @@ const blocks = surfPage?.pageBuilder;
   heroTitle={surfPage?.heroTitle}
   title={surfPage?.seo?.metaTitle || `Surf at ${campTitle} | Rapture Surfcamps`}
   description={surfPage?.seo?.metaDescription || `Discover the surf spots, conditions, and lessons at Rapture Surf Camp ${campTitle} in ${countryTitle}.`}
+  ogImage={surfPage?.seo?.ogImageUrl}
+  noindex={surfPage?.seo?.noindex}
 >
   {blocks?.length ? (
     <BlockRenderer blocks={blocks} campData={campData} />

@@ -16,13 +16,14 @@ interface Props {
     reverse?: boolean;
     background?: string;
   };
+  headingTag?: "h1" | "h2" | "h3";
 }
 
-const { block } = Astro.props;
+const { block, headingTag } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const reverse = block.reverse || false;
 const category = block.category || "";
-const headingLevel = block.headingLevel || "h2";
+const headingLevel = headingTag || block.headingLevel || "h2";
 
 const CATEGORY_DEFAULTS: Record<string, { title: string; items: CardItem[] }> = {
   waveType: {

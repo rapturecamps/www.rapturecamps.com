@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   block: any;
 }
@@ -42,16 +44,23 @@ function getMealImage(meal: any, i: number): string {
               isOdd ? "lg:flex-row-reverse" : "",
             ]}
           >
-            <div class:list={["lg:col-span-2", isOdd ? "lg:order-2" : ""]}>
-              <div class="aspect-[4/3] rounded-xl overflow-hidden">
-                <img
-                  src={getMealImage(meal, i)}
-                  alt={meal.meal || "Meal"}
-                  class="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
+            {(() => {
+              const rImg = responsiveSrc(getMealImage(meal, i));
+              return (
+                <div class:list={["lg:col-span-2", isOdd ? "lg:order-2" : ""]}>
+                  <div class="aspect-[4/3] rounded-xl overflow-hidden">
+                    <img
+                      src={rImg.src}
+                      srcset={rImg.srcset}
+                      sizes="(min-width: 1024px) 40vw, 100vw"
+                      alt={meal.meal || "Meal"}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              );
+            })()}
             <div class:list={["lg:col-span-3", isOdd ? "lg:order-1" : ""]}>
               <div class="flex items-center gap-3 mb-3">
                 <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-ocean-light/10 text-ocean-light">

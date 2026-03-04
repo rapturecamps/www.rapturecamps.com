@@ -1,4 +1,4 @@
-import { defineConfig, defineField } from "sanity";
+import { defineConfig, defineField, definePlugin } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { media } from "sanity-plugin-media";
@@ -9,6 +9,14 @@ import {
 } from "@sanity/document-internationalization";
 import { schemaTypes } from "./sanity/schemas";
 import { TranslateAction } from "./sanity/actions/translateAction";
+import { GenerateMetaAction } from "./sanity/actions/generateMetaAction";
+import { SuggestLinksAction } from "./sanity/actions/suggestLinksAction";
+import { SeoScoreAction } from "./sanity/actions/seoScoreAction";
+import { SeoPublishAction } from "./sanity/actions/seoPublishAction";
+import { GenerateAltTextAction } from "./sanity/actions/generateAltTextAction";
+import { ContentBriefTool } from "./sanity/tools/ContentBriefTool";
+import { SeoDashboardTool } from "./sanity/tools/SeoDashboardTool";
+import { CompetitorTool } from "./sanity/tools/CompetitorTool";
 
 const LANGUAGES = [
   { id: "en", title: "English" },
@@ -265,6 +273,7 @@ export default defineConfig({
             S.documentTypeListItem("redirect").title("Redirects"),
             S.documentTypeListItem("popup").title("Popups"),
             S.documentTypeListItem("videoTestimonialSet").title("Video Testimonials"),
+            S.documentTypeListItem("seoInsight").title("SEO Audit History"),
             S.divider(),
             S.listItem()
               .title("Site Settings")
@@ -280,7 +289,7 @@ export default defineConfig({
                   "camp", "campSurfPage", "campRoomsPage", "campFoodPage",
                   "country", "blogPost", "blogCategory",
                   "faq", "faqCategory", "page", "homepage", "linkinBio",
-                  "siteSettings", "redirect", "popup", "videoTestimonialSet",
+                  "siteSettings", "redirect", "popup", "videoTestimonialSet", "seoInsight",
                 ].includes(item.getId() ?? "")
             ),
           ]);
@@ -292,18 +301,54 @@ export default defineConfig({
       schemaTypes: I18N_SCHEMA_TYPES,
     }),
     visionTool(),
+    definePlugin({
+      name: "seo-tools",
+      tools: [
+        {
+          name: "seo-dashboard",
+          title: "SEO Dashboard",
+          component: SeoDashboardTool,
+        },
+        {
+          name: "content-brief",
+          title: "Content Brief",
+          component: ContentBriefTool,
+        },
+        {
+          name: "competitor-analysis",
+          title: "Competitor Analysis",
+          component: CompetitorTool,
+        },
+      ],
+    })(),
   ],
   document: {
     actions: (prev, context) => {
-      if (I18N_SCHEMA_TYPES.includes(context.schemaType)) {
-        return [
-          ...prev,
-          useDeleteTranslationAction,
-          useDuplicateWithTranslationsAction,
-          TranslateAction,
-        ];
+      const SEO_TYPES = [
+        "camp", "campSurfPage", "campRoomsPage", "campFoodPage",
+        "country", "blogPost", "page", "homepage",
+      ];
+
+      let actions = [...prev];
+
+      // Replace default Publish with SEO-gated Publish for content types
+      if (SEO_TYPES.includes(context.schemaType)) {
+        actions = actions.map((action) =>
+          action.action === "publish" ? SeoPublishAction : action,
+        );
+        actions.push(GenerateMetaAction);
+        actions.push(SuggestLinksAction);
+        actions.push(SeoScoreAction);
+        actions.push(GenerateAltTextAction);
       }
-      return prev;
+
+      if (I18N_SCHEMA_TYPES.includes(context.schemaType)) {
+        actions.push(useDeleteTranslationAction);
+        actions.push(useDuplicateWithTranslationsAction);
+        actions.push(TranslateAction);
+      }
+
+      return actions;
     },
   },
   schema: {

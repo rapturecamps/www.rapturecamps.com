@@ -17,6 +17,8 @@ interface Props {
   heroTagline?: string;
   title?: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
   disablePopups?: boolean;
 }
 
@@ -33,8 +35,12 @@ const {
   heroTagline: heroTaglineOverride,
   title = `Rapture Surf Camp ${campName} | Rapture Surfcamps`,
   description = `Experience the best surf camp at ${campName}. Daily surf lessons, yoga, delicious food, and unforgettable vibes.`,
+  ogImage: ogImageProp,
+  noindex,
   disablePopups,
 } = Astro.props;
+
+const resolvedOgImage = ogImageProp || heroImages?.[0] || heroImage;
 
 const countrySlug = basePath.split("/")[2];
 
@@ -53,7 +59,7 @@ const heroSubtitle = heroSubtitleOverride;
 const heroTagline = heroTaglineOverride;
 ---
 
-<BaseLayout title={title} description={description} ogImage={heroImage} bookingUrl={bookingUrl} disablePopups={disablePopups} preloadImage={heroImages?.[0] || heroImage}>
+<BaseLayout title={title} description={description} ogImage={resolvedOgImage} bookingUrl={bookingUrl} noindex={noindex} disablePopups={disablePopups} preloadImage={heroImages?.[0] || heroImage}>
   <Hero
     title={heroTitle}
     subtitle={heroSubtitle}

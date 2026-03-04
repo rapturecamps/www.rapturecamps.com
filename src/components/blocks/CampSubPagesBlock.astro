@@ -1,4 +1,6 @@
 ---
+import { responsiveSrc } from "@/lib/image-utils";
+
 interface Props {
   block: {
     heading?: string;
@@ -71,14 +73,21 @@ const subPages = [
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {subPages.map((page) => (
         <a href={page.href} class="group rounded-xl overflow-hidden border border-white/5 bg-dark-lighter hover:border-white/10 transition-colors">
-          <div class="aspect-[16/10] overflow-hidden">
-            <img
-              src={page.image}
-              alt={page.title}
-              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          </div>
+          {(() => {
+            const rImg = responsiveSrc(page.image);
+            return (
+              <div class="aspect-[16/10] overflow-hidden">
+                <img
+                  src={rImg.src}
+                  srcset={rImg.srcset}
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  alt={page.title}
+                  class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+            );
+          })()}
           <div class="p-5">
             <div class="flex items-center gap-3 mb-2">
               <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white/5 text-white/40">

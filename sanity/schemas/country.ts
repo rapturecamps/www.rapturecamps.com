@@ -49,6 +49,21 @@ export default defineType({
       description: "Override the tagline shown above the hero headline.",
     }),
     defineField({
+      name: "useHeroAsH1",
+      title: "Use Hero Title as H1",
+      type: "boolean",
+      description:
+        "When enabled, the hero title becomes the page's H1 heading. When disabled, a separate SEO H1 field is used instead.",
+      initialValue: false,
+    }),
+    defineField({
+      name: "seoH1",
+      title: "SEO H1 Heading",
+      type: "string",
+      description:
+        'Keyword-optimized H1 heading displayed below the hero (e.g. "Surf Camps in Bali"). Ignored when "Use Hero Title as H1" is enabled.',
+    }),
+    defineField({
       name: "description",
       title: "Short Description",
       type: "text",

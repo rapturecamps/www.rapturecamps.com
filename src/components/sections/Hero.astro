@@ -1,4 +1,6 @@
 ---
+import { resizeWidth } from "@/lib/image-utils";
+
 interface Props {
   title: string;
   subtitle?: string;
@@ -16,6 +18,8 @@ interface Props {
   titleSize?: "default" | "large";
   /** Full viewport height on all screens (homepage) vs compact on mobile (camp pages) */
   fullHeight?: boolean;
+  /** When set to "h1", renders the title as a semantic h1 instead of a styled p */
+  headingTag?: "h1" | "p";
 }
 
 const {
@@ -32,6 +36,7 @@ const {
   rotationInterval = 6,
   titleSize = "default",
   fullHeight = false,
+  headingTag = "p",
 } = Astro.props;
 
 const titleClasses = titleSize === "large"
@@ -46,9 +51,10 @@ const videoSources = hasVideo
       { src: backgroundVideo, type: "video/mp4" },
     ]
   : [];
-const images = backgroundImages && backgroundImages.length > 1
+const rawImages = backgroundImages && backgroundImages.length > 1
   ? backgroundImages
   : [backgroundImage];
+const images = rawImages.map((src) => resizeWidth(src, 1920));
 const hasRotation = !hasVideo && images.length > 1;
 
 ---
@@ -62,7 +68,7 @@ const hasRotation = !hasVideo && images.length > 1;
       muted
       playsinline
       class="absolute inset-0 h-full w-full object-cover"
-      poster={videoPoster || backgroundImage}
+      poster={videoPoster || images[0]}
     >
       {videoSources.map(({ src, type }) => (
         <source src={src} type={type} />
@@ -85,7 +91,7 @@ const hasRotation = !hasVideo && images.length > 1;
   ) : (
     <div
       class="absolute inset-0 bg-cover bg-center bg-no-repeat"
-      style={`background-image: url(${backgroundImage})`}
+      style={`background-image: url(${images[0]})`}
     />
   )}
 
@@ -98,9 +104,15 @@ const hasRotation = !hasVideo && images.length > 1;
       </p>
     )}
 
-    <p class:list={["font-display font-bold text-white leading-[0.95] tracking-tight whitespace-pre-line", titleClasses]} role="heading" aria-level="2">
-      {title}
-    </p>
+    {headingTag === "h1" ? (
+      <h1 class:list={["font-display font-bold text-white leading-[0.95] tracking-tight whitespace-pre-line", titleClasses]}>
+        {title}
+      </h1>
+    ) : (
+      <p class:list={["font-display font-bold text-white leading-[0.95] tracking-tight whitespace-pre-line", titleClasses]} role="heading" aria-level="2">
+        {title}
+      </p>
+    )}
 
     {subtitle && (
       <p class="mt-3 sm:mt-6 text-base sm:text-lg text-white/60 max-w-lg leading-relaxed font-light">

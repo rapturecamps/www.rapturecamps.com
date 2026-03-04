@@ -35,16 +35,47 @@ const seoDesc = post.seo?.metaDescription || post.excerpt || `Read ${post.title}
 <BaseLayout
   title={seoTitle}
   description={seoDesc}
-  ogImage={post.featuredImageUrl}
+  ogImage={post.seo?.ogImageUrl || post.featuredImageUrl}
+  noindex={post.seo?.noindex}
   translations={post._translations}
   translationBasePath="/blog"
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": seoDesc,
+    "url": `https://www.rapturecamps.com/blog/${post.slug}`,
+    ...(post.featuredImageUrl ? { "image": post.featuredImageUrl } : {}),
+    ...(post.publishedAt ? { "datePublished": post.publishedAt } : {}),
+    "author": post.authorName ? {
+      "@type": "Person",
+      "name": post.authorName,
+      ...(post.authorUrl ? { "url": post.authorUrl } : {}),
+    } : {
+      "@type": "Organization",
+      "name": "Rapture Surfcamps",
+      "url": "https://www.rapturecamps.com",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Rapture Surfcamps",
+      "url": "https://www.rapturecamps.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.rapturecamps.com/images/rapturecamps-logo.svg"
+      }
+    }
+  })} />
+
   <!-- Hero -->
   <div class="relative h-[55vh] min-h-[400px]">
     {post.featuredImageUrl && (
       <img
         src={post.featuredImageUrl + "?w=1920&h=1080&fit=crop&auto=format"}
         alt={post.title}
+        width={1920}
+        height={1080}
         class="absolute inset-0 h-full w-full object-cover"
       />
     )}

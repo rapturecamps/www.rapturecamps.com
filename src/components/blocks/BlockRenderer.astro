@@ -119,7 +119,7 @@ function portableTextToHtml(body: any): string {
   const layoutClass = getLayoutClasses(block);
 
   const renderBlock = () => {
-    if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} />;
+    if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} headingTag={isH1 ? "h1" : "h2"} />;
     if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} />;
     if (type === "surfSpots") return <SurfSpotsBlock block={block} />;
     if (type === "surfLevels") return <SurfLevelsBlock block={block} />;
@@ -127,9 +127,9 @@ function portableTextToHtml(body: any): string {
     if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
     if (type === "surfSeasons") return <SurfSeasonsBlock block={block} />;
     if (type === "climateInfo") return <ClimateInfoBlock block={block} />;
-    if (type === "surfConditions") return <SurfConditionsBlock block={block} />;
+    if (type === "surfConditions") return <SurfConditionsBlock block={block} headingTag={isH1 ? "h1" : undefined} />;
 
-    if (type === "foodIntro") return <FoodIntroBlock block={block} />;
+    if (type === "foodIntro") return <FoodIntroBlock block={block} headingTag={isH1 ? "h1" : "h2"} />;
     if (type === "mealCards") return <MealCardsBlock block={block} />;
     if (type === "menuTable") return <MenuTableBlock block={block} />;
     if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;

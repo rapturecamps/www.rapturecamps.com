@@ -2,9 +2,11 @@
 interface Props {
   block: any;
   campData?: any;
+  headingTag?: "h1" | "h2" | "h3";
 }
 
-const { block, campData } = Astro.props;
+const { block, campData, headingTag = "h2" } = Astro.props;
+const HeadingTag = headingTag;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const heading = block.heading || "The Waves";
 const body = block.body || "The coastline around this camp is stacked with surf breaks for every level. From gentle beach breaks perfect for your first pop-up to fast reef passes that'll get your heart pumping — there's a wave for every day and every surfer.\n\nOur instructors have been surfing these waters for years. They know exactly where to go based on the swell, wind, and tide — so you're always in the right spot at the right time.";
@@ -20,7 +22,7 @@ const conditionsCard = block.conditionsCard || [
   <div class="px-6 sm:px-12 lg:px-20">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
       <div>
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</h1>
+        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</HeadingTag>
         <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-xl">
           {paragraphs.map((p) => (
             <p>{p}</p>

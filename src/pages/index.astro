@@ -15,6 +15,8 @@ const heroTitle = hp?.heroTitle || "All you have is now.";
 const heroSubtitle = hp?.heroSubtitle || "Unparalleled Surf Camp Experience at the Best Surf Spots!";
 const blocks = hp?.pageBuilder;
 const hasSanityBlocks = blocks?.length > 0;
+const useHeroAsH1 = hp?.useHeroAsH1 === true;
+const seoH1 = hp?.seoH1;
 ---
 
 <BaseLayout
@@ -47,11 +49,19 @@ const hasSanityBlocks = blocks?.length > 0;
     tagline={heroTagline}
     title={heroTitle}
     subtitle={heroSubtitle}
+    headingTag={useHeroAsH1 ? "h1" : "p"}
     backgroundVideo="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/play_720p.mp4"
     videoPoster="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/thumbnail.jpg"
     titleSize="large"
     fullHeight
   />
+  {!useHeroAsH1 && seoH1 && (
+    <section class="pt-16 sm:pt-20 pb-0 bg-dark">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">{seoH1}</h1>
+      </div>
+    </section>
+  )}
   <DestinationGrid
     client:visible
     heading={hp?.destinationHeading}

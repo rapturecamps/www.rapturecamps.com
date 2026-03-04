@@ -21,7 +21,12 @@ export default defineConfig({
     sitemap({
       changefreq: "weekly",
       priority: 0.7,
-      filter: (page) => !page.includes("/studio"),
+      filter: (page) =>
+        !page.includes("/studio") &&
+        !page.includes("/404") &&
+        !page.includes("/linkin-bio") &&
+        !page.includes("/thank-you") &&
+        !page.includes("/survey-thank-you"),
     }),
   ],
   vite: {
