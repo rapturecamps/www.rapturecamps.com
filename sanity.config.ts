@@ -12,7 +12,7 @@ import { TranslateAction } from "./sanity/actions/translateAction";
 import { GenerateMetaAction } from "./sanity/actions/generateMetaAction";
 import { SuggestLinksAction } from "./sanity/actions/suggestLinksAction";
 import { SeoScoreAction } from "./sanity/actions/seoScoreAction";
-import { SeoPublishAction } from "./sanity/actions/seoPublishAction";
+
 import { GenerateAltTextAction } from "./sanity/actions/generateAltTextAction";
 import { ContentBriefTool } from "./sanity/tools/ContentBriefTool";
 import { SeoDashboardTool } from "./sanity/tools/SeoDashboardTool";
@@ -331,11 +331,7 @@ export default defineConfig({
 
       let actions = [...prev];
 
-      // Replace default Publish with SEO-gated Publish for content types
       if (SEO_TYPES.includes(context.schemaType)) {
-        actions = actions.map((action) =>
-          action.action === "publish" ? SeoPublishAction : action,
-        );
         actions.push(GenerateMetaAction);
         actions.push(SuggestLinksAction);
         actions.push(SeoScoreAction);

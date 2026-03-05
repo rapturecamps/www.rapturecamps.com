@@ -5,6 +5,7 @@ interface Props {
   block: {
     heading?: string;
     elfsightAppId: string;
+    background?: string;
   };
 }
 
@@ -15,5 +16,6 @@ const { block } = Astro.props;
   <ElfsightReviews
     heading={block.heading}
     appId={block.elfsightAppId}
+    background={block.background}
   />
 )}

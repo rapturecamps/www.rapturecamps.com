@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Online Termin buchen | Rapture Surfcamps"
+  description="Buche ein kostenloses Online-Meeting oder einen Rückruf mit unserem Team. Wähle einen Service, dein Wunschdatum und wir melden uns bei dir."
+>
+  <Hero
+    title="Triff uns online"
+    headingTag="h1"
+    backgroundVideo="https://vz-79cee76e-e6d.b-cdn.net/e3cb3e25-a814-498e-a191-6a12ed058af5/play_720p.mp4"
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Kontakt", href: "/de/contact" }, { label: "Online Termin" }]} />
+  </Hero>
+
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-sm text-white/50 leading-relaxed max-w-xl mx-auto">
+          Buche deinen Termin in wenigen Schritten: Wähle einen Service, dein Wunschdatum und fülle deine Daten aus. Wir freuen uns auf das Gespräch mit dir.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/5 overflow-hidden bg-white">
+        <iframe
+          src="https://rapturecamps.zohobookings.eu/portal-embed#/rapturecamps"
+          width="100%"
+          height="585"
+          frameborder="0"
+          allowfullscreen
+          loading="lazy"
+          title="Online-Meeting mit Rapture Surfcamps buchen"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

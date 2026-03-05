@@ -2,6 +2,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { createClient } from "@sanity/client";
 
 const sanityClient = createClient({
@@ -150,7 +151,8 @@ function extractPortableTextStrings(
 
 function buildTranslationPrompt(
   content: Record<string, any>,
-  targetLang: string
+  targetLang: string,
+  customInstructions?: string
 ): string {
   const langName = targetLang === "de" ? "German" : targetLang;
   const entries: { key: string; value: string }[] = [];
@@ -176,12 +178,17 @@ function buildTranslationPrompt(
     .map((e, i) => `[${i}] PATH: ${e.key}\nTEXT: ${e.value}`)
     .join("\n\n");
 
-  return `Translate the following text entries from English to ${langName}.
-This is content for a surf camp website (Rapture Surfcamps).
-Keep the tone casual, friendly, and exciting — matching the surf/travel lifestyle brand voice.
+  const customBlock = customInstructions
+    ? `\nADDITIONAL INSTRUCTIONS FROM THE EDITOR:\n${customInstructions}\n`
+    : "";
+
+  return `You are a native ${langName} copywriter for Rapture Surfcamps, a surf camp brand.
+Your job is to take English content and rewrite it in natural, fluent ${langName} — NOT translate it word-for-word.
+Read the full meaning of each text entry, then write it as a native ${langName} speaker would naturally express it.
+Restructure sentences where needed for natural flow. Use idiomatic expressions. Match the casual, inspiring surf/travel brand voice.
 Preserve any HTML tags, markdown formatting, or special characters exactly as they are.
 Do NOT translate proper nouns like camp names, place names, or brand names (Rapture, Green Bowl, etc.).
-
+${customBlock}
 Return ONLY a JSON array where each element is: { "index": <number>, "translation": "<translated text>" }
 No explanations, no markdown code fences, just the raw JSON array.
 
@@ -256,7 +263,7 @@ function parsePath(path: string): (string | number)[] {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { documentId, targetLang, forceOverwrite = false } = await request.json();
+    const { documentId, targetLang, forceOverwrite = false, provider = "claude", customInstructions } = await request.json();
 
     if (!documentId || !targetLang) {
       return new Response(
@@ -265,8 +272,16 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const apiKey = import.meta.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
+    const anthropicKey = import.meta.env.ANTHROPIC_API_KEY;
+    const openaiKey = import.meta.env.OPENAI_API_KEY;
+
+    if (provider === "openai" && !openaiKey) {
+      return new Response(
+        JSON.stringify({ error: "OPENAI_API_KEY not configured" }),
+        { status: 500 }
+      );
+    }
+    if (provider === "claude" && !anthropicKey) {
       return new Response(
         JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }),
         { status: 500 }
@@ -334,7 +349,7 @@ export const POST: APIRoute = async ({ request }) => {
     const sourceSlug = sourceDoc.slug?.current;
     const sourceTitle = sourceDoc.title;
 
-    const prompt = buildTranslationPrompt(translatableContent, targetLang);
+    const prompt = buildTranslationPrompt(translatableContent, targetLang, customInstructions);
 
     if (!prompt) {
       return new Response(
@@ -344,18 +359,28 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const slugPrompt = sourceTitle
-      ? `\n\nAlso translate this page title into a URL-friendly slug in ${targetLang === "de" ? "German" : targetLang}. Use only lowercase letters, numbers, and hyphens. No special characters (ä→ae, ö→oe, ü→ue, ß→ss). Return it as the LAST element in the JSON array with index 9999 and key "slug".\nTitle: ${sourceTitle}`
+      ? `\n\nAlso translate this page title into a URL-friendly slug in ${targetLang === "de" ? "German" : targetLang}. Use only lowercase letters, numbers, and hyphens. No special characters (ä→ae, ö→oe, ü→ue, ß→ss). Return it as the LAST element in the JSON array using this exact format: { "index": 9999, "translation": "the-translated-slug" }\nTitle: ${sourceTitle}`
       : "";
 
-    const anthropic = new Anthropic({ apiKey });
-    const message = await anthropic.messages.create({
-      model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
-      messages: [{ role: "user", content: prompt + slugPrompt }],
-    });
+    let responseText = "";
 
-    const responseText =
-      message.content[0].type === "text" ? message.content[0].text : "";
+    if (provider === "openai") {
+      const openai = new OpenAI({ apiKey: openaiKey });
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        max_tokens: 8192,
+        messages: [{ role: "user", content: prompt + slugPrompt }],
+      });
+      responseText = completion.choices[0]?.message?.content || "";
+    } else {
+      const anthropic = new Anthropic({ apiKey: anthropicKey });
+      const message = await anthropic.messages.create({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 8192,
+        messages: [{ role: "user", content: prompt + slugPrompt }],
+      });
+      responseText = message.content[0].type === "text" ? message.content[0].text : "";
+    }
     let translations: { index: number; translation: string }[];
 
     try {
@@ -369,15 +394,16 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     let translatedSlug: string | null = null;
-    const slugEntry = translations.find((t) => t.index === 9999);
-    if (slugEntry?.translation) {
-      translatedSlug = slugEntry.translation
+    const slugEntry = translations.find((t: any) => t.index === 9999);
+    const rawSlug = slugEntry?.translation || (slugEntry as any)?.slug;
+    if (rawSlug) {
+      translatedSlug = rawSlug
         .toLowerCase()
         .replace(/[^a-z0-9-]/g, "-")
         .replace(/-+/g, "-")
         .replace(/(^-|-$)/g, "");
     }
-    translations = translations.filter((t) => t.index !== 9999);
+    translations = translations.filter((t: any) => t.index !== 9999);
 
     const entries: { key: string; value: string }[] = [];
     for (const [path, value] of Object.entries(translatableContent)) {
@@ -419,16 +445,20 @@ export const POST: APIRoute = async ({ request }) => {
       delete fieldsToUpdate._type;
       delete fieldsToUpdate.language;
 
-      if (translatedSlug) {
-        fieldsToUpdate.slug = { _type: "slug", current: translatedSlug };
-      }
-
       const patchId = (await sanityClient.fetch(
         `*[_id == $id || _id == "drafts." + $id][0]._id`,
         { id: targetDocId }
       )) || targetDocId;
 
       const existingTarget = await fetchDoc(targetDocId);
+
+      if (translatedSlug) {
+        fieldsToUpdate.slug = { _type: "slug", current: translatedSlug };
+      } else if (existingTarget?.slug?.current) {
+        fieldsToUpdate.slug = existingTarget.slug;
+      } else {
+        delete fieldsToUpdate.slug;
+      }
 
       if (existingTarget && !forceOverwrite) {
         const fieldsSkipped: string[] = [];

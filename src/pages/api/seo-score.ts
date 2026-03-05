@@ -30,10 +30,14 @@ export const POST: APIRoute = async ({ request }) => {
     const words = wordCount(text);
     const metaTitle = doc.seo?.metaTitle || "";
     const metaDesc = doc.seo?.metaDescription || "";
+    const focusKeyword = doc.seo?.focusKeyword || "";
+    const seoH1 = doc.seoH1 || "";
+    const excerpt = doc.excerpt || "";
     const pageTitle = doc.name || doc.title || doc.heroTitle || "";
     const pageType = doc._type;
+    const hasSeoH1 = ["homepage", "country"].includes(pageType);
+    const hasExcerpt = pageType === "blogPost";
 
-    // Count images (rough — scan for resolved image URLs in document)
     const docStr = JSON.stringify(doc);
     const imageCount = (docStr.match(/resolvedImageUrl|"asset"/g) || []).length;
 
@@ -48,13 +52,16 @@ PAGE ANALYSIS DATA:
 - Meta title length: ${metaTitle.length} chars
 - Meta description: ${metaDesc || "(missing)"}
 - Meta description length: ${metaDesc.length} chars
+- Focus keyword: ${focusKeyword || "(not set)"}
+${hasSeoH1 ? `- SEO H1: ${seoH1 || "(not set)"}` : ""}
+${hasExcerpt ? `- Excerpt: ${excerpt || "(not set)"}` : ""}
 - Word count: ${words}
 - Heading structure: ${headings.length > 0 ? headings.map((h) => `${h.level}: ${h.text}`).join(" | ") : "(no headings found)"}
 - Internal links: ${internalLinks.length} (${internalLinks.join(", ") || "none"})
 - Approximate image count: ${imageCount}
 
-CONTENT (first 2000 chars):
-${text.slice(0, 2000)}
+CONTENT (first 3000 chars):
+${text.slice(0, 3000)}
 
 SCORING CATEGORIES:
 1. Keyword Optimization (is primary keyword in title, H1, meta, first paragraph?)
@@ -65,7 +72,7 @@ SCORING CATEGORIES:
 6. Image SEO (images present? alt text coverage likely?)
 7. Readability (sentence variety, paragraph length, scannability)
 
-Return ONLY a JSON object:
+Return ONLY a JSON object with this structure:
 {
   "overallScore": 7,
   "categories": [
@@ -81,10 +88,39 @@ Return ONLY a JSON object:
     "Most important thing to fix first",
     "Second priority",
     "Third priority"
+  ],
+  "suggestedFixes": {
+    "metaTitle": "Optimized meta title (50-60 chars). Only if current is missing or poor.",
+    "metaDescription": "Optimized meta description (120-160 chars, compelling with CTA). Only if current is missing or poor.",
+    "focusKeyword": "Primary keyword phrase this page should target (2-4 words). Only if not set or poorly chosen."${hasSeoH1 ? `,\n    "seoH1": "Keyword-optimized H1 heading for this page. Only if not set or could be improved."` : ""}${hasExcerpt ? `,\n    "excerpt": "Compelling excerpt/summary (1-2 sentences, 120-160 chars). Only if not set or could be improved."` : ""}
+  },
+  "contentSuggestions": [
+    {
+      "type": "heading_rewrite",
+      "current": "Current heading text",
+      "suggested": "Improved heading with keyword",
+      "reason": "Why this is better"
+    },
+    {
+      "type": "paragraph_addition",
+      "location": "After the introduction",
+      "suggested": "Full paragraph text to add...",
+      "reason": "Adds missing topical coverage about X"
+    },
+    {
+      "type": "internal_link",
+      "anchor": "suggested anchor text",
+      "url": "/surfcamp/bali/green-bowl",
+      "location": "In the section about Bali surf spots",
+      "reason": "Strengthens topical relevance"
+    }
   ]
 }
 
-Status should be "good" (7-10), "warning" (4-6), or "critical" (1-3).`;
+RULES:
+- Status: "good" (7-10), "warning" (4-6), "critical" (1-3).
+- "suggestedFixes": ONLY include fields that genuinely need improvement. Omit any field where the current value is already good.
+- "contentSuggestions": Provide 2-5 specific, copy-ready suggestions for improving the actual page content. These are things the editor can manually apply. Types can be: heading_rewrite, paragraph_addition, paragraph_rewrite, internal_link, cta_improvement. Always include the full suggested text ready to copy-paste.`;
 
     const raw = await askClaude("sonnet", prompt, { maxTokens: 4096 });
     const result = parseJsonResponse(raw);

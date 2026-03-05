@@ -24,6 +24,13 @@ export default defineType({
       description: "Custom social sharing image. Falls back to first hero image.",
     }),
     defineField({
+      name: "focusKeyword",
+      title: "Focus Keyword",
+      type: "string",
+      description:
+        "Primary keyword this page targets. Used by SEO tools for scoring and recommendations.",
+    }),
+    defineField({
       name: "noindex",
       title: "No Index",
       type: "boolean",

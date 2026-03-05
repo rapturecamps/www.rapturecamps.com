@@ -1,6 +1,5 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import type { DocumentActionProps } from "sanity";
-import { useDocumentOperation } from "sanity";
 import { Spinner, styles } from "./seoActions";
 
 const STATUS_ICONS: Record<string, string> = {
@@ -16,9 +15,8 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 export function SeoPublishAction(props: DocumentActionProps) {
-  const { id, type, draft, published, onComplete } = props;
-  const { publish } = useDocumentOperation(id, type);
-  const [phase, setPhase] = useState<"idle" | "checking" | "results" | "publishing">("idle");
+  const { id } = props;
+  const [phase, setPhase] = useState<"idle" | "checking" | "results">("idle");
   const [checks, setChecks] = useState<any[]>([]);
   const [summary, setSummary] = useState<any>(null);
 
@@ -35,38 +33,20 @@ export function SeoPublishAction(props: DocumentActionProps) {
       if (data.success) {
         setChecks(data.checks);
         setSummary(data.summary);
-        setPhase("results");
       } else {
-        // If check fails, allow publish anyway
         setChecks([]);
-        setSummary({ pass: 0, warn: 0, fail: 0, ready: true });
-        setPhase("results");
+        setSummary({ pass: 0, warn: 0, fail: 0 });
       }
     } catch {
-      setPhase("results");
       setChecks([]);
-      setSummary({ pass: 0, warn: 0, fail: 0, ready: true });
+      setSummary({ pass: 0, warn: 0, fail: 0 });
     }
+    setPhase("results");
   }, [id]);
 
-  const handlePublish = useCallback(() => {
-    setPhase("publishing");
-    publish.execute();
-    if (onComplete) onComplete();
-  }, [publish, onComplete]);
-
-  if (!draft) {
-    return {
-      label: "Publish",
-      disabled: true,
-      onHandle: () => {},
-    };
-  }
-
   return {
-    label: phase === "checking" ? "Checking SEO..." : phase === "publishing" ? "Publishing..." : "Publish",
-    disabled: phase === "checking" || phase === "publishing" || publish.disabled,
-    tone: "positive",
+    label: "SEO Check",
+    icon: () => <span style={{ fontSize: "1.1em" }}>🔍</span>,
     onHandle: () => {
       runCheck();
     },
@@ -127,19 +107,12 @@ export function SeoPublishAction(props: DocumentActionProps) {
                       ))}
                     </>
                   ) : (
-                    <p style={{ color: "#999", fontSize: "0.9em" }}>Could not run checks — proceeding with publish.</p>
+                    <p style={{ color: "#999", fontSize: "0.9em" }}>Could not run checks.</p>
                   )}
 
-                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.25rem" }}>
-                    <button onClick={handlePublish} style={styles.buttonPrimary}>
-                      {summary?.fail > 0 ? "Publish Anyway" : "Publish"}
-                    </button>
-                    {summary?.fail > 0 && (
-                      <button onClick={() => setPhase("idle")} style={styles.button}>
-                        Fix First
-                      </button>
-                    )}
-                  </div>
+                  <button onClick={() => setPhase("idle")} style={{ ...styles.button, marginTop: "1.25rem" }}>
+                    Close
+                  </button>
                 </div>
               ),
             }

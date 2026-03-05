@@ -368,7 +368,7 @@ const amenityLabels: Record<string, string> = {
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="mb-14">
-        {!useHeroAsH1 && !seoH1 ? (
+        {!useHeroAsH1 && !seoH1 && h1BlockIndex < 0 ? (
           <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h1>
         ) : (
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-4">{data.comparison.heading}</h2>
