@@ -810,7 +810,7 @@
       "statusCode": 301
     },
     {
-      "source": "/surfcamp-bali/?utm_source=pinterest&utm_medium=social&utm_campaign=pinterest-swing-my-soul-to-bali",
+      "source": "/surfcamp-bali",
       "destination": "/surfcamp/bali",
       "statusCode": 301
     },
@@ -845,7 +845,7 @@
       "statusCode": 301
     },
     {
-      "source": "/portugal-surfcamp/?gclid=COX-4Zjvnr0CFU_KtAodEGUAcg",
+      "source": "/portugal-surfcamp",
       "destination": "/surfcamp/portugal",
       "statusCode": 301
     },
@@ -855,7 +855,7 @@
       "statusCode": 301
     },
     {
-      "source": "/nicaragua-surfresort/?campaignid=967273398&adgroupid=48412405096&creative=229447269837&keyword=%2Bsurfing%20%2Bsan%20%2Bjuan%20%2Bdel%20%2Bsur%20%2Bnicaragua&matchtype=b&device=c&gclid=EAIaIQobChMIqvTo2Pnh1wIVEo0bCh0CxwGvEAAYASAAEgKRx_D_BwE",
+      "source": "/nicaragua-surfresort",
       "destination": "/surfcamp/nicaragua",
       "statusCode": 301
     },
@@ -2065,11 +2065,6 @@
       "statusCode": 301
     },
     {
-      "source": "/surf-apartments-ericeira-portugal/?wtime=%7Bseek_to_second_number%7D",
-      "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
-      "statusCode": 301
-    },
-    {
       "source": "/faq/bali-green-bowl/how-to-reach-us/free-airport-pick-up",
       "destination": "/faq/bali-green-bowl/how-to-reach-us",
       "statusCode": 301
@@ -2100,7 +2095,7 @@
       "statusCode": 301
     },
     {
-      "source": "/5-of-the-best-beginner-surf-beaches-in-costa-rica/?gclid=Cj0KCQjwt5zsBRD8ARIsAJfI4BiH8XRl7hWj6iRjTEStg7WcMFghl-synflKVfAo7urKKatriTgzYkoaArDbEALw_wcB",
+      "source": "/5-of-the-best-beginner-surf-beaches-in-costa-rica",
       "destination": "/blog/5-of-the-best-beginner-surf-beaches-in-costa-rica",
       "statusCode": 301
     },
@@ -2130,7 +2125,7 @@
       "statusCode": 301
     },
     {
-      "source": "/30-off-bali-nicaragua/?utm_source=social_media&utm_medium=facebook&utm_campaign=30_off_holiday_promo",
+      "source": "/30-off-bali-nicaragua",
       "destination": "/",
       "statusCode": 301
     },
@@ -2155,7 +2150,7 @@
       "statusCode": 301
     },
     {
-      "source": "/bali-surfcamp/rooms/?wvideo=i7pcu8ihq0",
+      "source": "/bali-surfcamp/rooms",
       "destination": "/surfcamp/bali",
       "statusCode": 301
     },
@@ -2366,11 +2361,6 @@
     },
     {
       "source": "/bali-surfcamp/photos",
-      "destination": "/surfcamp/bali/padang-padang/rooms",
-      "statusCode": 301
-    },
-    {
-      "source": "/bali-surfcamp/rooms",
       "destination": "/surfcamp/bali/padang-padang/rooms",
       "statusCode": 301
     },
@@ -2620,11 +2610,6 @@
       "statusCode": 301
     },
     {
-      "source": "/nicaragua-surfresort",
-      "destination": "/surfcamp/nicaragua/maderas",
-      "statusCode": 301
-    },
-    {
       "source": "/nicaragua-surfresort/blog",
       "destination": "/blog/category/nicaragua",
       "statusCode": 301
@@ -2652,11 +2637,6 @@
     {
       "source": "/nicaragua-surfresort/videos",
       "destination": "/surfcamp/nicaragua/maderas",
-      "statusCode": 301
-    },
-    {
-      "source": "/portugal-surfcamp",
-      "destination": "/surfcamp/portugal/ericeira-lizandro",
       "statusCode": 301
     },
     {
@@ -2707,11 +2687,6 @@
     {
       "source": "/surf-uluwatu",
       "destination": "/surfing-uluwatu",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp-bali",
-      "destination": "/surfcamp/bali/green-bowl",
       "statusCode": 301
     },
     {
@@ -3375,11 +3350,6 @@
       "statusCode": 301
     },
     {
-      "source": "/30-off-bali-nicaragua",
-      "destination": "/surfcamp/nicaragua",
-      "statusCode": 301
-    },
-    {
       "source": "/surf-report-rapture-campericeiraportugal",
       "destination": "/410.html",
       "statusCode": 410
@@ -3827,11 +3797,6 @@
     {
       "source": "/de/blog/category/bali-de",
       "destination": "/de/blog/category/bali",
-      "statusCode": 301
-    },
-    {
-      "source": "/5-of-the-best-beginner-surf-beaches-in-costa-rica",
-      "destination": "/blog/5-of-the-best-beginner-surf-beaches-in-costa-rica",
       "statusCode": 301
     },
     {

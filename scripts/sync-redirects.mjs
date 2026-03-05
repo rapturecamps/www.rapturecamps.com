@@ -42,12 +42,23 @@ async function sync() {
   // Build Vercel redirect/rewrite entries
   const vercelRedirects = [];
 
+  let skipped = 0;
+
   for (const r of redirects) {
     if (!r.fromPath) continue;
 
+    // Strip query strings — Vercel redirects only match on path
+    const pathOnly = r.fromPath.split("?")[0].split("#")[0];
+
     // Normalize: strip trailing slash (except root)
     const source =
-      r.fromPath.length > 1 ? r.fromPath.replace(/\/+$/, "") : r.fromPath;
+      pathOnly.length > 1 ? pathOnly.replace(/\/+$/, "") : pathOnly;
+
+    // Skip invalid patterns (empty, no leading slash)
+    if (!source || !source.startsWith("/")) {
+      skipped++;
+      continue;
+    }
 
     if (r.statusCode === 404) continue;
 
@@ -78,7 +89,8 @@ async function sync() {
 
   writeFileSync(VERCEL_JSON_PATH, JSON.stringify(config, null, 2) + "\n");
   console.log(
-    `[sync-redirects] Wrote ${deduped.length} redirects to vercel.json`
+    `[sync-redirects] Wrote ${deduped.length} redirects to vercel.json` +
+      (skipped ? ` (skipped ${skipped} invalid)` : "")
   );
 }
 
