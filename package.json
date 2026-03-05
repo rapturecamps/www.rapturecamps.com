@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/sync-redirects.mjs && astro build",
+    "sync-redirects": "node scripts/sync-redirects.mjs",
     "preview": "astro preview"
   },
   "dependencies": {

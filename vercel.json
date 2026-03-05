@@ -22,5 +22,4882 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/tag/sand",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/mazzy-star",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-news-surf-camp-rapture-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-11",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-25",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/rip-curl-de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/aled-de-malmanche",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/yoga-and-surfing-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-30",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/portual",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/6",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/kelly",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/james-pribram",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/another-happy-client-daily-blog-ericiera-21-05-2009",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-news-surfcamp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/jfa",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/slight-onshore",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/lack-of-surf-report-ericeira-portugal-17th-of-august-2009",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/wetsuit",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/great-waves-at-foz-do-lizandro-daily-blog-ericeria-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/balinese",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surf-camp-customers-are-stoked-on-their-stay",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/owen-wright-de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-school-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/amazing-weather-and-excellent-lefts-at-foz-do-lizandro-daily-blog",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/vacation-destination",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/dry-season",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/sunscreen",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/stone-roses",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-destination",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/ericeira-daily-surf-blog-portugal-16-06-09",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/snorkeling",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/eco-surf-rescue",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/padang-padang-small-today",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-15",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/bali_de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/small-and-clean-perfect-beginners-day-again",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-29",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/small-but-fun-at-foz-do-lizandro-daily-surf-blog-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/swimming-pool",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/up-early",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfboard",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-20",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-diesen-sommer-wellenreiten-lernen-in-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/rincon-de-la-vieja-national-park",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfers",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/eruption",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-wax",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report-7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/barra-honda",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-camp-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/llanos-de-cortez-waterfalls",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ubud",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/uluwatu-de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/news-und-surf-report-rapture-surf-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/learn-to-surf-with-us",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/great-day-of-waves",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-energie-tanken-im-rapture-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-19",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-10",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/tamarindo",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-24",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/bali-3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ericeira-sightseeing",
+      "destination": "/blog/things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/promo",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/nicaragua",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/rains-are-here",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-rapture-surfcamp-portugal-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-break",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/pura-vida",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/sw-swell-hits-ericerira-daily-surf-blog-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-ericeira-blog-28th-may-another-beautiful-morning",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/portuguese",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/girls-girls-girls-daily-blog-portugal-23rd-of-may",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/5",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/temple",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-camp",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/scuba-diving",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/learn",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-holiday",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/jet-ski",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/balis-best-surf-spots",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/19-05-2009-ericeira-daily-blog-fun-at-cascais",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-14",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-perfekte-tage-fur-anfanger",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ribeira-dilhas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/blog/5-mistakes-beginner-surfers-make-and-how-to-fix-them",
+      "destination": "/blog/common-surfing-mistakes",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/all-you-need-to-know-before-surfing-at-nias",
+      "destination": "/blog/surfing-at-nias",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ultimate-guide-to-surfing-mentawai-islands",
+      "destination": "/blog/surfing-mentawai-islands",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ultimate-guide-to-surfing-in-kuta-lombok",
+      "destination": "/blog/surfing-in-kuta-lombok",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/your-2024-guide-to-choosing-wetsuits-for-surfing",
+      "destination": "/blog/choosing-wetsuits-for-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/ultimate-indonesia-travel-guide-for-2024",
+      "destination": "/blog/ultimate-indonesia-travel-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-lessons-in-bali-tips-to-choose-the-right-one-for-you",
+      "destination": "/blog/tips-to-choose-surf-lessons-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/from-novice-to-pro-rapture-surfcamps-bali-surf-camps-cater-to-all-levels",
+      "destination": "/blog/bali-surf-camps-all-level-surf-lessons",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/essen/blumenkohl-burger",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/essen/gartenfrische-blumenkohl-burger",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-read-a-wave",
+      "destination": "/blog/basics-to-read-a-wave",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/expert-surfing-101-riding-a-barrel",
+      "destination": "/blog/barrel-riding-basics",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/7-things-to-do-on-the-gili-islands",
+      "destination": "/blog/things-to-do-gili-islands",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-tips-beginners-learn-to-surf",
+      "destination": "/blog/surf-tips-beginners",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/10-dream-surfing-destinations-for-2025",
+      "destination": "/blog/10-dream-surfing-destinations-for-2024",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-mentawai-islands",
+      "destination": "/blog/surfing-mentawai-islands",
+      "statusCode": 301
+    },
+    {
+      "source": "/origins-of-surfing-from-ancient-rituals-to-modern-surfing-history",
+      "destination": "/blog/origins-of-surfing-from-ancient-rituals-to-modern-surfing-history",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-in-seminyak",
+      "destination": "/blog/surfing-in-seminyak",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-in-october",
+      "destination": "/blog/surfing-in-october",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-6-best-beginner-surf-beaches-in-nicaragua",
+      "destination": "/blog/the-6-best-beginner-surf-beaches-in-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/tips-for-surfing-in-costa-rica-on-a-budget",
+      "destination": "/blog/tips-for-surfing-in-costa-rica-on-a-budget",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-style-like-a-surfer-rapturecamps",
+      "destination": "/blog/how-to-style-like-a-surfer-rapturecamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-choose-the-right-surfboard-for-you",
+      "destination": "/blog/how-to-choose-the-right-surfboard-for-you",
+      "statusCode": 301
+    },
+    {
+      "source": "/10-things-to-do-playa-avellanas-costa-rica",
+      "destination": "/blog/10-things-to-do-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-eats-in-tamarindo",
+      "destination": "/blog/best-eats-in-tamarindo",
+      "statusCode": 301
+    },
+    {
+      "source": "/beginner-surfer-tips",
+      "destination": "/blog/beginner-surfer-tips",
+      "statusCode": 301
+    },
+    {
+      "source": "/swimming-skills-surfing",
+      "destination": "/blog/swimming-skills-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/types-of-surf-breaks",
+      "destination": "/blog/types-of-surf-breaks",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-in-sumbawa",
+      "destination": "/blog/surfing-in-sumbawa",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-surf-spots-in-morocco",
+      "destination": "/blog/best-surf-spots-in-morocco",
+      "statusCode": 301
+    },
+    {
+      "source": "/sunscreen-for-surfers",
+      "destination": "/blog/sunscreen-for-surfers",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-travel-guide-all-you-need-to-know-before-you-plan-a-trip",
+      "destination": "/blog/portugal-travel-guide-all-you-need-to-know-before-you-plan-a-trip",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-holidays-",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-in-kuta-lombok",
+      "destination": "/blog/surfing-in-kuta-lombok",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/8-grunde-warum-bali-eine-der-besten-surf-destinationen-der-welt-ist",
+      "destination": "/de/blog/8-grunde-warum-bali-eine-der-besten-surf-destinationen-der-welt-ist",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/der-ultimative-leitfaden-zum-surfen-in-portugal-rapture-surfcamps",
+      "destination": "/de/blog/der-ultimative-leitfaden-zum-surfen-in-portugal-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/sicherheit-geht-vor-der-leitfaden-fuer-surfer-zum-umgang-mit-strandschildern-und-flaggen",
+      "destination": "/de/blog/sicherheit-geht-vor-der-leitfaden-fuer-surfer-zum-umgang-mit-strandschildern-und-flaggen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/die-5-besten-orte-um-surfen-zu-lernen-rapture-surfcamps",
+      "destination": "/de/blog/die-5-besten-orte-um-surfen-zu-lernen-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/portugal-makes-waves-liga%20-meo-pro-surf-and-another-big-wave-record",
+      "destination": "/blog/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "statusCode": 301
+    },
+    {
+      "source": "/speak-like-a-surfer",
+      "destination": "/blog/speak-like-a-surfer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/die-10-besten-surfspots-der-welt",
+      "destination": "/de/blog/die-10-besten-surfspots-der-welt",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/lachlan-campbell",
+      "destination": "/blog/author/lachlan-campbell",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-look-for-in-costa-rica-hotels",
+      "destination": "/blog/what-to-look-for-in-costa-rica-hotels",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-legends-inspirational-stories",
+      "destination": "/blog/surf-legends-inspirational-stories",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-for-beginners",
+      "destination": "/blog/surfing-for-beginners",
+      "statusCode": 301
+    },
+    {
+      "source": "/30-off-bali-",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/exploring-costa-ricas-surf-culture",
+      "destination": "/blog/exploring-costa-ricas-surf-culture",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-nicaragua-",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/destinations/bali",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-best-surfers",
+      "destination": "/blog/5-best-surfers",
+      "statusCode": 301
+    },
+    {
+      "source": "/3-yoga-poses-before-surfing",
+      "destination": "/blog/3-yoga-poses-before-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surf-camps",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-ways-to-stay-in-shape-when-youre-not-surfing",
+      "destination": "/blog/7-ways-to-stay-in-shape-when-youre-not-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-workout-plans",
+      "destination": "/blog/surf-workout-plans",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/besten-surfspots-fur-anfanger-auf-bali",
+      "destination": "/de/blog/besten-surfspots-fur-anfanger-auf-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/from-our-surf-",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/is-our-surf-camp-%20near-lisbon-right-for-you",
+      "destination": "/de/blog/ist-unser-surfcamp-in-der-nahe-von-lissabon-das-richtige-fur-dich",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/standard-double",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/?utm_source=pinterest&utm_medium=social&utm_campaign=pinterest-swing-my-soul-to-bali",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/margo-oberg-dorm",
+      "destination": "/de/surfcamp/nicaragua/maderas/zimmer/margo-oberg-dorm-4-bett",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/rooms/private-avellanas-double",
+      "destination": "/surfcamp/costa-rica/avellanas/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/rooms/4-bed-chopes-dorm",
+      "destination": "/surfcamp/costa-rica/avellanas/rooms/4-bed-dorm",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/arrival-by-car-lisbon-ericeira",
+      "destination": "/faq/portugal-ericeira/how-to-reach-us",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/6-types-of-guests-you-%20kannst-dich-mit-einem-treffen-in-unserem-surfcamp-portugal",
+      "destination": "/de/blog/6-typen-von-gaesten-die-du-in-unserem-surfcamp-in-portugal-antreffen-wirst",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-winter-escape",
+      "destination": "/blog/bali-winter-escape",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/?gclid=COX-4Zjvnr0CFU_KtAodEGUAcg",
+      "destination": "/surfcamp/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/top-10-surfing-destinations-in-the-world",
+      "destination": "/blog/top-10-surfing-destinations-in-the-world",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/?campaignid=967273398&adgroupid=48412405096&creative=229447269837&keyword=%2Bsurfing%20%2Bsan%20%2Bjuan%20%2Bdel%20%2Bsur%20%2Bnicaragua&matchtype=b&device=c&gclid=EAIaIQobChMIqvTo2Pnh1wIVEo0bCh0CxwGvEAAYASAAEgKRx_D_BwE",
+      "destination": "/surfcamp/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-read-a-surf-report",
+      "destination": "/blog/how-to-read-a-surf-report",
+      "statusCode": 301
+    },
+    {
+      "source": "/ultimate-guide-to-surfing-camps",
+      "destination": "/blog/ultimate-guide-to-surfing-camps",
+      "statusCode": 301
+    },
+    {
+      "source": "/8-steps-on-how-to-pop-up-on-a-surfboard",
+      "destination": "/blog/8-steps-on-how-to-pop-up-on-a-surfboard",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-fuer-anfaenger",
+      "destination": "/de/blog/surfen-fuer-anfaenger",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-places-to-eat-near-green-bowl",
+      "destination": "/blog/best-places-to-eat-near-green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-ekas-bay",
+      "destination": "/blog/surf-ekas-bay",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-in-portugal-ein-kurzer-uberlick-uber-die-geschichte-dahinter",
+      "destination": "/de/blog/surfen-in-portugal-ein-kurzer-uberlick-uber-die-geschichte-dahinter",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/costa-ricas-surf-kultur-erkunden",
+      "destination": "/de/blog/costa-ricas-surf-kultur-erkunden",
+      "statusCode": 301
+    },
+    {
+      "source": "/things-to-do-in-morocco",
+      "destination": "/blog/things-to-do-in-morocco",
+      "statusCode": 301
+    },
+    {
+      "source": "/visit-batu-karas",
+      "destination": "/blog/visit-batu-karas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-bali",
+      "destination": "/de/blog/surfen-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-at-nias",
+      "destination": "/blog/surfing-at-nias",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/geschichte-macher-die-10-groessten-jemals-gesurften-wellen",
+      "destination": "/de/blog/geschichte-macher-die-10-groessten-jemals-gesurften-wellen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/warum-bali-in-der-regenzeit-besuchen-und-surfen",
+      "destination": "/de/blog/warum-bali-in-der-regenzeit-besuchen-und-surfen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/top-5-surf-spots-playa-avellanas-costa",
+      "destination": "/de/blog/5-der-besten-surf-anfangerstrande-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/packing-essentials-bali-surfing",
+      "destination": "/blog/packing-essentials-bali-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/why-is-surfing-popular",
+      "destination": "/blog/why-is-surfing-popular",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-things-to-know-before-surfing",
+      "destination": "/blog/7-things-to-know-before-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/advanced-surf-spots-in-costa-rica",
+      "destination": "/blog/advanced-surf-spots-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-see-in-tamarindo-costa-rica",
+      "destination": "/blog/what-to-see-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-read-a-surf-report-unlocking-the-secrets-of-a-great-day-to-surf",
+      "destination": "/blog/how-to-read-a-surf-report-unlocking-the-secrets-of-a-great-day-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/top-surf-spots-around-playa-avellanas-costa-rica",
+      "destination": "/blog/top-surf-spots-around-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-ericeira",
+      "destination": "/de/blog/surfen-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-lernen-in-ericeira-portugal",
+      "destination": "/de/blog/surfen-lernen-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-apartments-ericeira-portugal",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-is-a-point-break",
+      "destination": "/blog/what-is-a-point-break",
+      "statusCode": 301
+    },
+    {
+      "source": "/beginners-guide-to-surfing",
+      "destination": "/blog/beginners-guide-to-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-biggest-waves-in-the-world",
+      "destination": "/blog/7-biggest-waves-in-the-world",
+      "statusCode": 301
+    },
+    {
+      "source": "/10-biggest-waves-ever-surfed",
+      "destination": "/blog/10-biggest-waves-ever-surfed",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author/gloria-dcosta",
+      "destination": "/de/blog/author/gloria-dcosta",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-lernen-ein-leitfaden-fuer-anfaenger-zum-meister-im-surfen",
+      "destination": "/de/blog/surfen-lernen-ein-leitfaden-fuer-anfaenger-zum-meister-im-surfen",
+      "statusCode": 301
+    },
+    {
+      "source": "/things-to-do-in-taghazout",
+      "destination": "/blog/things-to-do-in-taghazout",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/ein-surfcamp-buchen-in-portugal-darauf-musst-du-unbedingt-achten",
+      "destination": "/de/blog/ein-surfcamp-buchen-in-portugal-darauf-musst-du-unbedingt-achten",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/photos",
+      "destination": "/surfcamp/bali/green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/offers-prices",
+      "destination": "/surfcamp/bali/green-bowl/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/videos",
+      "destination": "/surfcamp/bali/green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/padang-padang/the-surf",
+      "destination": "/surfcamp/bali/padang-padang/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/the-surf",
+      "destination": "/surfcamp/costa-rica/avellanas/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/the-surf",
+      "destination": "/surfcamp/nicaragua/maderas/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/the-surf",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-ericeira-guide",
+      "destination": "/surf-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-news-portugal-and-the-world",
+      "destination": "/garrett-mcnamara-on-surfing-a-90ft-wave-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-portugal",
+      "destination": "/surf-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms-conditions-contest",
+      "destination": "/terms-conditions",
+      "statusCode": 301
+    },
+    {
+      "source": "/ultimate-guide-portugal-surf-spots",
+      "destination": "/the-ultimate-guide-to-surfing-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/yoga-surf-camp-bali",
+      "destination": "/yoga-surfcamp-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/choose-your-surfcamp",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/contact",
+      "destination": "/de/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/all-you-have-is-now-4",
+      "destination": "/de/alles-was-du-hast-ist-das-jetzt",
+      "statusCode": 301
+    },
+    {
+      "source": "/costa-rica-surfcamp/offers-prices",
+      "destination": "/surfcamp/costa-rica/avellanas/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/about",
+      "destination": "/de/ueber-uns",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/3004-2",
+      "destination": "/de/datenschutzrichtlinien",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp",
+      "destination": "/de/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/angebote-preise",
+      "destination": "/de/surfcamp/bali/padang-padang/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/fotos",
+      "destination": "/de/surfcamp/bali/padang-padang/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/videos",
+      "destination": "/de/surfcamp/bali/padang-padang/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/zimmer",
+      "destination": "/de/surfcamp/bali/padang-padang/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/costa-rica-surfcamp",
+      "destination": "/de/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/nicaragua-surfresort",
+      "destination": "/de/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/nicaragua-surfresort/angebote-und-preise",
+      "destination": "/de/surfcamp/nicaragua/maderas/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/nicaragua-surfresort/photos",
+      "destination": "/de/surfcamp/nicaragua/maderas/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/fotos",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/preise",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/videos",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp-bali/angebote-preise",
+      "destination": "/de/surfcamp/bali/green-bowl/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp-bali/fotos",
+      "destination": "/de/surfcamp/bali/green-bowl/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/offers-prices",
+      "destination": "/surfcamp/nicaragua/maderas/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/offers-prices",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp-virtual-tour",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-virtual-tour",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/rooms",
+      "destination": "/surfcamp/bali/green-bowl/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/eco-surf-rescue-uluwatu-oeko-surf-rettung-uluwatu",
+      "destination": "/de/eco-surf-rescue-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/facts",
+      "destination": "/bali-surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/facts",
+      "destination": "/de/bali-surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamps/facts",
+      "destination": "/portugal-surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/facts",
+      "destination": "/de/portugal-surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/booking-prices",
+      "destination": "/de/bali-surfcamp/angebote-preise",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/booking-prices",
+      "destination": "/portugal-surfcamp/offers-prices",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/booking-prices",
+      "destination": "/de/portugal-surfcamp/preise",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/journal",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/gdpr",
+      "destination": "/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/costa-rica-surfcamp/angebote-preise",
+      "destination": "/de/surfcamp/costa-rica/avellanas/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/costa-rica-surfcamp/fotos",
+      "destination": "/de/surfcamp/costa-rica/avellanas/gallerie",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/disclaimer",
+      "destination": "/de/datenschutzrichtlinien",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/graham-land",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/sunshine-after-the-rain-daily-blog-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-report-ericeira-portugal-10th-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/excellent-bank-at-sao-juliao-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/undrowded-waves-at-foz-do-lizandro-15th-june",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-ideal-place-to-learn-to-surf-paris-hilton",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surf-camp-daily-surf-report-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfing-bali-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ericeira-restaurants",
+      "destination": "/blog/things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/lay-day-at-foz-do-lizandro-daily-surf-report-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-portugal-surf-camp-offen-ab-dem-10-05-2010",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/bukit",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/hawaii",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/facebook-angebot-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/new-surfboards",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/balis-next-generation",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-daily-surf-report-and-blog",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/ericeira-daily-blog-yoga",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-report-ericeira-portugal-6th-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/festas-dos-santos-populares-daily-blog-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/ericeira-daily-surf-blog-portugal-a-great-week-at-foz",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/australia",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/party-at-foz-do-lizandro-portugal-daily-blog-the-20th-may",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/bali-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-12",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali_cliff_special_offer",
+      "destination": "/surfcamp/bali/green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/category/bali_spezialangebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/global-sales-manager",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfreport-6-november-2011",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/special-offer-august-2016",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfreport-9-november-2011",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/special-offer-last-min",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/stone-roses-play-optimus-alive-festival-in-july",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/beautiful-balangan",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/padang-padang-surf-camp",
+      "destination": "/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/amazing-waves",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/author/simon-eiler/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/padang-padang-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-das-leben-im-rapture-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/deutsch-30-000-flyer-verteilt-in-deutschland",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/uncrowded-waves-at-backdoor-ericeira-daily-blog",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/che-surfboards",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/bali-rainy-season",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/festival",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/diria",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/balangan-today",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report-3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-report-ericiera-portugal-16th-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/oeiras",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/backdoor-ericeira-for-the-dawn-session-daily-blog",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-waves",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surf-camp-daily-surf-accommodation-and-surf-updates-info",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/2-great-days-at-foz-do-lizandro-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ben-fogle",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/we-drove",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/rain-all-day",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/today-was-the-day-surf-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-and-bbq-daily-blog-ericeira-3rd-of-june",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/las-baulas-marine-park",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/playa-tamarindo",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-surf-report-surf-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-surf-camp-portugal-bald-offen",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/massive-villa-pool-party-30th-birthday-for-steve-surf-in-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-news-rapture-surfcamp-portugal-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/portugal-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/rapture-hort-french-rabbits",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali_special_offer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/nicaragua_special_offer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/bali_cliff_spezialangebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/2",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/nicaragua_spezialangebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/3",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/category/bali-cliff",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/hangin-with-the-locals",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/maria-nedelcheva",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfreport-5-november-2011",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfreport-4-november-2011",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/5",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/graham-land/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/4",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/graham-land/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-surfcamp/blog/page/6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfing-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/costa-rica-special-offer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfreport-8-november-2011",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/rapture-surf-camp-portugal",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/ericeira-surf-portugal-satisfied-customers",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/building-process",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/blog/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/graham-land/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/big-thanks-to-our-photo-sponsor",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-school-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal_special_offer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-32",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/7",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/jungle",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-36",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-rapture-surfcamp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/cool-vibes",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/costa-rica-avallenas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog/page/6",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/video-surfing-goat-and-other-animals",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/rip-curl",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-surf-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-news-surfcamp-rapture-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-holiday-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ecological",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-16",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/volcano",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-camp-news-rapture-surfcamp-portugal-ericeira-wed-2010-05-26",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-cities",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-21",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/packing",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/summer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/ericeira-surfing",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/paris-hilton",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-safaris",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/blatant-localism",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/tourism",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/playa-langosta",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/russian",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/playa-negra-skating",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/beach-signs-and-flags",
+      "destination": "/blog/beach-signs-and-flags",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/die-top-10-aktivitaeten-in-costa-rica-playa-avellanas",
+      "destination": "/de/blog/die-top-10-aktivitaeten-in-costa-rica-playa-avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/eine-schritt-fuer-schritt-anleitung-wie-man-auf-einem-surfbrett-aufsteht",
+      "destination": "/de/blog/eine-schritt-fuer-schritt-anleitung-wie-man-auf-einem-surfbrett-aufsteht",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/top-8-surf-spots-in-der-umgebung-von-playa-avellanas-costa-rica",
+      "destination": "/de/blog/top-8-surf-spots-in-der-umgebung-von-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/contact@rapturecamps.com",
+      "destination": "/de/kontakt",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/ana-isa",
+      "destination": "/blog/author/ana-isa",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-in-portugal-the-best-country-in-europe-to-learn-the-art-of-surfing",
+      "destination": "/blog/surf-lessons-in-portugal-the-best-country-in-europe-to-learn-the-art-of-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/rooms/6-bed-pipeline-dorm",
+      "destination": "/surfcamp/costa-rica/avellanas/rooms/6-bed-dorm",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-apartments-ericeira-portugal/?wtime=%7Bseek_to_second_number%7D",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-green-bowl/how-to-reach-us/free-airport-pick-up",
+      "destination": "/faq/bali-green-bowl/how-to-reach-us",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-skate-what-you-need-to-know",
+      "destination": "/blog/surf-skate-what-you-need-to-know",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/awayco-leichtes-reisen-ohne-surfboard/willkommen",
+      "destination": "/de/blog/awayco-leichtes-reisen-ohne-surfboard",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/tips-for%20-surfen-in-costa-rica-mit-budget",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/planning-a-surf-trip-to-the-tropics-here-are-10%20-Essentials-Sie-sollten-das-Haus-nicht-verlassen-ohne",
+      "destination": "/de/blog/du-planst-einen-surftrip-in-die-tropen-10-dinge-die-du-einpacken-musst",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/8-reasons-why-bali-is-one-of-the-best-surfing-destinations-in-the-world",
+      "destination": "/de/blog/8-grunde-warum-bali-eine-der-besten-surf-destinationen-der-welt-ist",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-of-the-best-beginner-surf-beaches-in-costa-rica/?gclid=Cj0KCQjwt5zsBRD8ARIsAJfI4BiH8XRl7hWj6iRjTEStg7WcMFghl-synflKVfAo7urKKatriTgzYkoaArDbEALw_wcB",
+      "destination": "/blog/5-of-the-best-beginner-surf-beaches-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author/natali-craig",
+      "destination": "/de/blog/author/natali-craig",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/katharina-maloun",
+      "destination": "/blog/author/katharina-maloun",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-padang-padang/address-where-to-find-us/free-airport-pick-up",
+      "destination": "/faq/bali-padang-padang/address-where-to-find-us",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-mit-kleinem-budget-wie-surfen-ausserhalb-der-hauptsaison-geld-spart",
+      "destination": "/de/blog/bali-mit-kleinem-budget-wie-surfen-ausserhalb-der-hauptsaison-geld-spart",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/booking-a-surf-camp-heres-what-to-look-for-when-making-your%20-Entscheidung",
+      "destination": "/de/blog/surfcamp-buchen-darauf-solltest-du-bei-deiner-entscheidung-achten",
+      "statusCode": 301
+    },
+    {
+      "source": "/30-off-bali-nicaragua/?utm_source=social_media&utm_medium=facebook&utm_campaign=30_off_holiday_promo",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/natali-craig",
+      "destination": "/blog/author/natali-craig",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author/ana-isa",
+      "destination": "/de/blog/author/ana-isa",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp%20/bali/padang-padang",
+      "destination": "/de/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/surf-camp-morocco",
+      "destination": "/surfcamp/morocco/banana-village",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/rooms/?wvideo=i7pcu8ihq0",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/author/dan-debnam",
+      "destination": "/de/blog/author/natali-craig",
+      "statusCode": 301
+    },
+    {
+      "source": "/author/gloria-dcosta",
+      "destination": "/blog/author/gloria-dcosta",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-schlaegt-wellen-meo-pro-surf-liga-und-ein-weiterer-big-wave-rekord",
+      "destination": "/de/blog/portugal-schlaegt-wellen-meo-pro-surf-liga-und-ein-weiterer-big-wave-rekord",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/de/bali-canggu",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/%20blog/10-dinge-to-do-playa-avellanas-costa-rica",
+      "destination": "/de/blog/die-10-top-aktivitaten-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-canggu",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-",
+      "destination": "/surfcamp/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/reisen-mit-einem-surfbrett-leicht-in-6-einfachen-schritten",
+      "destination": "/de/blog/6-hilfreiche-tipps-zum-reisen-mit-dem-surfboard",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/standard-double",
+      "destination": "/surfcamp/bali/canggu/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-best-surf-clothing-brands-in-2024",
+      "destination": "/blog/the-best-surf-clothing-brands-in-2025",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni-surfcamp",
+      "destination": "/surfcamp/morocco/sidi-ifni",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/banana-village",
+      "destination": "/de/surfcamp/marokko/sifi-ifni",
+      "statusCode": 301
+    },
+    {
+      "source": "/garrett-mcnamara-surfing-a-90ft-wave-in-portugal",
+      "destination": "/blog/nazare-mcnamaras-90ft-wave-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/10-things-playa-avellanas-costa-rica",
+      "destination": "/visiting-playa-avellanas-costa-rica-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/things-to-do-in-ericeira",
+      "destination": "/de/aktivitaten-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/__trashed",
+      "destination": "/de/besten-surfspots-fur-anfanger-auf-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/activities-tamarindo-costa-rica",
+      "destination": "/what-to-see-in-tamarindo-costa-rica-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/top-5-surf-spots-playa-avellanas-costa-rica",
+      "destination": "/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-bali-beginners-5-novice-surf-spots",
+      "destination": "/best-beginner-surf-spots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-portugal",
+      "destination": "/surf-school-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-apartments-in-ericeira-portugal-daily-surf-blog",
+      "destination": "/surf-apartments-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-ericeira",
+      "destination": "/surf-lessons-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/garrett-mcnamara-on-surfing-a-90ft-wave-in-portugal",
+      "destination": "/blog/nazare-mcnamaras-90ft-wave-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/ericeira-to-be-part-of-first-international-surf-network",
+      "destination": "/ericeira-portugal-part-of-first-international-surf-network",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-holidays-vacation-portugal",
+      "destination": "/surf-holidays-in-portugal-why-go-why-now-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-5-best-places-to-learn-how-to-surf",
+      "destination": "/the-5-best-places-to-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/see-the-sights-of-bali",
+      "destination": "/see-the-sights-of-bali-ubud-and-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-bali-2",
+      "destination": "/surf-school-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/10-of-balis-best-surf-spots",
+      "destination": "/10-best-surf-spots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-rainy-season-surf-and-some-sun",
+      "destination": "/surf-bali-rainy-season",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcampsurfing-bali",
+      "destination": "/surfing-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/keep-uluwatu-clean",
+      "destination": "/keeping-uluwatu-clean",
+      "statusCode": 301
+    },
+    {
+      "source": "/packing-list-costa-rica-nicaragua",
+      "destination": "/blog/what-to-pack-for-costa-rica-and-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-portugals-best-surf-spots",
+      "destination": "/blog/7-portugal-best-surf-spots",
+      "statusCode": 301
+    },
+    {
+      "source": "/a-good-story-in-surfing-world-about-innovative",
+      "destination": "/good-story-innovation-surfing",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-ideal-place-learn-surf-paris-hilton",
+      "destination": "/best-beginner-surf-spots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-rainy-season",
+      "destination": "/surf-bali-rainy-season",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surf-and-travel-in-the-news",
+      "destination": "/eco-tourism-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp",
+      "destination": "/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/blog",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/offers-prices",
+      "destination": "/surfcamp/bali/padang-padang/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/photos",
+      "destination": "/surfcamp/bali/padang-padang/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/rooms",
+      "destination": "/surfcamp/bali/padang-padang/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surf-knowledge",
+      "destination": "/surf-tips",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surf-lessons",
+      "destination": "/surf-lessons-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surf-resort",
+      "destination": "/surf-resort-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surf-school",
+      "destination": "/surf-school-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surfing-bali",
+      "destination": "/surfing-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surfing-padang-padang",
+      "destination": "/surfing-padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/surfing-uluwatu",
+      "destination": "/surfing-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/videos",
+      "destination": "/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/cops",
+      "destination": "/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/costa-rica-surfcamp",
+      "destination": "/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/costa-rica-surfcamp/blog",
+      "destination": "/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/costa-rica-surfcamp/photos",
+      "destination": "/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/costa-rica-surfcamp/videos",
+      "destination": "/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/angebot-august-2016",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/angebot-september-2016",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/agb",
+      "destination": "/terms-conditions/?lang=de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/blog",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/padang-padang-surfen",
+      "destination": "/de/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/surf-resort",
+      "destination": "/de/blog/surf-resort-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/surfen-in-bali",
+      "destination": "/de/surfen-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/surfkurs",
+      "destination": "/de/surfkurse-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/surfschule",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/uluwatu-surfen",
+      "destination": "/de/blog/surfen-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/category/unkategorisiert",
+      "destination": "/de/blog/category/inspiration",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/surf-apartments",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/zimmer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/surfen-in-ericeira",
+      "destination": "/de/surfen-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/surfkurs",
+      "destination": "/de/surfkurse-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/deutsch-perfekte-tage-fur-anfanger",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/deutsch-what-about-surfen-und-yoga",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/ein-groses-dankeschon",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/fruhlings-angebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/groses-danke-an-unseren-foto-sponsor",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/last-minute-angebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/nicaragua-angebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/regenzeit-angebot",
+      "destination": "/de/blog/packliste-fuer-eine-reise-nach-costarica-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surf-guide-fur-bali-gesucht",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-30-000-flyer-verteilt-in-deutschland",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-daily-surf-report-surf-camp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/no-blatant-localism",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/portugal-and-ericeira-surf-news",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfing-video-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/portugal-surfcamp/surfschule",
+      "destination": "/de/surfschule-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surf-apartments-portugal",
+      "destination": "/de/surf-apartment-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surf-lessons-portugal",
+      "destination": "/de/surfkurse-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp-bali",
+      "destination": "/de/surfcamp/bali/green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-auf-den-gili-inseln",
+      "destination": "/de/blog/surfen-auf-den-gili-inseln",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfkurs-portugal",
+      "destination": "/de/surfkurse-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/disclaimer",
+      "destination": "/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/ericeira-part-of-first-international-surf-network",
+      "destination": "/ericeira-portugal-part-of-first-international-surf-network",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/blog",
+      "destination": "/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/nicaragua-surf-school",
+      "destination": "/surf-school-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/surf-lessons",
+      "destination": "/surf-lessons-nicaragua-learn-to-surf-in-paradise-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/surfing-nicaragua",
+      "destination": "/surfing-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/photos",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/videos",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/blog",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/photos",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surf-ericeira",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surf-lessons",
+      "destination": "/surf-lessons-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surf-school",
+      "destination": "/surf-school-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/videos",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy-gdpr",
+      "destination": "/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/recipe/wrote-water-woman",
+      "destination": "/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-tips",
+      "destination": "/surf-tips-for-beginners-learn-to-surf-with-us-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-uluwatu",
+      "destination": "/surfing-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali",
+      "destination": "/surfcamp/bali/green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/blog",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/daily-surf-report-28",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/discount",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/things-to-do-on-gili-islands",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-spot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-33",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/world-championships",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/rapturecamps-de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/9",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/big-wave",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-report-3rd-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali-i-padang",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/garrett",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/real-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/hardcore",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/wet-season",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/uluwatu-today",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/panorama",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/hiking",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-18",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-australische-wochen-im-rapture-surfcamp-ericeira-foz-do-lizandro",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/new-surf-coach-needed-daily-blog-18th-of-may",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-23",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-camp-news-fri-2010-05-21-surfcamp-portugal-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/yoga-and-surfing-portugal",
+      "destination": "/blog/yoga-surfcamp-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-and-surf-camp-daily-surf-report-for-bali-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/beach-yoga",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-school",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/big-thanks-first",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surf-camp-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surf-vacation",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tmn-surf-clinic-foz-do-lizandro-ericeira-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/uluwatu",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/tamarindo-coffee-roasters",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/playa-grande",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/kingscliff",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfing-bali-news",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/great-beginner-day-ericeira-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/6",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/national-parks",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/nicaragua-progess",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-news-surfcamp-portugal-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/llanos-de-cortes-waterfalls",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/cliff",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/what-to-bring",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/owen-wright",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/rapturecamps",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-13",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/national-park",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/liga-meo-pro-surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/airport",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-27",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-camp-news-surfcamp-rapture-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/kuta",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/eco-surf-rescue-uluwatu",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/bali_cliff_de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/8",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/lolas-restaurant",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/foz-do-lizandro-daily-blog-clean-swell-offshore-waves",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/90ft",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/beach-bonfire",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report-5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/8",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/bali-2/page/2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/factory-tour",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-camp-bali-surf-school-bali-surfing-bali-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/cluster",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/optimus-alive",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surf-camp",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/beginner",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-17",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/environment",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-22",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfing-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/teahupo",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-camp-news-thu-2010-05-20-surfcamp-rapture-portugal-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/slater",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/localism",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/special-offer-september-2016",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/3",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/sushi-late-nights",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/bali/page/5",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/waves",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/sunset",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/palo-verde",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-surf-camp-daily-surf-accommodation-and-surf-updates-info-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/guincho",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/deutsch-what-about-surfen-und-yoga",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/fun-in-ericeira-daily-blog-14-05-2009",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-and-camp-news-surfcamp-rapture-portugal-ericeira",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-26",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/portugal_de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-report-2nd-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/costa-rica",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/poker-night-daily-ericeira-blog",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/category/portugal_spezialangebot",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/tahiti",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/tag/eco-surf-rescue-uluwatu-de",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-31",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/biggest-wave",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/beach",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/surfcamp-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/category/portugal/page/7",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/erosion",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/tag/zip-lining",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surf-camp-portugal-news",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/small-waves-and-low-tides",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp-bali-daily-surf-report-4",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/author/simon-eiler/page/7",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/facebook-offer-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/bali-nicaragua-camps-open-safe",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/facebook-offer-portugal",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/discount-costa-rica-nicaragua",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/perfect-for-the-beginners-at-foz-do-lizandro-ericeira-daily-surf-report",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/erosion-poses-problems-for-australian-surfing",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/facebook-angebot-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/bali-surfcamp/bewertungen",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/ericeira-surf-report-and-daily-blog-portugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/daily-surf-report-ericeira-portugal-1st-of-august",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/nicaragua-special-offer",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/30-off-bali-nicaragua",
+      "destination": "/surfcamp/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-report-rapture-campericeiraportugal",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/portugal-surfcamp/bewertungen",
+      "destination": "/de/surfcamp/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surfing-portugal",
+      "destination": "/the-ultimate-guide-to-surfing-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/uluwatu",
+      "destination": "/surfing-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/surfen-in-portugal",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/surfen",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-ericeira",
+      "destination": "/surf-school-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/uluwatu",
+      "destination": "/de/blog/surfen-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/reviews",
+      "destination": "/surfcamp/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/rapture-surfcamp-portugal-ericeira",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/reviews",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/ericeira-nightlife",
+      "destination": "/blog/things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surf-lessons-promo",
+      "destination": "/blog/surf-lessons-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-tips-for-beginners-learn-to-surf-with-us-rapture-surfcamps",
+      "destination": "/blog/surf-tips-beginners-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-lessons-nicaragua-learn-to-surf-in-paradise-rapture-surfcamps",
+      "destination": "/blog/surf-lessons-nicaragua-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-school-nicaragua-from-beginner-to-pro-rapture-surfcamps",
+      "destination": "/blog/surf-school-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-to-see-in-tamarindo-costa-rica-rapture-surfcamps",
+      "destination": "/blog/what-to-see-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/costa-rica-and-renewable-energy-plastic-and-carbon-free-by-2021",
+      "destination": "/blog/renewable-energy-plastic-carbon-free-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-holidays-in-portugal-why-go-why-now-rapture-surfcamps",
+      "destination": "/blog/surf-holidays-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-apartments-in-ericeira-portugal",
+      "destination": "/blog/surf-apartments-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/7-of-portugals-best-surf-spots",
+      "destination": "/blog/7-portugal-best-surf-spots",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/imprint",
+      "destination": "/de/rechtliche-hinweise",
+      "statusCode": 301
+    },
+    {
+      "source": "/rainy-season-surf-nicaragua",
+      "destination": "/blog/rainy-season-surf-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-wallpapers",
+      "destination": "/wallpapers",
+      "statusCode": 301
+    },
+    {
+      "source": "/best-beginner-surf-spots-in-bali",
+      "destination": "/blog/best-beginner-surf-spots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-nicaragua-learn-to-surf-in-paradise-rapture-surfcamps",
+      "destination": "/blog/surf-lessons-nicaragua-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/see-the-sights-of-bali-ubud-and-uluwatu",
+      "destination": "/blog/see-the-sights-of-bali-ubud-and-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-padang-padang",
+      "destination": "/blog/surfing-padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/10-best-surf-spots-in-bali",
+      "destination": "/blog/10-best-surf-spots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/visiting-playa-avellanas-costa-rica-rapture-surfcamps",
+      "destination": "/blog/visiting-playa-avellanas-costa-rica-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/things-to-do-in-ericeira",
+      "destination": "/blog/things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-nicaragua-from-beginner-to-pro-rapture-surfcamps",
+      "destination": "/blog/surf-school-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/ericeira-portugal-part-of-first-international-surf-network",
+      "destination": "/blog/ericeira-portugal-part-of-first-international-surf-network",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-bali",
+      "destination": "/blog/surf-lessons-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-uluwatu",
+      "destination": "/blog/surfing-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/journal",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/keeping-it-real-in-bali",
+      "destination": "/blog/keeping-it-real-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/yoga-surfcamp-portugal",
+      "destination": "/blog/yoga-surfcamp-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-nicaragua",
+      "destination": "/blog/surfing-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-ericeira",
+      "destination": "/blog/surf-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-see-in-tamarindo-costa-rica-rapture-surfcamps",
+      "destination": "/blog/what-to-see-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-5-best-places-to-learn-to-surf",
+      "destination": "/blog/the-5-best-places-to-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/yoga-surfcamp-bali",
+      "destination": "/blog/yoga-surfcamp-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-bali",
+      "destination": "/blog/surf-school-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-bali",
+      "destination": "/blog/surfing-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "destination": "/blog/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-apartments-in-ericeira-portugal",
+      "destination": "/blog/surf-apartments-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-in-ericeira-portugal",
+      "destination": "/blog/surf-school-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/eco-surf-rescue-uluwatu",
+      "destination": "/blog/eco-surf-rescue-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-in-ericeira-portugal",
+      "destination": "/blog/surf-lessons-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-bali-rainy-season",
+      "destination": "/blog/surf-bali-rainy-season",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-tips-for-beginners-learn-to-surf-with-us-rapture-surfcamps",
+      "destination": "/blog/surf-tips-beginners-learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-ultimate-guide-to-surfing-portugal",
+      "destination": "/blog/the-ultimate-guide-to-surfing-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-things-to-do-on-the-gili-islands",
+      "destination": "/blog/7-things-to-do-on-the-gili-islands",
+      "statusCode": 301
+    },
+    {
+      "source": "/8-reasons-why-bali-is-one-of-the-best-surfing-destinations-in-the-world",
+      "destination": "/blog/8-reasons-why-bali-is-one-of-the-best-surfing-destinations-in-the-world",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-costa-rica",
+      "destination": "/blog/surf-lessons-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-the-gili-islands",
+      "destination": "/blog/surfing-the-gili-islands",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-playa-maderas-nicaraguas-perfect-beach-break-rapture-surfcamps",
+      "destination": "/blog/surf-playa-maderas-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal-de",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/nazare-mcnamaras-90ft-wave-rapture-surfcamps",
+      "destination": "/blog/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/frequently-asked-questions-about-booking-a-surf-camp-in-bali",
+      "destination": "/blog/how-to-book-a-surf-camp-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/ericeira-night-life",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/things-to-do-in-ericeira",
+      "destination": "/de/blog/ericeiras-nachtleben-und-andere-aktivitaten",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/planning-a-surf-trip-to-the-tropics-here-are-10-essentials-you-shouldnt-leave-home-without",
+      "destination": "/blog/planning-a-surf-trip-to-the-tropics-10-essentials-you-shouldnt-forget",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/choose-your-surfcamp",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/blog/raptures-surf-camp-in-nicaragua-is-hosting-isa-surf-coaching-courses-in-november",
+      "destination": "/blog/raptures-surf-camp-nicaragua-hosting-isa-surf-coaching-courses",
+      "statusCode": 301
+    },
+    {
+      "source": "/travel-insurance",
+      "destination": "/blog/surf-trip-insurance",
+      "statusCode": 301
+    },
+    {
+      "source": "/links",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/how-to-pull-off-a-surf-trip-in-portugal-this-summer",
+      "destination": "/blog/how-to-pull-off-a-surf-trip-in-portugal-this-summer",
+      "statusCode": 301
+    },
+    {
+      "source": "/6-types-of-guests-you-can-expect-to-meet-at-our-portugal-surf-camp",
+      "destination": "/blog/6-types-of-guests-you-can-expect-to-meet-at-our-portugal-surf-camp",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/learning-to-surf-in-bali-heres-how-to-avoid-the-crowds-and-catch-more-waves",
+      "destination": "/blog/learning-to-surf-in-bali-avoid-crowd-and-catch-more-waves",
+      "statusCode": 301
+    },
+    {
+      "source": "/learning-to-surf-in-bali-heres-how-to-avoid-the-crowds-and-catch-more-waves",
+      "destination": "/blog/learning-to-surf-in-bali-avoid-crowd-and-catch-more-waves",
+      "statusCode": 301
+    },
+    {
+      "source": "/is-our-surf-camp-near-lisbon-right-for-you",
+      "destination": "/blog/is-our-surf-camp-near-lisbon-right-for-you",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surf-resort",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/booking-a-surf-camp-heres-what-to-look-for-when-making-your-decision",
+      "destination": "/blog/what-to-look-for-when-booking-a-surf-camp",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/booking-a-surf-camp-heres-what-to-look-for-when-making-your-decision",
+      "destination": "/blog/what-to-look-for-when-booking-a-surf-camp",
+      "statusCode": 301
+    },
+    {
+      "source": "/should-i-book-a-surf-camp-or-a-surf-school",
+      "destination": "/blog/should-i-book-a-surf-camp-or-a-surf-school",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/surf-apartments",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-surf-eco-friendly",
+      "destination": "/blog/how-to-surf-eco-friendly",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/learn-to-surf-in-costa-rica-9-epic-reasons-why-you-should-go-right-now",
+      "destination": "/blog/9-reasons-to-learn-to-surf-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/learn-to-surf-in-costa-rica-9-epic-reasons-why-you-should-go-right-now",
+      "destination": "/blog/9-reasons-to-learn-to-surf-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/raptures-surf-camp-in-nicaragua-is-hosting-isa-surf-coaching-courses-in-november",
+      "destination": "/blog/raptures-surf-camp-nicaragua-hosting-isa-surf-coaching-courses",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/portugals-best-surf-spots",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-lessons-in-nicaragua-heres-what-you-need-to-know",
+      "destination": "/blog/surf-lessons-in-nicaragua-heres-what-you-need-to-know",
+      "statusCode": 301
+    },
+    {
+      "source": "/wild-things-yoga-and-surf-retreat",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/planning-a-surf-trip-to-the-tropics-here-are-10-essentials-you-shouldnt-leave-home-without",
+      "destination": "/blog/planning-a-surf-trip-to-the-tropics-10-essentials-you-shouldnt-forget",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "destination": "/blog/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/9",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/category/nicaragua-de",
+      "destination": "/de/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica-de",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali-de",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/5-of-the-best-beginner-surf-beaches-in-costa-rica",
+      "destination": "/blog/5-of-the-best-beginner-surf-beaches-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/6-of-the-best-tips-for-beginner-surfers",
+      "destination": "/blog/6-of-the-best-tips-for-beginner-surfers",
+      "statusCode": 301
+    },
+    {
+      "source": "/7-of-the-weirdest-waves-around-the-world-and-where-to-find-them",
+      "destination": "/blog/7-of-the-weirdest-waves-around-the-world-and-where-to-find-them",
+      "statusCode": 301
+    },
+    {
+      "source": "/9-tips-to-help-you-plan-the-perfect-surf-trip-to-costa-rica",
+      "destination": "/blog/9-tips-to-help-you-plan-the-perfect-surf-trip-to-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-holidays-in-portugal-why-go-why-now-rapture-surfcamps",
+      "destination": "/blog/surf-holidays-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/what-to-pack-for-costa-rica-and-nicaragua",
+      "destination": "/blog/what-to-pack-for-costa-rica-and-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-school-nicaragua",
+      "destination": "/surfcamp/costa-rica/avellanas/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfschule-bali",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfen-uluwatu",
+      "destination": "/de/blog/surfen-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/covid-1",
+      "destination": "/blog/rapturecamps-response-to-coronavirus",
+      "statusCode": 301
+    },
+    {
+      "source": "/alert/covid-19-how-rapturecamps-is-responding-for-the-safety-of-all-our-guests",
+      "destination": "/alert/covid-19",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/booking-a-surf-camp-in-portugal-these-are-the-things-you-need-to-know-before-you-go",
+      "destination": "/blog/what-to-know-before-booking-a-surf-camp-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-playa-maderas-nicaragua",
+      "destination": "/blog/surfing-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-lessons-nicaragua-learn-to-surf",
+      "destination": "/blog/surf-school-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-lessons-bali",
+      "destination": "/blog/surf-school-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-ericeira/sightseeing-things-todo/sup-tours-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/raptures-surf-camp-nicaragua-hosting-isa-surf-coaching-courses",
+      "destination": "/de/blog/rapture-surf-camp-nicaragua-veranstaltet-isa-kurse",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/rapture-surf-camp-nicaragua-veranstaltet-isa-kurse",
+      "destination": "/de/blog/rapture-surfcamp-nicaragua-veranstaltet-isa-kurse",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/wie-viele-betten-gibt-es-im-deluxe-retro-dorm",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/private-bathroom",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/private-suites-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/surfing-surf-lessons-surf-guiding/if-it-rains-will-the-surf-lessons-be-cancelled-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/private-badezimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/2er-zimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-green-bowl/rooms/private-suiten",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/booking-prices/how-do-i-check-availability-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/2er-zimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/private-badezimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/wie-viele-betten-hat-der-deluxe-dorm",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/einzelzimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/private-suites-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-padang-padang/rooms/privatzimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/faq/currencies-atms-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/late-check-in-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/bietet-ihr-babybetten-an",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/extra-handtucher",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/portugal-ericeira/rooms/single-rooms-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/einzelzimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/sind-die-dorms-gemischt",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/was-ist-der-unterschied-zwischen-den-dorms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/zimmer",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/rooms/wie-viele-betten-sind-im-dorm",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/booking-prices/gibt-es-mindestaufenthalt",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/booking-prices/wie-buche-ich-online",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/booking-prices/kann-ich-meine-buchungen-stornieren",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/booking-prices/kann-ich-extras-for-ort-buchen",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/nicaragua-maderas/address-where-to-find-us/airport-pick-up",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/nicaragua-maderas/address-where-to-find-us/airport-pick-up-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/nicaragua-maderas/rooms/wiviele-betten-sind-in-den-dorms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/booking-prices/wie-prufe-ich-die-verfugbarkeit",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu/booking-prices/how-do-i-check-availability-2",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/blog/all-you-have-is-now",
+      "destination": "/blog/6-of-the-best-tips-for-beginner-surfers",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/garrett-mcnamara-reitet-eine-90-fuss-welle-in-portugal",
+      "destination": "/de/blog/portugal-schlaegt-wellen-meo-pro-surf-liga-und-ein-weiterer-big-wave-rekord",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/visiting-playa-avellanas-costa-rica-rapture-surfcamps",
+      "destination": "/blog/10-things-to-do-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/how-to-book-a-surf-camp-in-bali",
+      "destination": "/de/blog/was-du-wissen-solltest-bevor-du-ein-surfcamp-in-bali-buchst",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/7-ways-to-stay-in-shape-when-youre-not-surfing",
+      "destination": "/de/blog/7-tips-um-auch-ohne-surfen-fit-zu-bleiben",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/9-tips-to-help-you-plan-the-perfect-surf-trip-to-costa-rica",
+      "destination": "/de/blog/9-tips-fur-die-planung-deines-costa-rica-traumurlaubs",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-camp-and-surf-lessons-in-costa-rica-everything-you-need-to-know",
+      "destination": "/de/blog/alles-was-du-uber-unser-camp-in-costa-rica-wissen-musst",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/is-our-surf-camp-near-lisbon-right-for-you",
+      "destination": "/de/blog/ist-unser-surfcamp-in-der-nahe-von-lissabon-das-richtige-fur-dich",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/how-to-improve-your-surfing-in-6-easy-steps",
+      "destination": "/de/blog/6-tipps-wie-du-dein-surfen-verbessern-kannst",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-in-portugal-a-brief-history",
+      "destination": "/blog/surfing-in-portugal-a-brief-history",
+      "statusCode": 301
+    },
+    {
+      "source": "/booking-a-surf-camp-in-portugal-these-are-the-things-you-need-to-know-before-you-go",
+      "destination": "/blog/what-to-know-before-booking-a-surf-camp-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/from-our-surf-house-in-ericeira-paddle-to-purpose",
+      "destination": "/blog/from-our-surf-house-in-ericeira-paddle-to-purpose",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/7-of-the-weirdest-waves-around-the-world-and-where-to-find-them",
+      "destination": "/de/blog/7-der-verrucktesten-wellen-der-welt-und-wo-du-sie-findest",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-camp-portugal-10-must-see-and-do-things-in-ericeira",
+      "destination": "/de/blog/10-dinge-die-man-im-schonen-ericeira-gesehen-haben-muss-ein-top-surfziel-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-lessons-in-nicaragua-heres-what-you-need-to-know",
+      "destination": "/de/blog/surf-lessons-in-nicaragua-alles-was-du-wissen-musst",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "destination": "/de/blog/top-8-surf-spots-in-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/bali-surfcamp/padang-padang",
+      "destination": "/de/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-surfcamp/ericeira",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-improve-your-surfing-in-6-easy-steps",
+      "destination": "/blog/how-to-improve-your-surfing-in-6-easy-steps",
+      "statusCode": 301
+    },
+    {
+      "source": "/bali-surfcamp/padang-padang",
+      "destination": "/surfcamp/bali/padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/portugal-surfcamp/ericeira",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/booking-a-surf-camp-in-portugal",
+      "destination": "/blog/what-to-know-before-booking-a-surf-camp-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/the-definitive-surfers-guide-to-lisbon",
+      "destination": "/de/blog/der-ultimative-lissabon-guide-die-besten-orte-furs-essen-entspannen-und-surfen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfing-in-portugal-a-brief-history",
+      "destination": "/de/blog/surfen-in-portugal-ein-kurzer-uberlick-uber-die-geschichte-dahinter",
+      "statusCode": 301
+    },
+    {
+      "source": "/tag/ericeira",
+      "destination": "/blog/things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp-bali/blog/page/1",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/nicaragua-surfresort/playa-maderas-2",
+      "destination": "/surfcamp/nicaragua/maderas",
+      "statusCode": 301
+    },
+    {
+      "source": "/the-waves-in-nicaragua-are-always-offshore",
+      "destination": "/blog/the-waves-in-nicaragua-are-always-offshore",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-resort-bali",
+      "destination": "/blog/surf-resort-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surf-apartment-portugal",
+      "destination": "/de/blog/surf-apartment-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/learn-to-surf-in-bali",
+      "destination": "/blog/surf-school-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/learning-to-surf-in-bali-avoid-crowd-and-catch-more-waves",
+      "destination": "/blog/avoid-crowd-and-catch-more-waves-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/why-choose-nicaragua-as-your-first-surf-trip",
+      "destination": "/de/blog/6-grunde-fur-deinen-ersten-surfurlaub-in-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/how-to-pull-off-a-surf-trip-in-portugal-this-summer",
+      "destination": "/de/blog/was-du-diesen-sommer-in-portugal-nicht-verpassen-darfst",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/eco-tourism-in-bali",
+      "destination": "/blog/eco-surf-rescue-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/keeping-uluwatu-clean",
+      "destination": "/blog/eco-surf-rescue-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-school-in-ericeira-portugal",
+      "destination": "/blog/surf-school-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-lessons-costa-rica",
+      "destination": "/blog/surf-school-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/tutorial/tutorial-name",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/packliste-fuer-eine-reise-nach-costarica-nicaragua",
+      "destination": "/de/blog/packliste-fur-deine-reise-nach-costa-rica-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/entdecke-tamarindo-costa-rica",
+      "destination": "/de/blog/die-10-top-aktivitaten-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/see-the-sights-of-bali-ubud-and-uluwatu",
+      "destination": "/blog/the-real-bali-ubud-and-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/keeping-it-real-in-bali",
+      "destination": "/blog/the-real-bali-ubud-and-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfkurse-costa-rica",
+      "destination": "/de/blog/surfschule-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/8-gruende-warum-bali-einer-der-besten-surf-destinationen-der-welt-ist",
+      "destination": "/de/blog/8-grunde-warum-bali-eine-der-besten-surf-destinationen-der-welt-ist",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "destination": "/blog/top-surf-spots-around-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/7-portugal-best-surf-spots",
+      "destination": "/blog/portugal-best-surf-spots",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/things-to-do-in-ericeira",
+      "destination": "/blog/nightlife-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-camp-portugal-10-must-see-and-do-things-in-ericeira",
+      "destination": "/blog/best-things-to-do-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/top-8-surf-spots-in-playa-avellanas-costa-rica",
+      "destination": "/de/blog/top-8-surf-spots-in-der-umgebung-von-playa-avellanas-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/join-rapturecamps-and-start-your-own-surf-camp",
+      "destination": "/join-rapturecamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/alles-was-du-hast-ist-das-jetzt",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/keeping-uluwatu-clean",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/keeping-it-real-in-bali",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-ericeira-surf-lessons-signup",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/danke",
+      "destination": "/de/danke-schoen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/ericeira-portugal-teil-des-ersten-internationalen-surf-netzwerks",
+      "destination": "/de/blog/ericeira-portugal-euorpa-surfspots",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfen-lernen-auf-bali-so-vermeidest-du-die-massen-bekommst-mehr-wellen",
+      "destination": "/de/blog/surfen-lernen-auf-bali-ohne-crowd",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfen-lernen-in-costa-rica-9-unschlagbare-grunde-warum-genau-jetzt",
+      "destination": "/de/blog/surfen-lernen-in-costa-rica-9-grunde",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/how-to-reach-us",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/other/what-visa-do-i-need-to-enter-bali",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/other/weather-rainy-season",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/other/sun-protection",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/other/currencies-atms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/other",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/how-to-reach-us/camp-address",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/food-beverages/dietary-requirements",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/is-there-a-minimum-stay",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/how-do-i-book-online",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/how-do-i-check-availability",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/can-i-book-extras-locally",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/do-you-do-week-long-packages",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/food-beverages/kitchen-usage",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/bali-canggu__trashed/booking-prices/can-i-cancel-my-booking",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/blog/surfkurse-in-ericeira-portugal",
+      "destination": "/de/blog/surfen-lernen-in-ericeira-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfkurse-nicaragua",
+      "destination": "/de/blog/surfkurse-surfcamp-nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfkurse-bali",
+      "destination": "/de/blog/surfschule-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/camp-activities",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/camp-address",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/camp-adress",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/currencies-atms",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/dietary-requirements",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/difference-between-lessons-and-guiding",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/extras",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/is-the-surf-camp-suitable-for-complete-beginners-2",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/is-the-surf-camp-suitable-for-complete-beginners",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/kitchen-usage",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/places-to-be-at-night",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/weather-rainy-season",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/what-is-surf-guiding",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/are-the-rooms-rented-seperately",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/what-kind-of-surfboards-do-you-have",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/what-visa-do-i-need-to-enter-bali",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-green-bowl/booking-prices/do-you-offer-weekly-packages",
+      "destination": "/faq/bali-green-bowl/booking-prices/do-you-do-week-long-packages",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-padang-padang/address-where-to-find-us/directions-from-the-airport",
+      "destination": "/faq/bali-padang-padang/address-where-to-find-us/how-to-get-to-the-rapture-surf-camp-in-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-ericeira/how-to-reach-us/arrival-by-car-lisbon-ericeira-2",
+      "destination": "/faq/portugal-ericeira/how-to-reach-us/how-to-get-to-the-rapture-surf-camp-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-ericeira/how-to-reach-us/arrival-by-car-lisbon-ericeira",
+      "destination": "/faq/portugal-ericeira/how-to-reach-us/how-to-get-to-the-rapture-surf-camp-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-ericeira/how-to-reach-us/camp-adress",
+      "destination": "/faq/portugal-ericeira/how-to-reach-us/how-to-get-to-the-rapture-surf-camp-in-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-coxos-surf-villa/how-to-reach-us/arrival-by-car-lisbon-ericeira",
+      "destination": "/faq/portugal-coxos-surf-villa/how-to-reach-us/how-to-get-to-the-rapture-surf-villa-in-coxos",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-coxos-surf-villa/how-to-reach-us/camp-address",
+      "destination": "/faq/portugal-coxos-surf-villa/how-to-reach-us/how-to-get-to-the-rapture-surf-villa-in-coxos",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/nicaragua-maderas/how-to-reach-us/do-you-have-parking",
+      "destination": "/faq/nicaragua-maderas/how-to-reach-us/parking-available",
+      "statusCode": 301
+    },
+    {
+      "source": "/newsletter-signup",
+      "destination": "/newsletter",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/terms-conditions",
+      "destination": "/de/agb",
+      "statusCode": 301
+    },
+    {
+      "source": "/traveling-with-a-surfboard-made-easy-in-6-simple-steps",
+      "destination": "/blog/traveling-with-a-surfboard-made-easy-in-6-simple-steps",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/padang-padang/rooms/shared-deluxe-twin-fan",
+      "destination": "/surfcamp/bali/padang-padang/rooms/shared-deluxe-twin-ac-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/portugal-",
+      "destination": "/surfcamp/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/%20target=",
+      "destination": "/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/discount-costa-rica-",
+      "destination": "/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/lodge-6-beds",
+      "destination": "/surfcamp/bali/canggu/rooms/dorm-lodge",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "destination": "/blog/portugal-makes-waves-liga-meo-pro-surf-and-another-big-wave-record",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/sollte-ich-ein-surfcamp-oder-eine-surfschule-buchen",
+      "destination": "/de/blog/soll-ich-ein-surfcamp-oder-eine-surfschule-buchen",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/booking-a-surf-camp-heres-what-to-look-for-when-making-your-Entscheidung",
+      "destination": "/de/blog/surfcamp-buchen-darauf-solltest-du-bei-deiner-entscheidung-achten",
+      "statusCode": 301
+    },
+    {
+      "source": "/august-discount-costa-rica-nicaragua",
+      "destination": "/surfcamp/costa-rica/avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/top-5-surf-spots-playa-avellanas-costa-rica",
+      "destination": "/blog/5-of-the-best-beginner-surf-beaches-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/how-to-get-better-at-surfing-10-tips-for-surfers",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/blog/a-quiet-new-years-eve-heres-how-you-can-do-it",
+      "destination": "/blog/a-quiet-new-years-eve-idea",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-quiet-new-years-eve-idea",
+      "destination": "/blog/a-quiet-new-years-eve-ideas",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-school-in-portugal",
+      "destination": "/blog/surf-lessons-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-beginners-guide-to-surf-breaks-in-surfing",
+      "destination": "/blog/types-of-surf-breaks",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/a-look-at-the-7-biggest-waves-in-the-world",
+      "destination": "/blog/7-biggest-waves-in-the-world",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-is-bali-belly-how-to-prevent-it-what-to-do-if-you-get-it-a-complete-guide-here",
+      "destination": "/blog/what-is-bali-belly",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/from-sunset-to-sunrise-experiencing-the-vibrant-nightlife-of-bali",
+      "destination": "/blog/nightlife-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/the-ultimate-bali-travel-guide-how-to-plan-your-dream-vacation",
+      "destination": "/blog/the-ultimate-bali-travel-guide",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/discover-the-magic-of-balis-surfing-culture",
+      "destination": "/blog/surfing-bali-experienced",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/banana-village",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/faq/maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/faq/maderas-surf-resort",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/morocco",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/morocco/banana-village",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/morocco/banana-village/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/morocco/banana-village/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/morocco/banana-village/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas-surf-resort",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas-surf-resort/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas-surf-resort/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas-surf-resort/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/playa-maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/banana-village",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/faq/maderas-surf-resort",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/morocco",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/food",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/surf",
+      "destination": "/410.html",
+      "statusCode": 410
+    },
+    {
+      "source": "/surfcamp/nicaragua/playa-maderas",
+      "destination": "/410.html",
+      "statusCode": 410
+    }
   ]
 }

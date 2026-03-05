@@ -287,16 +287,48 @@ const segmentAngle = 360 / segmentCount;
     var email = emailInput.value.trim();
     if (!email) return;
 
-    var evt = window._rcPopupEvent || {};
-    var listKey = evt.zohoListKey || "";
-    var source = evt.zohoSource || "Spinning Wheel";
-    if (listKey) {
-      fetch("/api/popup-submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, listKey: listKey, source: source }),
-      }).catch(function () {});
-    }
+    // Submit to Zoho Campaigns via hidden iframe (no OAuth token needed)
+    try {
+      var iframeName = "zcPopupFrame";
+      var iframe = document.getElementById(iframeName);
+      if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.id = iframeName;
+        iframe.name = iframeName;
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+      }
+      var f = document.createElement("form");
+      f.method = "POST";
+      f.action = "https://ecms-zcmp.maillist-manage.eu/weboptin.zc";
+      f.target = iframeName;
+      f.style.display = "none";
+      var fields = {
+        CONTACT_EMAIL: email,
+        submitType: "optinCustomView",
+        emailReportId: "",
+        formType: "QuickForm",
+        zx: "14ac446cfb",
+        zcvers: "2.0",
+        oldListIds: "",
+        mode: "OptinCreateView",
+        zcld: "117eb0f345eba43a",
+        zctd: "117eb0f345eabdc1",
+        zc_trackCode: "ZCFORMVIEW",
+        zc_formIx: "3z9f4f2f4cca15c6e298e1a6ccc55ac7d83247773fc23caceb1a832fc7f71f0fbc",
+        viewFrom: "URL_ACTION",
+      };
+      for (var key in fields) {
+        var inp = document.createElement("input");
+        inp.type = "hidden";
+        inp.name = key;
+        inp.value = fields[key];
+        f.appendChild(inp);
+      }
+      document.body.appendChild(f);
+      f.submit();
+      f.remove();
+    } catch (e) {}
 
     // Switch to spinning state
     stepEmail.classList.add("hidden");

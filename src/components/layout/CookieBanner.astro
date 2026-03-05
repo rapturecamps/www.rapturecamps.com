@@ -1,26 +1,62 @@
 ---
+const lang = Astro.currentLocale ?? "en";
+const isDE = lang === "de";
+
+const t = isDE ? {
+  bannerText: "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern und den Website-Traffic zu analysieren. Sie können wählen, welche Cookies Sie zulassen möchten.",
+  privacyLink: "Datenschutzerklärung",
+  customize: "Anpassen",
+  rejectAll: "Alle ablehnen",
+  acceptAll: "Alle akzeptieren",
+  modalTitle: "Cookie-Einstellungen",
+  modalDesc: 'Wählen Sie, welche Cookies Sie zulassen möchten. Ihre Einstellungen werden gespeichert und können jederzeit über den Link „Cookies verwalten" in der Fußzeile geändert werden.',
+  necessary: "Notwendig",
+  necessaryDesc: "Erforderlich für die Funktionalität der Website. Kann nicht deaktiviert werden.",
+  analytics: "Analyse",
+  analyticsDesc: "Helfen uns zu verstehen, wie Besucher die Website nutzen, damit wir sie verbessern können.",
+  marketing: "Marketing & Drittanbieter",
+  marketingDesc: "Bewertungs-Widgets, Social-Media-Feeds und andere eingebettete Inhalte von Drittanbietern aktivieren.",
+  save: "Einstellungen speichern",
+} : {
+  bannerText: "We use cookies to improve your experience and analyse site traffic. You can choose which cookies to allow.",
+  privacyLink: "Privacy Policy",
+  customize: "Customize",
+  rejectAll: "Reject All",
+  acceptAll: "Accept All",
+  modalTitle: "Cookie Preferences",
+  modalDesc: 'Choose which cookies you\'d like to allow. Your preferences are saved and you can change them at any time via the "Manage Cookies" link in the footer.',
+  necessary: "Necessary",
+  necessaryDesc: "Required for the site to function. Cannot be disabled.",
+  analytics: "Analytics",
+  analyticsDesc: "Help us understand how visitors use the site so we can improve it.",
+  marketing: "Marketing & Third-Party",
+  marketingDesc: "Enable review widgets, social feeds, and other embedded content from third parties.",
+  save: "Save Preferences",
+};
+
+const privacyHref = isDE ? "/de/privacy-policy" : "/privacy-policy";
 ---
 
 <!-- Cookie Consent Banner -->
-<div id="cookie-banner" class="fixed bottom-0 inset-x-0 z-[9999] translate-y-full transition-transform duration-500 ease-out" role="dialog" aria-label="Cookie consent">
+<div id="cookie-banner" class="fixed bottom-0 inset-x-0 z-[9999] translate-y-full transition-transform duration-500 ease-out" role="dialog" aria-label={isDE ? "Cookie-Zustimmung" : "Cookie consent"}>
   <div class="mx-auto max-w-5xl px-4 sm:px-6 pb-4 sm:pb-6">
     <div class="rounded-2xl border border-white/10 bg-dark-lighter/95 backdrop-blur-xl shadow-2xl shadow-black/40 p-5 sm:p-6">
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
         <div class="flex-1 min-w-0">
           <p class="text-sm text-white/70 leading-relaxed">
-            We use cookies to improve your experience and analyse site traffic. You can choose which cookies to allow.
-            <a href="/privacy-policy" class="text-ocean-light hover:underline">Privacy Policy</a>
+            {t.bannerText}
+            <a href={privacyHref} class="text-ocean-light hover:underline">{t.privacyLink}</a>
           </p>
         </div>
         <div class="flex flex-shrink-0 flex-wrap gap-2.5">
           <button id="cookie-customize" class="rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/60 hover:text-white hover:border-white/30 transition-colors">
-            Customize
+            {t.customize}
           </button>
           <button id="cookie-reject" class="rounded-full border border-white/15 px-4 py-2 text-xs font-medium text-white/60 hover:text-white hover:border-white/30 transition-colors">
-            Reject All
+            {t.rejectAll}
           </button>
           <button id="cookie-accept" class="rounded-full bg-ocean px-5 py-2 text-xs font-semibold text-white hover:bg-ocean-light transition-colors">
-            Accept All
+            {t.acceptAll}
           </button>
         </div>
       </div>
@@ -29,12 +65,12 @@
 </div>
 
 <!-- Cookie Preferences Modal -->
-<div id="cookie-modal" class="fixed inset-0 z-[10000] hidden" role="dialog" aria-label="Cookie preferences">
+<div id="cookie-modal" class="fixed inset-0 z-[10000] hidden" role="dialog" aria-label={isDE ? "Cookie-Einstellungen" : "Cookie preferences"}>
   <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="cookie-modal-backdrop"></div>
   <div class="relative flex items-center justify-center min-h-full p-4">
     <div class="w-full max-w-lg rounded-2xl border border-white/10 bg-dark-lighter shadow-2xl shadow-black/50 overflow-hidden">
       <div class="flex items-center justify-between p-5 sm:p-6 border-b border-white/5">
-        <h2 class="text-lg font-semibold text-white">Cookie Preferences</h2>
+        <h2 class="text-lg font-semibold text-white">{t.modalTitle}</h2>
         <button id="cookie-modal-close" class="flex h-8 w-8 items-center justify-center rounded-full text-white/30 hover:text-white hover:bg-white/10 transition-colors">
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
         </button>
@@ -42,15 +78,15 @@
 
       <div class="p-5 sm:p-6 space-y-5 max-h-[60vh] overflow-y-auto">
         <p class="text-sm text-white/40 leading-relaxed">
-          Choose which cookies you'd like to allow. Your preferences are saved and you can change them at any time via the "Manage Cookies" link in the footer.
+          {t.modalDesc}
         </p>
 
         <!-- Necessary -->
         <div class="rounded-xl border border-white/5 bg-dark p-4">
           <div class="flex items-center justify-between">
             <div>
-              <h3 class="text-sm font-medium text-white">Necessary</h3>
-              <p class="text-xs text-white/30 mt-1">Required for the site to function. Cannot be disabled.</p>
+              <h3 class="text-sm font-medium text-white">{t.necessary}</h3>
+              <p class="text-xs text-white/30 mt-1">{t.necessaryDesc}</p>
             </div>
             <div class="relative h-6 w-10 rounded-full bg-ocean/30 cursor-not-allowed">
               <div class="absolute top-0.5 left-[18px] h-5 w-5 rounded-full bg-ocean shadow-sm"></div>
@@ -62,8 +98,8 @@
         <div class="rounded-xl border border-white/5 bg-dark p-4">
           <div class="flex items-center justify-between">
             <div class="pr-4">
-              <h3 class="text-sm font-medium text-white">Analytics</h3>
-              <p class="text-xs text-white/30 mt-1">Help us understand how visitors use the site so we can improve it.</p>
+              <h3 class="text-sm font-medium text-white">{t.analytics}</h3>
+              <p class="text-xs text-white/30 mt-1">{t.analyticsDesc}</p>
             </div>
             <button class="cookie-toggle relative h-6 w-10 rounded-full bg-white/10 transition-colors flex-shrink-0" data-category="analytics" role="switch" aria-checked="false">
               <div class="cookie-toggle-dot absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white/40 shadow-sm transition-all"></div>
@@ -75,8 +111,8 @@
         <div class="rounded-xl border border-white/5 bg-dark p-4">
           <div class="flex items-center justify-between">
             <div class="pr-4">
-              <h3 class="text-sm font-medium text-white">Marketing & Third-Party</h3>
-              <p class="text-xs text-white/30 mt-1">Enable review widgets, social feeds, and other embedded content from third parties.</p>
+              <h3 class="text-sm font-medium text-white">{t.marketing}</h3>
+              <p class="text-xs text-white/30 mt-1">{t.marketingDesc}</p>
             </div>
             <button class="cookie-toggle relative h-6 w-10 rounded-full bg-white/10 transition-colors flex-shrink-0" data-category="marketing" role="switch" aria-checked="false">
               <div class="cookie-toggle-dot absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white/40 shadow-sm transition-all"></div>
@@ -87,7 +123,7 @@
 
       <div class="flex gap-3 p-5 sm:p-6 border-t border-white/5">
         <button id="cookie-save" class="flex-1 rounded-full bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors">
-          Save Preferences
+          {t.save}
         </button>
       </div>
     </div>

@@ -1,0 +1,39 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+---
+
+<BaseLayout
+  title="Meet Us Online | Rapture Surfcamps"
+  description="Book a free online meeting or callback with our team. Choose a service, pick your date and time, and we'll get in touch."
+>
+  <Hero
+    title="Meet Us Online"
+    headingTag="h1"
+    backgroundVideo="https://vz-79cee76e-e6d.b-cdn.net/e3cb3e25-a814-498e-a191-6a12ed058af5/play_720p.mp4"
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Contact", href: "/contact" }, { label: "Meet Us" }]} />
+  </Hero>
+
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-sm text-white/50 leading-relaxed max-w-xl mx-auto">
+          Book your appointment in a few simple steps: Choose a service, pick your date and time, and fill in your details. We look forward to speaking with you.
+        </p>
+      </div>
+      <div class="rounded-2xl border border-white/5 overflow-hidden bg-white">
+        <iframe
+          src="https://rapturecamps.zohobookings.eu/portal-embed#/rapturecamps"
+          width="100%"
+          height="585"
+          frameborder="0"
+          allowfullscreen
+          loading="lazy"
+          title="Book an online meeting with Rapture Surfcamps"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
