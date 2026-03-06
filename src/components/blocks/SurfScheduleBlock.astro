@@ -19,26 +19,88 @@ const schedule = block.schedule || [
   { time: "19:00", activity: "Dinner" },
 ];
 
-const scheduleIcons: Record<string, string> = {
-  "Wake-up": "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z M6.34 17.66 4 22 M17.66 17.66 20 22",
-  "Breakfast": "M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z",
-  "Surf theory": "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z",
-  "Morning surf": "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
-  "Lunch": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7",
-  "Yoga": "M18 8a6 6 0 0 1-6 6 6 6 0 0 1-6-6",
-  "Afternoon surf": "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
-  "Sunset": "M23 7l-7 5 7 5V7z M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z",
-  "Dinner": "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2",
+const scheduleIcons: Record<string, string[]> = {
+  "Wake-up": [
+    "M12 3a6 6 0 0 0 9 9 9 9 0 0 1-9-9Z",
+    "M6.34 17.66l-2.34 4.34",
+    "M17.66 17.66l2.34 4.34",
+  ],
+  "Breakfast": [
+    "M17 8h1a4 4 0 1 1 0 8h-1",
+    "M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z",
+    "M6 1v3",
+    "M10 1v3",
+  ],
+  "Surf theory": [
+    "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z",
+    "M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z",
+  ],
+  "Morning surf": [
+    "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+    "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+    "M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  ],
+  "Lunch": [
+    "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2",
+    "M7 2v20",
+    "M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z",
+    "M21 15v7",
+  ],
+  "Yoga": [
+    "M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
+    "M4 22l4-10",
+    "M20 22l-4-10",
+    "M8 12h8",
+  ],
+  "Afternoon surf": [
+    "M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+    "M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+    "M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.4 2 5 2c2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1",
+  ],
+  "Sunset": [
+    "M12 2v4",
+    "M4.93 4.93l2.83 2.83",
+    "M2 12h4",
+    "M19.07 4.93l-2.83 2.83",
+    "M22 12h-4",
+    "M2 18h20",
+    "M12 12a4 4 0 1 0 0-0.01",
+  ],
+  "Dinner": [
+    "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2",
+    "M7 2v20",
+    "M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3z",
+    "M21 15v7",
+  ],
+  "Video": [
+    "M15.2 3.6l3.2 3.2L7.8 17.4H4.6v-3.2L15.2 3.6z",
+    "M2 21h20",
+  ],
+  "free time": [
+    "M12 8v4l3 3",
+    "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z",
+  ],
+  "recovery": [
+    "M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2",
+    "M12 11v4",
+    "M10 13h4",
+    "M9 2h6v4H9z",
+  ],
+  "stretch": [
+    "M12 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z",
+    "M12 8v8",
+    "M8 20l4-4 4 4",
+  ],
 };
 
-function getScheduleIcon(activity: string): string {
-  for (const [key, icon] of Object.entries(scheduleIcons)) {
-    if (activity.toLowerCase().includes(key.toLowerCase())) return icon;
+function getScheduleIcon(activity: string): string[] {
+  for (const [key, paths] of Object.entries(scheduleIcons)) {
+    if (activity.toLowerCase().includes(key.toLowerCase())) return paths;
   }
-  return "M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z";
+  return ["M12 8v4l3 3", "M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"];
 }
 
-const scheduleWithIcons = schedule.map((s: any) => ({ ...s, icon: getScheduleIcon(s.activity) }));
+const scheduleWithIcons = schedule.map((s: any) => ({ ...s, iconPaths: getScheduleIcon(s.activity) }));
 ---
 
 <section class:list={["py-16 sm:py-20", bg]}>
@@ -53,7 +115,7 @@ const scheduleWithIcons = schedule.map((s: any) => ({ ...s, icon: getScheduleIco
             <div class="relative flex items-start gap-5 py-3">
               <div class="relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-dark border border-white/10">
                 <svg class="h-4 w-4 text-white/40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                  <path d={s.icon} />
+                  {s.iconPaths.map((d: string) => <path d={d} />)}
                 </svg>
               </div>
               <div class="pt-2">
