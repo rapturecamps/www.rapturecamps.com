@@ -30,6 +30,32 @@ function formatDate(dateStr: string) {
 
 const seoTitle = post.seo?.metaTitle || `${post.title} | Rapture Surfcamps`;
 const seoDesc = post.seo?.metaDescription || post.excerpt || `Lies ${post.title} im Rapture Surfcamps Blog.`;
+
+function extractFaqPairs(blocks: any[]): { question: string; answer: string }[] {
+  if (!blocks?.length) return [];
+  let faqStart = -1;
+  for (let i = 0; i < blocks.length; i++) {
+    const text = (blocks[i].text || "").toLowerCase();
+    const style = blocks[i].style || "";
+    if ((style === "h2" || style === "h3") && (text.includes("faq") || text.includes("frequently asked") || text.includes("häufig gestellte"))) {
+      faqStart = i + 1;
+      break;
+    }
+  }
+  if (faqStart === -1) return [];
+  const pairs: { question: string; answer: string }[] = [];
+  for (let i = faqStart; i < blocks.length - 1; i++) {
+    const block = blocks[i];
+    const next = blocks[i + 1];
+    if (block.style === "normal" && (block.text || "").trim().endsWith("?") && next.style === "normal") {
+      pairs.push({ question: (block.text || "").trim(), answer: (next.text || "").trim() });
+      i++;
+    }
+  }
+  return pairs;
+}
+
+const faqPairs = extractFaqPairs(post.faqBlocks);
 ---
 
 <BaseLayout
@@ -68,6 +94,21 @@ const seoDesc = post.seo?.metaDescription || post.excerpt || `Lies ${post.title}
       },
     },
   })} />
+
+  {faqPairs.length > 0 && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": faqPairs.map(faq => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer,
+        },
+      })),
+    })} />
+  )}
 
   <div class="relative h-[55vh] min-h-[400px]">
     {post.featuredImageUrl && (

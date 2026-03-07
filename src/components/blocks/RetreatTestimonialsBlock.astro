@@ -1,0 +1,135 @@
+---
+interface Testimonial {
+  quote: string;
+  authorName: string;
+  authorRole?: string;
+}
+
+interface Props {
+  block: {
+    heading?: string;
+    testimonials?: Testimonial[];
+    background?: string;
+  };
+}
+
+const { block } = Astro.props;
+const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
+const testimonials = block.testimonials || [];
+
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+const badgeColors = [
+  "bg-ocean-light/20 text-ocean-light",
+  "bg-violet-400/20 text-violet-400",
+  "bg-green-400/20 text-green-400",
+  "bg-amber-400/20 text-amber-400",
+  "bg-rose-400/20 text-rose-400",
+];
+---
+
+<section class:list={["py-16 sm:py-20", bg]}>
+  <div class="px-6 sm:px-12 lg:px-20">
+    {block.heading && (
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-10 text-center">
+        {block.heading}
+      </h2>
+    )}
+
+    {testimonials.length === 1 ? (
+      <div class="max-w-2xl mx-auto">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8">
+          <p class="text-base sm:text-lg text-white/70 leading-relaxed italic mb-6">
+            "{testimonials[0].quote}"
+          </p>
+          <div class="flex items-center gap-3">
+            <div class:list={["flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold", badgeColors[0]]}>
+              {getInitials(testimonials[0].authorName)}
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-white">{testimonials[0].authorName}</p>
+              {testimonials[0].authorRole && <p class="text-xs text-white/40">{testimonials[0].authorRole}</p>}
+            </div>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="retreat-testimonial-slider relative max-w-2xl mx-auto overflow-hidden">
+        <div class="retreat-testimonial-track flex transition-transform duration-500 ease-out">
+          {testimonials.map((t, i) => (
+            <div class="retreat-testimonial-slide w-full flex-shrink-0 px-2">
+              <div class="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm p-8">
+                <p class="text-base sm:text-lg text-white/70 leading-relaxed italic mb-6">
+                  "{t.quote}"
+                </p>
+                <div class="flex items-center gap-3">
+                  <div class:list={["flex h-10 w-10 items-center justify-center rounded-full text-xs font-bold", badgeColors[i % badgeColors.length]]}>
+                    {getInitials(t.authorName)}
+                  </div>
+                  <div>
+                    <p class="text-sm font-semibold text-white">{t.authorName}</p>
+                    {t.authorRole && <p class="text-xs text-white/40">{t.authorRole}</p>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="flex justify-center gap-2 mt-6">
+          {testimonials.map((_, i) => (
+            <button
+              class:list={["retreat-testimonial-dot h-2.5 w-2.5 rounded-full transition-colors", i === 0 ? "bg-ocean-light" : "bg-white/20"]}
+              data-index={i}
+              aria-label={`Show testimonial ${i + 1}`}
+            />
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<script is:inline>
+(function () {
+  var slider = document.querySelector(".retreat-testimonial-slider");
+  if (!slider) return;
+  var track = slider.querySelector(".retreat-testimonial-track");
+  var dots = slider.querySelectorAll(".retreat-testimonial-dot");
+  var slides = slider.querySelectorAll(".retreat-testimonial-slide");
+  if (!track || slides.length < 2) return;
+
+  var current = 0;
+  var total = slides.length;
+  var autoTimer;
+
+  function goTo(idx) {
+    current = ((idx % total) + total) % total;
+    track.style.transform = "translateX(-" + (current * 100) + "%)";
+    dots.forEach(function (d, i) {
+      d.classList.toggle("bg-ocean-light", i === current);
+      d.classList.toggle("bg-white/20", i !== current);
+    });
+  }
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      clearInterval(autoTimer);
+      goTo(parseInt(dot.getAttribute("data-index") || "0"));
+      startAuto();
+    });
+  });
+
+  function startAuto() {
+    autoTimer = setInterval(function () { goTo(current + 1); }, 5000);
+  }
+  startAuto();
+})();
+</script>

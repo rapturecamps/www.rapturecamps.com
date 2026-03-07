@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { destinations as fallbackDestinations } from "@/lib/data";
 
 interface DestinationItem {
@@ -8,6 +8,8 @@ interface DestinationItem {
   image: string;
   location: string;
   country: string;
+  rating?: number;
+  reviewCount?: number;
 }
 
 interface Props {
@@ -80,7 +82,18 @@ export default function DestinationGrid({ heading, destinations: propDestination
                   <h3 className="text-lg font-semibold text-white">
                     {dest.name}
                   </h3>
-                  <p className="text-sm text-white/50 mt-0.5">{dest.country}</p>
+                  <div className="flex items-center justify-between mt-1">
+                    <p className="text-sm text-white/50">{dest.country}</p>
+                    {dest.rating && (
+                      <div className="flex items-center gap-1">
+                        <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium text-white">{dest.rating}</span>
+                        {dest.reviewCount && (
+                          <span className="text-xs text-white/40">({dest.reviewCount})</span>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </a>

@@ -23,7 +23,23 @@
       ]
     }
   ],
+  "crons": [
+    {
+      "path": "/api/update-reviews",
+      "schedule": "0 4 * * *"
+    }
+  ],
   "redirects": [
+    {
+      "source": "/blog/category/inspiration/:path*",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/inspiration/:path*",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
     {
       "source": "/category/portugal/page/6",
       "destination": "/blog/category/portugal",

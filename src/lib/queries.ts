@@ -396,6 +396,19 @@ export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (lang
   "slug": slug.current,
   lastUpdated,
   body,
+  "heroImages": heroImages[].asset->url,
+  heroTitle,
+  heroSubtitle,
+  heroTagline,
+  pageBuilder[] {
+    _key, _type, ...,
+    "resolvedImageUrl": image.asset->url,
+    "resolvedImageAlt": image.asset->altText,
+    "resolvedPosterUrl": poster.asset->url,
+    "resolvedVideoPosterUrl": videoPoster.asset->url,
+    images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
+    cards[] { ..., "resolvedImageUrl": image.asset->url },
+  },
   seo
 }`;
 
@@ -419,7 +432,9 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
     "slug": "/surfcamp/" + country->slug.current + "/" + slug.current,
     "image": image.asset->url,
     location,
-    "country": country->name
+    "country": country->name,
+    rating,
+    reviewCount
   },
   pageBuilder[] {
     _key, _type, ...,
@@ -493,6 +508,7 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
   excerpt,
   featuredImage,
   "featuredImageUrl": featuredImage.asset->url,
+  "faqBlocks": body[_type == "block"] { style, "text": pt::text(@) },
   body[] {
     ...,
     _type == "image" => {

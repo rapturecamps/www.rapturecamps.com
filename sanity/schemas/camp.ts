@@ -230,6 +230,14 @@ export default defineType({
       group: "overview",
     }),
     defineField({
+      name: "googlePlaceId",
+      title: "Google Place ID",
+      type: "string",
+      description:
+        'Google Maps Place ID for automated rating/review syncing. Find yours at https://developers.google.com/maps/documentation/places/web-service/place-id',
+      group: "overview",
+    }),
+    defineField({
       name: "elfsightId",
       title: "Elfsight App ID",
       type: "string",

@@ -4,6 +4,11 @@ export default defineType({
   name: "page",
   title: "Page",
   type: "document",
+  groups: [
+    { name: "content", title: "Content", default: true },
+    { name: "hero", title: "Hero" },
+    { name: "seo", title: "SEO" },
+  ],
   fields: [
     defineField({
       name: "language",
@@ -16,6 +21,7 @@ export default defineType({
       title: "Title",
       type: "string",
       validation: (r) => r.required(),
+      group: "content",
     }),
     defineField({
       name: "slug",
@@ -23,17 +29,55 @@ export default defineType({
       type: "slug",
       options: { source: "title", maxLength: 96 },
       validation: (r) => r.required(),
+      group: "content",
     }),
     defineField({
       name: "lastUpdated",
       title: "Last Updated",
       type: "date",
-      description: "Shown at the top of legal pages (e.g. 'Last updated: February 2026').",
+      description:
+        "Shown at the top of legal pages (e.g. 'Last updated: February 2026').",
+      group: "content",
     }),
+
+    // Hero
+    defineField({
+      name: "heroImages",
+      title: "Hero Images",
+      type: "array",
+      of: [{ type: "image", options: { hotspot: true } }],
+      description: "Background images for the hero section.",
+      group: "hero",
+    }),
+    defineField({
+      name: "heroTitle",
+      title: "Hero Title",
+      type: "string",
+      description: "Main headline in the hero. Use \\n for line breaks.",
+      group: "hero",
+    }),
+    defineField({
+      name: "heroSubtitle",
+      title: "Hero Subtitle",
+      type: "string",
+      group: "hero",
+    }),
+    defineField({
+      name: "heroTagline",
+      title: "Hero Tagline",
+      type: "string",
+      description: "Small uppercase text above the hero headline.",
+      group: "hero",
+    }),
+
+    // Body (for simple text pages)
     defineField({
       name: "body",
       title: "Body",
       type: "array",
+      description:
+        "Simple rich text body for legal/text pages. For landing pages, use Page Builder instead.",
+      group: "content",
       of: [
         {
           type: "block",
@@ -81,10 +125,43 @@ export default defineType({
         },
       ],
     }),
+
+    // Page Builder (for landing pages)
+    defineField({
+      name: "pageBuilder",
+      title: "Page Builder",
+      type: "array",
+      description: "Build rich landing pages with modular blocks.",
+      group: "content",
+      of: [
+        { type: "richText" },
+        { type: "cardGrid" },
+        { type: "contentBlock" },
+        { type: "contentBlockGrid" },
+        { type: "contentBlockVideo" },
+        { type: "contentBlockImageCarousel" },
+        { type: "featureBlock" },
+        { type: "imageBreak" },
+        { type: "imageGrid" },
+        { type: "imageCarousel" },
+        { type: "imageGallery" },
+        { type: "videoBlock" },
+        { type: "highlightsGrid" },
+        { type: "inclusionsGrid" },
+        { type: "faqSection" },
+        { type: "ctaSection" },
+        { type: "retreatItinerary" },
+        { type: "retreatTestimonials" },
+        { type: "retreatStatsBar" },
+        { type: "retreatGallery" },
+      ],
+    }),
+
     defineField({
       name: "seo",
       title: "SEO",
       type: "seo",
+      group: "seo",
     }),
   ],
   preview: {

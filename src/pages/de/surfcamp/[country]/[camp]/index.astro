@@ -177,6 +177,39 @@ const hasSanityBlocks = blocks?.length > 0;
   title={campData?.seo?.metaTitle}
   description={campData?.seo?.metaDescription}
 >
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": `Rapture Surf Camp ${campTitle}`,
+    "description": campData?.seo?.metaDescription || `Surfcamp in ${campTitle}, ${countryTitle}. Tägliche Surfkurse, Yoga und unvergessliche Vibes.`,
+    "url": `https://www.rapturecamps.com${basePath}`,
+    ...(campData?.heroImages?.[0] ? { "image": campData.heroImages[0] } : {}),
+    ...(campData?.latitude && campData?.longitude ? {
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": campData.latitude,
+        "longitude": campData.longitude,
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": countryTitle,
+        "addressLocality": campData?.location || campTitle,
+      },
+    } : {}),
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": rating,
+      "reviewCount": reviewCount,
+      "bestRating": 5,
+    },
+    "priceRange": "$$",
+    "brand": {
+      "@type": "Organization",
+      "name": "Rapture Surfcamps",
+      "url": "https://www.rapturecamps.com",
+    },
+  })} />
+
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-16 items-start">

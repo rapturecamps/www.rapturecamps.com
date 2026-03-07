@@ -50,6 +50,10 @@ import imageGallery from "./blocks/imageGallery";
 import featureBlock from "./blocks/featureBlock";
 import elfsightReviews from "./blocks/elfsightReviews";
 import campSubPages from "./blocks/campSubPages";
+import retreatItinerary from "./blocks/retreatItinerary";
+import retreatTestimonials from "./blocks/retreatTestimonials";
+import retreatStatsBar from "./blocks/retreatStatsBar";
+import retreatGallery from "./blocks/retreatGallery";
 
 import seo from "./objects/seo";
 
@@ -114,6 +118,12 @@ export const schemaTypes = [
   // Page builder blocks — rooms
   roomTypes,
   roomInclusions,
+
+  // Page builder blocks — retreat
+  retreatItinerary,
+  retreatTestimonials,
+  retreatStatsBar,
+  retreatGallery,
 
   // Objects
   seo,

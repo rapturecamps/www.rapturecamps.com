@@ -97,7 +97,8 @@ body {
 }
 
 /* Camp subnav sticky positioning */
-#camp-subnav {
+#camp-subnav,
+#retreat-subnav {
   top: 5rem; /* h-20 = 80px = 5rem, sits right below the main header */
 }
 

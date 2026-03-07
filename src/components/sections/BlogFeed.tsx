@@ -26,7 +26,7 @@ const recentPosts: BlogPost[] = [
     title: "Dominical, Costa Rica: Surfing, Yoga, And Laid-Back Vibes",
     excerpt: "Tucked along Costa Rica's Pacific coast, Dominical offers what many surfers consider paradise.",
     featuredImage: "https://www.rapturecamps.com/wp-content/uploads/2025/05/Dominical-costa-rica-surfer.jpg",
-    category: "Inspiration",
+    category: "Surf Travel",
     date: "May 9, 2025",
   },
   {

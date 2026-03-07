@@ -33,6 +33,9 @@ import RichTextBlock from "./RichTextBlock.astro";
 import CardGridBlock from "./CardGridBlock.astro";
 import ElfsightReviewsBlock from "./ElfsightReviewsBlock.astro";
 import CampSubPagesBlock from "./CampSubPagesBlock.astro";
+import RetreatItineraryBlock from "./RetreatItineraryBlock.astro";
+import RetreatTestimonialsBlock from "./RetreatTestimonialsBlock.astro";
+import RetreatStatsBarBlock from "./RetreatStatsBarBlock.astro";
 
 interface Props {
   blocks: any[];
@@ -177,6 +180,10 @@ function portableTextToHtml(body: any): string {
     if (type === "faqSection") return <FaqSectionBlock block={block} />;
     if (type === "elfsightReviews") return <ElfsightReviewsBlock block={block} />;
     if (type === "campSubPages") return <CampSubPagesBlock block={block} campData={campData} />;
+
+    if (type === "retreatItinerary") return <RetreatItineraryBlock block={block} />;
+    if (type === "retreatTestimonials") return <RetreatTestimonialsBlock block={block} />;
+    if (type === "retreatStatsBar") return <RetreatStatsBarBlock block={block} />;
 
     if (type === "imageBreak") {
       return <ImageBreak
