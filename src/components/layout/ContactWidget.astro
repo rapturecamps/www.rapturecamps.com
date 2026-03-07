@@ -40,9 +40,9 @@ const channels = [
       <div class="relative z-10 flex flex-col h-full p-6">
         <!-- Team faces -->
         <div class="flex items-center -space-x-2 mb-auto">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Team member" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Team member" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Team member" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face" alt="Team member" width="40" height="40" loading="lazy" decoding="async" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Team member" width="40" height="40" loading="lazy" decoding="async" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Team member" width="40" height="40" loading="lazy" decoding="async" class="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
         </div>
         <p class="text-white/60 text-lg font-light">Hello there</p>
         <p class="text-white text-2xl font-bold">How can we help?</p>
@@ -203,16 +203,44 @@ const channels = [
         panel.classList.add("hidden");
         iconOpen.classList.remove("hidden");
         iconClose.classList.add("hidden");
+        function openChat() {
+          if (window.ZohoDeskAsap) {
+            ZohoDeskAsap.invoke("open");
+            closeBtn.style.display = "flex";
+          }
+        }
         if (window.ZohoDeskAsap) {
-          ZohoDeskAsap.invoke("open");
-          closeBtn.style.display = "flex";
+          openChat();
+        } else if (window.__loadZohoDesk) {
+          window.__loadZohoDesk(openChat);
         }
       });
     });
   })();
 </script>
 
-<!-- Zoho Desk ASAP (launcher disabled in Zoho settings, opened via our contact widget) -->
-<script is:inline id="zohodeskasap">
-var d=document;s=d.createElement("script"),s.type="text/javascript",s.id="zohodeskasapscript",s.defer=!0,s.src="https://desk.zoho.eu/portal/api/web/asapApp/105098000020930606?orgId=20082166933",t=d.getElementsByTagName("script")[0],t.parentNode.insertBefore(s,t),window.ZohoDeskAsapReady=function(s){var e=window.ZohoDeskAsap__asyncalls=window.ZohoDeskAsap__asyncalls||[];window.ZohoDeskAsapReadyStatus?(s&&e.push(s),e.forEach(s=>s&&s()),window.ZohoDeskAsap__asyncalls=null):s&&e.push(s)};
+<!-- Zoho Desk ASAP – loaded on-demand when user clicks Chat -->
+<script is:inline>
+(function () {
+  window.__loadZohoDesk = function (cb) {
+    if (document.getElementById("zohodeskasapscript")) {
+      if (cb) { window.ZohoDeskAsapReady(cb); }
+      return;
+    }
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.id = "zohodeskasapscript";
+    s.defer = true;
+    s.src = "https://desk.zoho.eu/portal/api/web/asapApp/105098000020930606?orgId=20082166933";
+    var t = document.getElementsByTagName("script")[0];
+    t.parentNode.insertBefore(s, t);
+    window.ZohoDeskAsapReady = function (fn) {
+      var q = window.ZohoDeskAsap__asyncalls = window.ZohoDeskAsap__asyncalls || [];
+      if (window.ZohoDeskAsapReadyStatus) {
+        fn && q.push(fn); q.forEach(function (f) { f && f(); }); window.ZohoDeskAsap__asyncalls = null;
+      } else { fn && q.push(fn); }
+    };
+    if (cb) { window.ZohoDeskAsapReady(cb); }
+  };
+})();
 </script>

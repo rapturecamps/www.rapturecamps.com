@@ -19,18 +19,18 @@ const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
       <div class="grid grid-cols-1 gap-3 sm:gap-4">
         <!-- Top: full-width image -->
         <div class="aspect-[21/9] overflow-hidden rounded-xl">
-          <img src={rImages[0].src} srcset={rImages[0].srcset} sizes="(min-width: 1024px) 90vw, 100vw" alt={rImages[0].alt} class="h-full w-full object-cover" loading="lazy" />
+          <img src={rImages[0].src} srcset={rImages[0].srcset} sizes="(min-width: 1024px) 90vw, 100vw" alt={rImages[0].alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
         </div>
         <!-- Bottom: left spans 2 rows, right has 2 stacked images -->
         <div class="grid grid-cols-2 grid-rows-2 gap-3 sm:gap-4 aspect-[2/1]">
           <div class="row-span-2 overflow-hidden rounded-xl">
-            <img src={rImages[1].src} srcset={rImages[1].srcset} sizes="50vw" alt={rImages[1].alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={rImages[1].src} srcset={rImages[1].srcset} sizes="50vw" alt={rImages[1].alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
           </div>
           <div class="overflow-hidden rounded-xl">
-            <img src={rImages[2].src} srcset={rImages[2].srcset} sizes="50vw" alt={rImages[2].alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={rImages[2].src} srcset={rImages[2].srcset} sizes="50vw" alt={rImages[2].alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
           </div>
           <div class="overflow-hidden rounded-xl">
-            <img src={rImages[3].src} srcset={rImages[3].srcset} sizes="50vw" alt={rImages[3].alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={rImages[3].src} srcset={rImages[3].srcset} sizes="50vw" alt={rImages[3].alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -44,7 +44,7 @@ const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         {rImages.slice(0, 2).map((img) => (
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 50vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 50vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
           </div>
         ))}
       </div>
@@ -58,7 +58,7 @@ const rImages = images.map((img) => ({ ...img, ...responsiveSrc(img.src) }));
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         {rImages.slice(0, 3).map((img) => (
           <div class="aspect-[4/3] overflow-hidden rounded-xl">
-            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 33vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" />
+            <img src={img.src} srcset={img.srcset} sizes="(min-width: 640px) 33vw, 100vw" alt={img.alt} class="h-full w-full object-cover" loading="lazy" decoding="async" />
           </div>
         ))}
       </div>

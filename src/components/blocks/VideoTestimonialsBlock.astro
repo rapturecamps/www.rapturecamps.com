@@ -135,6 +135,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
                     alt={`Video review by ${v.guestName || "Guest"}`}
                     class="vt-poster absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
+                    decoding="async"
                     onerror="this.remove()"
                   />
                 )}

@@ -124,6 +124,7 @@ export default function BlogFeed({ heading, viewAllText, blogBasePath }: Props) 
                   alt={post.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 

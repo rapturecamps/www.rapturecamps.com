@@ -115,6 +115,9 @@ const popupConfig = activePopup ? JSON.stringify({
     {prevPage && <link rel="prev" href={prevPage} />}
     {nextPage && <link rel="next" href={nextPage} />}
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+    <link rel="preconnect" href="https://vz-79cee76e-e6d.b-cdn.net" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <slot name="head" />
   </head>
@@ -136,7 +139,7 @@ const popupConfig = activePopup ? JSON.stringify({
       });
     })();
     </script>
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KQ66LK" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- GTM noscript fallback omitted: consent-gated GTM only loads after user opt-in -->
     <Header alternatePath={alternatePathForHeader} />
     <main>
       <slot />
