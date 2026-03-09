@@ -1,12 +1,15 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: any;
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "A Typical Surf Day";
-const subtext = block.subtext || "Every day is different depending on conditions, but here's what a standard day looks like.";
+const heading = block.heading || t("surf.typicalDay", lang);
+const subtext = block.subtext || t("surf.typicalDaySubtext", lang);
 const schedule = block.schedule || [
   { time: "06:30", activity: "Wake-up & light stretch" },
   { time: "07:00", activity: "Breakfast buffet" },

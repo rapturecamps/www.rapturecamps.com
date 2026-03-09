@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: {
     heading?: string;
@@ -8,10 +10,11 @@ interface Props {
       description?: string;
     }[];
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
-const heading = block.heading || "Highlights";
+const { block, lang = "en" } = Astro.props;
+const heading = block.heading || t("camp.highlights", lang);
 const items = block.items || [];
 ---
 

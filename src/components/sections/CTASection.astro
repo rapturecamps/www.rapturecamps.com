@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   heading?: string;
   text?: string;
@@ -6,15 +8,20 @@ interface Props {
   buttonUrl?: string;
   faqSlug?: string;
   blogCategory?: string;
+  lang?: Lang;
 }
 
 const props = Astro.props;
-const heading = props.heading || "All You Have Is Now.\nStart Surfing Today.";
-const text = props.text || "Book your surf camp experience today and join thousands of happy surfers who chose Rapture as their gateway to the perfect wave.";
-const buttonText = props.buttonText || "Book Your Trip";
+const lang = props.lang || "en";
+const heading = props.heading || t("cta.headline", lang);
+const text = props.text || t("cta.text", lang);
+const buttonText = props.buttonText || t("cta.book", lang);
 const buttonUrl = props.buttonUrl || "https://bookings.rapturecamps.com";
 const faqSlug = props.faqSlug;
 const blogCategory = props.blogCategory;
+const contactHref = lang === "de" ? "/de/contact" : "/contact";
+const faqBase = lang === "de" ? "/de/faq" : "/faq";
+const blogBase = lang === "de" ? "/de/blog/category" : "/blog/category";
 
 const headingParts = heading.split("\n");
 ---
@@ -41,18 +48,18 @@ const headingParts = heading.split("\n");
         {buttonText}
       </a>
       <a
-        href="/contact"
+        href={contactHref}
         class="rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
       >
-        Get in Touch
+        {t("general.getInTouch", lang)}
       </a>
     </div>
     {(faqSlug || blogCategory) && (
       <p class="mt-8 text-sm text-white/30">
-        Got questions?{" "}
-        {faqSlug && <><a href={`/faq/${faqSlug}`} class="text-ocean-light hover:underline">FAQ</a>, </>}
-        {blogCategory && <>browse our <a href={`/blog/category/${blogCategory}`} class="text-ocean-light hover:underline">Blog</a>, or </>}
-        <a href="/contact" class="text-ocean-light hover:underline">message us</a> directly.
+        {t("general.gotQuestions", lang)}{" "}
+        {faqSlug && <><a href={`${faqBase}/${faqSlug}`} class="text-ocean-light hover:underline">FAQ</a>, </>}
+        {blogCategory && <>{t("general.browseOur", lang)} <a href={`${blogBase}/${blogCategory}`} class="text-ocean-light hover:underline">Blog</a>, {lang === "de" ? "oder" : "or"} </>}
+        <a href={contactHref} class="text-ocean-light hover:underline">{t("general.orMessageUs", lang)}</a>.
       </p>
     )}
   </div>

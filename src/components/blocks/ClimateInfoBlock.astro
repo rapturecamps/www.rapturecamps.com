@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface MonthData {
   month: number;
   airTempHigh: number;
@@ -15,16 +17,17 @@ interface Props {
     wetsuitNote?: string;
     background?: string;
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "Air & Water Temperatures";
+const heading = block.heading || t("surf.airWaterTemp", lang);
 const body = block.body;
 const months = (block.months || []).sort((a, b) => a.month - b.month);
 const wetsuitNote = block.wetsuitNote;
 
-const MONTH_LABELS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTH_LABELS = [t("months.jan", lang), t("months.feb", lang), t("months.mar", lang), t("months.apr", lang), t("months.may", lang), t("months.jun", lang), t("months.jul", lang), t("months.aug", lang), t("months.sep", lang), t("months.oct", lang), t("months.nov", lang), t("months.dec", lang)];
 
 // Calculate chart bounds
 const allTemps = months.flatMap((m) => [m.airTempHigh, m.airTempLow, m.waterTemp]);
@@ -121,16 +124,16 @@ const bodyHtml = body ? bodyToHtml(body) : "";
             <div class="flex flex-wrap gap-4 mb-6">
               <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
                 <span class="h-2 w-6 rounded-full bg-gradient-to-r from-amber-400/40 to-amber-400"></span>
-                Air temp range
+                {t("surf.airTempRange", lang)}
               </span>
               <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
                 <span class="h-0.5 w-6 bg-sky-400"></span>
-                Water temp
+                {t("surf.waterTemp", lang)}
               </span>
               {months.some((m) => m.rainyDays) && (
                 <span class="flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-white/40">
                   <span class="h-2 w-2 rounded-full bg-sky-400/30"></span>
-                  Rainy days
+                  {t("surf.rainyDays", lang)}
                 </span>
               )}
             </div>
@@ -169,8 +172,8 @@ const bodyHtml = body ? bodyToHtml(body) : "";
                       <div class="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-20 pointer-events-none">
                         <div class="bg-dark border border-white/10 rounded-lg px-2.5 py-1.5 text-[10px] text-white whitespace-nowrap shadow-lg">
                           <p class="font-semibold mb-0.5">{MONTH_LABELS[m.month - 1]}</p>
-                          <p class="text-amber-400">Air: {m.airTempLow}–{m.airTempHigh}°C</p>
-                          <p class="text-sky-400">Water: {m.waterTemp}°C</p>
+                          <p class="text-amber-400">{t("surf.air", lang)}: {m.airTempLow}–{m.airTempHigh}°C</p>
+                          <p class="text-sky-400">{t("surf.water", lang)}: {m.waterTemp}°C</p>
                           {m.rainyDays != null && <p class="text-white/40">Rain: {m.rainyDays} days</p>}
                         </div>
                       </div>
@@ -192,7 +195,7 @@ const bodyHtml = body ? bodyToHtml(body) : "";
             {/* Rainy days row */}
             {months.some((m) => m.rainyDays) && (
               <div>
-                <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">Rainfall</p>
+                <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">{t("surf.rainfall", lang)}</p>
                 <div class="flex gap-1 pl-6 h-8">
                   {months.map((m) => {
                     const rain = m.rainyDays || 0;
@@ -223,19 +226,19 @@ const bodyHtml = body ? bodyToHtml(body) : "";
               {avgAirHigh != null && avgAirLow != null && (
                 <div class="text-center">
                   <p class="text-lg font-semibold text-amber-400">{avgAirLow}–{avgAirHigh}°C</p>
-                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Avg Air Temp</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">{t("surf.avgAirTemp", lang)}</p>
                 </div>
               )}
               {avgWater != null && (
                 <div class="text-center">
                   <p class="text-lg font-semibold text-sky-400">{avgWater}°C</p>
-                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Avg Water</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">{t("surf.avgWater", lang)}</p>
                 </div>
               )}
               {totalRainyDays > 0 ? (
                 <div class="text-center">
                   <p class="text-lg font-semibold text-white/60">{totalRainyDays}</p>
-                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">Rainy Days/Year</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/25 mt-0.5">{t("surf.rainyDaysYear", lang)}</p>
                 </div>
               ) : wetsuitNote ? (
                 <div class="text-center">

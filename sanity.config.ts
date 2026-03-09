@@ -248,9 +248,30 @@ export default defineConfig({
                               )
                           )
                       ),
+                    S.listItem()
+                      .title("By Category")
+                      .child(
+                        S.documentList()
+                          .title("Select Category")
+                          .schemaType("faqCategory")
+                          .apiVersion(API_V)
+                          .filter('_type == "faqCategory" && (language == "en" || !defined(language))')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                          .child((categoryId) =>
+                            S.documentList()
+                              .title("FAQs")
+                              .schemaType("faq")
+                              .apiVersion(API_V)
+                              .filter(
+                                '_type == "faq" && (language == "en" || !defined(language)) && category._ref == $categoryId'
+                              )
+                              .params({ categoryId })
+                              .defaultOrdering([{ field: "order", direction: "asc" }])
+                          )
+                      ),
                     S.divider(),
                     S.listItem()
-                      .title("Categories")
+                      .title("Manage Categories")
                       .child(
                         S.documentList()
                           .title("Categories")

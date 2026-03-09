@@ -1,18 +1,22 @@
 ---
+import type { Lang } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
+
 interface Props {
   campName: string;
   basePath: string;
   activePage: "overview" | "surf" | "rooms" | "food";
   bookingUrl: string;
+  lang?: Lang;
 }
 
-const { campName, basePath, activePage, bookingUrl } = Astro.props;
+const { campName, basePath, activePage, bookingUrl, lang = "en" } = Astro.props;
 
 const tabs = [
-  { id: "overview", label: "The Surfcamp", href: basePath },
-  { id: "surf", label: "Surf", href: `${basePath}/surf` },
-  { id: "rooms", label: "Rooms", href: `${basePath}/rooms` },
-  { id: "food", label: "Food", href: `${basePath}/food` },
+  { id: "overview", label: t("nav.overview", lang), href: basePath },
+  { id: "surf", label: t("nav.surf", lang), href: `${basePath}/surf` },
+  { id: "rooms", label: t("nav.rooms", lang), href: `${basePath}/rooms` },
+  { id: "food", label: t("nav.food", lang), href: `${basePath}/food` },
 ] as const;
 ---
 
@@ -43,7 +47,7 @@ const tabs = [
         rel="noopener noreferrer"
         class="book-link flex-shrink-0 rounded-full bg-white px-4 sm:px-5 py-1.5 text-xs font-semibold text-brand-blue hover:bg-white/90 transition-colors"
       >
-        Book
+        {t("nav.book", lang)}
       </a>
     </div>
   </div>

@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Activity {
   time?: string;
   title: string;
@@ -19,9 +21,10 @@ interface Props {
     days?: Day[];
     background?: string;
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const days = block.days || [];
 
@@ -54,7 +57,7 @@ const categoryStyles: Record<string, { text: string; bg: string }> = {
           <div class="flex items-center justify-between px-5 pt-5 pb-3">
             <div class="flex items-center gap-3">
               <span class="text-[10px] font-bold uppercase tracking-wider text-ocean-light bg-ocean-light/10 px-2.5 py-1 rounded-full">
-                Day {day.dayNumber}
+                {t("retreat.day", lang)} {day.dayNumber}
               </span>
               <h3 class="text-base sm:text-lg font-semibold text-white">
                 {day.dayName}

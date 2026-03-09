@@ -1,13 +1,16 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: any;
   headingTag?: "h1" | "h2" | "h3";
+  lang?: Lang;
 }
 
-const { block, headingTag = "h2" } = Astro.props;
+const { block, headingTag = "h2", lang = "en" } = Astro.props;
 const HeadingTag = headingTag;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "Eat Well, Surf Better";
+const heading = block.heading || t("food.eatWell", lang);
 const body = block.body || "";
 const paragraphs = body ? body.split("\n\n") : [];
 const glanceItems = block.glanceItems || [];
@@ -25,7 +28,7 @@ const glanceItems = block.glanceItems || [];
         </div>
       </div>
       <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
-        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-5">At a Glance</h3>
+        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-5">{t("food.atAGlance", lang)}</h3>
         <div class="space-y-0">
           {glanceItems.map((item: any, i: number) => (
             <div

@@ -1,10 +1,13 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: any;
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
-const heading = block.heading || "What's Included";
+const { block, lang = "en" } = Astro.props;
+const heading = block.heading || t("rooms.whatsIncluded", lang);
 const items = block.items || [];
 const bg = block.background === "dark" ? "bg-dark" : "bg-dark-lighter";
 ---

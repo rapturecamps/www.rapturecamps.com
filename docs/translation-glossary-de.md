@@ -52,6 +52,14 @@ Surfcamp, Surfspot, Lineup, Reef Break, Beach Break, Point Break, Barrel, Tube, 
 | ocean swells | Swells |
 | ocean swell | Swell |
 | ocean waves | Wellen |
+| right-handers | right-handers |
+| right-hander | right-hander |
+| left-handers | left-handers |
+| left-hander | left-hander |
+| right handers | right handers |
+| right hander | right hander |
+| left handers | left handers |
+| left hander | left hander |
 
 
 ## CTA Translations
@@ -74,6 +82,7 @@ Surfcamp, Surfspot, Lineup, Reef Break, Beach Break, Point Break, Barrel, Tube, 
 
 - **Address:** Always use "du" (informal singular) or "ihr" (informal plural). NEVER use "Sie".
 - **Voice:** Casual, inspiring, adventurous — like a friend recommending a surf trip, not a corporate brochure.
+- **Perspective:** When writing about Rapture's own camps, ALWAYS use first-person "unser/unsere" (our), never third-person "dieses/diese/das" (this/that). We are Rapture — we talk about ourselves, not about someone else. Example: "Dieses Surfresort ist für Surfer aller Levels" → "Unser Surfresort ist für Surfer aller Levels".
 - **Sentence structure:** Restructure freely. German has different natural word order. Do not mirror English syntax.
 - **Anglicisms:** Avoid "Denglisch" — use German equivalents where natural ones exist. Exception: established surf terms listed above.
 - **Enthusiasm:** Match the original energy. If the English is exclamatory, the German should be too.
@@ -171,3 +180,10 @@ EN: "You arrive alone. By the second sunset, you're sharing stories over dinner,
 Bad: "Du kommst alleine an. Beim zweiten Sonnenuntergang teilst du Geschichten beim Abendessen und planst die nächste Dawn Patrol zusammen."
 Good: "Du kommst allein an. Schon beim zweiten Sonnenuntergang sitzt du beim Abendessen, tauschst Geschichten aus und planst gemeinsam die nächste Dawn Patrol."
 Why: "Schon beim" adds emphasis, "tauschst Geschichten aus" is more idiomatic than "teilst Geschichten", "gemeinsam" flows better at end.
+
+### Example 11 — Camp description (first-person perspective)
+
+EN: "Rapture's Green Bowl Surfcamp sits on a cliff overlooking the Indian Ocean, offering direct access to one of the most legendary reef breaks on the Bukit Peninsula. This surf resort is for surfers of all levels who want world-class waves without the tourist chaos."
+Bad: "Rapture's Green Bowl Surfcamp thront auf einer Klippe mit Blick auf den Indischen Ozean und bietet direkten Zugang zu einem der legendärsten Reef Breaks auf der Bukit Peninsula. Dieses Surfresort ist für Surfer aller Levels, die Weltklasse-Wellen erleben wollen, ohne das Touristenchaos."
+Good: "Unser Green Bowl Surfcamp thront auf einer Klippe über dem Indischen Ozean — mit direktem Zugang zu einem der legendärsten Reef Breaks der Bukit Peninsula. Unser Surfresort ist für Surfer aller Levels, die Weltklasse-Wellen ohne Touristenchaos suchen."
+Why: ALWAYS use "Unser/Unsere" (our) when describing Rapture's own camps — we speak as the brand, not about it. "Dieses Surfresort" sounds like a third-party review. Also: em dash for flow, "suchen" is more active than "erleben wollen, ohne".

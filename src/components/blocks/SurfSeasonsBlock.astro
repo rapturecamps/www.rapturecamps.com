@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Season {
   name: string;
   startMonth: number;
@@ -21,18 +23,19 @@ interface Props {
     wetsuitNote?: string;
     background?: string;
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "Best Time to Surf";
+const heading = block.heading || t("surf.bestTimeToSurf", lang);
 const body = block.body;
 const seasons = block.seasons || [];
 const airTemp = block.airTemp;
 const waterTemp = block.waterTemp;
 const wetsuitNote = block.wetsuitNote;
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTHS = [t("months.jan", lang), t("months.feb", lang), t("months.mar", lang), t("months.apr", lang), t("months.may", lang), t("months.jun", lang), t("months.jul", lang), t("months.aug", lang), t("months.sep", lang), t("months.oct", lang), t("months.nov", lang), t("months.dec", lang)];
 
 const COLOR_MAP: Record<string, { bar: string; bg: string; text: string }> = {
   amber:  { bar: "bg-amber-400/50",  bg: "bg-amber-400/10",  text: "text-amber-400" },
@@ -142,7 +145,7 @@ const bodyHtml = body ? bodyToHtml(body) : "";
           </div>
 
           <!-- Wave consistency bars -->
-          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-3">Wave Consistency</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-3">{t("surf.waveConsistency", lang)}</p>
           <div class="flex items-end gap-1.5 mb-1" style="height: 144px">
             {monthData.map((m) => {
               const c = COLOR_MAP[m.color];
@@ -165,7 +168,7 @@ const bodyHtml = body ? bodyToHtml(body) : "";
           </div>
 
           <!-- Season bands -->
-          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">Seasons</p>
+          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">{t("surf.seasons", lang)}</p>
           <div class="flex gap-0.5 h-6 rounded-lg overflow-hidden mb-6">
             {monthData.map((m) => {
               const c = m.season ? COLOR_MAP[m.color] : null;
@@ -183,7 +186,7 @@ const bodyHtml = body ? bodyToHtml(body) : "";
           <!-- Crowd level -->
           {seasons.some((s) => s.crowdLevel) && (
             <div>
-              <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">Crowd Level</p>
+              <p class="text-[10px] uppercase tracking-wider text-white/25 mb-2">{t("surf.crowdLevel", lang)}</p>
               <div class="flex gap-1 h-4 mb-6">
                 {monthData.map((m) => {
                   const crowd = m.season?.crowdLevel || 0;
@@ -203,11 +206,11 @@ const bodyHtml = body ? bodyToHtml(body) : "";
           <!-- Temperature bars -->
           {(airTemp?.low != null || waterTemp?.low != null) && (
             <div>
-              <p class="text-[10px] uppercase tracking-wider text-white/25 mb-3">Temperature</p>
+              <p class="text-[10px] uppercase tracking-wider text-white/25 mb-3">{t("surf.temperature", lang)}</p>
               <div class="space-y-2">
                 {airTemp?.low != null && airTemp?.high != null && (
                   <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 w-10 shrink-0">Air</span>
+                    <span class="text-[10px] text-white/30 w-10 shrink-0">{t("surf.air", lang)}</span>
                     <div class="flex-1 h-2 rounded-full bg-white/5 relative overflow-hidden">
                       <div
                         class="absolute inset-y-0 rounded-full bg-gradient-to-r from-amber-400/40 to-amber-400/80"
@@ -219,7 +222,7 @@ const bodyHtml = body ? bodyToHtml(body) : "";
                 )}
                 {waterTemp?.low != null && waterTemp?.high != null && (
                   <div class="flex items-center gap-3">
-                    <span class="text-[10px] text-white/30 w-10 shrink-0">Water</span>
+                    <span class="text-[10px] text-white/30 w-10 shrink-0">{t("surf.water", lang)}</span>
                     <div class="flex-1 h-2 rounded-full bg-white/5 relative overflow-hidden">
                       <div
                         class="absolute inset-y-0 rounded-full bg-gradient-to-r from-sky-400/40 to-sky-400/80"

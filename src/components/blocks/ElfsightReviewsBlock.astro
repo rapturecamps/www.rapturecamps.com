@@ -1,5 +1,6 @@
 ---
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
+import { type Lang } from "@/lib/i18n";
 
 interface Props {
   block: {
@@ -7,9 +8,10 @@ interface Props {
     elfsightAppId: string;
     background?: string;
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 ---
 
 {block.elfsightAppId && (
@@ -17,5 +19,6 @@ const { block } = Astro.props;
     heading={block.heading}
     appId={block.elfsightAppId}
     background={block.background}
+    lang={lang}
   />
 )}

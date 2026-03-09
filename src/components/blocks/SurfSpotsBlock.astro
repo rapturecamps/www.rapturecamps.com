@@ -1,13 +1,15 @@
 ---
 import { responsiveSrc } from "@/lib/image-utils";
+import { t, type Lang } from "@/lib/i18n";
 
 interface Props {
   block: any;
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "Surf Spots Nearby";
+const heading = block.heading || t("surf.spotsNearby", lang);
 const subtext = block.subtext || block.subtitle || "";
 const spots = block.spots || block.surfSpots || [];
 

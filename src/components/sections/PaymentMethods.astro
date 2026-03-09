@@ -1,0 +1,30 @@
+---
+import { t, type Lang } from "@/lib/i18n";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "en" } = Astro.props;
+---
+
+<section class="py-12 sm:py-16 bg-dark">
+  <div class="px-6 sm:px-12 lg:px-20">
+    <div class="flex flex-col items-center text-center">
+      <div class="flex items-center gap-2 mb-5">
+        <svg class="h-4.5 w-4.5 text-white/30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span class="text-xs uppercase tracking-wider text-white/30 font-medium">{t("rooms.securePayments", lang)}</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#1A1F71"/><path d="M19.5 21h-3l1.9-11h3l-1.9 11zm13.6-10.7c-.6-.2-1.5-.5-2.7-.5-3 0-5.1 1.5-5.1 3.7 0 1.6 1.5 2.5 2.6 3.1 1.2.6 1.5.9 1.5 1.4 0 .8-.9 1.1-1.8 1.1-1.2 0-1.8-.2-2.8-.6l-.4-.2-.4 2.5c.7.3 2 .6 3.3.6 3.2 0 5.2-1.5 5.2-3.8 0-1.3-.8-2.3-2.5-3.1-1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 1 0 1.7.2 2.2.4l.3.1.6-2.3zm7.9-.3h-2.3c-.7 0-1.3.2-1.6.9l-4.5 10.1h3.2s.5-1.4.6-1.7h3.9c.1.4.4 1.7.4 1.7H43l-2-11zm-3.7 7.1c.3-.7 1.2-3.2 1.2-3.2s.3-.7.4-1.1l.2 1 .7 3.3h-2.5zM17.2 10h-4.7l-.1.2c3.7.9 6.2 3.1 7.2 5.8l-1-4.9c-.2-.8-.8-1-1.4-1.1z" fill="#fff"/></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#252525"/><circle cx="19" cy="16" r="8" fill="#EB001B"/><circle cx="29" cy="16" r="8" fill="#F79E1B"/><path d="M24 10.3a8 8 0 0 1 0 11.4 8 8 0 0 1 0-11.4z" fill="#FF5F00"/></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#006FCF"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="7" font-weight="bold" font-family="Arial, sans-serif">AMEX</text></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#003087"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6.5" font-weight="bold" font-family="Arial, sans-serif">PayPal</text></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#FFB3C7"/><text x="24" y="18.5" text-anchor="middle" fill="#0A0B09" font-size="7" font-weight="bold" font-family="Arial, sans-serif">Klarna</text></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#000"/><text x="24" y="18.5" text-anchor="middle" fill="white" font-size="6" font-weight="bold" font-family="Arial, sans-serif"> Pay</text><path d="M15.2 13.2c.3-.4.5-.9.5-1.4-.5 0-1.1.3-1.5.7-.3.3-.6.9-.5 1.4.5 0 1.1-.3 1.5-.7zm.4.8c-.8 0-1.5.5-1.9.5s-1-.4-1.7-.4c-.8 0-1.6.5-2.1 1.3-.9 1.5-.2 3.7.6 4.9.4.6.9 1.3 1.6 1.2.6 0 .9-.4 1.6-.4.7 0 1 .4 1.6.4.7 0 1.1-.6 1.5-1.2.5-.7.7-1.4.7-1.4-.7-.3-1.3-1.2-1.3-2.2 0-.9.5-1.7 1.2-2.1-.5-.7-1.2-1-1.8-1.1z" fill="white"/></svg></div>
+        <div class="flex items-center gap-2 rounded-lg bg-white/[0.04] border border-white/[0.06] px-4 py-2.5"><svg class="h-5 w-8" viewBox="0 0 48 32" fill="none"><rect width="48" height="32" rx="4" fill="#fff" stroke="#e0e0e0" stroke-width=".5"/><text x="30" y="18.5" text-anchor="middle" fill="#5f6368" font-size="6" font-weight="500" font-family="Arial, sans-serif">Pay</text><path d="M14.5 17.5c0-2.5 2-4.5 4.4-4.5 1.3 0 2.2.5 2.9 1.2l-.8.8c-.5-.5-1.2-.8-2.1-.8-1.8 0-3.2 1.4-3.2 3.2s1.4 3.2 3.2 3.2c1.2 0 1.8-.5 2.2-.9.3-.3.5-.8.6-1.5h-2.8v-1.1h3.9c0 .3.1.5.1.9 0 1.1-.3 2.4-1.2 3.3-.9.9-2 1.4-3.4 1.4-2.6.1-4.8-1.9-4.8-4.2z" fill="#4285F4"/></svg></div>
+      </div>
+      <p class="text-[11px] text-white/20 mt-4">{t("rooms.paymentNote", lang)}</p>
+    </div>
+  </div>
+</section>

@@ -78,8 +78,14 @@ export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug &&
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
   "heroImages": heroImages[].asset->url,
@@ -189,8 +195,14 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     },
     _type == "campSubPages" => {
       ...,
@@ -252,8 +264,14 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
   seo { ..., "ogImageUrl": ogImage.asset->url },
@@ -304,8 +322,14 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
   seo { ..., "ogImageUrl": ogImage.asset->url },
@@ -344,8 +368,14 @@ export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current =
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
   seo { ..., "ogImageUrl": ogImage.asset->url },
@@ -464,8 +494,14 @@ export const HOMEPAGE = `*[_type == "homepage" && (language == $lang || (!define
     },
     _type == "faqSection" => {
       ...,
-      "resolvedFaqs": faqRefs[]->{ question, answer },
-      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref] | order(order asc) { question, answer }
+      "resolvedFaqs": faqRefs[] {
+        "faqId": coalesce(
+          *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+            .translations[_key == $lang][0].value._ref,
+          _ref
+        )
+      }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+      "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
   seo { ..., "ogImageUrl": ogImage.asset->url },

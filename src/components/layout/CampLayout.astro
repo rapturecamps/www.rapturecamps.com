@@ -3,6 +3,8 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CampSubnav from "./CampSubnav.astro";
+import type { Lang } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
 interface Props {
   campName: string;
@@ -20,6 +22,7 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   disablePopups?: boolean;
+  lang?: Lang;
 }
 
 const {
@@ -38,19 +41,14 @@ const {
   ogImage: ogImageProp,
   noindex,
   disablePopups,
+  lang = "en",
 } = Astro.props;
 
 const resolvedOgImage = ogImageProp || heroImages?.[0] || heroImage;
 
 const countrySlug = basePath.split("/")[2];
 
-const pageLabels: Record<string, string> = {
-  overview: "The Surfcamp",
-  surf: "Surf",
-  rooms: "Rooms",
-  food: "Food",
-};
-const pageLabel = pageLabels[activePage] || "";
+const pageLabel = t(`nav.${activePage}`, lang);
 const defaultTitle = activePage === "overview"
   ? `Rapture Surf Camp\n${campName}`
   : pageLabel;
@@ -68,8 +66,8 @@ const heroTagline = heroTaglineOverride;
     backgroundImages={heroImages}
   >
     <Breadcrumbs inline crumbs={[
-      { label: "Surf Camps", href: "/surfcamp" },
-      { label: countryName, href: `/surfcamp/${countrySlug}` },
+      { label: "Surfcamps", href: `${lang === "de" ? "/de" : ""}/surfcamp` },
+      { label: countryName, href: `${lang === "de" ? "/de" : ""}/surfcamp/${countrySlug}` },
       { label: campName, href: activePage === "overview" ? undefined : basePath },
       ...(activePage !== "overview" ? [{ label: pageLabel }] : []),
     ]} />
@@ -80,6 +78,7 @@ const heroTagline = heroTaglineOverride;
     basePath={basePath}
     activePage={activePage}
     bookingUrl={bookingUrl}
+    lang={lang}
   />
 
   <slot />

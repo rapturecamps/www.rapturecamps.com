@@ -2,6 +2,7 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import PaymentMethods from "@/components/sections/PaymentMethods.astro";
 import { getDestinations, getCampBySlug, getCampRoomsPage } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
 
@@ -23,7 +24,9 @@ const countryTitle = roomsPage?.countryName || country!.split("-").map((w: strin
 const bookingUrl = roomsPage?.bookingUrl || campData?.bookingUrl || `https://bookings.rapturecamps.com/de/product/${country}-${camp}-surf-stay`;
 const basePath = `/de/surfcamp/${country}/${camp}`;
 
-const blocks = roomsPage?.pageBuilder;
+const allBlocks = roomsPage?.pageBuilder || [];
+const contentBlocks = allBlocks.filter((b: any) => b._type !== "ctaSection");
+const ctaBlock = allBlocks.find((b: any) => b._type === "ctaSection");
 ---
 
 <CampLayout
@@ -36,10 +39,25 @@ const blocks = roomsPage?.pageBuilder;
   heroTitle={roomsPage?.heroTitle}
   title={roomsPage?.seo?.metaTitle || `${t("camp.rooms_title", lang)} ${campTitle} | Rapture Surfcamps`}
   description={roomsPage?.seo?.metaDescription || `${t("camp.rooms_title", lang)} ${campTitle} ${countryTitle}.`}
+  lang="de"
 >
-  {blocks?.length ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
+  {contentBlocks.length > 0 && (
+    <BlockRenderer blocks={contentBlocks} campData={campData} lang="de" />
+  )}
+
+  <PaymentMethods lang="de" />
+
+  {ctaBlock ? (
+    <CTASection
+      heading={ctaBlock.heading}
+      text={ctaBlock.text}
+      buttonText={ctaBlock.buttonText}
+      buttonUrl={ctaBlock.buttonUrl || campData?.bookingUrl}
+      faqSlug={campData?.slug}
+      blogCategory={campData?.countrySlug}
+      lang="de"
+    />
   ) : (
-    <CTASection />
+    <CTASection lang="de" />
   )}
 </CampLayout>

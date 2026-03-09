@@ -31,6 +31,9 @@ yarn-debug.log*
 .vscode/
 .idea/
 
+# cursor (keep .cursor/rules/ and .cursor/plans/, exclude transcripts)
+.cursor/transcripts/
+
 # migration artifacts
 sanity/wp-image-map.json
 sanity/wp-image-checkpoint.json

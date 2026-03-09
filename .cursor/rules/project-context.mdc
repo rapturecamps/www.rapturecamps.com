@@ -1,0 +1,72 @@
+---
+description: Project architecture, conventions, and key references for Rapture Surfcamps website
+alwaysApply: true
+---
+
+# Rapture Surfcamps — Project Context
+
+## Tech Stack
+
+- **Framework**: Astro (SSR on Vercel, `prerender = false` for dynamic pages)
+- **CMS**: Sanity v3 with `@sanity/document-internationalization` (EN + DE)
+- **Styling**: Tailwind CSS with custom dark theme (`bg-dark`, `bg-dark-lighter`, `text-ocean`)
+- **Hosting**: Vercel (serverless functions, cron jobs via `vercel.json`)
+- **CDN/Video**: Bunny CDN (pull zones) + Bunny Stream (video hosting, embed URLs)
+- **Language**: TypeScript throughout
+
+## Directory Structure
+
+- `src/pages/` — Astro pages (English). German at `src/pages/de/`
+- `src/components/sections/` — Major page sections (Hero, DestinationGrid, AboutSection, etc.)
+- `src/components/blocks/` — Sanity pageBuilder block renderers (BlockRenderer.astro dispatches by `_type`)
+- `src/components/layout/` — Header, Footer, CampLayout, CampSubnav, ContactWidget
+- `src/lib/queries.ts` — All GROQ queries (parameterized with `$lang`)
+- `src/lib/sanity-data.ts` — Data fetching functions wrapping GROQ queries
+- `src/lib/i18n.ts` — Translation dictionary and `t(key, lang)` function
+- `src/pages/api/` — API routes (translate, update-reviews, translate-meta)
+- `sanity/schemas/` — All Sanity schema definitions
+- `sanity/schemas/blocks/` — pageBuilder block schemas (use `blockLayoutFields` from `objects/blockLayout`)
+- `sanity/actions/` — Custom Sanity Studio document actions (translate, SEO, meta generation)
+- `docs/translation-glossary-de.md` — Translation glossary, tone rules, few-shot examples
+
+## CMS Architecture
+
+- **Document internationalization**: EN docs are the source of truth. DE docs linked via `translation.metadata`
+- **pageBuilder pattern**: Most content pages use a `pageBuilder` array field with typed blocks
+- **FAQ resolution**: GROQ queries resolve `faqRefs` through `translation.metadata` to find the correct language version. Category-based FAQ queries filter by `language == $lang`
+- **Slug uniqueness**: All i18n document types use language-aware `isUnique` on slug fields
+- **Camp pages**: `camp` (overview), `campSurfPage`, `campRoomsPage`, `campFoodPage` — each has EN/DE variants
+
+## Translation Workflow
+
+- **3 providers**: Claude (`claude-sonnet-4-20250514`), OpenAI (`gpt-4o`), DeepL hybrid
+- **DeepL hybrid**: DeepL translates first for natural German, then Claude/OpenAI refines with glossary + tone rules
+- **Glossary enforcement**: Programmatic post-processing (`postProcessTranslations`) does deterministic find-and-replace after AI translation
+- **Translatable fields whitelist**: `TRANSLATABLE_STRING_FIELDS` in `src/pages/api/translate.ts` — add new field names here when schemas add translatable strings
+- **String array fields**: `features`, `amenities`, `highlights`, `items` are recognized as translatable arrays
+- **Key file**: `src/pages/api/translate.ts` (main API), `sanity/actions/translateAction.tsx` (Studio UI)
+
+## i18n Conventions
+
+- German pages live at `src/pages/de/` mirroring the English structure
+- Use `t(key, lang)` from `src/lib/i18n.ts` for UI strings
+- Camp sub-pages pass `lang="de"` to `CampLayout` which forwards to `CampSubnav`
+- When German CMS data is missing, fall back to English (see `de/index.astro` pattern)
+- Destination slugs from English are prefixed with `/de` for German pages
+
+## External Services
+
+- **Zoho Desk**: Chat widget (loaded on-demand in ContactWidget.astro), web-to-case contact form
+- **Zoho Campaigns**: Newsletter popup integration
+- **Zoho Bookings**: Embedded iframe on `/meet-us` page
+- **Google Places API**: Automated review sync via `/api/update-reviews` (Vercel cron daily)
+- **Bunny Stream**: Video testimonials, hero videos, intro videos (embed via `vz-79cee76e-e6d.b-cdn.net`)
+- **Elfsight**: Reviews widget (being phased out in favor of Google API)
+
+## Key Conventions
+
+- Block schemas: always include `...blockLayoutFields` from `sanity/schemas/objects/blockLayout`
+- New pageBuilder blocks: add to relevant schema's `pageBuilder.of[]` array AND `sanity/schemas/index.ts`
+- New translatable string fields: add field name to `TRANSLATABLE_STRING_FIELDS` in `translate.ts`
+- Images: use `loading="lazy"`, `decoding="async"`, and `fetchpriority="high"` for above-fold only
+- German nav items: add translation keys to `src/lib/i18n.ts`, use `t()` in components

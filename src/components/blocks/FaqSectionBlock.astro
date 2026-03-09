@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface FaqItem {
   question: string;
   answer: string;
@@ -13,10 +15,11 @@ interface Props {
     resolvedFaqs?: FaqItem[];
     resolvedCategoryFaqs?: FaqItem[];
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
-const heading = block.heading || "Frequently Asked Questions";
+const { block, lang = "en" } = Astro.props;
+const heading = block.heading || t("camp.faq", lang);
 const subtitle = block.subtitle || "";
 
 let faqs: FaqItem[] = [];
@@ -78,8 +81,8 @@ const hasMore = hiddenFaqs.length > 0;
                 </details>
               ))}
             </div>
-            <button class="faq-show-more mt-6 flex items-center gap-2 text-sm font-medium text-ocean-light hover:text-white transition-colors group">
-              <span class="faq-show-more-text">Show {hiddenFaqs.length} more questions</span>
+            <button class="faq-show-more mt-6 flex items-center gap-2 text-sm font-medium text-ocean-light hover:text-white transition-colors group" data-show-more={t("general.showMore", lang).replace("{n}", String(hiddenFaqs.length))} data-show-fewer={t("general.showFewer", lang)}>
+              <span class="faq-show-more-text">{t("general.showMore", lang).replace("{n}", String(hiddenFaqs.length))}</span>
               <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 faq-show-more-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
             </button>
           </div>
@@ -98,18 +101,20 @@ const hasMore = hiddenFaqs.length > 0;
     var icon = wrap.querySelector(".faq-show-more-icon");
     if (!btn || !items) return;
 
+    var showMoreLabel = btn.getAttribute("data-show-more") || "Show more questions";
+    var showFewerLabel = btn.getAttribute("data-show-fewer") || "Show fewer questions";
+
     btn.addEventListener("click", function () {
       var expanded = wrap.getAttribute("data-expanded") === "true";
       if (expanded) {
         items.style.display = "none";
         wrap.setAttribute("data-expanded", "false");
-        if (text) text.textContent = text.getAttribute("data-label") || "Show more questions";
+        if (text) text.textContent = showMoreLabel;
         if (icon) icon.style.transform = "";
       } else {
-        if (!text.getAttribute("data-label")) text.setAttribute("data-label", text.textContent);
         items.style.display = "";
         wrap.setAttribute("data-expanded", "true");
-        if (text) text.textContent = "Show fewer questions";
+        if (text) text.textContent = showFewerLabel;
         if (icon) icon.style.transform = "rotate(180deg)";
       }
     });

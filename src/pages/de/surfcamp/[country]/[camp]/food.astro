@@ -36,10 +36,11 @@ const blocks = foodPage?.pageBuilder;
   heroTitle={foodPage?.heroTitle}
   title={foodPage?.seo?.metaTitle || `${t("camp.food_title", lang)} ${campTitle} | Rapture Surfcamps`}
   description={foodPage?.seo?.metaDescription || `${t("camp.food_title", lang)} ${campTitle} ${countryTitle}.`}
+  lang="de"
 >
   {blocks?.length ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
+    <BlockRenderer blocks={blocks} campData={campData} lang="de" />
   ) : (
-    <CTASection />
+    <CTASection lang="de" />
   )}
 </CampLayout>

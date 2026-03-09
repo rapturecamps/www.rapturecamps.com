@@ -136,6 +136,34 @@ const TRANSLATABLE_STRING_FIELDS = [
   "aboutHeading",
   "aboutSubtext",
   "aboutLinkText",
+  "surfLevels",
+  "minStay",
+  "groupSize",
+  "subtitle",
+  "outcome",
+  "level",
+  "value",
+  "tag",
+  "cardTitle",
+  "cardNote",
+  "eyebrow",
+  "dayName",
+  "theme",
+  "time",
+  "authorRole",
+  "prefix",
+  "quote",
+  "desc",
+  "item",
+  "note",
+  "day",
+  "starter",
+  "main",
+  "dessert",
+  "activity",
+  "meal",
+  "type",
+  "extra",
 ];
 
 const SKIP_FIELDS = [
@@ -157,6 +185,8 @@ const SKIP_FIELDS = [
   "reviewCount",
   "country",
   "background",
+  "category",
+  "headingLevel",
   "reverse",
   "height",
   "imageUrl",
@@ -167,7 +197,6 @@ const SKIP_FIELDS = [
   "bunnyLibraryId",
   "bunnyPullZone",
   "spokenLanguages",
-  "amenities",
   "videoType",
   "videoId",
   "videoPoster",
@@ -189,8 +218,8 @@ function extractTranslatableContent(obj: any, path = ""): Record<string, any> {
       if (key === "body" || key === "content") {
         result[currentPath] = value;
       } else if (
-        key === "amenities" &&
-        value.every((v: any) => typeof v === "string")
+        value.every((v: any) => typeof v === "string") &&
+        ["amenities", "features", "highlights", "items"].includes(key)
       ) {
         result[currentPath] = value;
       } else {

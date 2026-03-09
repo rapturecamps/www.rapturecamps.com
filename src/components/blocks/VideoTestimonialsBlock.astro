@@ -1,4 +1,6 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface VideoItem {
   bunnyVideoId: string;
   posterImageUrl?: string;
@@ -25,14 +27,15 @@ interface Props {
     };
     background?: string;
   };
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 
 const isLibrary = block.source === "library" && block.resolvedSet;
 const set = isLibrary ? block.resolvedSet! : block;
 
-const heading = (isLibrary ? block.headingOverride : null) || set.heading || "Stories from Our Guests";
+const heading = (isLibrary ? block.headingOverride : null) || set.heading || t("testimonials.heading", lang);
 const pullZone = set.bunnyPullZone || "";
 const videos = (set.videos || []).filter((v) => v.bunnyVideoId);
 const bgClass = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
@@ -95,13 +98,13 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
       <div class="hidden sm:flex items-center gap-2">
         <button
           class="vt-prev flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-          aria-label="Previous"
+          aria-label={t("general.previous", lang)}
         >
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
         </button>
         <button
           class="vt-next flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
-          aria-label="Next"
+          aria-label={t("general.next", lang)}
         >
           <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </button>
@@ -182,7 +185,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
                     <svg class="vt-icon-pause h-5 w-5 text-brand-blue hidden" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
                     </svg>
-                    <span class="vt-btn-text text-sm font-semibold text-dark/90">Play Story</span>
+                    <span class="vt-btn-text text-sm font-semibold text-dark/90" data-play-text={t("general.playStory", lang)} data-pause-text={t("general.pauseStory", lang)}>{t("general.playStory", lang)}</span>
                   </button>
                 </div>
               </div>
@@ -194,13 +197,13 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
 
       <button
         class="vt-prev-mobile sm:hidden absolute left-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
-        aria-label="Previous"
+        aria-label={t("general.previous", lang)}
       >
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
       </button>
       <button
         class="vt-next-mobile sm:hidden absolute right-2 top-1/2 -translate-y-1/2 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-dark shadow-lg"
-        aria-label="Next"
+        aria-label={t("general.next", lang)}
       >
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
       </button>
@@ -288,7 +291,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
       var btnText = card.querySelector(".vt-btn-text");
       if (iconPlay) iconPlay.classList.remove("hidden");
       if (iconPause) iconPause.classList.add("hidden");
-      if (btnText) btnText.textContent = "Play Story";
+      if (btnText) btnText.textContent = btnText.getAttribute("data-play-text") || "Play Story";
     }
 
     function playCard(card) {
@@ -305,7 +308,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
       var btnText = card.querySelector(".vt-btn-text");
       if (iconPlay) iconPlay.classList.add("hidden");
       if (iconPause) iconPause.classList.remove("hidden");
-      if (btnText) btnText.textContent = "Pause Story";
+      if (btnText) btnText.textContent = btnText.getAttribute("data-pause-text") || "Pause Story";
       currentlyPlaying = card;
     }
 

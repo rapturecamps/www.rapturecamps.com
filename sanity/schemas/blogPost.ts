@@ -27,10 +27,11 @@ export default defineType({
         isUnique: async (value, context) => {
           const { document, getClient } = context;
           const client = getClient({ apiVersion: "2024-01-01" });
-          const lang = (document as any)?.language || "en";
+          const lang = (document as any)?.language;
+          if (!lang) return true;
           const id = document?._id?.replace(/^drafts\./, "");
           const count = await client.fetch(
-            `count(*[_type == "blogPost" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en")) && !(_id in [$pubId, $draftId])])`,
+            `count(*[_type == "blogPost" && slug.current == $slug && language == $lang && !(_id in [$pubId, $draftId])])`,
             { slug: value, lang, pubId: id, draftId: `drafts.${id}` }
           );
           return count === 0;

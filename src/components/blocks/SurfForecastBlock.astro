@@ -1,10 +1,13 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: any;
   campData?: any;
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const fadeFrom = block.background === "dark-lighter" ? "from-dark-lighter" : "from-dark";
 ---
@@ -14,21 +17,21 @@ const fadeFrom = block.background === "dark-lighter" ? "from-dark-lighter" : "fr
     <div class="flex items-center justify-between mb-8">
       <div>
         <div class="flex items-center gap-3 mb-2">
-          <h2 class="text-xl sm:text-2xl font-semibold text-white">Surf Forecast</h2>
+          <h2 class="text-xl sm:text-2xl font-semibold text-white">{t("surf.forecast", lang)}</h2>
           <span class="forecast-live-badge hidden items-center gap-1.5 rounded-full bg-green-500/10 border border-green-500/20 px-2 py-0.5">
             <span class="relative flex h-1.5 w-1.5">
               <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
               <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500"></span>
             </span>
-            <span class="text-[10px] uppercase tracking-wider text-green-400 font-semibold">Live</span>
+            <span class="text-[10px] uppercase tracking-wider text-green-400 font-semibold">{t("surf.live", lang)}</span>
           </span>
         </div>
-        <p class="text-sm text-white/40">Wave and swell forecast for the next 14 days</p>
+        <p class="text-sm text-white/40">{t("surf.forecastSubtext", lang)}</p>
       </div>
       <div class="hidden sm:flex items-center gap-3 text-[10px] uppercase tracking-wider text-white/30">
-        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-green-400"></span> Mellow</span>
-        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-ocean-light"></span> Fun</span>
-        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-amber-400"></span> Pumping</span>
+        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-green-400"></span> {t("surf.mellow", lang)}</span>
+        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-ocean-light"></span> {t("surf.fun", lang)}</span>
+        <span class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-amber-400"></span> {t("surf.pumping", lang)}</span>
       </div>
     </div>
 
@@ -37,7 +40,7 @@ const fadeFrom = block.background === "dark-lighter" ? "from-dark-lighter" : "fr
         <div class="forecast-placeholder flex items-center justify-center w-full py-12">
           <div class="flex items-center gap-3 text-white/20">
             <svg class="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            <span class="text-sm">Loading forecast&hellip;</span>
+            <span class="text-sm">{t("general.loading", lang)}</span>
           </div>
         </div>
       </div>
@@ -45,7 +48,7 @@ const fadeFrom = block.background === "dark-lighter" ? "from-dark-lighter" : "fr
       <div class:list={["pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l to-transparent z-10", fadeFrom]}></div>
     </div>
 
-    <p class="text-[11px] text-white/15 mt-3">Data from Open-Meteo Marine API. Updated hourly. Forecasts beyond 7 days are less reliable.</p>
+    <p class="text-[11px] text-white/15 mt-3">{t("surf.forecastDisclaimer", lang)}</p>
   </div>
 </section>
 

@@ -37,13 +37,16 @@ import RetreatItineraryBlock from "./RetreatItineraryBlock.astro";
 import RetreatTestimonialsBlock from "./RetreatTestimonialsBlock.astro";
 import RetreatStatsBarBlock from "./RetreatStatsBarBlock.astro";
 
+import type { Lang } from "@/lib/i18n";
+
 interface Props {
   blocks: any[];
   campData?: any;
   h1BlockIndex?: number;
+  lang?: Lang;
 }
 
-const { blocks = [], campData, h1BlockIndex } = Astro.props;
+const { blocks = [], campData, h1BlockIndex, lang = "en" } = Astro.props;
 
 const ASPECT_MAP = { "16/9": "16:9", "4/3": "4:3", "3/2": "3:2", "1/1": "1:1" } as Record<string, string>;
 const VIDEO_TYPE_MAP = { youtube: "youtube", vimeo: "vimeo", wistia: "wistia", bunny: "bunny", file: "file" } as Record<string, string>;
@@ -122,23 +125,23 @@ function portableTextToHtml(body: any): string {
   const layoutClass = getLayoutClasses(block);
 
   const renderBlock = () => {
-    if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} headingTag={isH1 ? "h1" : "h2"} />;
-    if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} />;
-    if (type === "surfSpots") return <SurfSpotsBlock block={block} />;
-    if (type === "surfLevels") return <SurfLevelsBlock block={block} />;
-    if (type === "surfSchedule") return <SurfScheduleBlock block={block} />;
-    if (type === "surfEquipment") return <SurfEquipmentBlock block={block} />;
-    if (type === "surfSeasons") return <SurfSeasonsBlock block={block} />;
-    if (type === "climateInfo") return <ClimateInfoBlock block={block} />;
-    if (type === "surfConditions") return <SurfConditionsBlock block={block} headingTag={isH1 ? "h1" : undefined} />;
+    if (type === "surfIntro") return <SurfIntroBlock block={block} campData={campData} headingTag={isH1 ? "h1" : "h2"} lang={lang} />;
+    if (type === "surfForecast") return <SurfForecastBlock block={block} campData={campData} lang={lang} />;
+    if (type === "surfSpots") return <SurfSpotsBlock block={block} lang={lang} />;
+    if (type === "surfLevels") return <SurfLevelsBlock block={block} lang={lang} />;
+    if (type === "surfSchedule") return <SurfScheduleBlock block={block} lang={lang} />;
+    if (type === "surfEquipment") return <SurfEquipmentBlock block={block} lang={lang} />;
+    if (type === "surfSeasons") return <SurfSeasonsBlock block={block} lang={lang} />;
+    if (type === "climateInfo") return <ClimateInfoBlock block={block} lang={lang} />;
+    if (type === "surfConditions") return <SurfConditionsBlock block={block} headingTag={isH1 ? "h1" : undefined} lang={lang} />;
 
-    if (type === "foodIntro") return <FoodIntroBlock block={block} headingTag={isH1 ? "h1" : "h2"} />;
-    if (type === "mealCards") return <MealCardsBlock block={block} />;
-    if (type === "menuTable") return <MenuTableBlock block={block} />;
-    if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} />;
+    if (type === "foodIntro") return <FoodIntroBlock block={block} headingTag={isH1 ? "h1" : "h2"} lang={lang} />;
+    if (type === "mealCards") return <MealCardsBlock block={block} lang={lang} />;
+    if (type === "menuTable") return <MenuTableBlock block={block} lang={lang} />;
+    if (type === "dietaryOptions") return <DietaryOptionsBlock block={block} lang={lang} />;
 
-    if (type === "roomTypes") return <RoomTypesBlock block={block} bookingUrl={campData?.bookingUrl} />;
-    if (type === "roomInclusions") return <RoomInclusionsBlock block={block} />;
+    if (type === "roomTypes") return <RoomTypesBlock block={block} bookingUrl={campData?.bookingUrl} lang={lang} />;
+    if (type === "roomInclusions") return <RoomInclusionsBlock block={block} lang={lang} />;
 
     if (type === "featureBlock") return <FeatureBlock block={block} />;
     if (type === "imageGallery") return <ImageGalleryBlock block={block} />;
@@ -174,14 +177,14 @@ function portableTextToHtml(body: any): string {
       />;
     }
 
-    if (type === "videoTestimonials") return <VideoTestimonialsBlock block={block} />;
-    if (type === "highlightsGrid") return <HighlightsGridBlock block={block} />;
-    if (type === "inclusionsGrid") return <InclusionsGridBlock block={block} />;
-    if (type === "faqSection") return <FaqSectionBlock block={block} />;
-    if (type === "elfsightReviews") return <ElfsightReviewsBlock block={block} />;
+    if (type === "videoTestimonials") return <VideoTestimonialsBlock block={block} lang={lang} />;
+    if (type === "highlightsGrid") return <HighlightsGridBlock block={block} lang={lang} />;
+    if (type === "inclusionsGrid") return <InclusionsGridBlock block={block} lang={lang} />;
+    if (type === "faqSection") return <FaqSectionBlock block={block} lang={lang} />;
+    if (type === "elfsightReviews") return <ElfsightReviewsBlock block={block} lang={lang} />;
     if (type === "campSubPages") return <CampSubPagesBlock block={block} campData={campData} />;
 
-    if (type === "retreatItinerary") return <RetreatItineraryBlock block={block} />;
+    if (type === "retreatItinerary") return <RetreatItineraryBlock block={block} lang={lang} />;
     if (type === "retreatTestimonials") return <RetreatTestimonialsBlock block={block} />;
     if (type === "retreatStatsBar") return <RetreatStatsBarBlock block={block} />;
 
@@ -281,6 +284,7 @@ function portableTextToHtml(body: any): string {
       buttonUrl={block.buttonUrl || campData?.bookingUrl}
       faqSlug={campData?.slug}
       blogCategory={campData?.countrySlug}
+      lang={lang}
     />;
 
     return null;

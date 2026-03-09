@@ -8,6 +8,7 @@ import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import VideoBlock from "@/components/sections/VideoBlock.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
+import { bunnyEmbedUrl } from "@/lib/sanity";
 import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
 
@@ -56,6 +57,7 @@ const rating = campData.rating || 4.7;
 const reviewCount = campData.reviewCount || 100;
 const introHeading = campData?.introHeading;
 const introHeadingLevel = campData?.introHeadingLevel || "h2";
+const introVideoId = campData?.introVideoId;
 
 function renderSpans(children: any[], markDefs: any[] = []): string {
   if (!children) return "";
@@ -176,6 +178,7 @@ const hasSanityBlocks = blocks?.length > 0;
   heroTagline={campData?.heroTagline}
   title={campData?.seo?.metaTitle}
   description={campData?.seo?.metaDescription}
+  lang="de"
 >
   <script type="application/ld+json" slot="head" set:html={JSON.stringify({
     "@context": "https://schema.org",
@@ -212,8 +215,8 @@ const hasSanityBlocks = blocks?.length > 0;
 
   <section class="py-16 sm:py-20 bg-dark">
     <div class="px-6 sm:px-12 lg:px-20">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-16 items-start">
-        <div class="lg:order-2">
+      <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 items-start">
+        <div class="order-1 lg:order-none lg:col-start-2 lg:row-start-2 mb-10 lg:mb-0">
           <div class="rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8">
             <div class="flex items-center gap-3 mb-5">
               <div class="flex items-center gap-1">
@@ -270,15 +273,28 @@ const hasSanityBlocks = blocks?.length > 0;
             </a>
           </div>
         </div>
-        <div class="lg:order-1">
-          {introHeading && (
-            introHeadingLevel === "h1"
-              ? <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h1>
+        {introHeading && (
+          <div class="order-2 lg:order-none lg:col-start-1 lg:row-start-1 mb-6 lg:mb-0">
+            {introHeadingLevel === "h1"
+              ? <h1 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{introHeading}</h1>
               : introHeadingLevel === "h3"
-                ? <h3 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h3>
+                ? <h3 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{introHeading}</h3>
                 : introHeadingLevel === "h4"
-                  ? <h4 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h4>
-                  : <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{introHeading}</h2>
+                  ? <h4 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{introHeading}</h4>
+                  : <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{introHeading}</h2>}
+          </div>
+        )}
+        <div class="order-3 lg:order-none lg:col-start-1 lg:row-start-2">
+          {introVideoId && (
+            <div class="mb-6 rounded-xl overflow-hidden aspect-video">
+              <iframe
+                src={bunnyEmbedUrl(introVideoId, { autoplay: false })}
+                loading="lazy"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                allowfullscreen
+                class="w-full h-full border-0"
+              />
+            </div>
           )}
           {introHtml && (
             <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4" set:html={introHtml} />
@@ -289,7 +305,7 @@ const hasSanityBlocks = blocks?.length > 0;
   </section>
 
   {hasSanityBlocks ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
+    <BlockRenderer blocks={blocks} campData={campData} lang="de" />
   ) : (
     <>
       <ImageGrid
@@ -415,5 +431,6 @@ const hasSanityBlocks = blocks?.length > 0;
     buttonUrl={bookingUrl}
     faqSlug={camp}
     blogCategory={country}
+    lang="de"
   />
 </CampLayout>

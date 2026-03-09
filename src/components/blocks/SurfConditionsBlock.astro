@@ -1,4 +1,6 @@
 ---
+import type { Lang } from "@/lib/i18n";
+
 interface CardItem {
   label: string;
   value: string;
@@ -17,15 +19,16 @@ interface Props {
     background?: string;
   };
   headingTag?: "h1" | "h2" | "h3";
+  lang?: Lang;
 }
 
-const { block, headingTag } = Astro.props;
+const { block, headingTag, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const reverse = block.reverse || false;
 const category = block.category || "";
 const headingLevel = headingTag || block.headingLevel || "h2";
 
-const CATEGORY_DEFAULTS: Record<string, { title: string; items: CardItem[] }> = {
+const CATEGORY_DEFAULTS_EN: Record<string, { title: string; items: CardItem[] }> = {
   waveType: {
     title: "Wave Summary",
     items: [
@@ -77,6 +80,61 @@ const CATEGORY_DEFAULTS: Record<string, { title: string; items: CardItem[] }> = 
     ],
   },
 };
+
+const CATEGORY_DEFAULTS_DE: Record<string, { title: string; items: CardItem[] }> = {
+  waveType: {
+    title: "Wellenübersicht",
+    items: [
+      { label: "Wellentyp", value: "Offener Reef Break (Rechts)" },
+      { label: "Wellengröße", value: "0,3 m – 1,5x Überkopf" },
+      { label: "Beste Sektion", value: "Inside Bowl / Barrel" },
+      { label: "Rifftiefe", value: "Moderat (nicht flach)" },
+      { label: "Gefahren", value: "Starke Strömungen, Closeouts bei größerem Swell" },
+    ],
+  },
+  skillLevel: {
+    title: "Level-Übersicht",
+    items: [
+      { label: "Empfohlenes Level", value: "Fortgeschrittene Anfänger+" },
+      { label: "Hauptbreak", value: "Intermediate – Advanced" },
+      { label: "Surfunterricht", value: "Ja, alle Level" },
+      { label: "Anfänger-Optionen", value: "Jimbaran & nahegelegene Beachbreaks" },
+      { label: "Ideal für", value: "Positionierung & Timing verbessern" },
+    ],
+  },
+  bestSeason: {
+    title: "Saison-Übersicht",
+    items: [
+      { label: "Hauptsaison", value: "April – Oktober (Trockenzeit)" },
+      { label: "Swellquelle", value: "Südhalbkugel" },
+      { label: "Nebensaison", value: "Weniger konstant, Wind dreht" },
+      { label: "Ganzjährig surfbar", value: "Ja, mehrere Breaks in der Nähe" },
+      { label: "Täglicher Spot-Check", value: "Durch unsere Camp-Manager" },
+    ],
+  },
+  swellWind: {
+    title: "Swell & Wind",
+    items: [
+      { label: "Optimaler Swell", value: "SW – W" },
+      { label: "Gezeiten", value: "Alle Phasen (ablaufend = stärkere Strömung)" },
+      { label: "Offshore-Wind", value: "Nördlich (selten, frühe Morgenstunden ideal)" },
+      { label: "Bestes Zeitfenster", value: "Morgendämmerung – Vormittag (Glassy)" },
+      { label: "Backup-Spots", value: "Fängt Swell, den andere verpassen" },
+    ],
+  },
+  crowdFactor: {
+    title: "Crowd-Übersicht",
+    items: [
+      { label: "Crowd-Level", value: "5/10" },
+      { label: "Lokalismus", value: "1/10" },
+      { label: "Zugang", value: "Klippe (hält Gelegenheitssurfer fern)" },
+      { label: "Camp-Vorteil", value: "2 Min. Fahrt, Zugang am frühen Morgen" },
+      { label: "Atmosphäre", value: "Einladend" },
+    ],
+  },
+};
+
+const CATEGORY_DEFAULTS = lang === "de" ? CATEGORY_DEFAULTS_DE : CATEGORY_DEFAULTS_EN;
 
 const CATEGORY_COLORS: Record<string, { dot: string; title: string; border: string; noteBg: string }> = {
   waveType:    { dot: "bg-sky-400",    title: "text-sky-400",    border: "border-sky-400/15",    noteBg: "bg-sky-400/5" },

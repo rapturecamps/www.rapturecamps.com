@@ -1,11 +1,14 @@
 ---
+import { t, type Lang } from "@/lib/i18n";
+
 interface Props {
   block: any;
+  lang?: Lang;
 }
 
-const { block } = Astro.props;
+const { block, lang = "en" } = Astro.props;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
-const heading = block.heading || "Sample Weekly Menu";
+const heading = block.heading || t("food.sampleMenu", lang);
 const subtext = block.subtext || "";
 const menu = block.menu || [];
 ---
@@ -21,10 +24,10 @@ const menu = block.menu || [];
       <table class="w-full">
         <thead>
           <tr class="bg-white/5">
-            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Day</th>
-            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Starter</th>
-            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Main</th>
-            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">Dessert</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">{t("food.day", lang)}</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">{t("food.starter", lang)}</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">{t("food.main", lang)}</th>
+            <th class="text-left text-sm font-semibold text-white/80 px-6 py-4">{t("food.dessert", lang)}</th>
           </tr>
         </thead>
         <tbody>
@@ -47,15 +50,15 @@ const menu = block.menu || [];
           <h3 class="text-base font-semibold text-white mb-4">{row.day}</h3>
           <div class="space-y-2">
             <div class="flex justify-between text-sm">
-              <span class="text-white/40">Starter</span>
+              <span class="text-white/40">{t("food.starter", lang)}</span>
               <span class="text-white/80">{row.starter}</span>
             </div>
             <div class="flex justify-between text-sm">
-              <span class="text-white/40">Main</span>
+              <span class="text-white/40">{t("food.main", lang)}</span>
               <span class="text-white/80">{row.main}</span>
             </div>
             <div class="flex justify-between text-sm">
-              <span class="text-white/40">Dessert</span>
+              <span class="text-white/40">{t("food.dessert", lang)}</span>
               <span class="text-white/80">{row.dessert}</span>
             </div>
           </div>

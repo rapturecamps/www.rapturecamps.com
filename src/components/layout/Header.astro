@@ -1,6 +1,8 @@
 ---
 import { navigation as fallbackNav, countries as fallbackCountries, destinations as fallbackDests } from "@/lib/data";
 import { getCountries, getDestinations, getSiteSettings } from "@/lib/sanity-data";
+import { t } from "@/lib/i18n";
+import type { Lang } from "@/lib/i18n";
 
 interface Props {
   alternatePath?: string;
@@ -12,21 +14,34 @@ const settings = await getSiteSettings();
 const countries = await getCountries();
 const allDestinations = await getDestinations();
 
-const navItems = (settings.navigation?.main || fallbackNav.main).slice(1);
-
-const campsByCountry = countries.map((country: any) => ({
-  ...country,
-  camps: allDestinations.filter((d) => d.country === country.name),
-}));
-
 const pathname = Astro.url.pathname;
 const isDE = pathname.startsWith("/de/") || pathname === "/de";
 const currentLang = isDE ? "de" : "en";
+const lang: Lang = isDE ? "de" : "en";
 const pathWithoutLang = isDE ? (pathname.replace(/^\/de/, "") || "/") : pathname;
 const alternatePath = altPathProp || (isDE ? pathWithoutLang : `/de${pathname === "/" ? "/" : pathname}`);
 const alternateLabel = isDE ? "EN" : "DE";
 const alternateTitle = isDE ? "Switch to English" : "Auf Deutsch wechseln";
 const langPrefix = isDE ? "/de" : "";
+
+const rawNavItems = (settings.navigation?.main || fallbackNav.main).slice(1);
+
+const navLabelMap: Record<string, string> = {
+  Blog: "nav.blog",
+  About: "nav.about",
+  FAQ: "nav.faq",
+  Contact: "nav.contact",
+};
+
+const navItems = rawNavItems.map((item: any) => ({
+  ...item,
+  label: navLabelMap[item.label] ? t(navLabelMap[item.label], lang) : item.label,
+}));
+
+const campsByCountry = countries.map((country: any) => ({
+  ...country,
+  camps: allDestinations.filter((d) => d.country === country.name),
+}));
 ---
 
 <header
@@ -52,7 +67,7 @@ const langPrefix = isDE ? "/de" : "";
             id="dest-btn"
             class="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors"
           >
-            Destinations
+            {t("nav.destinations", lang)}
             <svg class="h-3.5 w-3.5 transition-transform duration-200" id="dest-chevron" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
             </svg>
@@ -124,7 +139,7 @@ const langPrefix = isDE ? "/de" : "";
           rel="noopener noreferrer"
           class="book-link rounded-full border-2 border-white px-6 py-1.5 text-sm font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
         >
-          Book
+          {t("nav.book", lang)}
         </a>
       </nav>
 
@@ -182,7 +197,7 @@ const langPrefix = isDE ? "/de" : "";
               href={`${langPrefix}/surfcamp/${country.slug}`}
               class="block rounded-lg px-4 py-2.5 text-xs uppercase tracking-wider text-white/40 hover:text-white/70"
             >
-              All {country.name} camps
+              {t("nav.allCamps", lang).replace("{country}", country.name)}
             </a>
             {country.camps.map((camp) => (
               <a
@@ -233,7 +248,7 @@ const langPrefix = isDE ? "/de" : "";
           rel="noopener noreferrer"
           class="book-link block w-full rounded-full border-2 border-white py-3.5 text-center text-base font-semibold text-white hover:bg-white hover:text-brand-blue transition-all"
         >
-          Book
+          {t("nav.book", lang)}
         </a>
       </div>
     </div>

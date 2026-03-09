@@ -37,11 +37,12 @@ const blocks = surfPage?.pageBuilder;
   heroTitle={surfPage?.heroTitle}
   title={surfPage?.seo?.metaTitle || `${t("camp.surf_title", lang)} ${campTitle} | Rapture Surfcamps`}
   description={surfPage?.seo?.metaDescription || `${t("camp.surf_title", lang)} ${campTitle} ${countryTitle}.`}
+  lang="de"
 >
   {blocks?.length ? (
-    <BlockRenderer blocks={blocks} campData={campData} />
+    <BlockRenderer blocks={blocks} campData={campData} lang="de" />
   ) : (
-    <CTASection />
+    <CTASection lang="de" />
   )}
 
   <script is:inline>

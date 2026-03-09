@@ -10,11 +10,22 @@ import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import { getHomepage } from "@/lib/sanity-data";
 
 const hp = await getHomepage("de");
+const hpEn = await getHomepage("en");
 const heroTagline = hp?.heroTagline || "Rapture Surfcamps";
-const heroTitle = hp?.heroTitle || "Alles was zählt ist jetzt.";
-const heroSubtitle = hp?.heroSubtitle || "Einzigartiges Surfcamp-Erlebnis an den besten Surfspots!";
-const blocks = hp?.pageBuilder;
+const heroTitle = hp?.heroTitle || "Alles, was du hast, ist jetzt.";
+const heroSubtitle = hp?.heroSubtitle || "Ein unvergleichliches Surfcamp-Erlebnis an den besten Surfspots!";
+const blocks = hp?.pageBuilder || hpEn?.pageBuilder;
 const hasSanityBlocks = blocks?.length > 0;
+const useHeroAsH1 = hp?.useHeroAsH1 === true;
+const seoH1 = hp?.seoH1;
+const rawDestinations = hp?.featuredDestinations?.length
+  ? hp.featuredDestinations
+  : hpEn?.featuredDestinations;
+const featuredDestinations = rawDestinations?.map((d: any) => ({
+  ...d,
+  slug: d.slug?.startsWith("/de/") ? d.slug : `/de${d.slug}`,
+}));
+const stats = hp?.stats || hpEn?.stats;
 ---
 
 <BaseLayout
@@ -22,19 +33,49 @@ const hasSanityBlocks = blocks?.length > 0;
   description={hp?.seo?.metaDescription}
   preloadImage="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/thumbnail.jpg"
 >
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Rapture Surfcamps",
+    "url": "https://www.rapturecamps.com/de",
+    "logo": "https://www.rapturecamps.com/images/rapturecamps-logo.svg",
+    "description": "Ein Netzwerk von 6 einzigartigen Surfcamps in 3 Ländern auf 3 Kontinenten.",
+    "foundingDate": "2003",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "email": "info@rapturecamps.com",
+      "telephone": "+447700177360",
+      "availableLanguage": ["English", "German"]
+    },
+    "sameAs": [
+      "https://www.instagram.com/rapturecamps",
+      "https://www.facebook.com/rapturecamps",
+      "https://www.youtube.com/@rapturecamps",
+      "https://www.tiktok.com/@rapturecamps"
+    ]
+  })} />
   <Hero
     tagline={heroTagline}
     title={heroTitle}
     subtitle={heroSubtitle}
+    headingTag={useHeroAsH1 ? "h1" : "p"}
     backgroundVideo="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/play_720p.mp4"
     videoPoster="https://vz-79cee76e-e6d.b-cdn.net/a436e01a-f3f4-4ea3-8ac7-1db2cef08d8a/thumbnail.jpg"
     titleSize="large"
     fullHeight
   />
+  {!useHeroAsH1 && seoH1 && (
+    <section class="pt-16 sm:pt-20 pb-0 bg-dark">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">{seoH1}</h1>
+      </div>
+    </section>
+  )}
   <DestinationGrid
     client:visible
     heading={hp?.destinationHeading || "Wähle dein Reiseziel"}
-    destinations={hp?.featuredDestinations}
+    destinations={featuredDestinations}
   />
   <AboutSection
     heading={hp?.aboutHeading || "Wir sind ein Netzwerk von 8 einzigartigen Surfcamps in 5 Ländern auf 4 Kontinenten. In den letzten 21 Jahren haben wir mehr als 85.000 Menschen aus aller Welt geholfen, surfen zu lernen und die besten Wellen zu finden."}
@@ -42,14 +83,14 @@ const hasSanityBlocks = blocks?.length > 0;
     linkText={hp?.aboutLinkText || "Mehr über uns erfahren"}
     aboutHref="/de/about"
   />
-  {hasSanityBlocks && <BlockRenderer blocks={blocks} />}
+  {hasSanityBlocks && <BlockRenderer blocks={blocks} lang="de" />}
   <BlogFeed
     client:visible
     heading="Neueste Beiträge"
     viewAllText="Alle anzeigen"
     blogBasePath="/de/blog"
   />
-  <StatsSection stats={hp?.stats} />
+  <StatsSection stats={stats} />
   <SocialGrid
     heading="Entdecke unseren Social Feed"
     consentText="Dieser Inhalt wird von einem Drittanbieter bereitgestellt. Um unseren Social-Media-Feed anzuzeigen, akzeptiere bitte Marketing-Cookies."
