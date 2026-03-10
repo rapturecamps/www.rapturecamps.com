@@ -43,6 +43,7 @@ Surfcamp, Surfspot, Lineup, Reef Break, Beach Break, Point Break, Barrel, Tube, 
 | surf guide | Surfguide |
 | surf coaching | Surfcoaching |
 | video analysis | Videoanalyse |
+| condition check | Spot-Check |
 | surf conditions | Surfbedingungen |
 | surf forecast | Surfvorhersage |
 | guest review | Gästebewertung |
@@ -60,6 +61,8 @@ Surfcamp, Surfspot, Lineup, Reef Break, Beach Break, Point Break, Barrel, Tube, 
 | right hander | right hander |
 | left handers | left handers |
 | left hander | left hander |
+| overhead | overhead |
+| skill level | Surflevel |
 
 
 ## CTA Translations
@@ -83,7 +86,9 @@ Surfcamp, Surfspot, Lineup, Reef Break, Beach Break, Point Break, Barrel, Tube, 
 - **Address:** Always use "du" (informal singular) or "ihr" (informal plural). NEVER use "Sie".
 - **Voice:** Casual, inspiring, adventurous — like a friend recommending a surf trip, not a corporate brochure.
 - **Perspective:** When writing about Rapture's own camps, ALWAYS use first-person "unser/unsere" (our), never third-person "dieses/diese/das" (this/that). We are Rapture — we talk about ourselves, not about someone else. Example: "Dieses Surfresort ist für Surfer aller Levels" → "Unser Surfresort ist für Surfer aller Levels".
-- **Sentence structure:** Restructure freely. German has different natural word order. Do not mirror English syntax.
+- **Sentence structure:** Restructure freely. German has different natural word order. Do not mirror English syntax. Never translate word-for-word — rephrase so it reads like it was originally written in German.
+- **Reader address:** When the English says "guests" or "surfers" in third person, switch to "du" (you) in German wherever possible. "Die Gäste paddeln raus" → "Du paddelst raus". This makes the copy personal and direct.
+- **Avoid academic phrasing:** Marketing copy should sound human, not like a textbook. Rephrase stiff constructions like "Das Verständnis seiner Mechanik trennt..." into natural speech like "Wer die Welle versteht, holt mehr raus."
 - **Anglicisms:** Avoid "Denglisch" — use German equivalents where natural ones exist. Exception: established surf terms listed above.
 - **Enthusiasm:** Match the original energy. If the English is exclamatory, the German should be too.
 - **Specificity:** Keep concrete details (numbers, distances, durations) intact.
@@ -181,9 +186,16 @@ Bad: "Du kommst alleine an. Beim zweiten Sonnenuntergang teilst du Geschichten b
 Good: "Du kommst allein an. Schon beim zweiten Sonnenuntergang sitzt du beim Abendessen, tauschst Geschichten aus und planst gemeinsam die nächste Dawn Patrol."
 Why: "Schon beim" adds emphasis, "tauschst Geschichten aus" is more idiomatic than "teilst Geschichten", "gemeinsam" flows better at end.
 
-### Example 11 — Camp description (first-person perspective)
+### Example 11 — Body copy (natural rephrasing, reader address, avoid academic tone)
+
+EN: "Green Bowl delivers a powerful reef break experience that differs fundamentally from Bali's more forgiving waves. Understanding its mechanics separates memorable sessions from frustrating ones, and the camp's daily condition checks ensure guests paddle out when the wave performs at its best."
+Bad: "Green Bowl bietet ein kraftvolles Reef-Break-Erlebnis, das sich grundlegend von Balis sanfteren Wellen unterscheidet. Das Verständnis seiner Mechanik trennt unvergessliche Sessions von frustrierenden, und die täglichen Zustands-Checks des Camps sorgen dafür, dass die Gäste rauspaddeln, wenn die Welle am besten ist."
+Good: "Green Bowl bietet ein kraftvolles Reef-Break-Erlebnis, das sich grundlegend von Balis sanfteren Wellen unterscheidet. Wer die Welle versteht, holt deutlich mehr aus jeder Session raus — und unsere täglichen Spot-Checks sorgen dafür, dass du genau dann ins Wasser gehst, wenn die Bedingungen am besten sind."
+Why: "Das Verständnis seiner Mechanik trennt" is academic and stiff — "Wer die Welle versteht, holt mehr raus" is natural speech. "die Gäste" (third person) becomes "du" (direct address). "Zustands-Checks des Camps" becomes "unsere Spot-Checks" (first-person + natural surf term). Em dash for rhythm.
+
+### Example 12 — Camp description (first-person perspective)
 
 EN: "Rapture's Green Bowl Surfcamp sits on a cliff overlooking the Indian Ocean, offering direct access to one of the most legendary reef breaks on the Bukit Peninsula. This surf resort is for surfers of all levels who want world-class waves without the tourist chaos."
 Bad: "Rapture's Green Bowl Surfcamp thront auf einer Klippe mit Blick auf den Indischen Ozean und bietet direkten Zugang zu einem der legendärsten Reef Breaks auf der Bukit Peninsula. Dieses Surfresort ist für Surfer aller Levels, die Weltklasse-Wellen erleben wollen, ohne das Touristenchaos."
 Good: "Unser Green Bowl Surfcamp thront auf einer Klippe über dem Indischen Ozean — mit direktem Zugang zu einem der legendärsten Reef Breaks der Bukit Peninsula. Unser Surfresort ist für Surfer aller Levels, die Weltklasse-Wellen ohne Touristenchaos suchen."
-Why: ALWAYS use "Unser/Unsere" (our) when describing Rapture's own camps — we speak as the brand, not about it. "Dieses Surfresort" sounds like a third-party review. Also: em dash for flow, "suchen" is more active than "erleben wollen, ohne".
+Why: ALWAYS use "Unser/Unsere" when describing Rapture's own camps — we speak as the brand, not about it. "Dieses Surfresort" sounds like a third-party review. Em dash for flow, "suchen" is more active than "erleben wollen, ohne".
