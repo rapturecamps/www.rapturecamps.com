@@ -3,7 +3,6 @@ export const prerender = false;
 import type { APIRoute } from "astro";
 import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
-import * as deepl from "deepl-node";
 import { createClient } from "@sanity/client";
 import glossaryContent from "../../../docs/translation-glossary-de.md?raw";
 
@@ -93,10 +92,16 @@ function applyGlossaryReplacements(text: string, replacements: TermReplacement[]
 
 const glossaryReplacements = parseGlossaryReplacements();
 
+function fixColonSpacing(text: string): string {
+  return text.replace(/:([^\s:/\\])/g, ": $1");
+}
+
 function postProcessTranslations(translationMap: Map<string, string>): Map<string, string> {
   const processed = new Map<string, string>();
   for (const [key, value] of translationMap) {
-    processed.set(key, applyGlossaryReplacements(value, glossaryReplacements));
+    let fixed = applyGlossaryReplacements(value, glossaryReplacements);
+    fixed = fixColonSpacing(fixed);
+    processed.set(key, fixed);
   }
   return processed;
 }
@@ -217,9 +222,9 @@ function extractTranslatableContent(obj: any, path = ""): Record<string, any> {
     } else if (Array.isArray(value)) {
       if (key === "body" || key === "content") {
         result[currentPath] = value;
-      } else if (
+      } else       if (
         value.every((v: any) => typeof v === "string") &&
-        ["amenities", "features", "highlights", "items"].includes(key)
+        ["amenities", "features", "highlights", "items", "values"].includes(key)
       ) {
         result[currentPath] = value;
       } else {
@@ -249,7 +254,7 @@ function extractTranslatableContent(obj: any, path = ""): Record<string, any> {
         }
       }
     } else if (typeof value === "object" && value !== null) {
-      if (key === "seo") {
+      if (key === "seo" || key === "comparison") {
         const nested = extractTranslatableContent(value, currentPath);
         Object.assign(result, nested);
       }
@@ -481,6 +486,39 @@ function parsePath(path: string): (string | number)[] {
   return parts;
 }
 
+function fixPortableTextSpanSpacing(doc: any) {
+  function fixBlocks(blocks: any[]) {
+    if (!Array.isArray(blocks)) return;
+    for (const block of blocks) {
+      if (block.children && Array.isArray(block.children)) {
+        for (let i = 0; i < block.children.length - 1; i++) {
+          const curr = block.children[i];
+          const next = block.children[i + 1];
+          if (!curr.text || !next.text || next.text.length === 0) continue;
+          const currHasMarks = curr.marks && curr.marks.length > 0;
+          const nextHasMarks = next.marks && next.marks.length > 0;
+          if (currHasMarks === nextHasMarks) continue;
+          if (curr.text.endsWith(" ") || next.text.startsWith(" ")) continue;
+          if (/[.,;:!?)\]}]/.test(next.text[0])) continue;
+          if (/[(\[{"']/.test(curr.text[curr.text.length - 1])) continue;
+          curr.text += " ";
+        }
+      }
+    }
+  }
+
+  if (doc.pageBuilder && Array.isArray(doc.pageBuilder)) {
+    for (const block of doc.pageBuilder) {
+      if (block.body) fixBlocks(block.body);
+    }
+  }
+  if (doc.comparison) {
+    for (const camp of doc.comparison.camps || []) {
+      if (camp.body) fixBlocks(camp.body);
+    }
+  }
+}
+
 function buildReviewPrompt(
   content: Record<string, any>,
   documentType: string
@@ -563,7 +601,7 @@ async function handleReview(
     const openai = new OpenAI({ apiKey: openaiKey });
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
-      max_tokens: 8192,
+      max_tokens: 16384,
       messages: [{ role: "user", content: prompt }],
     });
     responseText = completion.choices[0]?.message?.content || "";
@@ -577,7 +615,7 @@ async function handleReview(
     const anthropic = new Anthropic({ apiKey: anthropicKey });
     const message = await anthropic.messages.create({
       model: "claude-sonnet-4-20250514",
-      max_tokens: 8192,
+      max_tokens: 16384,
       messages: [{ role: "user", content: prompt }],
     });
     responseText = message.content[0].type === "text" ? message.content[0].text : "";
@@ -605,96 +643,10 @@ async function handleReview(
   );
 }
 
-const DEEPL_LANG_MAP: Record<string, deepl.TargetLanguageCode> = {
-  de: "de",
-  en: "en-US",
-};
-
-async function translateWithDeepL(
-  content: Record<string, any>,
-  targetLang: string,
-  deeplKey: string
-): Promise<Map<string, string>> {
-  const translator = new deepl.Translator(deeplKey);
-  const entries = buildContentEntries(content);
-  const targetDeeplLang = DEEPL_LANG_MAP[targetLang] || (targetLang as deepl.TargetLanguageCode);
-  const translationMap = new Map<string, string>();
-
-  const BATCH_SIZE = 50;
-  for (let i = 0; i < entries.length; i += BATCH_SIZE) {
-    const batch = entries.slice(i, i + BATCH_SIZE);
-    const texts = batch.map((e) => e.value);
-
-    const results = await translator.translateText(
-      texts,
-      null,
-      targetDeeplLang,
-      { formality: "less" as deepl.Formality, tagHandling: "html" }
-    );
-
-    const resultArray = Array.isArray(results) ? results : [results];
-    resultArray.forEach((result, idx) => {
-      translationMap.set(batch[idx].key, result.text);
-    });
-  }
-
-  return translationMap;
-}
-
-function buildRefinementPrompt(
-  entries: { key: string; english: string; deepl: string }[],
-  documentType: string,
-  customInstructions?: string
-): string {
-  if (entries.length === 0) return "";
-
-  const pageLabel = getPageTypeLabel(documentType);
-  const pageInstructions = PAGE_TYPE_INSTRUCTIONS[documentType] || PAGE_TYPE_INSTRUCTIONS["page"];
-
-  const additionalNotes = customInstructions?.trim()
-    ? `\nADDITIONAL NOTES FROM THE EDITOR:\n${customInstructions}\n`
-    : "";
-
-  const lines = entries
-    .map((e, i) => `[${i}] PATH: ${e.key}\nENGLISH: ${e.english}\nDEEPL TRANSLATION: ${e.deepl}`)
-    .join("\n\n");
-
-  return `You are a senior German copywriter for Rapture Surfcamps. You are refining machine translations from DeepL.
-
-DeepL already produced natural German translations. Your job is to POLISH them — not retranslate from scratch.
-
-DOCUMENT TYPE: ${pageLabel}
-${pageInstructions}
-
-GLOSSARY AND STYLE GUIDE — MANDATORY RULES:
-${glossaryContent}
-
-${additionalNotes}
-REFINEMENT RULES (in priority order):
-
-1. GLOSSARY TERM REPLACEMENTS ARE MANDATORY. The glossary above contains a "German Term Preferences" table with English→German mappings. You MUST find and replace every instance where DeepL used a different German word than what the glossary specifies. For example, if the glossary says "ocean waves → Wellen", then "Meereswellen", "Ozeanwellen", or any other variant MUST be replaced with "Wellen". This is not optional — scan every field for glossary violations.
-
-2. Brand terminology: apply all brand terms from the glossary exactly as listed. Keep English surf terms that the glossary says to keep.
-
-3. Tone and address: verify "du" (informal) is used consistently, never "Sie".
-
-4. Headlines and CTAs: ensure they sound like native German marketing copy — punchy, benefit-driven. Rewrite if they sound translated.
-
-5. Preserve any HTML tags, markdown formatting, or special characters exactly as they are.
-
-6. Meta titles must stay under 60 characters, meta descriptions under 160.
-
-7. For everything else, keep DeepL's version if it reads naturally. Do NOT over-edit beyond the rules above.
-
-Return ONLY a JSON array where each element is: { "index": <number>, "translation": "<refined German text>" }
-No explanations, no markdown code fences, just the raw JSON array.
-
-${lines}`;
-}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { documentId, targetLang, forceOverwrite = false, provider = "claude", refineProvider, customInstructions, mode = "translate" } = await request.json();
+    const { documentId, targetLang, forceOverwrite = false, provider = "claude", customInstructions, mode = "translate" } = await request.json();
 
     if (!documentId || !targetLang) {
       return new Response(
@@ -705,7 +657,6 @@ export const POST: APIRoute = async ({ request }) => {
 
     const anthropicKey = import.meta.env.ANTHROPIC_API_KEY;
     const openaiKey = import.meta.env.OPENAI_API_KEY;
-    const deeplKey = import.meta.env.DEEPL_API_KEY;
 
     if (provider === "openai" && !openaiKey) {
       return new Response(
@@ -716,12 +667,6 @@ export const POST: APIRoute = async ({ request }) => {
     if (provider === "claude" && !anthropicKey) {
       return new Response(
         JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }),
-        { status: 500 }
-      );
-    }
-    if (provider === "deepl" && !deeplKey) {
-      return new Response(
-        JSON.stringify({ error: "DEEPL_API_KEY not configured" }),
         { status: 500 }
       );
     }
@@ -789,7 +734,7 @@ export const POST: APIRoute = async ({ request }) => {
     const sourceTitle = sourceDoc.title;
 
     if (mode === "review") {
-      const reviewProvider = provider === "deepl" ? "claude" : provider;
+      const reviewProvider = provider;
       if (reviewProvider === "claude" && !anthropicKey) {
         return new Response(
           JSON.stringify({ error: "Review requires Claude or OpenAI. ANTHROPIC_API_KEY not configured." }),
@@ -802,76 +747,7 @@ export const POST: APIRoute = async ({ request }) => {
     let translationMap: Map<string, string>;
     let translatedSlug: string | null = null;
 
-    if (provider === "deepl") {
-      const deeplMap = await translateWithDeepL(translatableContent, targetLang, deeplKey!);
-
-      const contentEntries = buildContentEntries(translatableContent);
-      const refinementEntries = contentEntries.map((e) => ({
-        key: e.key,
-        english: e.value,
-        deepl: deeplMap.get(e.key) || e.value,
-      }));
-
-      const refinementPrompt = buildRefinementPrompt(refinementEntries, documentType, customInstructions);
-
-      const chosenRefiner = refineProvider || (anthropicKey ? "claude" : openaiKey ? "openai" : null);
-      if (!chosenRefiner) {
-        translationMap = deeplMap;
-      } else if (chosenRefiner === "openai" && !openaiKey) {
-        translationMap = deeplMap;
-        console.log("[translate] DeepL hybrid: OpenAI selected but no key, using raw DeepL output");
-      } else if (chosenRefiner === "claude" && !anthropicKey) {
-        translationMap = deeplMap;
-        console.log("[translate] DeepL hybrid: Claude selected but no key, using raw DeepL output");
-      } else {
-        let responseText = "";
-        if (chosenRefiner === "openai") {
-          const openai = new OpenAI({ apiKey: openaiKey });
-          const completion = await openai.chat.completions.create({
-            model: "gpt-4o",
-            max_tokens: 8192,
-            messages: [{ role: "user", content: refinementPrompt }],
-          });
-          responseText = completion.choices[0]?.message?.content || "";
-        } else {
-          const anthropic = new Anthropic({ apiKey: anthropicKey });
-          const message = await anthropic.messages.create({
-            model: "claude-sonnet-4-20250514",
-            max_tokens: 8192,
-            messages: [{ role: "user", content: refinementPrompt }],
-          });
-          responseText = message.content[0].type === "text" ? message.content[0].text : "";
-        }
-
-        try {
-          const cleaned = responseText.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim();
-          const refinements: { index: number; translation: string }[] = JSON.parse(cleaned);
-
-          translationMap = new Map<string, string>();
-          refinements.forEach((r) => {
-            if (r.index < contentEntries.length) {
-              translationMap.set(contentEntries[r.index].key, r.translation);
-            }
-          });
-        } catch {
-          translationMap = deeplMap;
-          console.log("[translate] DeepL hybrid: refinement parse failed, using raw DeepL output");
-        }
-      }
-
-      if (sourceTitle) {
-        const translator = new deepl.Translator(deeplKey!);
-        const targetDeeplLang = DEEPL_LANG_MAP[targetLang] || (targetLang as deepl.TargetLanguageCode);
-        const slugResult = await translator.translateText(sourceTitle, null, targetDeeplLang);
-        const slugText = Array.isArray(slugResult) ? slugResult[0].text : slugResult.text;
-        translatedSlug = slugText
-          .toLowerCase()
-          .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
-          .replace(/[^a-z0-9-]/g, "-")
-          .replace(/-+/g, "-")
-          .replace(/(^-|-$)/g, "");
-      }
-    } else {
+    {
       const prompt = buildTranslationPrompt(translatableContent, targetLang, documentType, customInstructions);
 
       if (!prompt) {
@@ -891,7 +767,7 @@ export const POST: APIRoute = async ({ request }) => {
         const openai = new OpenAI({ apiKey: openaiKey });
         const completion = await openai.chat.completions.create({
           model: "gpt-4o",
-          max_tokens: 8192,
+          max_tokens: 16384,
           messages: [{ role: "user", content: prompt + slugPrompt }],
         });
         responseText = completion.choices[0]?.message?.content || "";
@@ -899,7 +775,7 @@ export const POST: APIRoute = async ({ request }) => {
         const anthropic = new Anthropic({ apiKey: anthropicKey });
         const message = await anthropic.messages.create({
           model: "claude-sonnet-4-20250514",
-          max_tokens: 8192,
+          max_tokens: 16384,
           messages: [{ role: "user", content: prompt + slugPrompt }],
         });
         responseText = message.content[0].type === "text" ? message.content[0].text : "";
@@ -909,9 +785,10 @@ export const POST: APIRoute = async ({ request }) => {
       try {
         const cleaned = responseText.replace(/```json\s*/g, "").replace(/```\s*/g, "").trim();
         translations = JSON.parse(cleaned);
-      } catch {
+      } catch (parseErr: any) {
+        console.error("[translate] Failed to parse response. Length:", responseText.length, "First 500 chars:", responseText.substring(0, 500));
         return new Response(
-          JSON.stringify({ error: "Failed to parse translation response", raw: responseText }),
+          JSON.stringify({ error: "Failed to parse translation response", raw: responseText.substring(0, 1000) }),
           { status: 500 }
         );
       }
@@ -960,6 +837,8 @@ export const POST: APIRoute = async ({ request }) => {
       translatableContent,
       finalTranslationMap
     );
+
+    fixPortableTextSpanSpacing(translatedDoc);
 
     if (targetDocId) {
       const fieldsToUpdate = { ...translatedDoc };

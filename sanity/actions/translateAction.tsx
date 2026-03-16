@@ -7,18 +7,11 @@ const LANGUAGES: Record<string, string> = {
   en: "English",
 };
 
-type Provider = "claude" | "openai" | "deepl";
-type RefineProvider = "claude" | "openai";
+type Provider = "claude" | "openai";
 
 const PROVIDER_META: Record<Provider, { label: string; icon: string; model: string; description?: string }> = {
-  deepl: { label: "DeepL + AI Refinement", icon: "🔵", model: "Hybrid", description: "DeepL translates, then AI refines with glossary & brand voice" },
-  claude: { label: "Claude (Anthropic)", icon: "🟣", model: "claude-sonnet-4", description: "Full AI translation with glossary & tone rules" },
+  claude: { label: "Claude (Anthropic)", icon: "🟣", model: "claude-sonnet-4", description: "Full glossary, surf context & brand voice" },
   openai: { label: "ChatGPT (OpenAI)", icon: "🟢", model: "gpt-4o", description: "Full AI translation with glossary & tone rules" },
-};
-
-const REFINE_META: Record<RefineProvider, { label: string; icon: string }> = {
-  claude: { label: "Claude", icon: "🟣" },
-  openai: { label: "ChatGPT", icon: "🟢" },
 };
 
 const PAGE_TYPE_LABELS: Record<string, string> = {
@@ -53,7 +46,6 @@ export function TranslateAction(props: DocumentActionProps) {
     "idle" | "pick-provider" | "pick-mode" | "translating" | "reviewing" | "review-results" | "success" | "error"
   >("idle");
   const [provider, setProvider] = useState<Provider>("claude");
-  const [refineProvider, setRefineProvider] = useState<RefineProvider>("claude");
   const [message, setMessage] = useState("");
   const [additionalNotes, setAdditionalNotes] = useState("");
   const [glossaryExpanded, setGlossaryExpanded] = useState(false);
@@ -85,11 +77,7 @@ export function TranslateAction(props: DocumentActionProps) {
     async (targetLang: string, forceOverwrite: boolean) => {
       setStatus("translating");
       const meta = PROVIDER_META[provider];
-      setMessage(
-        provider === "deepl"
-          ? `Step 1/2: Translating with DeepL... Step 2: ${REFINE_META[refineProvider].label} refinement will follow.`
-          : `Translating to ${LANGUAGES[targetLang]} with ${meta.label}...`
-      );
+      setMessage(`Translating to ${LANGUAGES[targetLang]} with ${meta.label}...`);
 
       try {
         const baseUrl = window.location.origin;
@@ -101,7 +89,6 @@ export function TranslateAction(props: DocumentActionProps) {
             targetLang,
             forceOverwrite,
             provider,
-            refineProvider: provider === "deepl" ? refineProvider : undefined,
             customInstructions: additionalNotes.trim() || undefined,
             mode: "translate",
           }),
@@ -129,7 +116,7 @@ export function TranslateAction(props: DocumentActionProps) {
         setMessage(err.message || "Network error");
       }
     },
-    [id, provider, refineProvider, additionalNotes]
+    [id, provider, additionalNotes]
   );
 
   const handleReview = useCallback(async () => {
@@ -280,7 +267,7 @@ export function TranslateAction(props: DocumentActionProps) {
                   Which AI provider would you like to use?
                 </p>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  {(["deepl", "claude", "openai"] as Provider[]).map((p) => {
+                  {(["claude", "openai"] as Provider[]).map((p) => {
                     const meta = PROVIDER_META[p];
                     return (
                       <button
@@ -422,53 +409,9 @@ export function TranslateAction(props: DocumentActionProps) {
                       }}
                     />
                     <p style={{ fontSize: "0.75em", color: "#666", marginTop: "0.25rem" }}>
-                      {provider === "deepl"
-                        ? "One-off overrides sent to Claude during the refinement step."
-                        : "One-off overrides sent alongside the glossary and page-type instructions."}
+                      One-off overrides sent alongside the glossary and page-type instructions.
                     </p>
                   </div>
-
-                  {provider === "deepl" && (
-                    <>
-                      <div style={{ marginBottom: "0.75rem", padding: "0.75rem", border: "1px solid #1a3a5c", borderRadius: "6px", background: "#0a1525" }}>
-                        <p style={{ fontSize: "0.85em", color: "#5dade2", margin: 0, lineHeight: 1.5 }}>
-                          <strong>Hybrid mode:</strong> DeepL translates first for natural German fluency, then AI refines the output using your glossary, brand voice, and page-type instructions.
-                        </p>
-                      </div>
-                      <div style={{ marginBottom: "1rem" }}>
-                        <label style={{ display: "block", fontSize: "0.8em", fontWeight: 600, color: "#999", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                          Refinement AI
-                        </label>
-                        <div style={{ display: "flex", gap: "0.5rem" }}>
-                          {(["claude", "openai"] as RefineProvider[]).map((rp) => {
-                            const meta = REFINE_META[rp];
-                            const isActive = refineProvider === rp;
-                            return (
-                              <button
-                                key={rp}
-                                onClick={() => setRefineProvider(rp)}
-                                style={{
-                                  flex: 1,
-                                  padding: "0.5rem 0.75rem",
-                                  border: `1px solid ${isActive ? "#5dade2" : "#333"}`,
-                                  borderRadius: "6px",
-                                  background: isActive ? "#1a3a5c" : "transparent",
-                                  color: isActive ? "#5dade2" : "#999",
-                                  cursor: "pointer",
-                                  fontSize: "0.85em",
-                                  fontWeight: isActive ? 600 : 400,
-                                  fontFamily: FONT_STACK,
-                                  textAlign: "center",
-                                }}
-                              >
-                                {meta.icon} {meta.label}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    </>
-                  )}
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                     <button
@@ -501,7 +444,6 @@ export function TranslateAction(props: DocumentActionProps) {
                         <br />
                         <span style={{ fontSize: "0.85em", color: "#999" }}>
                           AI reviews the existing German content for quality, consistency, and localization issues.
-                          {provider === "deepl" && " (Uses Claude for review)"}
                         </span>
                       </button>
                     )}

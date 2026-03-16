@@ -23,7 +23,6 @@
     "astro": "^5.17.2",
     "astro-portabletext": "^0.13.0",
     "clsx": "^2.1.1",
-    "deepl-node": "^1.24.0",
     "lucide-react": "^0.574.0",
     "node-html-parser": "^7.0.2",
     "openai": "^6.25.0",

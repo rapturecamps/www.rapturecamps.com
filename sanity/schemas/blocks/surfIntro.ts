@@ -15,8 +15,8 @@ export default defineType({
     defineField({
       name: "body",
       title: "Body",
-      type: "text",
-      rows: 4,
+      type: "array",
+      of: [{ type: "block" }],
     }),
     defineField({
       name: "conditionsCard",

@@ -8,12 +8,52 @@ interface Props {
   lang?: Lang;
 }
 
+function renderSpans(children: any[], markDefs: any[] = []): string {
+  if (!children) return "";
+  return children.map((c: any) => {
+    let t = c.text || "";
+    for (const m of c.marks || []) {
+      if (m === "strong") { t = `<strong>${t}</strong>`; continue; }
+      if (m === "em") { t = `<em>${t}</em>`; continue; }
+      const def = markDefs.find((d: any) => d._key === m);
+      if (def?._type === "link") {
+        const rel = def.blank ? ' target="_blank" rel="noopener"' : "";
+        t = `<a href="${def.href}"${rel} class="text-ocean-light underline decoration-ocean-light/40 underline-offset-2 hover:decoration-ocean-light transition-colors">${t}</a>`;
+      }
+    }
+    return t;
+  }).join("");
+}
+
+function portableTextToHtml(body: any): string {
+  if (typeof body === "string") return body.split("\n\n").map((p: string) => `<p>${p}</p>`).join("");
+  if (!Array.isArray(body)) return "";
+  let html = "";
+  let openList: string | null = null;
+  for (const b of body) {
+    if (b._type !== "block") continue;
+    const text = renderSpans(b.children, b.markDefs);
+    const style = b.style || "normal";
+    const li = b.listItem;
+    if (openList && (!li || li !== openList)) { html += openList === "bullet" ? "</ul>" : "</ol>"; openList = null; }
+    if (li) {
+      if (!openList) { html += li === "bullet" ? '<ul class="list-disc pl-5 space-y-1.5">' : '<ol class="list-decimal pl-5 space-y-1.5">'; openList = li; }
+      html += `<li>${text}</li>`;
+      continue;
+    }
+    if (style === "h3") html += `<h3 class="text-lg font-semibold text-white mt-6 mb-2">${text}</h3>`;
+    else if (style === "h4") html += `<h4 class="text-base font-semibold text-white mt-4 mb-1">${text}</h4>`;
+    else html += `<p>${text}</p>`;
+  }
+  if (openList) html += openList === "bullet" ? "</ul>" : "</ol>";
+  return html;
+}
+
 const { block, campData, headingTag = "h2", lang = "en" } = Astro.props;
 const HeadingTag = headingTag;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const heading = block.heading || t("surf.theWaves", lang);
-const body = block.body || "The coastline around this camp is stacked with surf breaks for every level. From gentle beach breaks perfect for your first pop-up to fast reef passes that'll get your heart pumping — there's a wave for every day and every surfer.\n\nOur instructors have been surfing these waters for years. They know exactly where to go based on the swell, wind, and tide — so you're always in the right spot at the right time.";
-const paragraphs = body.split("\n\n");
+const bodyHtml = portableTextToHtml(block.body);
 const conditionsCard = block.conditionsCard || [
   { label: "Wave Type", value: "Beach, Reef & Point" },
   { label: "Peak Season", value: "May – October" },
@@ -23,58 +63,60 @@ const conditionsCard = block.conditionsCard || [
 
 <section class:list={["py-16 sm:py-20", bg]}>
   <div class="px-6 sm:px-12 lg:px-20">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-      <div>
-        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white mb-6">{heading}</HeadingTag>
-        <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4 max-w-xl">
-          {paragraphs.map((p) => (
-            <p>{p}</p>
-          ))}
-        </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 items-start">
+      <div class="lg:col-start-1 lg:row-start-1 mb-6 lg:mb-0">
+        <HeadingTag class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">{heading}</HeadingTag>
       </div>
-      <div
-        class="surf-conditions-card rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8"
-        data-lat={campData?.latitude}
-        data-lng={campData?.longitude}
-      >
-        <div class="flex items-center justify-between mb-5">
-          <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t("surf.conditions", lang)}</h3>
-          <span class="surf-live-badge hidden items-center gap-1.5 rounded-full bg-green-500/10 border border-green-500/20 px-2.5 py-1">
-            <span class="relative flex h-1.5 w-1.5">
-              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-              <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500"></span>
+      <div class="lg:col-start-2 lg:row-span-2 mb-10 lg:mb-0">
+        <div
+          class="surf-conditions-card rounded-xl border border-white/5 bg-dark-lighter p-6 sm:p-8"
+          data-lat={campData?.latitude}
+          data-lng={campData?.longitude}
+        >
+          <div class="flex items-center justify-between mb-5">
+            <h3 class="text-sm font-semibold text-white uppercase tracking-wider">{t("surf.conditions", lang)}</h3>
+            <span class="surf-live-badge hidden items-center gap-1.5 rounded-full bg-green-500/10 border border-green-500/20 px-2.5 py-1">
+              <span class="relative flex h-1.5 w-1.5">
+                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-green-500"></span>
+              </span>
+              <span class="text-[10px] uppercase tracking-wider text-green-400 font-semibold">{t("surf.live", lang)}</span>
             </span>
-            <span class="text-[10px] uppercase tracking-wider text-green-400 font-semibold">{t("surf.live", lang)}</span>
-          </span>
-        </div>
-        <div class="space-y-4">
-          {conditionsCard.map((item: any) => (
-            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-              <span class="text-sm text-white/40">{item.label}</span>
-              <span class="text-sm text-white font-medium">{item.value}</span>
+          </div>
+          <div class="space-y-4">
+            {conditionsCard.map((item: any) => (
+              <div class="flex justify-between items-center border-b border-white/5 pb-3">
+                <span class="text-sm text-white/40">{item.label}</span>
+                <span class="text-sm text-white font-medium">{item.value}</span>
+              </div>
+            ))}
+            <div class="pt-1">
+              <p class="text-[10px] uppercase tracking-wider text-white/20 mb-3">{t("surf.currentConditions", lang)}</p>
             </div>
-          ))}
-          <div class="pt-1">
-            <p class="text-[10px] uppercase tracking-wider text-white/20 mb-3">{t("surf.currentConditions", lang)}</p>
-          </div>
-          <div class="flex justify-between items-center border-b border-white/5 pb-3">
-            <span class="text-sm text-white/40">{t("surf.waveHeight", lang)}</span>
-            <span class="text-sm text-white font-medium surf-live-wave-height">—</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-white/5 pb-3">
-            <span class="text-sm text-white/40">{t("surf.wavePeriod", lang)}</span>
-            <span class="text-sm text-white font-medium surf-live-wave-period">—</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-white/5 pb-3">
-            <span class="text-sm text-white/40">{t("surf.swellHeight", lang)}</span>
-            <span class="text-sm text-white font-medium surf-live-swell-height">—</span>
-          </div>
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-white/40">{t("surf.swellDirection", lang)}</span>
-            <span class="text-sm text-white font-medium surf-live-swell-dir">—</span>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">{t("surf.waveHeight", lang)}</span>
+              <span class="text-sm text-white font-medium surf-live-wave-height">—</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">{t("surf.wavePeriod", lang)}</span>
+              <span class="text-sm text-white font-medium surf-live-wave-period">—</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-white/5 pb-3">
+              <span class="text-sm text-white/40">{t("surf.swellHeight", lang)}</span>
+              <span class="text-sm text-white font-medium surf-live-swell-height">—</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-white/40">{t("surf.swellDirection", lang)}</span>
+              <span class="text-sm text-white font-medium surf-live-swell-dir">—</span>
+            </div>
           </div>
         </div>
       </div>
+      {bodyHtml && (
+        <div class="lg:col-start-1 lg:row-start-2">
+          <div class="text-base sm:text-lg text-white/50 leading-relaxed space-y-4" set:html={bodyHtml} />
+        </div>
+      )}
     </div>
   </div>
 </section>
