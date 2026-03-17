@@ -120,6 +120,19 @@
 
 ---
 
+## Phase 7: Internal Linking Strategy (2–4 Weeks Post-Launch)
+
+- [ ] Audit current site for contextual in-content links (blog ↔ camp pages, cross-camp references)
+- [ ] Design internal linking concept based on topic clusters (align with blog category restructuring)
+- [ ] Add contextual links within **blog post body text** — link to relevant camp pages, country pages, and related posts
+- [ ] Add contextual links within **camp page content** — link to relevant blog posts and nearby camps
+- [ ] Consider adding a **"Related Posts"** section to blog posts
+- [ ] Consider adding a **"Related Articles"** section to camp pages
+- [ ] Review GSC data to identify pages that need more internal link authority (low impressions despite good content)
+- [ ] Verify no orphan pages exist (pages only reachable via sitemap, not through any on-site link)
+
+---
+
 ## Notes
 
 - Redirects are synced from Sanity to `vercel.json` at build time. After adding/changing redirects in Sanity, trigger a new Vercel deployment.
