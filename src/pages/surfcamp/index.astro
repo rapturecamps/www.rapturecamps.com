@@ -2,44 +2,65 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
-import { countries as fallbackCountries } from "@/lib/data";
-import { getCountries } from "@/lib/sanity-data";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
+import { resizeWidth } from "@/lib/image-utils";
+import { getPageBySlug } from "@/lib/sanity-data";
 
-const countries = await getCountries();
+const page = await getPageBySlug("surfcamp");
+
+const heroTitle = page?.heroTitle || "Choose Your Destination";
+const heroTagline = page?.heroTagline || "";
+const heroImages = page?.heroImages?.length
+  ? page.heroImages
+  : [
+      "https://cdn.sanity.io/images/ypmt1bmc/production/301aa2ac02adaa1b397bb4be507f4adb66670c0e-1920x1280.jpg",
+      "https://cdn.sanity.io/images/ypmt1bmc/production/e1696b4d5fc2c7f1fbdb73229838d338a06c8883-1920x1281.jpg",
+      "https://cdn.sanity.io/images/ypmt1bmc/production/c9538fbcc49d9a29c0f8cf327a820fa747a5834a-1920x1440.jpg",
+      "https://cdn.sanity.io/images/ypmt1bmc/production/645fece67ca00725dc995d9e5bda9fe416b19961-1920x1276.jpg",
+    ];
+
+const seoTitle = page?.seo?.metaTitle || "Surf Camps Worldwide · Rapture";
+const seoDesc = page?.seo?.metaDescription || "Choose your surf camp destination. Rapture Surfcamps operates in Bali, Costa Rica, and Portugal.";
+const ogImage = page?.seoOgImageUrl
+  || (heroImages[0] ? resizeWidth(heroImages[0], 1200) : undefined);
+
+const useHeroAsH1 = page?.useHeroAsH1 === true;
+const seoH1 = page?.seoH1;
+
+const blocks = page?.pageBuilder || [];
+const hasSanityBlocks = blocks.length > 0;
+const h1BlockIndex = blocks.findIndex((b: any) => b._type === "contentBlock");
 ---
 
 <BaseLayout
-  title="Surf Camps Worldwide | Rapture Surfcamps"
-  description="Choose your surf camp destination. Rapture Surfcamps operates in Bali, Costa Rica, and Portugal."
-  ogImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=630&fit=crop"
+  title={seoTitle}
+  description={seoDesc}
+  ogImage={ogImage}
+  noindex={page?.seo?.noindex}
+  preloadImage={heroImages[0]}
 >
   <Hero
-    title="Choose Your Destination"
-    backgroundImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop"
-    backgroundImages={[
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=1080&fit=crop",
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
-    ]}
+    title={heroTitle}
+    tagline={heroTagline}
+    headingTag={useHeroAsH1 ? "h1" : "p"}
+    backgroundImage={heroImages[0]}
+    backgroundImages={heroImages}
   >
     <Breadcrumbs inline crumbs={[{ label: "Surf Camps" }]} />
   </Hero>
 
-  <section class="py-20 bg-dark">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {countries.map((country) => (
-          <a href={`/surfcamp/${country.slug}`} class="group relative aspect-[3/4] overflow-hidden rounded-xl">
-            <img src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=600&h=800&fit=crop" alt={`Surf camp in ${country.name}`} class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div class="absolute bottom-0 left-0 right-0 p-6">
-              <span class="text-3xl mb-2 block">{country.flag}</span>
-              <h2 class="text-2xl font-bold text-white">{country.name}</h2>
-            </div>
-          </a>
-        ))}
+  {!useHeroAsH1 && seoH1 && (
+    <section class="pt-16 sm:pt-20 pb-0 bg-dark">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">{seoH1}</h1>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
+
+  {hasSanityBlocks && (
+    <BlockRenderer
+      blocks={blocks}
+      h1BlockIndex={!useHeroAsH1 && !seoH1 && h1BlockIndex >= 0 ? h1BlockIndex : undefined}
+    />
+  )}
 </BaseLayout>

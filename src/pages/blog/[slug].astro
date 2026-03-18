@@ -28,7 +28,7 @@ function formatDate(dateStr: string) {
   });
 }
 
-const seoTitle = post.seo?.metaTitle || `${post.title} | Rapture Surfcamps`;
+const seoTitle = post.seo?.metaTitle || `${post.title} · Rapture`;
 const seoDesc = post.seo?.metaDescription || post.excerpt || `Read ${post.title} on the Rapture Surfcamps blog.`;
 
 function extractFaqPairs(blocks: any[]): { question: string; answer: string }[] {

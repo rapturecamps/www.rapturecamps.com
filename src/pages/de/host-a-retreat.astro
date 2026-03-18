@@ -1,0 +1,467 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import { getPageBySlug } from "@/lib/sanity-data";
+
+const page = await getPageBySlug("host-a-retreat", "de");
+
+const heroTitle = page?.heroTitle || "Veranstalte dein Retreat\nim Paradies";
+const heroSubtitle = page?.heroSubtitle || "Ein schlüsselfertiger Retreat-Standort auf Bali — gestaltet für Verbindung, Fokus und Transformation.";
+const heroTagline = page?.heroTagline || "Eine exklusive Einladung";
+const heroImages = page?.heroImages?.length ? page.heroImages : [
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop",
+];
+
+const seoTitle = page?.seo?.metaTitle || "Retreat veranstalten · Rapture Surfcamps";
+const seoDesc = page?.seo?.metaDescription || "Veranstalte unvergessliche Surf-, Yoga- und Wellness-Retreats auf Bali, in Portugal und Costa Rica — in Partnerschaft mit Rapture Surfcamps.";
+
+const blocks = page?.pageBuilder || [];
+const whyBlock = blocks.find((b: any) => b._type === "cardGrid" && b.heading?.includes("Everything"));
+const includedBlock = blocks.find((b: any) => b._type === "cardGrid" && b.heading?.includes("Handle"));
+const locationGallery = blocks.find((b: any) => b._type === "retreatGallery");
+const itineraryBlock = blocks.find((b: any) => b._type === "retreatItinerary");
+const statsBlock = blocks.find((b: any) => b._type === "retreatStatsBar");
+const testimonialsBlock = blocks.find((b: any) => b._type === "retreatTestimonials");
+
+const whyCards = whyBlock?.cards || [];
+const includedCards = includedBlock?.cards || [];
+const locationImages = (locationGallery?.images || []).map((img: any) => ({
+  src: img.resolvedUrl || img.asset?.url || "",
+  label: img.label || "",
+})).filter((i: any) => i.src);
+const days = itineraryBlock?.days || [];
+const stats = statsBlock?.stats || [];
+const testimonials = testimonialsBlock?.testimonials || [];
+
+const whyIcons = [
+  '<circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  '<circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/><path d="M24 14v10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  '<circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/><path d="M15 32c0-5 4-9 9-9s9 4 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="18" r="5" stroke="currentColor" stroke-width="2"/>',
+  '<circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5"/><path d="M17 28c2-4 5-6 7-6s5 2 7 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M14 24c3-7 7-10 10-10s7 3 10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+];
+
+const categoryStyles: Record<string, { text: string; bg: string }> = {
+  Surf:     { text: "text-[#4dabff]", bg: "bg-[rgba(0,130,255,0.1)]" },
+  Yoga:     { text: "text-[#7dd3a8]", bg: "bg-[rgba(100,220,160,0.1)]" },
+  Wellness: { text: "text-[#7dd3a8]", bg: "bg-[rgba(100,220,160,0.1)]" },
+  Culture:  { text: "text-[#e0a86e]", bg: "bg-[rgba(220,160,80,0.1)]" },
+};
+
+function getInitials(name: string): string {
+  return name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2);
+}
+
+const navItems = [
+  { label: "Warum wir", href: "#why" },
+  { label: "Inklusive", href: "#included" },
+  { label: "Standorte", href: "#locations" },
+  { label: "Kontakt", href: "#contact" },
+];
+---
+
+<BaseLayout title={seoTitle} description={seoDesc}>
+  <Hero
+    title={heroTitle}
+    subtitle={heroSubtitle}
+    tagline={heroTagline}
+    backgroundImages={heroImages}
+    headingTag="h1"
+    ctaText="Jetzt dein Retreat planen"
+    ctaHref="#contact"
+    centered
+  />
+
+  <nav id="retreat-subnav" class="sticky z-40 bg-dark/95 backdrop-blur-md border-b border-white/5">
+    <div class="mx-auto w-full px-0 sm:px-12 lg:px-20">
+      <div class="flex h-14 items-center sm:justify-center gap-5 sm:gap-8 overflow-x-auto no-scrollbar px-4 sm:px-0">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              "retreat-nav-link whitespace-nowrap py-2 text-xs sm:text-sm font-medium uppercase tracking-wider hover:text-white transition-colors relative",
+              item.href === "#contact"
+                ? "bg-white/15 border border-white/30 rounded-full px-5 text-white hover:bg-white/25"
+                : "text-white/50"
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </nav>
+
+  <section id="why" class="py-20 sm:py-24 bg-[#0f1525]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="text-center max-w-[640px] mx-auto mb-16">
+        <p class="text-xs font-semibold tracking-[3px] uppercase text-[#005aff] mb-4">Warum Rapture Camps</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-semibold text-white leading-tight tracking-tight mb-5">
+          {whyBlock?.heading || "Alles was du brauchst. Nichts, was du nicht brauchst."}
+        </h2>
+        {whyBlock?.subtext && (
+          <p class="text-base text-white/50 max-w-[520px] mx-auto leading-relaxed">{whyBlock.subtext}</p>
+        )}
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+        {whyCards.map((card: any, i: number) => (
+          <div class="bg-white/[0.03] rounded-2xl p-8 sm:p-9 border border-white/[0.06] transition-all duration-[350ms] hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:border-[rgba(0,90,255,0.3)] hover:bg-white/[0.05]">
+            <div class="w-12 h-12 text-[#005aff] mb-5">
+              <svg viewBox="0 0 48 48" fill="none" class="w-full h-full" set:html={whyIcons[i] || whyIcons[0]} />
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-3 tracking-tight">{card.title}</h3>
+            <p class="text-sm text-white/45 leading-relaxed">{card.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="included" class="py-20 sm:py-24 bg-[#121c30]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
+        <div class="relative h-[400px] md:h-[500px]">
+          <div class="absolute top-0 left-0 w-[70%] h-[75%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] z-[1]">
+            {(includedCards[0]?.resolvedImageUrl || includedCards[0]?.image?.asset?.url) && (
+              <img
+                src={includedCards[0].resolvedImageUrl || includedCards[0].image.asset.url}
+                alt={includedCards[0].title || ""}
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+          <div class="absolute bottom-0 right-0 w-[60%] h-[55%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.4)] z-[2] border-4 border-[#121c30]">
+            {(includedCards[1]?.resolvedImageUrl || includedCards[1]?.image?.asset?.url) && (
+              <img
+                src={includedCards[1].resolvedImageUrl || includedCards[1].image.asset.url}
+                alt={includedCards[1].title || ""}
+                class="w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            )}
+          </div>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold tracking-[3px] uppercase text-[#005aff] mb-4">Was ist inklusive</p>
+          <h2 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-semibold text-white leading-tight tracking-tight mb-8">
+            {includedBlock?.heading || "Wir kümmern uns um alles"}
+          </h2>
+          <div class="space-y-6">
+            {includedCards.map((card: any) => (
+              <div class="flex gap-4 items-start">
+                <div class="shrink-0 w-7 h-7 text-[#005aff] mt-0.5">
+                  <svg viewBox="0 0 24 24" fill="none" class="w-full h-full">
+                    <path d="M5 12l5 5L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="text-base font-semibold text-white mb-1">{card.title}</h4>
+                  <p class="text-sm text-white/45 leading-relaxed">{card.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="locations" class="py-20 sm:py-24 pb-16 sm:pb-20 bg-[#0f1525] overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="text-center max-w-[640px] mx-auto mb-12">
+        <p class="text-xs font-semibold tracking-[3px] uppercase text-white/35 mb-4">{locationGallery?.eyebrow || "Der Standort"}</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-semibold text-white leading-tight tracking-tight mb-5">
+          {locationGallery?.heading || "Green Bowl, Bali"}
+        </h2>
+        <p class="text-base text-white/50 max-w-[520px] mx-auto leading-relaxed">{locationGallery?.subtext || ""}</p>
+      </div>
+    </div>
+    {locationImages.length > 0 && (
+      <div class="px-6 overflow-x-auto overflow-y-hidden no-scrollbar">
+        <div class="flex gap-5 w-max mx-auto pb-2">
+          {locationImages.map((item: any) => (
+            <div class="shrink-0 w-[260px] sm:w-[300px] rounded-2xl overflow-hidden relative transition-transform duration-[400ms] hover:-translate-y-2">
+              <img src={item.src} alt={`${item.label} bei Rapture Camps`} class="w-full h-[340px] object-cover" loading="lazy" decoding="async" />
+              {item.label && (
+                <div class="absolute bottom-4 left-4 text-sm font-semibold text-white px-3.5 py-1.5 bg-[rgba(0,90,255,0.85)] rounded-full backdrop-blur-sm">
+                  {item.label}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </section>
+
+  <section id="program" class="py-20 sm:py-24 bg-[#121c30]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="text-center max-w-[640px] mx-auto mb-16">
+        <p class="text-xs font-semibold tracking-[3px] uppercase text-[#005aff] mb-4">Beispiel-Programm</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-semibold text-white leading-tight tracking-tight mb-5">
+          {itineraryBlock?.heading || "Beispiel Retreat-Programm"}
+        </h2>
+        {itineraryBlock?.subtext && (
+          <p class="text-base text-white/50 max-w-[520px] mx-auto leading-relaxed">{itineraryBlock.subtext}</p>
+        )}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 max-w-[800px] mx-auto">
+        {days.map((day: any, dayIdx: number) => (
+          <div class:list={[
+            "bg-white/[0.03] border rounded-2xl p-7 transition-all duration-[350ms] hover:border-[rgba(0,90,255,0.2)] hover:bg-white/[0.05]",
+            dayIdx === days.length - 1 ? "border-dashed border-white/[0.06]" : "border-white/[0.06]"
+          ]}>
+            <div class="flex items-center gap-2.5 mb-5 pb-4 border-b border-white/[0.06] flex-wrap">
+              <span class="text-[0.65rem] font-bold tracking-[2px] uppercase text-[#005aff] bg-[rgba(0,90,255,0.1)] px-2.5 py-1 rounded-full">
+                Tag {day.dayNumber}
+              </span>
+              <h3 class="text-lg font-semibold text-white tracking-normal">{day.dayName}</h3>
+              {day.theme && (
+                <span class="ml-auto text-[0.7rem] font-medium tracking-wider text-white/25 italic">{day.theme}</span>
+              )}
+            </div>
+            {day.activities && (
+              <ul class="flex flex-col">
+                {day.activities.map((act: any, actIdx: number) => {
+                  const cat = act.category ? categoryStyles[act.category] : null;
+                  return (
+                    <li class:list={[
+                      "flex gap-3 items-baseline text-sm leading-normal py-2 flex-wrap",
+                      actIdx < day.activities.length - 1 ? "border-b border-white/[0.03]" : "",
+                      "text-white/50"
+                    ]}>
+                      <span class="shrink-0 min-w-[56px] text-[0.78rem] font-semibold text-white/25 tabular-nums">
+                        {act.time || ""}
+                      </span>
+                      <span class="flex-1">{act.title}</span>
+                      {act.category && cat && (
+                        <span class:list={["text-[0.6rem] font-bold tracking-[1.5px] uppercase px-2 py-0.5 rounded-full whitespace-nowrap self-center", cat.text, cat.bg]}>
+                          {act.category}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 sm:py-24 bg-[#0f1525]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-16 md:gap-20 items-center">
+        <div class="grid grid-cols-2 gap-10">
+          {stats.map((stat: any) => (
+            <div class="text-center">
+              <span class="block text-4xl sm:text-5xl lg:text-[3.5rem] font-bold text-[#005aff] leading-none mb-2 tracking-tight">
+                {stat.prefix ? "" : ""}{stat.value}
+              </span>
+              <span class="text-[0.8rem] font-medium text-white/40 tracking-wider uppercase">{stat.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="retreat-testimonial-wrap relative">
+          {testimonials.map((t: any, i: number) => (
+            <div class:list={["retreat-tcard bg-white/[0.03] rounded-2xl p-9 border border-white/[0.06]", i === 0 ? "" : "hidden"]} data-tcard={i}>
+              <p class="text-base sm:text-lg text-white/70 leading-relaxed italic mb-6">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-full bg-[#005aff] flex items-center justify-center shrink-0">
+                  <span class="text-white text-xs font-bold tracking-wider">{getInitials(t.authorName)}</span>
+                </div>
+                <div>
+                  <strong class="block text-sm text-white">{t.authorName}</strong>
+                  {t.authorRole && <span class="text-xs text-white/40">{t.authorRole}</span>}
+                </div>
+              </div>
+            </div>
+          ))}
+          {testimonials.length > 1 && (
+            <div class="flex gap-2 mt-6 md:justify-start justify-center">
+              {testimonials.map((_: any, i: number) => (
+                <button
+                  class:list={["retreat-tdot w-2.5 h-2.5 rounded-full transition-all duration-300", i === 0 ? "bg-[#005aff] scale-[1.2]" : "bg-white/15"]}
+                  data-tdot={i}
+                  aria-label={`Erfahrungsbericht ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-20 sm:py-24 bg-[#121c30]">
+    <div class="max-w-[1200px] mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+        <div>
+          <p class="text-xs font-semibold tracking-[3px] uppercase text-[#005aff] mb-4">Lass uns reden</p>
+          <h2 class="text-3xl sm:text-4xl lg:text-[3.2rem] font-semibold text-white leading-tight tracking-tight mb-5">
+            Gestalte dein nächstes<br>Retreat auf Bali
+          </h2>
+          <p class="text-base text-white/50 leading-relaxed mb-8">
+            Erzähl uns von deiner Vision und wir melden uns innerhalb von 48 Stunden mit einem maßgeschneiderten Vorschlag bei dir.
+          </p>
+          <a
+            href="https://wa.me/+447700177360"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-3 text-[#4d8eff] font-medium hover:opacity-70 transition-opacity"
+          >
+            <svg viewBox="0 0 24 24" fill="none" class="w-5 h-5 shrink-0">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="currentColor"/>
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <span>Oder schreib uns auf WhatsApp</span>
+          </a>
+        </div>
+
+        <div class="bg-white/[0.03] rounded-[20px] p-8 sm:p-11 border border-white/[0.06]">
+          <form
+            name="zsWebToCase_105098000032334342"
+            id="zsWebToCase_105098000032334342_de"
+            action="https://help.rapturecamps.com/support/WebToCase"
+            method="POST"
+            enctype="multipart/form-data"
+            class="space-y-5"
+          >
+            <input type="hidden" name="xnQsjsdp" value="edbsn02b8dc7e1b707441cd82c295a3b2ecb2" />
+            <input type="hidden" name="xmIwtLD" value="edbsnff5a3a5fd084e6c963c7d2cc1afe1d0d731368373932ee0e905c73082a1bc50e" />
+            <input type="hidden" name="xJdfEaS" value="" />
+            <input type="hidden" name="actionType" value="Q2FzZXM=" />
+            <input type="hidden" id="property(module)" value="Cases" />
+            <input type="hidden" id="dependent_field_values_Cases" value='{"JSON_VALUES":{},"JSON_SELECT_VALUES":{},"JSON_MAP_DEP_LABELS":[]}' />
+            <input type="hidden" name="returnURL" value="https://www.rapturecamps.com/de/thank-you" />
+            <input type="hidden" name="Subject" value="Retreat Partnership - Anfrage (DE)" />
+
+            <div>
+              <label for="retreat-name-de" class="block text-[0.8rem] font-semibold uppercase tracking-wider text-white/50 mb-2">Dein Name</label>
+              <input type="text" id="retreat-name-de" name="Contact Name" maxlength="120" required class="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3 text-[0.95rem] text-white placeholder-white/25 transition-all focus:border-[#005aff] focus:shadow-[0_0_0_3px_rgba(0,90,255,0.2)] focus:bg-white/[0.07] outline-none" />
+            </div>
+            <div>
+              <label for="retreat-email-de" class="block text-[0.8rem] font-semibold uppercase tracking-wider text-white/50 mb-2">E-Mail-Adresse</label>
+              <input type="email" id="retreat-email-de" name="Email" maxlength="120" required class="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3 text-[0.95rem] text-white placeholder-white/25 transition-all focus:border-[#005aff] focus:shadow-[0_0_0_3px_rgba(0,90,255,0.2)] focus:bg-white/[0.07] outline-none" />
+            </div>
+            <div>
+              <label for="retreat-location-de" class="block text-[0.8rem] font-semibold uppercase tracking-wider text-white/50 mb-2">Bevorzugter Standort</label>
+              <select id="retreat-location-de" name="Location" class="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3 text-[0.95rem] text-white transition-all focus:border-[#005aff] focus:shadow-[0_0_0_3px_rgba(0,90,255,0.2)] focus:bg-white/[0.07] outline-none appearance-none" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23555' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 16px center;">
+                <option value="" class="bg-[#121c30]">Standort wählen</option>
+                <option value="Bali - Green Bowls" class="bg-[#121c30]">Bali - Green Bowl</option>
+                <option value="Bali - Padang Padang" class="bg-[#121c30]">Bali - Padang Padang</option>
+                <option value="Costa Rica - Avellanas" class="bg-[#121c30]">Costa Rica - Avellanas</option>
+                <option value="Portugal - Ericeira" class="bg-[#121c30]">Portugal - Ericeira</option>
+                <option value="Portugal - Ericeira - Coxos" class="bg-[#121c30]">Portugal - Coxos Surf Villa</option>
+                <option value="Portugal - Milfontes" class="bg-[#121c30]">Portugal - Milfontes</option>
+              </select>
+            </div>
+            <div>
+              <label for="retreat-description-de" class="block text-[0.8rem] font-semibold uppercase tracking-wider text-white/50 mb-2">Erzähl uns von deinem Retreat</label>
+              <textarea id="retreat-description-de" name="Description" rows="4" maxlength="3000" class="w-full rounded-[10px] border-[1.5px] border-white/10 bg-white/5 px-4 py-3 text-[0.95rem] text-white placeholder-white/25 transition-all focus:border-[#005aff] focus:shadow-[0_0_0_3px_rgba(0,90,255,0.2)] focus:bg-white/[0.07] outline-none resize-y min-h-[100px]" placeholder="Was ist das Thema? An welchen Zeitraum denkst du?"></textarea>
+            </div>
+            <button type="submit" class="w-full rounded-full bg-[#005aff] border-2 border-[#005aff] px-8 py-4 text-[0.95rem] font-semibold text-white transition-all hover:bg-[#0044cc] hover:border-[#0044cc] hover:-translate-y-0.5 hover:shadow-[0_8px_30px_rgba(0,90,255,0.3)] mt-2">
+              Anfrage senden
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script is:inline>
+(function () {
+  var nav = document.getElementById("retreat-subnav");
+  if (!nav) return;
+  var links = nav.querySelectorAll(".retreat-nav-link");
+  var sections = [];
+  links.forEach(function (l) {
+    var href = l.getAttribute("href");
+    if (href && href.startsWith("#")) {
+      var el = document.getElementById(href.slice(1));
+      if (el) sections.push({ el: el, link: l });
+    }
+  });
+  function update() {
+    var scrollY = window.scrollY + 140;
+    var active = null;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (sections[i].el.offsetTop <= scrollY) { active = sections[i].link; break; }
+    }
+    links.forEach(function (l) {
+      if (l === active) {
+        l.classList.add("text-white");
+        l.classList.remove("text-white/50");
+      } else {
+        l.classList.remove("text-white");
+        l.classList.add("text-white/50");
+      }
+    });
+  }
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (!ticking) { requestAnimationFrame(function () { update(); ticking = false; }); ticking = true; }
+  });
+  update();
+})();
+</script>
+
+<script is:inline>
+(function () {
+  var wrap = document.querySelector(".retreat-testimonial-wrap");
+  if (!wrap) return;
+  var cards = wrap.querySelectorAll(".retreat-tcard");
+  var dots = wrap.querySelectorAll(".retreat-tdot");
+  if (cards.length < 2) return;
+  var current = 0;
+  var total = cards.length;
+  var timer;
+
+  function goTo(idx) {
+    current = ((idx % total) + total) % total;
+    cards.forEach(function (c, i) {
+      if (i === current) {
+        c.classList.remove("hidden");
+        c.style.animation = "fadeInCard 0.4s ease";
+      } else {
+        c.classList.add("hidden");
+      }
+    });
+    dots.forEach(function (d, i) {
+      if (i === current) { d.classList.add("bg-[#005aff]", "scale-[1.2]"); d.classList.remove("bg-white/15"); }
+      else { d.classList.remove("bg-[#005aff]", "scale-[1.2]"); d.classList.add("bg-white/15"); }
+    });
+  }
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      clearInterval(timer);
+      goTo(parseInt(dot.getAttribute("data-tdot") || "0"));
+      startAuto();
+    });
+  });
+
+  function startAuto() { timer = setInterval(function () { goTo(current + 1); }, 5000); }
+  startAuto();
+})();
+</script>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

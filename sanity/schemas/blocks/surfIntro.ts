@@ -13,6 +13,19 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "headingLevel",
+      title: "Heading Level",
+      type: "string",
+      options: {
+        list: [
+          { title: "H1", value: "h1" },
+          { title: "H2 (default)", value: "h2" },
+          { title: "H3", value: "h3" },
+        ],
+      },
+      initialValue: "h2",
+    }),
+    defineField({
       name: "body",
       title: "Body",
       type: "array",

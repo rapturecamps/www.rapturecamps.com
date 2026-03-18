@@ -18,8 +18,8 @@ const categories = await sanityClient.fetch(ALL_BLOG_CATEGORIES);
 
 const currentPage = page.currentPage;
 const pageTitle = currentPage > 1
-  ? `Blog - Seite ${currentPage} | Rapture Surfcamps`
-  : "Blog - Waves for Days | Rapture Surfcamps";
+  ? `Blog - Seite ${currentPage} · Rapture`
+  : "Blog - Waves for Days · Rapture";
 
 const baseUrl = "/de/blog";
 const prevUrl = currentPage === 2 ? baseUrl : currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : undefined;
@@ -38,6 +38,13 @@ const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : 
   >
     <Breadcrumbs inline crumbs={[{ label: "Blog" }]} />
   </Hero>
+
+  <section class="pt-16 sm:pt-20 pb-0 bg-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white text-center mb-4">Rapture Surfcamps Blog – Surf-Reisetipps & Geschichten</h1>
+      <p class="text-base text-white/40 text-center max-w-2xl mx-auto">Surf-Destinationen, Tipps und Reise-Inspiration von Rapture Surfcamps.</p>
+    </div>
+  </section>
 
   <section class="py-12 bg-dark">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

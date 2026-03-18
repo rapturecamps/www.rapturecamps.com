@@ -9,7 +9,8 @@ export const ALL_COUNTRIES = `*[_type == "country" && (language == $lang || (!de
   _id,
   name,
   "slug": slug.current,
-  flag
+  flag,
+  "cardImage": heroImages[0].asset->url
 }`;
 
 export const COUNTRY_BY_SLUG = `*[_type == "country" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
@@ -430,6 +431,8 @@ export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (lang
   heroTitle,
   heroSubtitle,
   heroTagline,
+  useHeroAsH1,
+  seoH1,
   pageBuilder[] {
     _key, _type, ...,
     "resolvedImageUrl": image.asset->url,
@@ -438,7 +441,26 @@ export const PAGE_BY_SLUG = `*[_type == "page" && slug.current == $slug && (lang
     "resolvedVideoPosterUrl": videoPoster.asset->url,
     images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
     cards[] { ..., "resolvedImageUrl": image.asset->url },
+    _type == "videoTestimonials" => {
+      ...,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url },
+      "resolvedSet": testimonialSet->{
+        heading,
+        bunnyLibraryId,
+        bunnyPullZone,
+        videos[] { ..., "posterImageUrl": posterImage.asset->url }
+      }
+    },
+    _type == "inclusionsGrid" => {
+      ...,
+      inclusions[] { ..., "resolvedIconUrl": icon.asset->url }
+    },
+    _type == "highlightsGrid" => {
+      ...,
+      items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+    },
   },
+  "seoOgImageUrl": seo.ogImage.asset->url,
   seo
 }`;
 

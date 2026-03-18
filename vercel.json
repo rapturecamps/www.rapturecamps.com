@@ -661,11 +661,6 @@
       "statusCode": 301
     },
     {
-      "source": "/de/contact",
-      "destination": "/de/kontakt",
-      "statusCode": 301
-    },
-    {
       "source": "/de/all-you-have-is-now-4",
       "destination": "/de/alles-was-du-hast-ist-das-jetzt",
       "statusCode": 301
@@ -673,11 +668,6 @@
     {
       "source": "/costa-rica-surfcamp/offers-prices",
       "destination": "/surfcamp/costa-rica/avellanas/rooms",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/about",
-      "destination": "/de/ueber-uns",
       "statusCode": 301
     },
     {
@@ -2883,6 +2873,1946 @@
     {
       "source": "/surfcamp/portugal/ericeira-lizandro/rooms/standard-dorm",
       "destination": "/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms-conditions",
+      "destination": "/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/imprint",
+      "destination": "/legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/meet-us-online",
+      "destination": "/meet-us",
+      "statusCode": 301
+    },
+    {
+      "source": "/join-rapturecamps",
+      "destination": "/jobs",
+      "statusCode": 301
+    },
+    {
+      "source": "/wallpapers",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/travel-insurance-for-your-surf-trip",
+      "destination": "/blog/surf-trip-insurance",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/datenschutzrichtlinien",
+      "destination": "/de/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/impressum",
+      "destination": "/de/legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/packing-list-costa-rica-nicaragua",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/reiseversicherung-fuer-deinen-surftrip",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/wallpapers",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfing-at-the-2024-paris-olympics",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/surf-camp-and-surf-lessons-in-costa-rica-everything-you-need-to-know",
+      "destination": "/blog/9-reasons-to-learn-to-surf-in-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/zimmer",
+      "destination": "/de/surfcamp/bali/green-bowl/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/essen",
+      "destination": "/de/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/surfen",
+      "destination": "/de/surfcamp/bali/green-bowl/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/zimmer",
+      "destination": "/de/surfcamp/bali/padang-padang/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/essen",
+      "destination": "/de/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/surfen",
+      "destination": "/de/surfcamp/bali/padang-padang/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/zimmer",
+      "destination": "/de/surfcamp/costa-rica/avellanas/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/surfen",
+      "destination": "/de/surfcamp/costa-rica/avellanas/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/zimmer",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/surfen",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/zimmer",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/essen",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/surfen",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/zimmer",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/essen",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/surfen",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/banana-village/surf",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni/food",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni/rooms",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni/surf",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/sifi-ifni",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/sifi-ifni/essen",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/sifi-ifni/surf",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/sifi-ifni/zimmer",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/surf",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/surf",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/food",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/rooms",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/surf",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/surfen",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa/food",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa/rooms",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/rooms",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa/surf",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/green-bowl/food/coco-nutty-overnight-oats",
+      "destination": "/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/green-bowl/food/thai-inspired-tuna-prawn-pumpkin-curry",
+      "destination": "/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/green-bowl/food/tofu-tempeh",
+      "destination": "/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/padang-padang/food/banana-pancakes-with-coconut-flakes-honey",
+      "destination": "/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/padang-padang/food/chicken-curry",
+      "destination": "/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/padang-padang/food/nasi-goreng",
+      "destination": "/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/food/green-mango-salad-with-coconut-rice",
+      "destination": "/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/food/homemade-bread",
+      "destination": "/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/food/pickled-red-onions",
+      "destination": "/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/food/pineapple-ketchup",
+      "destination": "/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/costa-rica/avellanas/food/rum-fueled-bbq-sauce",
+      "destination": "/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/alentejo-milfontes/food/bacalhau-a-bras-codfish",
+      "destination": "/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/alentejo-milfontes/food/borecole-soup-with-chorizo",
+      "destination": "/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/alentejo-milfontes/food/octopus-rice",
+      "destination": "/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-coxos-surf-villa/food/cauliflower-burgers",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-coxos-surf-villa/food/portuguese-meat-pie",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/food/banana-bread",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/food/bbq-ribs",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/food/cornflakes-schnitzel",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/food/minchi-with-coconut-rice-malasyan-rapture-surfcamps",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-lizandro/food/veggie-curry",
+      "destination": "/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/essen/coco-nutty-overnight-oats",
+      "destination": "/de/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/essen/thai-inspiriertes-thunfisch-garnelen-und-kuerbiscurry",
+      "destination": "/de/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/green-bowl/essen/tofu-und-tempeh",
+      "destination": "/de/surfcamp/bali/green-bowl/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/essen/huehner-curry",
+      "destination": "/de/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/essen/nasi-goreng",
+      "destination": "/de/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/padang-padang/essen/pfannkuchen-mit-bananen-kokosraspeln-und-honig",
+      "destination": "/de/surfcamp/bali/padang-padang/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen/ananas-ketchup",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen/eingelegte-rote-zwiebeln",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen/gruener-mango-salat-mit-kokosreis",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen/rum-bbq-sauce",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/costa-rica/avellanas/essen/selbstgebackenes-brot",
+      "destination": "/de/surfcamp/costa-rica/avellanas/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/essen/bacalhau-a-bras-kabeljau",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/essen/borecole-suppe-mit-chorizo",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/essen/oktopus-reis",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/essen/gartenfrische-blumenkohl-burger",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/essen/portugiesische-teigtaeschchen",
+      "destination": "/de/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/bananenbrot",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/bbq-rippen",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/blumenkohl-burger",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/cornflakes-schnitzel",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/minchi-mit-kokosreis",
+      "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food/chargrilled-chicken-kebabs",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food/chicken-burger-with-potato-wedges",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food/churrasco-with-chimichurri",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food/gallo-pinto",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/food/vegan-tacos",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods/churrasco-with-chimichurri",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods/vegan-tacos",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen/fleisch-mit-chimichurri",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen/gallo-pinto",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen/huehnerburger-mit-kartoffel-wedges",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen/huehnerspiess-kebab",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/essen/vegane-tacos",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/andy-irons-dorm-4-bed",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/margo-oberg-dorm-4-bed",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/mark-farrelly-dorm-4-bed",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/miki-dora-dorm-8-bed",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/private-ac-suites-king",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/private-ac-suites-queen",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas/rooms/private-glamping-tents",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/andy-irons-dorm-4-bett",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/margo-oberg-dorm-4-bett",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/mark-farrelly-dorm-4-bett",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/miki-dora-dorm-8-bett",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-ac-suiten-king",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-ac-suiten-queen",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-glamping-zelte",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/el-cabana",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/jungle-apartment",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/jungle-view-twin",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/large-cabana",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/sea-view-twin",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni/food/moroccan-couscous-with-roasted-vegetables",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/morocco/sidi-ifni/food/moroccan-lamb-tagine",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/sifi-ifni/essen/marokkanischer-couscous",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/author/:path*",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/author/:path*",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-green-bowl/:path*",
+      "destination": "/faq/bali-green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-padang-padang/:path*",
+      "destination": "/faq/bali-padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/costa-rica-avellanas/:path*",
+      "destination": "/faq/costa-rica-avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-ericeira/:path*",
+      "destination": "/faq/portugal-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-coxos-surf-villa/:path*",
+      "destination": "/faq/portugal-coxos-surf-villa",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal-milfontes/:path*",
+      "destination": "/faq/portugal-milfontes",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/nicaragua-maderas/:path*",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/morocco-banana-village/:path*",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/morocco-sidi-ifni/:path*",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali-canggu/:path*",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-green-bowl/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-padang-padang/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-canggu/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/costa-rica-avellanas/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal-ericeira/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal-coxos-surf-villa/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal-milfontes/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/nicaragua-maderas/:path*",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/buchung-preise",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/camp-address",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/camp-aktivitaeten",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/essen-getraenke",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/fremdwaehrungen-geldautomaten",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/sehenswuerdigkeiten-und-aktivitaeten",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/sonstige",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfen-und-lessons",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/wo-wir-zu-finden-sind",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/zimmer",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bietet-ihr-wochenpakete-an",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/gibt-es-mindestaufenthalt",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/ist-das-camp-fuer-komplette-beginner",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/kann-ich-extras-for-ort-buchen-5",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/kann-ich-meine-buchung-stornieren",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/kuechennutzung",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/nachtleben",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/regenzeit",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/sind-die-dorms-gemischt",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/sonnenschutz",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/unterschied-zwischen-lessons-und-guiding",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/was-fuer-boards-habt-ihr-vor-ort",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/was-ist-surf-guiding",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/welches-visum-benoetige-ich-um-nach-bali-einzureisen",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/wie-buche-ich-online",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/wie-pruefe-ich-die-verfuegbarkeit",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/page/2",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/page/2",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/page/2",
+      "destination": "/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/page/2",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/about/page/2",
+      "destination": "/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/contact/page/2",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/jobs/page/2",
+      "destination": "/jobs",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/jobs/page/2",
+      "destination": "/de/jobs",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kontakt/page/2",
+      "destination": "/de/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/ueber-uns/page/2",
+      "destination": "/de/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/impressum/page/2",
+      "destination": "/de/legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/datenschutzrichtlinien/page/2",
+      "destination": "/de/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/privacy-policy/page/2",
+      "destination": "/privacy-policy",
+      "statusCode": 301
+    },
+    {
+      "source": "/imprint/page/2",
+      "destination": "/legal",
+      "statusCode": 301
+    },
+    {
+      "source": "/terms-conditions/page/2",
+      "destination": "/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/meet-us-online/page/2",
+      "destination": "/meet-us",
+      "statusCode": 301
+    },
+    {
+      "source": "/join-rapturecamps/page/2",
+      "destination": "/jobs",
+      "statusCode": 301
+    },
+    {
+      "source": "/wallpapers/page/2",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/wallpapers/page/2",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/travel-insurance-for-your-surf-trip/page/2",
+      "destination": "/blog/surf-trip-insurance",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/reiseversicherung-fuer-deinen-surftrip/page/2",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/workations/surf-study",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/workations/surf-study/page/2",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/2",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/3",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/4",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/5",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/6",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/7",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/8",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/9",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/10",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/11",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/12",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/page/13",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/2",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/2",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/3",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/3",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/4",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/4",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/5",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/5",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/6",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/6",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/bali/page/7",
+      "destination": "/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/page/7",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/costa-rica/page/2",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica/page/2",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/costa-rica/page/3",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica/page/3",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/costa-rica/page/4",
+      "destination": "/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica/page/4",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/nicaragua/page/2",
+      "destination": "/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/nicaragua/page/2",
+      "destination": "/de/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/nicaragua/page/3",
+      "destination": "/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/nicaragua/page/3",
+      "destination": "/de/blog/category/nicaragua",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/portugal/page/2",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal/page/2",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/portugal/page/3",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal/page/3",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/portugal/page/4",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal/page/4",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/portugal/page/5",
+      "destination": "/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal/page/5",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/category/morocco/page/2",
+      "destination": "/blog/category/morocco",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/morocco/page/2",
+      "destination": "/de/blog/category/morocco",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/10-things-to-do-playa-avellanas-costa-rica",
+      "destination": "/de/blog/die-top-10-aktivitaeten-in-costa-rica-playa-avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/6-of-the-best-tips-for-beginner-surfers",
+      "destination": "/de/blog/6-tipps-fuer-anfaenger-surfer",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/best-beginner-surf-spots-in-bali",
+      "destination": "/de/blog/besten-surfspots-fur-anfanger-auf-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/best-things-to-do-in-ericeira",
+      "destination": "/de/blog/10-dinge-die-man-im-schonen-ericeira-gesehen-haben-muss-ein-top-surfziel-in-portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/nightlife-in-ericeira",
+      "destination": "/de/blog/ericeiras-nachtleben-und-andere-aktivitaten",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-school-bali",
+      "destination": "/de/blog/surfschule-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-trip-insurance",
+      "destination": "/de/blog/reiseversicherung-fuer-deinen-surftrip",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surfing-uluwatu",
+      "destination": "/de/blog/surfen-uluwatu",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/the-5-best-places-to-learn-to-surf",
+      "destination": "/de/blog/die-5-besten-orte-um-surfen-zu-lernen-rapture-surfcamps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/the-waves-in-nicaragua-are-always-offshore",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/traveling-with-a-surfboard-made-easy-in-6-simple-steps",
+      "destination": "/de/blog/6-hilfreiche-tipps-zum-reisen-mit-dem-surfboard",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/what-to-pack-for-costa-rica-and-nicaragua",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/what-to-see-in-tamarindo-costa-rica",
+      "destination": "/de/blog/die-10-top-aktivitaten-in-tamarindo-costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/9-reasons-to-learn-to-surf-in-costa-rica",
+      "destination": "/de/blog/surfen-lernen-in-costa-rica-9-grunde",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-playa-maderas-nicaragua",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/learn-to-surf-in-costa-rica-9-epic-reasons-why-you-should-go-right-now",
+      "destination": "/de/blog/surfen-lernen-in-costa-rica-9-grunde",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/surf-ericeira",
+      "destination": "/de/blog/surfen-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/from-our-surf-house-in-ericeira-paddle-to-purpose",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/aktivitaten-in-ericeira",
+      "destination": "/de/blog/ericeiras-nachtleben-und-andere-aktivitaten",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa/food/carapaus-with-spanish-sauce",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa/food/gambas-a-guilho",
+      "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/2",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/3",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/4",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/5",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/6",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/7",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/8",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/9",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/10",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/11",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/12",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/13",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/14",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/15",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/16",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/17",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/18",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/19",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/20",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/21",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/22",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/23",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/24",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/25",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/26",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/27",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/28",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/29",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/30",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/31",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/32",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/33",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/page/34",
+      "destination": "/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/inspiration",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-green-bowl",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-padang-padang",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali-seminyak",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/costa-rica-avellanas",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/nicaragua-maderas",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal-ericeira",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal-milfontes",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/allergien-und-diaet",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/page/2",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/page/2",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/rooms",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/essen/superfood-bowl",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/food/superfood-bowl",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/2-zimmer-private-villa",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/deluxe-doppelzimmer",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/deluxe-double",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/deluxe-suite-doppel-twin",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/deluxe-suite-double-twin",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/standard-doppelzimmer",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/standard-double",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/bali/canggu/zimmer/surf-lodge-6-betten",
+      "destination": "/de/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/2-bedroom-villa",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/deluxe-double",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/deluxe-suite-double-twin",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/dorm-lodge",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/bali/canggu/rooms/standard-double-room",
+      "destination": "/surfcamp/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/marokko/banana-village/surf",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/food/bacalhau-a-bras-kabeljau",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/food/borecole-suppe-mit-chorizo",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/portugal/alentejo-milfontes/food/oktopus-reis",
+      "destination": "/de/surfcamp/portugal/alentejo-milfontes/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/top-5-surf-spots-in-playa-avellanas-costa-rica",
+      "destination": "/de/blog",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/bali",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/costa-rica",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/portugal",
+      "destination": "/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/bali",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/costa-rica",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/portugal",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/bali/green-bowl",
+      "destination": "/faq/bali-green-bowl",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/bali/padang-padang",
+      "destination": "/faq/bali-padang-padang",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/costa-rica/avellanas",
+      "destination": "/faq/costa-rica-avellanas",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/portugal/alentejo-milfontes",
+      "destination": "/faq/portugal-milfontes",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/portugal/ericeira-coxos-surf-villa",
+      "destination": "/faq/portugal-coxos-surf-villa",
+      "statusCode": 301
+    },
+    {
+      "source": "/faq/surfcamp/portugal/ericeira-lizandro",
+      "destination": "/faq/portugal-ericeira",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/bali/green-bowl",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/bali/padang-padang",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/costa-rica/avellanas",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/portugal/alentejo-milfontes",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/portugal/ericeira-coxos-surf-villa",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/faq/surfcamp/portugal/ericeira-lizandro",
+      "destination": "/de/faq",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/kontakt",
+      "destination": "/de/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/ueber-uns",
+      "destination": "/de/about",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/morocco",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/maderas",
+      "destination": "/de",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/surfcamp",
+      "destination": "/de/surfcamp",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/surfcamp/nicaragua/maderas-surf-resort",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/10-best-surf-spots-in-bali",
+      "destination": "/de/blog/10-besten-surfspots-in-bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/arenal-volcano",
+      "destination": "/de/blog/arenal-vulkan-wanderung-die-besten-trails-tipps",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/3",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/4",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/5",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/6",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/bali/7",
+      "destination": "/de/blog/category/bali",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica/3",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/costa-rica/4",
+      "destination": "/de/blog/category/costa-rica",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/learn-to-surf/2",
+      "destination": "/de/blog/category/learn-to-surf",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/portugal/4",
+      "destination": "/de/blog/category/portugal",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-culture-lifestyle/2",
+      "destination": "/de/blog/category/surf-culture-lifestyle",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-culture-lifestyle/3",
+      "destination": "/de/blog/category/surf-culture-lifestyle",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-equipment-gear/2",
+      "destination": "/de/blog/category/surf-equipment-gear",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-equipment-gear/3",
+      "destination": "/de/blog/category/surf-equipment-gear",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-health-safety/2",
+      "destination": "/de/blog/category/surf-health-safety",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-science-conditions/2",
+      "destination": "/de/blog/category/surf-science-conditions",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/7",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/8",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/9",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/10",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/11",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/12",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/13",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/14",
+      "destination": "/de/blog/category/surf-travel",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/blog/category/surf-travel/15",
+      "destination": "/de/blog/category/surf-travel",
       "statusCode": 301
     }
   ]

@@ -24,6 +24,7 @@ export default defineConfig({
       filter: (page) =>
         !page.includes("/studio") &&
         !page.includes("/404") &&
+        !page.includes("/410") &&
         !page.includes("/linkin-bio") &&
         !page.includes("/thank-you") &&
         !page.includes("/survey-thank-you"),

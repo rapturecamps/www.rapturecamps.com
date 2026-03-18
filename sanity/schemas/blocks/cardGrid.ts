@@ -65,6 +65,12 @@ export default defineType({
               rows: 4,
             }),
             defineField({
+              name: "link",
+              title: "Link",
+              type: "string",
+              description: "Optional URL to make the card clickable (e.g. /surfcamp/bali).",
+            }),
+            defineField({
               name: "image",
               title: "Image",
               type: "image",

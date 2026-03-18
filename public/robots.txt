@@ -1,13 +1,8 @@
-# *
 User-agent: *
 Allow: /
-
-# *
-User-agent: *
 Disallow: /api/
+Disallow: /studio/
 
-# Host
 Host: https://www.rapturecamps.com
 
-# Sitemaps
-Sitemap: https://www.rapturecamps.com/sitemap.xml
+Sitemap: https://www.rapturecamps.com/sitemap-index.xml

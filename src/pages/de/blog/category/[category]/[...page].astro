@@ -35,8 +35,8 @@ const currentPage = page.currentPage;
 const baseUrl = `/de/blog/category/${category}`;
 
 const pageTitle = currentPage > 1
-  ? `${title} - Seite ${currentPage} | Blog | Rapture Surfcamps`
-  : `${title} - Blog | Rapture Surfcamps`;
+  ? `${title} - Seite ${currentPage} · Blog · Rapture`
+  : `${title} - Blog · Rapture`;
 
 const prevUrl = currentPage === 2 ? baseUrl : currentPage > 2 ? `${baseUrl}/${currentPage - 1}` : undefined;
 const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : undefined;
@@ -60,6 +60,12 @@ const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : 
       { label: title },
     ]} />
   </Hero>
+
+  <section class="pt-16 sm:pt-20 pb-0 bg-dark">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white text-center mb-4">{title} – Surf-Blog Artikel & Guides</h1>
+    </div>
+  </section>
 
   <section class="py-12 bg-dark">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -50,7 +50,7 @@ function portableTextToHtml(body: any): string {
 }
 
 const { block, campData, headingTag = "h2", lang = "en" } = Astro.props;
-const HeadingTag = headingTag;
+const HeadingTag = block.headingLevel || headingTag;
 const bg = block.background === "dark-lighter" ? "bg-dark-lighter" : "bg-dark";
 const heading = block.heading || t("surf.theWaves", lang);
 const bodyHtml = portableTextToHtml(block.body);

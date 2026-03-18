@@ -35,7 +35,7 @@ const ctaBlock = allBlocks.find((b: any) => b._type === "ctaSection");
   bookingUrl={bookingUrl}
   heroImages={roomsPage?.heroImages?.length ? roomsPage.heroImages : (roomsPage?.campHeroImages || campData?.heroImages)}
   heroTitle={roomsPage?.heroTitle}
-  title={roomsPage?.seo?.metaTitle || `Rooms at ${campTitle} | Rapture Surfcamps`}
+  title={roomsPage?.seo?.metaTitle || `Rooms at ${campTitle} · Rapture`}
   description={roomsPage?.seo?.metaDescription || `Explore accommodation options at Rapture Surf Camp ${campTitle}. From shared dorms to private rooms.`}
   ogImage={roomsPage?.seo?.ogImageUrl}
   noindex={roomsPage?.seo?.noindex}

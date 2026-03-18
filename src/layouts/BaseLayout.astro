@@ -52,7 +52,7 @@ const normalizedPath = pathname === "/" ? "/" : pathname.replace(/\/+$/, "");
 const canonicalUrl = new URL(normalizedPath, siteUrl);
 
 function getTranslatedPath(lang: string): string | null {
-  if (translations.length > 0 && translationBasePath) {
+  if (translationBasePath) {
     const t = translations.find((tr) => tr?.language === lang);
     if (t) {
       const base = lang === "en" ? translationBasePath : `/de${translationBasePath}`;

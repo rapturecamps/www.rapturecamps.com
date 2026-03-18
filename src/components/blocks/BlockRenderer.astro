@@ -221,7 +221,7 @@ function portableTextToHtml(body: any): string {
         heading={block.heading || ""}
         body={body}
         image={block.resolvedImageUrl || ""}
-        imageAlt={block.resolvedImageAlt || block.imageAlt || ""}
+        imageAlt={block.resolvedImageAlt || block.imageAlt || block.heading || ""}
         reverse={block.reverse || false}
         background={block.background === "dark-lighter" ? "dark-lighter" : "dark"}
         headingTag={block.headingLevel || (isH1 ? "h1" : "h2")}

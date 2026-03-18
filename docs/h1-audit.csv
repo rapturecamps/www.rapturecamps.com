@@ -1,0 +1,61 @@
+Page,URL (localhost),Language,H1 Status,H1 Source,Action Required
+Homepage,http://localhost:4321/,EN,Depends on Sanity,"useHeroAsH1 or seoH1 field on homepage document",Check Sanity: ensure one of these is set
+Homepage,http://localhost:4321/de/,DE,Depends on Sanity,"useHeroAsH1 or seoH1 field on DE homepage document",Check Sanity: ensure one of these is set
+About,http://localhost:4321/about,EN,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+About,http://localhost:4321/de/about,DE,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Blog Listing,http://localhost:4321/blog,EN,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Blog Listing,http://localhost:4321/de/blog,DE,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Blog Category,http://localhost:4321/blog/category/surf-travel,EN,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Blog Category,http://localhost:4321/de/blog/category/surf-travel,DE,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Surfcamp Index,http://localhost:4321/surfcamp,EN,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Surfcamp Index,http://localhost:4321/de/surfcamp,DE,Missing,Hero defaults to p — no other h1 in template,Needs an H1 added (code or Sanity)
+Country Page,http://localhost:4321/surfcamp/bali,EN,Depends on Sanity,"useHeroAsH1 / seoH1 / first contentBlock in pageBuilder / comparison heading fallback",Check Sanity: ensure one H1 source is set
+Country Page,http://localhost:4321/surfcamp/portugal,EN,Depends on Sanity,"useHeroAsH1 / seoH1 / first contentBlock in pageBuilder / comparison heading fallback",Check Sanity: ensure one H1 source is set
+Country Page,http://localhost:4321/surfcamp/costa-rica,EN,Depends on Sanity,"useHeroAsH1 / seoH1 / first contentBlock in pageBuilder / comparison heading fallback",Check Sanity: ensure one H1 source is set
+Country Page (DE),http://localhost:4321/de/surfcamp/bali,DE,Missing,Hero defaults to p — comparison heading is h2,Needs an H1 added (code or Sanity)
+Country Page (DE),http://localhost:4321/de/surfcamp/portugal,DE,Missing,Hero defaults to p — comparison heading is h2,Needs an H1 added (code or Sanity)
+Country Page (DE),http://localhost:4321/de/surfcamp/costa-rica,DE,Missing,Hero defaults to p — comparison heading is h2,Needs an H1 added (code or Sanity)
+Camp Overview,http://localhost:4321/surfcamp/bali/padang-padang,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview,http://localhost:4321/surfcamp/bali/green-bowl,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview,http://localhost:4321/surfcamp/portugal/ericeira-lizandro,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview,http://localhost:4321/surfcamp/portugal/ericeira-coxos-surf-villa,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview,http://localhost:4321/surfcamp/portugal/alentejo-milfontes,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview,http://localhost:4321/surfcamp/costa-rica/avellanas,EN,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/bali/padang-padang,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/bali/green-bowl,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/portugal/ericeira-lizandro,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/portugal/ericeira-coxos-surf-villa,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/portugal/alentejo-milfontes,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Overview (DE),http://localhost:4321/de/surfcamp/costa-rica/avellanas,DE,Depends on Sanity,"introHeadingLevel field (defaults to h2, must be set to h1)",Check Sanity: set introHeadingLevel to h1
+Camp Surf,http://localhost:4321/surfcamp/bali/padang-padang/surf,EN,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Camp Rooms,http://localhost:4321/surfcamp/bali/padang-padang/rooms,EN,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Camp Food,http://localhost:4321/surfcamp/bali/padang-padang/food,EN,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Camp Surf (DE),http://localhost:4321/de/surfcamp/bali/padang-padang/surf,DE,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Camp Rooms (DE),http://localhost:4321/de/surfcamp/bali/padang-padang/rooms,DE,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Camp Food (DE),http://localhost:4321/de/surfcamp/bali/padang-padang/food,DE,Missing,CampLayout Hero defaults to p — BlockRenderer has no h1BlockIndex,Needs an H1 (via Sanity pageBuilder or code)
+Blog Post,http://localhost:4321/blog/surf-ericeira,EN,Present,Hardcoded h1 in template for post title,OK — verify visually
+Blog Post (DE),http://localhost:4321/de/blog/surf-ericeira,DE,Present,Hardcoded h1 in template for post title,OK — verify visually
+FAQ Index,http://localhost:4321/faq,EN,Present,Hardcoded h1 — Frequently Asked Questions,OK
+FAQ Index (DE),http://localhost:4321/de/faq,DE,Present,Hardcoded h1 — Häufig gestellte Fragen,OK
+FAQ Location,http://localhost:4321/faq/padang-padang,EN,Present,Hardcoded h1 — FAQ + camp name,OK
+FAQ Location (DE),http://localhost:4321/de/faq/padang-padang,DE,Present,Hardcoded h1 — FAQ + camp name,OK
+Contact,http://localhost:4321/contact,EN,Present,Hero headingTag=h1,OK
+Contact (DE),http://localhost:4321/de/contact,DE,Present,Hero headingTag=h1,OK
+Meet Us,http://localhost:4321/meet-us,EN,Present,Hero headingTag=h1,OK
+Meet Us (DE),http://localhost:4321/de/meet-us,DE,Present,Hero headingTag=h1,OK
+Host a Retreat,http://localhost:4321/host-a-retreat,EN,Present,Hero headingTag=h1,OK
+Host a Retreat (DE),http://localhost:4321/de/host-a-retreat,DE,Present,Hero headingTag=h1,OK
+Jobs,http://localhost:4321/jobs,EN,Present,Hardcoded h1,OK
+Jobs (DE),http://localhost:4321/de/jobs,DE,Present,Hardcoded h1,OK
+Legal,http://localhost:4321/legal,EN,Present,Hardcoded h1,OK
+Legal (DE),http://localhost:4321/de/legal,DE,Present,Hardcoded h1,OK
+Terms,http://localhost:4321/terms,EN,Present,Hardcoded h1,OK
+Terms (DE),http://localhost:4321/de/terms,DE,Present,Hardcoded h1,OK
+Privacy Policy,http://localhost:4321/privacy-policy,EN,Present,Hardcoded h1,OK
+Privacy Policy (DE),http://localhost:4321/de/privacy-policy,DE,Present,Hardcoded h1,OK
+Thank You,http://localhost:4321/thank-you,EN,Present (noindex),Hardcoded h1,OK — noindex page
+Thank You (DE),http://localhost:4321/de/thank-you,DE,Present (noindex),Hardcoded h1,OK — noindex page
+Survey Thank You,http://localhost:4321/survey-thank-you,EN,Present (noindex),Hardcoded h1,OK — noindex page
+404,http://localhost:4321/any-nonexistent-page,EN,Present (noindex),Hardcoded h1,OK — noindex page
+410,http://localhost:4321/410,EN,Present (noindex),Hardcoded h1,OK — noindex page
+Linkin Bio,http://localhost:4321/linkin-bio,EN,Present (noindex),Hardcoded h1,OK — noindex page

@@ -9,23 +9,26 @@ import { getPageBySlug } from "@/lib/sanity-data";
 
 const page = await getPageBySlug("about");
 const title = page?.title || "Our Story";
-const seoTitle = page?.seo?.title || "About Us | Rapture Surfcamps";
+const seoTitle = page?.seo?.title || "About Us · Rapture";
 const seoDesc = page?.seo?.description || "Founded in 2003, Rapture Surfcamps has grown into a global network of 8 surf camps across 5 countries.";
 ---
 
 <BaseLayout
   title={seoTitle}
   description={seoDesc}
-  ogImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=630&fit=crop"
+  ogImage="https://cdn.sanity.io/images/ypmt1bmc/production/645fece67ca00725dc995d9e5bda9fe416b19961-1920x1276.jpg?w=1200&h=630&fit=crop&auto=format"
 >
   <Hero
     title={title}
-    backgroundImage="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=1080&fit=crop"
+    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/645fece67ca00725dc995d9e5bda9fe416b19961-1920x1276.jpg?w=1920&h=1080&fit=crop&auto=format"
   >
     <Breadcrumbs inline crumbs={[{ label: title }]} />
   </Hero>
 
   <section class="py-20 bg-dark">
+    <div class="max-w-3xl px-6 sm:px-12 lg:px-20 mb-10">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white">About Rapture Surfcamps – Our Story Since 2003</h1>
+    </div>
     <div class="max-w-3xl px-6 sm:px-12 lg:px-20">
       {page?.body ? (
         <div class="space-y-6 text-base sm:text-lg text-white/50 leading-relaxed prose-page">
