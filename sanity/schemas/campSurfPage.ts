@@ -64,6 +64,15 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "relatedBlogPosts",
+      title: "Related Blog Posts",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "blogPost" }] }],
+      description:
+        "Manually pick blog posts to feature on this page. Leave empty to auto-select the latest posts from this country.",
+      validation: (r) => r.max(6),
+    }),
+    defineField({
       name: "seo",
       title: "SEO",
       type: "seo",

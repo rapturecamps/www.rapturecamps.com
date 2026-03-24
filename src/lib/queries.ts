@@ -212,6 +212,7 @@ export const CAMP_BY_SLUG = `*[_type == "camp" && slug.current == $slug && (lang
       "foodCard": { ...foodCard, "imageUrl": foodCard.image.asset->url }
     }
   },
+  "relatedBlogPosts": relatedBlogPosts[]->{ _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt, "categories": categories[]->{ name, "slug": slug.current } },
   seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     "slug": slug.current,
@@ -275,6 +276,7 @@ export const CAMP_SURF_PAGE = `*[_type == "campSurfPage" && camp->slug.current =
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
+  "relatedBlogPosts": relatedBlogPosts[]->{ _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt, "categories": categories[]->{ name, "slug": slug.current } },
   seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
@@ -333,6 +335,7 @@ export const CAMP_ROOMS_PAGE = `*[_type == "campRoomsPage" && camp->slug.current
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
+  "relatedBlogPosts": relatedBlogPosts[]->{ _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt, "categories": categories[]->{ name, "slug": slug.current } },
   seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
@@ -379,6 +382,7 @@ export const CAMP_FOOD_PAGE = `*[_type == "campFoodPage" && camp->slug.current =
       "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
     }
   },
+  "relatedBlogPosts": relatedBlogPosts[]->{ _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt, "categories": categories[]->{ name, "slug": slug.current } },
   seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     language
@@ -402,7 +406,9 @@ export const ALL_BLOG_POSTS = `*[_type == "blogPost" && (language == $lang || (!
   excerpt,
   "featuredImage": featuredImage.asset->url,
   publishedAt,
-  "categories": categories[]->{ name, "slug": slug.current }
+  "categories": categories[]->{ name, "slug": slug.current },
+  "silo": silo->name,
+  "hub": hub->name
 }`;
 
 export const BLOG_POSTS_BY_CATEGORY = `*[_type == "blogPost" && (language == $lang || (!defined(language) && $lang == "en")) && $categorySlug in categories[]->slug.current] | order(publishedAt desc) {
@@ -609,6 +615,11 @@ export const BLOG_POST_BY_SLUG = `*[_type == "blogPost" && slug.current == $slug
   authorUrl,
   tags,
   "categories": categories[]->{ name, "slug": slug.current },
+  "silo": silo->name,
+  "siloSlug": silo->slug.current,
+  "siloIsCountry": silo->isCountry,
+  "hub": hub->name,
+  "hubSlug": hub->slug.current,
   seo { ..., "ogImageUrl": ogImage.asset->url },
   "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
     "slug": slug.current,
@@ -645,4 +656,39 @@ export const ACTIVE_POPUPS = `*[_type == "popup" && enabled == true] | order(pri
   segments,
   zohoListKey,
   zohoSource
+}`;
+
+export const BLOG_POSTS_BY_SILO = `*[_type == "blogPost" && silo->name == $siloName && (language == $lang || (!defined(language) && $lang == "en"))] | order(publishedAt desc) [0...$limit] {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  "featuredImage": featuredImage.asset->url,
+  publishedAt,
+  "categories": categories[]->{ name, "slug": slug.current },
+  "silo": silo->name,
+  "hub": hub->name
+}`;
+
+export const BLOG_POSTS_BY_HUB = `*[_type == "blogPost" && hub->name == $hubName && (language == $lang || (!defined(language) && $lang == "en")) && _id != $excludeId] | order(publishedAt desc) [0...$limit] {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  "featuredImage": featuredImage.asset->url,
+  publishedAt,
+  "categories": categories[]->{ name, "slug": slug.current },
+  "silo": silo->name,
+  "hub": hub->name
+}`;
+
+export const RELATED_BLOG_POSTS = `{
+  "byHub": *[_type == "blogPost" && silo->name == $siloName && hub->name == $hubName && (language == $lang || (!defined(language) && $lang == "en")) && _id != $excludeId] | order(publishedAt desc) [0...$limit] {
+    _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt,
+    "categories": categories[]->{ name, "slug": slug.current }, "silo": silo->name, "hub": hub->name
+  },
+  "bySilo": *[_type == "blogPost" && silo->name == $siloName && hub->name != $hubName && (language == $lang || (!defined(language) && $lang == "en")) && _id != $excludeId] | order(publishedAt desc) [0...$limit] {
+    _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt,
+    "categories": categories[]->{ name, "slug": slug.current }, "silo": silo->name, "hub": hub->name
+  }
 }`;

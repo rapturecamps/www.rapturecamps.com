@@ -149,12 +149,36 @@ export default defineType({
       options: { layout: "tags" },
     }),
     defineField({
+      name: "silo",
+      title: "Content Silo",
+      type: "reference",
+      to: [{ type: "contentSilo" }],
+      description: "Primary silo for this post (e.g., Bali, Learn to Surf, Surf Equipment & Gear).",
+    }),
+    defineField({
+      name: "hub",
+      title: "Content Hub",
+      type: "reference",
+      to: [{ type: "contentHub" }],
+      description: "Sub-category within the silo. Select a Silo first to filter available hubs.",
+      options: {
+        filter: ({ document }) => {
+          const siloRef = (document as any)?.silo?._ref;
+          if (!siloRef) return {};
+          return {
+            filter: "$siloRef in silos[]._ref",
+            params: { siloRef },
+          };
+        },
+      },
+    }),
+    defineField({
       name: "topicCluster",
-      title: "Topic Cluster / Silo",
+      title: "Topic Cluster (Legacy)",
       type: "reference",
       to: [{ type: "country" }],
-      description:
-        "Assign this post to a country silo for internal linking. Leave empty for auto-detection based on content.",
+      description: "Legacy country reference. Use Content Silo instead for new posts.",
+      hidden: true,
     }),
     defineField({
       name: "authorName",

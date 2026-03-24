@@ -1,0 +1,144 @@
+---
+import { sanityClient } from "@/lib/sanity";
+import { ALL_BLOG_POSTS } from "@/lib/queries";
+
+interface Props {
+  heading?: string;
+  viewAllText?: string;
+  blogBasePath?: string;
+  lang?: string;
+  limit?: number;
+}
+
+const {
+  heading = "Recent Posts",
+  viewAllText = "View all",
+  blogBasePath = "/blog",
+  lang = "en",
+  limit = 5,
+} = Astro.props;
+
+const allPosts = await sanityClient.fetch(ALL_BLOG_POSTS, { lang });
+const posts = allPosts.slice(0, limit);
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleDateString(lang === "de" ? "de-DE" : "en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+---
+
+{posts.length > 0 && (
+  <section class="pt-12 sm:pt-16 pb-16 bg-dark-lighter">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white">
+          {heading}
+        </h2>
+        <div class="flex items-center gap-3">
+          <a
+            href={blogBasePath}
+            class="text-xs text-white/40 hover:text-white/70 transition-colors hidden sm:block"
+          >
+            {viewAllText}
+          </a>
+          <div class="flex gap-2">
+            <button
+              data-blog-scroll="left"
+              class="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/50 hover:text-white hover:border-white/30 transition-colors"
+              aria-label="Scroll left"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              data-blog-scroll="right"
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-ocean text-white hover:bg-ocean-light transition-colors"
+              aria-label="Scroll right"
+            >
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 18l6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        data-blog-scroll-container
+        class="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory"
+        style="scrollbar-width: none; -ms-overflow-style: none;"
+      >
+        {posts.map((post: any) => (
+          <a
+            href={`${blogBasePath}/${post.slug}`}
+            class="group flex-shrink-0 snap-start"
+          >
+            <article class="relative w-[280px] sm:w-[320px] lg:w-[360px] aspect-[3/4] overflow-hidden rounded-2xl">
+              {post.featuredImage ? (
+                <img
+                  src={`${post.featuredImage}?w=800&h=1000&fit=crop&auto=format`}
+                  alt={post.title}
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="absolute inset-0 bg-dark" />
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+              {post.categories?.[0] && (
+                <div class="absolute top-4 right-4">
+                  <span class="rounded-full bg-white/10 backdrop-blur-sm border border-white/10 px-3 py-1 text-[10px] font-medium text-white/80">
+                    {post.categories[0].name}
+                  </span>
+                </div>
+              )}
+
+              <div class="absolute bottom-0 left-0 right-0 p-5">
+                <h3 class="text-lg font-semibold text-white leading-tight line-clamp-2 group-hover:text-ocean-light transition-colors">
+                  {post.title}
+                </h3>
+                {post.excerpt && (
+                  <p class="mt-2 text-xs text-white/50 line-clamp-2">
+                    {post.excerpt}
+                  </p>
+                )}
+                {post.publishedAt && (
+                  <p class="mt-2 text-[10px] text-white/30">
+                    {formatDate(post.publishedAt)}
+                  </p>
+                )}
+              </div>
+            </article>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  [data-blog-scroll-container]::-webkit-scrollbar { display: none; }
+</style>
+
+<script is:inline>
+(function () {
+  var container = document.querySelector("[data-blog-scroll-container]");
+  if (!container) return;
+  document.querySelectorAll("[data-blog-scroll]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var dir = btn.getAttribute("data-blog-scroll");
+      container.scrollBy({
+        left: dir === "left" ? -400 : 400,
+        behavior: "smooth",
+      });
+    });
+  });
+})();
+</script>

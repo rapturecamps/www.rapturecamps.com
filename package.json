@@ -37,6 +37,7 @@
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "lighthouse": "^12.8.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

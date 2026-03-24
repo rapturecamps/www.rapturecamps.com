@@ -2,6 +2,8 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
+import OtherCamps from "@/components/sections/OtherCamps.astro";
 import ImageBreak from "@/components/sections/ImageBreak.astro";
 import ImageGrid from "@/components/sections/ImageGrid.astro";
 
@@ -422,6 +424,23 @@ const hasSanityBlocks = blocks?.length > 0;
       </section>
     </>
   )}
+
+  <OtherCamps
+    countrySlug={country!}
+    countryName={countryTitle}
+    currentCampSlug={camp!}
+    lang="en"
+  />
+
+  <RelatedBlogPosts
+    posts={campData?.relatedBlogPosts?.length ? campData.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    limit={4}
+    lang="en"
+    title={`${countryTitle} Surf Blog`}
+    description={`Latest articles about surfing in ${countryTitle}.`}
+    background="dark"
+  />
 
   <CTASection
     buttonUrl={bookingUrl}

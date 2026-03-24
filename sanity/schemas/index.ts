@@ -15,6 +15,8 @@ import redirect from "./redirect";
 import popup from "./popup";
 import videoTestimonialSet from "./videoTestimonialSet";
 import seoInsight from "./seoInsight";
+import contentSilo from "./contentSilo";
+import contentHub from "./contentHub";
 
 import richText from "./blocks/richText";
 import cardGrid from "./blocks/cardGrid";
@@ -76,6 +78,8 @@ export const schemaTypes = [
   popup,
   videoTestimonialSet,
   seoInsight,
+  contentSilo,
+  contentHub,
 
   // Page builder blocks — shared
   richText,

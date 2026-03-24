@@ -201,39 +201,43 @@ export interface SiloMap {
   silos: { id: string; name: string; pillarUrl: string | null }[];
 }
 
+const PUBLISHED_FILTER = '!(_id in path("drafts.**"))';
+
 const SILO_QUERY = `{
-  "countries": *[_type == "country" && (language == "en" || !defined(language))] {
+  "countries": *[_type == "country" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, name, "slug": slug.current,
     "heroTitle": heroTitle
   },
-  "camps": *[_type == "camp" && (language == "en" || !defined(language))] {
+  "camps": *[_type == "camp" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, name, "slug": slug.current, tagline, location,
     "countrySlug": country->slug.current,
     "countryName": country->name,
     introBody, body, pageBuilder
   },
-  "surfPages": *[_type == "campSurfPage" && (language == "en" || !defined(language))] {
+  "surfPages": *[_type == "campSurfPage" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, "campSlug": camp->slug.current,
     "countrySlug": camp->country->slug.current,
     heroTitle, pageBuilder, body
   },
-  "roomsPages": *[_type == "campRoomsPage" && (language == "en" || !defined(language))] {
+  "roomsPages": *[_type == "campRoomsPage" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, "campSlug": camp->slug.current,
     "countrySlug": camp->country->slug.current,
     heroTitle, pageBuilder, body
   },
-  "foodPages": *[_type == "campFoodPage" && (language == "en" || !defined(language))] {
+  "foodPages": *[_type == "campFoodPage" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, "campSlug": camp->slug.current,
     "countrySlug": camp->country->slug.current,
     heroTitle, pageBuilder, body
   },
-  "blogPosts": *[_type == "blogPost" && (language == "en" || !defined(language))] {
+  "blogPosts": *[_type == "blogPost" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, title, "slug": slug.current, excerpt,
     body, tags, publishedAt,
     "topicClusterSlug": topicCluster->slug.current,
+    "siloSlug": silo->slug.current,
+    "siloIsCountry": silo->isCountry,
     "categories": categories[]->{ name, "slug": slug.current }
   },
-  "pages": *[_type == "page" && (language == "en" || !defined(language))] {
+  "pages": *[_type == "page" && (language == "en" || !defined(language)) && ${PUBLISHED_FILTER}] {
     _id, title, "slug": slug.current, body
   }
 }`;
@@ -298,11 +302,11 @@ export async function buildSiloMap(): Promise<SiloMap> {
     }
   }
 
-  // Blog posts → supporting (assign to silo via topicCluster or content analysis)
+  // Blog posts → supporting (assign to silo via silo field, topicCluster, or content)
   for (const post of data.blogPosts || []) {
     const url = `/blog/${post.slug}`;
     const text = extractDocumentText(post);
-    let siloId = post.topicClusterSlug || "global";
+    let siloId = post.siloSlug || post.topicClusterSlug || "global";
 
     // Auto-detect silo from content if no explicit cluster
     if (siloId === "global") {
@@ -316,6 +320,14 @@ export async function buildSiloMap(): Promise<SiloMap> {
       }
     }
 
+    const contentLinks = extractInternalLinks(post);
+
+    // BlogSurfcampCTA: country-silo posts link to /surfcamp/{country}
+    if (post.siloIsCountry && post.siloSlug) {
+      const countryUrl = `/surfcamp/${post.siloSlug}`;
+      if (!contentLinks.includes(countryUrl)) contentLinks.push(countryUrl);
+    }
+
     pages.push({
       _id: post._id,
       _type: "blogPost",
@@ -323,7 +335,7 @@ export async function buildSiloMap(): Promise<SiloMap> {
       url,
       role: "supporting",
       siloId,
-      internalLinksTo: extractInternalLinks(post),
+      internalLinksTo: contentLinks,
       wordCount: wordCount(text),
     });
   }
@@ -342,6 +354,51 @@ export async function buildSiloMap(): Promise<SiloMap> {
       internalLinksTo: extractInternalLinks(p),
       wordCount: wordCount(text),
     });
+  }
+
+  // -----------------------------------------------------------------------
+  // Add structural/component-level links rendered by Astro components
+  // (CampSubnav, OtherCamps, RelatedBlogPosts, etc.)
+  // -----------------------------------------------------------------------
+  const pagesByUrl = new Map(pages.map((p) => [p.url, p]));
+
+  for (const page of pages) {
+    if (page._type === "camp") {
+      // CampSubnav: camp overview → /surf, /rooms, /food sub-pages
+      for (const suffix of ["surf", "rooms", "food"]) {
+        const subUrl = `${page.url}/${suffix}`;
+        if (pagesByUrl.has(subUrl) && !page.internalLinksTo.includes(subUrl)) {
+          page.internalLinksTo.push(subUrl);
+        }
+      }
+      // CampSubnav: camp overview → country pillar page
+      const pillarUrl = `/surfcamp/${page.siloId}`;
+      if (pagesByUrl.has(pillarUrl) && !page.internalLinksTo.includes(pillarUrl)) {
+        page.internalLinksTo.push(pillarUrl);
+      }
+      // OtherCamps: camp → sibling camps in same country
+      for (const other of pages) {
+        if (other._type === "camp" && other.siloId === page.siloId && other.url !== page.url) {
+          if (!page.internalLinksTo.includes(other.url)) {
+            page.internalLinksTo.push(other.url);
+          }
+        }
+      }
+    }
+
+    if (page._type === "campSurfPage" || page._type === "campRoomsPage" || page._type === "campFoodPage") {
+      // CampSubnav: sub-pages → camp overview + sibling sub-pages
+      const parentUrl = page.url.replace(/\/(surf|rooms|food)$/, "");
+      if (pagesByUrl.has(parentUrl) && !page.internalLinksTo.includes(parentUrl)) {
+        page.internalLinksTo.push(parentUrl);
+      }
+      for (const suffix of ["surf", "rooms", "food"]) {
+        const siblingUrl = `${parentUrl}/${suffix}`;
+        if (siblingUrl !== page.url && pagesByUrl.has(siblingUrl) && !page.internalLinksTo.includes(siblingUrl)) {
+          page.internalLinksTo.push(siblingUrl);
+        }
+      }
+    }
   }
 
   return { pages, silos };

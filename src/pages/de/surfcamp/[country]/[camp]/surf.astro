@@ -5,6 +5,7 @@ import CTASection from "@/components/sections/CTASection.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug, getCampSurfPage } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
 
 const lang = "de";
 
@@ -44,6 +45,17 @@ const blocks = surfPage?.pageBuilder;
   ) : (
     <CTASection lang="de" />
   )}
+
+  <RelatedBlogPosts
+    posts={surfPage?.relatedBlogPosts?.length ? surfPage.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    hubName="Surf Spots & Guides"
+    limit={4}
+    lang="de"
+    title={`Surf Guides für ${countryTitle}`}
+    description={`Tipps, Spots und Bedingungen zum Surfen in ${countryTitle}.`}
+    background="dark-lighter"
+  />
 
   <script is:inline>
   (function () {

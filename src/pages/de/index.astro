@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import DestinationGrid from "@/components/sections/DestinationGrid";
 import AboutSection from "@/components/sections/AboutSection.astro";
-import BlogFeed from "@/components/sections/BlogFeed";
+import BlogFeed from "@/components/sections/BlogFeed.astro";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import SocialGrid from "@/components/sections/SocialGrid.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
@@ -85,10 +85,10 @@ const stats = hp?.stats || hpEn?.stats;
   />
   {hasSanityBlocks && <BlockRenderer blocks={blocks} lang="de" />}
   <BlogFeed
-    client:visible
     heading="Neueste Beiträge"
     viewAllText="Alle anzeigen"
     blogBasePath="/de/blog"
+    lang="de"
   />
   <StatsSection stats={stats} />
   <SocialGrid

@@ -161,7 +161,7 @@ export const POST: APIRoute = async ({ request }) => {
     const siloMap = await buildSiloMap();
 
     // Fetch meta data for all pages
-    const metaQuery = `*[_type in ["camp", "country", "blogPost", "campSurfPage", "campRoomsPage", "campFoodPage", "page", "homepage"] && (language == "en" || !defined(language))] {
+    const metaQuery = `*[_type in ["camp", "country", "blogPost", "campSurfPage", "campRoomsPage", "campFoodPage", "page", "homepage"] && (language == "en" || !defined(language)) && !(_id in path("drafts.**"))] {
       _id, _type, "metaTitle": seo.metaTitle, "metaDescription": seo.metaDescription
     }`;
     const metaData = await sanityClient.fetch(metaQuery);

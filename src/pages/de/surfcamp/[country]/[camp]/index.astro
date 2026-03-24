@@ -8,6 +8,8 @@ import ImageGrid from "@/components/sections/ImageGrid.astro";
 import ElfsightReviews from "@/components/sections/ElfsightReviews.astro";
 import VideoBlock from "@/components/sections/VideoBlock.astro";
 import ImageCarousel from "@/components/sections/ImageCarousel.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
+import OtherCamps from "@/components/sections/OtherCamps.astro";
 import { bunnyEmbedUrl } from "@/lib/sanity";
 import { getDestinations, getCampBySlug } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
@@ -423,6 +425,23 @@ const hasSanityBlocks = blocks?.length > 0;
       </section>
     </>
   )}
+
+  <OtherCamps
+    countrySlug={country!}
+    countryName={countryTitle}
+    currentCampSlug={camp!}
+    lang="de"
+  />
+
+  <RelatedBlogPosts
+    posts={campData?.relatedBlogPosts?.length ? campData.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    limit={4}
+    lang="de"
+    title={`${countryTitle} Surf Blog`}
+    description={`Aktuelle Artikel über Surfen in ${countryTitle}.`}
+    background="dark"
+  />
 
   <CTASection
     heading={`${t("cta.headline", lang)}`}

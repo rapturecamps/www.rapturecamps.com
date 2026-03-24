@@ -42,3 +42,5 @@ sanity/image-size-report.csv
 sanity/migration-errors.log
 sanity/stripped-embeds.log
 sanity/unmatched-links.log
+tmp/
+docs/lighthouse/

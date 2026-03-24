@@ -2,6 +2,7 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug, getCampSurfPage } from "@/lib/sanity-data";
 
@@ -42,6 +43,17 @@ const blocks = surfPage?.pageBuilder;
   ) : (
     <CTASection />
   )}
+
+  <RelatedBlogPosts
+    posts={surfPage?.relatedBlogPosts?.length ? surfPage.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    hubName="Surf Spots & Guides"
+    limit={4}
+    lang="en"
+    title={`Surf Guides for ${countryTitle}`}
+    description={`Tips, spots, and conditions for surfing in ${countryTitle}.`}
+    background="dark-lighter"
+  />
 
   <script is:inline>
   (function () {

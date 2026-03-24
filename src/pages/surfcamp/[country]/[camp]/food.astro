@@ -2,6 +2,7 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug, getCampFoodPage } from "@/lib/sanity-data";
 
@@ -42,4 +43,14 @@ const blocks = foodPage?.pageBuilder;
   ) : (
     <CTASection />
   )}
+
+  <RelatedBlogPosts
+    posts={foodPage?.relatedBlogPosts?.length ? foodPage.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    limit={3}
+    lang="en"
+    title={`More About ${countryTitle}`}
+    description={`Explore ${countryTitle} beyond the waves.`}
+    background="dark"
+  />
 </CampLayout>

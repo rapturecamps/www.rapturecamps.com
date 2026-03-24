@@ -31,6 +31,16 @@ const { category } = Astro.params;
 const categories = await sanityClient.fetch(ALL_BLOG_CATEGORIES);
 
 const title = categoryName || category!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+
+const COUNTRY_BANNER_MAP: Record<string, { slug: string; name: string }> = {
+  bali: { slug: "bali", name: "Bali" },
+  portugal: { slug: "portugal", name: "Portugal" },
+  "costa-rica": { slug: "costa-rica", name: "Costa Rica" },
+  nicaragua: { slug: "nicaragua", name: "Nicaragua" },
+  morocco: { slug: "morocco", name: "Marokko" },
+};
+const countryBanner = COUNTRY_BANNER_MAP[category!.toLowerCase()];
+
 const currentPage = page.currentPage;
 const baseUrl = `/de/blog/category/${category}`;
 
@@ -60,6 +70,25 @@ const nextUrl = currentPage < page.lastPage ? `${baseUrl}/${currentPage + 1}` : 
       { label: title },
     ]} />
   </Hero>
+
+  {countryBanner && (
+    <section class="bg-dark pt-10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <a
+          href={`/de/surfcamp/${countryBanner.slug}`}
+          class="flex items-center justify-between rounded-xl border border-ocean/20 bg-ocean/5 p-5 sm:p-6 hover:border-ocean/40 hover:bg-ocean/10 transition-colors group"
+        >
+          <div>
+            <p class="text-sm font-semibold text-white">Entdecke unsere Surfcamps in {countryBanner.name}</p>
+            <p class="text-xs text-white/40 mt-0.5">Finde das perfekte Surfcamp und plane deinen Trip.</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-ocean-light shrink-0 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+          </svg>
+        </a>
+      </div>
+    </section>
+  )}
 
   <section class="pt-16 sm:pt-20 pb-0 bg-dark">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

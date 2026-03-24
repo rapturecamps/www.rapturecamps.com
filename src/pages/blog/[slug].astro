@@ -2,6 +2,8 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import BlogSurfcampCTA from "@/components/sections/BlogSurfcampCTA.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
 import { sanityClient } from "@/lib/sanity";
 import { ALL_BLOG_POSTS, BLOG_POST_BY_SLUG } from "@/lib/queries";
 import { PortableText } from "astro-portabletext";
@@ -174,6 +176,8 @@ const faqPairs = extractFaqPairs(post.faqBlocks);
         )}
       </div>
 
+      <BlogSurfcampCTA silo={post.silo} siloIsCountry={post.siloIsCountry} lang="en" />
+
       {post.tags?.length > 0 && (
         <div class="mt-16 pt-8 border-t border-white/10">
           <div class="flex flex-wrap gap-2">
@@ -187,6 +191,17 @@ const faqPairs = extractFaqPairs(post.faqBlocks);
       )}
     </div>
   </article>
+
+  <RelatedBlogPosts
+    hubName={post.hub}
+    siloName={post.silo}
+    excludeId={post._id}
+    limit={4}
+    lang="en"
+    title="You Might Also Like"
+    description="More articles on this topic."
+    background="dark-lighter"
+  />
 
   <CTASection />
 </BaseLayout>

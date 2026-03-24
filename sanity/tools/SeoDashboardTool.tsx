@@ -267,6 +267,7 @@ export function SeoDashboardTool() {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<string>("all");
+  const [severityFilter, setSeverityFilter] = useState<string>("all");
   const [tab, setTab] = useState<"issues" | "silos" | "images">("issues");
 
   const handleRun = useCallback(async (save = false) => {
@@ -293,9 +294,11 @@ export function SeoDashboardTool() {
     }
   }, []);
 
-  const filteredIssues = result?.issues?.filter((i: any) =>
-    filter === "all" ? true : i.category === filter
-  ) || [];
+  const filteredIssues = result?.issues?.filter((i: any) => {
+    const matchCategory = filter === "all" || i.category === filter;
+    const matchSeverity = severityFilter === "all" || i.severity === severityFilter;
+    return matchCategory && matchSeverity;
+  }) || [];
 
   const categories = [...new Set((result?.issues || []).map((i: any) => i.category))];
 
@@ -392,13 +395,19 @@ export function SeoDashboardTool() {
                   <div style={{ fontSize: "2em", fontWeight: 700, color: "#fff" }}>{result.totalPages}</div>
                   <div style={{ color: "#666", fontSize: "0.75em", textTransform: "uppercase" }}>Pages Analyzed</div>
                 </div>
-                <div style={{ ...s.card, textAlign: "center" }}>
+                <div
+                  onClick={() => { setTab("issues"); setSeverityFilter("critical"); }}
+                  style={{ ...s.card, textAlign: "center", cursor: "pointer", outline: severityFilter === "critical" ? "2px solid #ef4444" : "none" }}
+                >
                   <div style={{ fontSize: "2em", fontWeight: 700, color: "#ef4444" }}>
                     {result.issues.filter((i: any) => i.severity === "critical").length}
                   </div>
                   <div style={{ color: "#666", fontSize: "0.75em", textTransform: "uppercase" }}>Critical Issues</div>
                 </div>
-                <div style={{ ...s.card, textAlign: "center" }}>
+                <div
+                  onClick={() => { setTab("issues"); setSeverityFilter("warning"); }}
+                  style={{ ...s.card, textAlign: "center", cursor: "pointer", outline: severityFilter === "warning" ? "2px solid #f59e0b" : "none" }}
+                >
                   <div style={{ fontSize: "2em", fontWeight: 700, color: "#f59e0b" }}>
                     {result.issues.filter((i: any) => i.severity === "warning").length}
                   </div>
@@ -408,8 +417,30 @@ export function SeoDashboardTool() {
 
               {tab === "issues" && (
                 <>
-                  {/* Category filter */}
-                  <div style={{ display: "flex", gap: "0.35rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                  {/* Severity + Category filters */}
+                  <div style={{ display: "flex", gap: "0.35rem", marginBottom: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
+                    <span style={{ color: "#666", fontSize: "0.75em", textTransform: "uppercase", marginRight: "0.25rem" }}>Severity</span>
+                    {(["all", "critical", "warning", "info"] as const).map((sev) => {
+                      const count = sev === "all"
+                        ? result.issues.length
+                        : result.issues.filter((i: any) => i.severity === sev).length;
+                      if (sev !== "all" && count === 0) return null;
+                      const bg = severityFilter === sev
+                        ? (sev === "critical" ? "#ef4444" : sev === "warning" ? "#f59e0b" : sev === "info" ? "#3b82f6" : "#2563eb")
+                        : "#374151";
+                      return (
+                        <button
+                          key={sev}
+                          onClick={() => setSeverityFilter(sev)}
+                          style={{ ...s.badge(bg), cursor: "pointer", border: "none", padding: "0.25rem 0.75rem" }}
+                        >
+                          {sev === "all" ? "All" : sev.charAt(0).toUpperCase() + sev.slice(1)} ({count})
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div style={{ display: "flex", gap: "0.35rem", marginBottom: "1rem", flexWrap: "wrap", alignItems: "center" }}>
+                    <span style={{ color: "#666", fontSize: "0.75em", textTransform: "uppercase", marginRight: "0.25rem" }}>Category</span>
                     <button
                       onClick={() => setFilter("all")}
                       style={{ ...s.badge(filter === "all" ? "#2563eb" : "#374151"), cursor: "pointer", border: "none", padding: "0.25rem 0.75rem" }}

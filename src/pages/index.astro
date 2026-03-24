@@ -3,7 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import DestinationGrid from "@/components/sections/DestinationGrid";
 import AboutSection from "@/components/sections/AboutSection.astro";
-import BlogFeed from "@/components/sections/BlogFeed";
+import BlogFeed from "@/components/sections/BlogFeed.astro";
 import StatsSection from "@/components/sections/StatsSection.astro";
 import SocialGrid from "@/components/sections/SocialGrid.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
@@ -70,7 +70,7 @@ const seoH1 = hp?.seoH1;
   />
   <AboutSection heading={hp?.aboutHeading} subtext={hp?.aboutSubtext} linkText={hp?.aboutLinkText} />
   {hasSanityBlocks && <BlockRenderer blocks={blocks} />}
-  <BlogFeed client:visible />
+  <BlogFeed />
   <StatsSection stats={hp?.stats} />
   <SocialGrid />
 </BaseLayout>

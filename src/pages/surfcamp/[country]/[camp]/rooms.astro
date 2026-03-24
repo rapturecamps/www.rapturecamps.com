@@ -2,6 +2,7 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import RelatedBlogPosts from "@/components/sections/RelatedBlogPosts.astro";
 import PaymentMethods from "@/components/sections/PaymentMethods.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug, getCampRoomsPage } from "@/lib/sanity-data";
@@ -45,6 +46,16 @@ const ctaBlock = allBlocks.find((b: any) => b._type === "ctaSection");
   )}
 
   <PaymentMethods />
+
+  <RelatedBlogPosts
+    posts={roomsPage?.relatedBlogPosts?.length ? roomsPage.relatedBlogPosts : undefined}
+    siloName={countryTitle}
+    limit={3}
+    lang="en"
+    title={`More About ${countryTitle}`}
+    description={`Discover what ${countryTitle} has to offer beyond the surf.`}
+    background="dark"
+  />
 
   {ctaBlock ? (
     <CTASection
