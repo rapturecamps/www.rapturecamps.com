@@ -28,6 +28,8 @@ interface Props {
   translations?: { slug: string; language: string }[];
   /** Base path for building translated URLs (e.g. "/blog") */
   translationBasePath?: string;
+  /** Hide language switcher when no alternate-language version exists */
+  hideLanguageSwitcher?: boolean;
 }
 
 const {
@@ -42,6 +44,7 @@ const {
   nextPage,
   translations = [],
   translationBasePath,
+  hideLanguageSwitcher = false,
 } = Astro.props;
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || "https://www.rapturecamps.com";
@@ -63,13 +66,15 @@ function getTranslatedPath(lang: string): string | null {
   return lang === "en" ? pathWithoutLang : `/de${pathWithoutLang === "/" ? "/" : pathWithoutLang}`;
 }
 
-const enPath = getTranslatedPath("en");
-const dePath = getTranslatedPath("de");
+const enPath = hideLanguageSwitcher ? null : getTranslatedPath("en");
+const dePath = hideLanguageSwitcher ? null : getTranslatedPath("de");
 const enUrl = enPath ? new URL(enPath, siteUrl) : null;
 const deUrl = dePath ? new URL(dePath, siteUrl) : null;
-const alternatePathForHeader = isDE
-  ? (enPath || pathWithoutLang)
-  : (dePath || `/de${pathWithoutLang === "/" ? "/" : pathWithoutLang}`);
+const alternatePathForHeader = hideLanguageSwitcher
+  ? null
+  : isDE
+    ? (enPath || pathWithoutLang)
+    : (dePath ?? null);
 const defaultOgImage = `${siteUrl}/images/og-default.jpg`;
 const resolvedOgImage = ogImage || defaultOgImage;
 
@@ -117,7 +122,6 @@ const popupConfig = activePopup ? JSON.stringify({
     <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
     <link rel="preconnect" href="https://vz-79cee76e-e6d.b-cdn.net" crossorigin />
-    <link rel="dns-prefetch" href="https://images.unsplash.com" />
     {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
     <slot name="head" />
   </head>

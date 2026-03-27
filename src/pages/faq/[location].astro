@@ -19,7 +19,7 @@ const campList = camps?.length ? camps : destinations;
 const campData = campList.find((d: any) => d.slug.split("/").pop() === location);
 const campName = campData?.name || location!.split("-").map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 const countryName = campData?.country || "";
-const campImage = campData?.image || "https://images.unsplash.com/photo-1530053969600-caed2596d242?w=1920&h=600&fit=crop";
+const campImage = campData?.image || "/images/placeholder.png";
 const campSlug = campData?.slug || `/surfcamp`;
 
 const sanityFaqs = await getFaqsByCamp(location!);

@@ -53,7 +53,6 @@ export default defineConfig({
   },
   image: {
     domains: [
-      "images.unsplash.com",
       "www.rapturecamps.com",
       "cdn.sanity.io",
     ],

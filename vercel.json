@@ -31,6 +31,16 @@
   ],
   "redirects": [
     {
+      "source": "/surfcamp/:country/:camp/food/:recipe",
+      "destination": "/surfcamp/:country/:camp/food",
+      "statusCode": 301
+    },
+    {
+      "source": "/de/surfcamp/:country/:camp/food/:recipe",
+      "destination": "/de/surfcamp/:country/:camp/food",
+      "statusCode": 301
+    },
+    {
       "source": "/blog/category/inspiration/:path*",
       "destination": "/blog",
       "statusCode": 301
@@ -341,11 +351,6 @@
       "statusCode": 301
     },
     {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/margo-oberg-dorm",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
       "source": "/surfcamp/costa-rica/avellanas/rooms/private-avellanas-double",
       "destination": "/surfcamp/costa-rica/avellanas/rooms",
       "statusCode": 301
@@ -613,11 +618,6 @@
     {
       "source": "/surfcamp/costa-rica/avellanas/the-surf",
       "destination": "/surfcamp/costa-rica/avellanas/surf",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/the-surf",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -3091,71 +3091,6 @@
       "statusCode": 301
     },
     {
-      "source": "/surfcamp/nicaragua/maderas/food",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/surf",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/surf",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/food",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/rooms",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/surf",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/surfen",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
       "source": "/surfcamp/portugal/ericeira-sao-lourenco-villa",
       "destination": "/surfcamp/portugal/ericeira-coxos-surf-villa",
       "statusCode": 301
@@ -3388,161 +3323,6 @@
     {
       "source": "/de/surfcamp/portugal/ericeira-lizandro/essen/minchi-mit-kokosreis",
       "destination": "/de/surfcamp/portugal/ericeira-lizandro/food",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/food/chargrilled-chicken-kebabs",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/food/chicken-burger-with-potato-wedges",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/food/churrasco-with-chimichurri",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/food/gallo-pinto",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/food/vegan-tacos",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods/churrasco-with-chimichurri",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/foods/vegan-tacos",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen/fleisch-mit-chimichurri",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen/gallo-pinto",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen/huehnerburger-mit-kartoffel-wedges",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen/huehnerspiess-kebab",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/essen/vegane-tacos",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/andy-irons-dorm-4-bed",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/margo-oberg-dorm-4-bed",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/mark-farrelly-dorm-4-bed",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/miki-dora-dorm-8-bed",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/private-ac-suites-king",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/private-ac-suites-queen",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas/rooms/private-glamping-tents",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/andy-irons-dorm-4-bett",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/margo-oberg-dorm-4-bett",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/mark-farrelly-dorm-4-bett",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/miki-dora-dorm-8-bett",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-ac-suiten-king",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-ac-suiten-queen",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/de/surfcamp/nicaragua/maderas/zimmer/private-glamping-zelte",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/el-cabana",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/jungle-apartment",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/jungle-view-twin",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/large-cabana",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort/rooms/sea-view-twin",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -4661,28 +4441,8 @@
       "statusCode": 301
     },
     {
-      "source": "/de/surfcamp/nicaragua/maderas",
-      "destination": "/de",
-      "statusCode": 301
-    },
-    {
       "source": "/de/surfcamp/surfcamp",
       "destination": "/de/surfcamp",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas",
-      "destination": "/",
-      "statusCode": 301
-    },
-    {
-      "source": "/surfcamp/nicaragua/maderas-surf-resort",
-      "destination": "/",
       "statusCode": 301
     },
     {
@@ -4814,6 +4574,24 @@
       "source": "/de/blog/category/surf-travel/15",
       "destination": "/de/blog/category/surf-travel",
       "statusCode": 301
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/surfcamp/nicaragua/:path*",
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/surfcamp/nicaragua",
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/de/surfcamp/nicaragua/:path*",
+      "destination": "/api/gone"
+    },
+    {
+      "source": "/de/surfcamp/nicaragua",
+      "destination": "/api/gone"
     }
   ]
 }

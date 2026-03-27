@@ -7,6 +7,372 @@ const SEVERITY_COLORS: Record<string, string> = {
   info: "#3b82f6",
 };
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+function DeltaBadge({ value, invert, suffix = "" }: { value: number; invert?: boolean; suffix?: string }) {
+  if (value === 0) return <span style={{ color: "#666", fontSize: "0.75em" }}>—</span>;
+  const positive = invert ? value < 0 : value > 0;
+  const color = positive ? "#22c55e" : "#ef4444";
+  const arrow = value > 0 ? "▲" : "▼";
+  const display = typeof value === "number" && !Number.isInteger(value) ? Math.abs(value).toFixed(1) : Math.abs(value);
+  return (
+    <span style={{ color, fontSize: "0.75em", fontWeight: 600 }}>
+      {arrow} {display}{suffix}
+    </span>
+  );
+}
+
+function TableHeader({ columns }: { columns: { label: string; align?: string; width?: string }[] }) {
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: columns.map((c) => c.width || "1fr").join(" "),
+        padding: "0.5rem 0.75rem",
+        borderBottom: "1px solid #333",
+        position: "sticky",
+        top: 0,
+        background: "#101020",
+        zIndex: 1,
+      }}
+    >
+      {columns.map((col) => (
+        <span
+          key={col.label}
+          style={{
+            color: "#666",
+            fontSize: "0.7em",
+            textTransform: "uppercase",
+            fontWeight: 600,
+            letterSpacing: "0.05em",
+            textAlign: (col.align as any) || "left",
+          }}
+        >
+          {col.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// GSC Performance Tab
+// ---------------------------------------------------------------------------
+type GscView = "pages" | "queries" | "quickWins" | "declining";
+
+function GscTab() {
+  const [gscStatus, setGscStatus] = useState<"idle" | "loading" | "loaded" | "error">("idle");
+  const [gscData, setGscData] = useState<any>(null);
+  const [gscError, setGscError] = useState("");
+  const [gscView, setGscView] = useState<GscView>("pages");
+  const [period, setPeriod] = useState(28);
+
+  const loadGsc = useCallback(async (days = 28) => {
+    setGscStatus("loading");
+    setGscError("");
+    try {
+      const baseUrl = window.location.origin;
+      const res = await fetch(`${baseUrl}/api/seo-gsc`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ period: days }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setGscData(data);
+        setGscStatus("loaded");
+      } else {
+        setGscError(data.error || "Failed to fetch GSC data");
+        setGscStatus("error");
+      }
+    } catch (err: any) {
+      setGscError(err.message);
+      setGscStatus("error");
+    }
+  }, []);
+
+  const formatCtr = (v: number) => `${(v * 100).toFixed(1)}%`;
+  const formatNum = (v: number) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(v);
+
+  if (gscStatus === "idle") {
+    return (
+      <div style={{ ...s.card, textAlign: "center", padding: "2rem" }}>
+        <p style={{ color: "#666", marginBottom: "1rem" }}>
+          Fetch live performance data from Google Search Console.
+        </p>
+        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center", marginBottom: "1rem" }}>
+          {[7, 28, 90].map((d) => (
+            <button
+              key={d}
+              onClick={() => setPeriod(d)}
+              style={{
+                ...s.button,
+                background: period === d ? "#2563eb" : "transparent",
+                borderColor: period === d ? "#2563eb" : "#444",
+                padding: "0.35rem 0.75rem",
+                fontSize: "0.8em",
+              }}
+            >
+              {d}d
+            </button>
+          ))}
+        </div>
+        <button onClick={() => loadGsc(period)} style={s.buttonPrimary}>
+          Fetch GSC Data
+        </button>
+      </div>
+    );
+  }
+
+  if (gscStatus === "loading") return <Spinner message="Fetching data from Google Search Console..." />;
+
+  if (gscStatus === "error") {
+    return (
+      <div style={{ ...s.card, borderColor: "#ef4444" }}>
+        <p style={{ color: "#ef4444", marginBottom: "0.5rem" }}>{gscError}</p>
+        <p style={{ color: "#666", fontSize: "0.8em" }}>
+          Ensure .gsc-credentials.json is in the project root and the service account has access to Search Console.
+        </p>
+      </div>
+    );
+  }
+
+  const ov = gscData?.overview;
+
+  return (
+    <>
+      {/* Overview cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1rem", marginBottom: "1rem" }}>
+        <div style={{ ...s.card, textAlign: "center" }}>
+          <div style={{ fontSize: "2em", fontWeight: 700, color: "#3b82f6" }}>{formatNum(ov.clicks)}</div>
+          <div style={{ color: "#666", fontSize: "0.7em", textTransform: "uppercase", marginBottom: "0.15rem" }}>Clicks</div>
+          <DeltaBadge value={ov.clicksDelta} />
+        </div>
+        <div style={{ ...s.card, textAlign: "center" }}>
+          <div style={{ fontSize: "2em", fontWeight: 700, color: "#8b5cf6" }}>{formatNum(ov.impressions)}</div>
+          <div style={{ color: "#666", fontSize: "0.7em", textTransform: "uppercase", marginBottom: "0.15rem" }}>Impressions</div>
+          <DeltaBadge value={ov.impressionsDelta} />
+        </div>
+        <div style={{ ...s.card, textAlign: "center" }}>
+          <div style={{ fontSize: "2em", fontWeight: 700, color: "#22c55e" }}>{formatCtr(ov.ctr)}</div>
+          <div style={{ color: "#666", fontSize: "0.7em", textTransform: "uppercase", marginBottom: "0.15rem" }}>CTR</div>
+          <DeltaBadge value={ov.ctrDelta * 100} suffix="pp" />
+        </div>
+        <div style={{ ...s.card, textAlign: "center" }}>
+          <div style={{ fontSize: "2em", fontWeight: 700, color: "#f59e0b" }}>{ov.position.toFixed(1)}</div>
+          <div style={{ color: "#666", fontSize: "0.7em", textTransform: "uppercase", marginBottom: "0.15rem" }}>Avg Position</div>
+          <DeltaBadge value={ov.positionDelta} invert />
+        </div>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.75rem" }}>
+        <span style={{ color: "#666", fontSize: "0.75em" }}>{ov.dateRange}</span>
+        <span style={{ color: "#444", fontSize: "0.75em" }}>vs previous {ov.period} days</span>
+        <div style={{ marginLeft: "auto", display: "flex", gap: "0.35rem" }}>
+          {[7, 28, 90].map((d) => (
+            <button
+              key={d}
+              onClick={() => { setPeriod(d); loadGsc(d); }}
+              style={{
+                ...s.button,
+                background: period === d ? "#2563eb" : "transparent",
+                borderColor: period === d ? "#2563eb" : "#444",
+                padding: "0.2rem 0.6rem",
+                fontSize: "0.75em",
+              }}
+            >
+              {d}d
+            </button>
+          ))}
+          <button onClick={() => loadGsc(period)} style={{ ...s.button, padding: "0.2rem 0.6rem", fontSize: "0.75em" }}>
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      {/* Sub-tabs */}
+      <div style={{ display: "flex", gap: "0.35rem", marginBottom: "1rem" }}>
+        {([
+          ["pages", `Top Pages (${gscData.topPages?.length || 0})`],
+          ["queries", `Top Queries (${gscData.topQueries?.length || 0})`],
+          ["quickWins", `Quick Wins (${gscData.quickWins?.length || 0})`],
+          ["declining", `Declining (${gscData.declining?.length || 0})`],
+        ] as const).map(([key, label]) => (
+          <button
+            key={key}
+            onClick={() => setGscView(key as GscView)}
+            style={{
+              ...s.button,
+              background: gscView === key ? "#2563eb" : "transparent",
+              borderColor: gscView === key ? "#2563eb" : "#444",
+              padding: "0.3rem 0.75rem",
+              fontSize: "0.8em",
+            }}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Top Pages */}
+      {gscView === "pages" && (
+        <div style={{ ...s.card, padding: 0, overflow: "hidden" }}>
+          <TableHeader
+            columns={[
+              { label: "Page", width: "2.5fr" },
+              { label: "Clicks", width: "0.7fr", align: "right" },
+              { label: "Δ", width: "0.6fr", align: "right" },
+              { label: "Impressions", width: "0.9fr", align: "right" },
+              { label: "CTR", width: "0.6fr", align: "right" },
+              { label: "Position", width: "0.7fr", align: "right" },
+            ]}
+          />
+          <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+            {(gscData.topPages || []).map((row: any, i: number) => (
+              <div
+                key={i}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2.5fr 0.7fr 0.6fr 0.9fr 0.6fr 0.7fr",
+                  padding: "0.5rem 0.75rem",
+                  borderBottom: "1px solid #222",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ color: "#0ea5e9", fontSize: "0.85em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} title={row.page}>
+                  {row.page}
+                </span>
+                <span style={{ color: "#fff", fontSize: "0.85em", textAlign: "right", fontWeight: 600 }}>{row.clicks}</span>
+                <span style={{ textAlign: "right" }}><DeltaBadge value={row.clicksDelta} /></span>
+                <span style={{ color: "#ccc", fontSize: "0.85em", textAlign: "right" }}>{formatNum(row.impressions)}</span>
+                <span style={{ color: "#ccc", fontSize: "0.85em", textAlign: "right" }}>{formatCtr(row.ctr)}</span>
+                <span style={{ color: row.position <= 10 ? "#22c55e" : row.position <= 20 ? "#f59e0b" : "#ef4444", fontSize: "0.85em", textAlign: "right", fontWeight: 600 }}>
+                  {row.position}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Top Queries */}
+      {gscView === "queries" && (
+        <div style={{ ...s.card, padding: 0, overflow: "hidden" }}>
+          <TableHeader
+            columns={[
+              { label: "Query", width: "2.5fr" },
+              { label: "Clicks", width: "0.7fr", align: "right" },
+              { label: "Δ", width: "0.6fr", align: "right" },
+              { label: "Impressions", width: "0.9fr", align: "right" },
+              { label: "CTR", width: "0.6fr", align: "right" },
+              { label: "Position", width: "0.7fr", align: "right" },
+            ]}
+          />
+          <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+            {(gscData.topQueries || []).map((row: any, i: number) => (
+              <div
+                key={i}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "2.5fr 0.7fr 0.6fr 0.9fr 0.6fr 0.7fr",
+                  padding: "0.5rem 0.75rem",
+                  borderBottom: "1px solid #222",
+                  alignItems: "center",
+                }}
+              >
+                <span style={{ color: "#fff", fontSize: "0.85em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {row.query}
+                </span>
+                <span style={{ color: "#fff", fontSize: "0.85em", textAlign: "right", fontWeight: 600 }}>{row.clicks}</span>
+                <span style={{ textAlign: "right" }}><DeltaBadge value={row.clicksDelta} /></span>
+                <span style={{ color: "#ccc", fontSize: "0.85em", textAlign: "right" }}>{formatNum(row.impressions)}</span>
+                <span style={{ color: "#ccc", fontSize: "0.85em", textAlign: "right" }}>{formatCtr(row.ctr)}</span>
+                <span style={{ color: row.position <= 10 ? "#22c55e" : row.position <= 20 ? "#f59e0b" : "#ef4444", fontSize: "0.85em", textAlign: "right", fontWeight: 600 }}>
+                  {row.position}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Quick Wins */}
+      {gscView === "quickWins" && (
+        <div>
+          {(gscData.quickWins || []).length === 0 ? (
+            <div style={{ ...s.card, textAlign: "center", padding: "2rem" }}>
+              <p style={{ color: "#666" }}>No quick win opportunities found for this period.</p>
+            </div>
+          ) : (
+            (gscData.quickWins || []).map((row: any, i: number) => (
+              <div key={i} style={{ ...s.card, borderLeft: `3px solid ${row.position <= 10 ? "#22c55e" : "#f59e0b"}` }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.25rem" }}>
+                  <span style={{ color: "#0ea5e9", fontSize: "0.85em" }}>{row.page}</span>
+                  <span style={s.badge(row.position <= 10 ? "#22c55e" : "#f59e0b")}>
+                    #{row.position}
+                  </span>
+                </div>
+                <div style={{ display: "flex", gap: "1.5rem", marginBottom: "0.25rem" }}>
+                  <span style={{ color: "#ccc", fontSize: "0.8em" }}>{formatNum(row.impressions)} impressions</span>
+                  <span style={{ color: "#ccc", fontSize: "0.8em" }}>{row.clicks} clicks</span>
+                  <span style={{ color: "#ccc", fontSize: "0.8em" }}>CTR {formatCtr(row.ctr)}</span>
+                </div>
+                <p style={{ color: "#999", fontSize: "0.8em" }}>{row.opportunity}</p>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Declining */}
+      {gscView === "declining" && (
+        <div>
+          {(gscData.declining || []).length === 0 ? (
+            <div style={{ ...s.card, textAlign: "center", padding: "2rem" }}>
+              <p style={{ color: "#22c55e" }}>No pages with significant traffic loss. Looking good!</p>
+            </div>
+          ) : (
+            <div style={{ ...s.card, padding: 0, overflow: "hidden" }}>
+              <TableHeader
+                columns={[
+                  { label: "Page", width: "2.5fr" },
+                  { label: "Clicks", width: "0.7fr", align: "right" },
+                  { label: "Prev", width: "0.7fr", align: "right" },
+                  { label: "Change", width: "0.7fr", align: "right" },
+                  { label: "Position", width: "0.7fr", align: "right" },
+                ]}
+              />
+              <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+                {(gscData.declining || []).map((row: any, i: number) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "2.5fr 0.7fr 0.7fr 0.7fr 0.7fr",
+                      padding: "0.5rem 0.75rem",
+                      borderBottom: "1px solid #222",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span style={{ color: "#0ea5e9", fontSize: "0.85em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }} title={row.page}>
+                      {row.page}
+                    </span>
+                    <span style={{ color: "#fff", fontSize: "0.85em", textAlign: "right" }}>{row.clicks}</span>
+                    <span style={{ color: "#666", fontSize: "0.85em", textAlign: "right" }}>{row.prevClicks}</span>
+                    <span style={{ color: "#ef4444", fontSize: "0.85em", textAlign: "right", fontWeight: 600 }}>{row.delta}</span>
+                    <span style={{ color: "#ccc", fontSize: "0.85em", textAlign: "right" }}>{row.position}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
+}
+
 interface AssetItem {
   _id: string;
   url: string;
@@ -268,7 +634,7 @@ export function SeoDashboardTool() {
   const [error, setError] = useState("");
   const [filter, setFilter] = useState<string>("all");
   const [severityFilter, setSeverityFilter] = useState<string>("all");
-  const [tab, setTab] = useState<"issues" | "silos" | "images">("issues");
+  const [tab, setTab] = useState<"issues" | "silos" | "images" | "gsc">("issues");
 
   const handleRun = useCallback(async (save = false) => {
     setStatus("loading");
@@ -312,7 +678,7 @@ export function SeoDashboardTool() {
           </p>
         </div>
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          {tab !== "images" && (
+          {(tab === "issues" || tab === "silos") && (
             <>
               <button onClick={() => handleRun(false)} disabled={status === "loading"} style={s.buttonPrimary}>
                 {status === "loading" ? "Running..." : "Run Audit"}
@@ -359,13 +725,24 @@ export function SeoDashboardTool() {
         >
           Image Alt Text
         </button>
+        <button
+          onClick={() => setTab("gsc")}
+          style={{
+            ...s.button,
+            background: tab === "gsc" ? "#2563eb" : "transparent",
+            borderColor: tab === "gsc" ? "#2563eb" : "#444",
+          }}
+        >
+          GSC Performance
+        </button>
       </div>
 
-      {/* Images tab — standalone, doesn't need the audit */}
+      {/* Standalone tabs */}
       {tab === "images" && <ImagesTab />}
+      {tab === "gsc" && <GscTab />}
 
       {/* Audit-dependent tabs */}
-      {tab !== "images" && (
+      {(tab === "issues" || tab === "silos") && (
         <>
           {status === "idle" && (
             <div style={{ ...s.card, textAlign: "center", padding: "3rem" }}>

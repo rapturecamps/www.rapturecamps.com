@@ -23,6 +23,7 @@
     "astro": "^5.17.2",
     "astro-portabletext": "^0.13.0",
     "clsx": "^2.1.1",
+    "googleapis": "^171.4.0",
     "lucide-react": "^0.574.0",
     "node-html-parser": "^7.0.2",
     "openai": "^6.25.0",
@@ -37,7 +38,6 @@
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "lighthouse": "^12.8.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
