@@ -8,19 +8,23 @@ import { PortableText } from "astro-portabletext";
 import { getPageBySlug } from "@/lib/sanity-data";
 
 const page = await getPageBySlug("about");
-const title = page?.title || "Our Story";
+const title = page?.heroTitle || page?.title || "Our Story";
 const seoTitle = page?.seo?.title || "About Us · Rapture";
 const seoDesc = page?.seo?.description || "Founded in 2003, Rapture Surfcamps has grown into a global network of 8 surf camps across 5 countries.";
+const heroImages: string[] = page?.heroImages?.filter(Boolean) || [];
+const heroImage = heroImages[0] ? `${heroImages[0]}?w=1920&h=1080&fit=crop&auto=format` : "/images/placeholder.png";
+const ogImage = heroImages[0] ? `${heroImages[0]}?w=1200&h=630&fit=crop&auto=format` : undefined;
 ---
 
 <BaseLayout
   title={seoTitle}
   description={seoDesc}
-  ogImage="https://cdn.sanity.io/images/ypmt1bmc/production/645fece67ca00725dc995d9e5bda9fe416b19961-1920x1276.jpg?w=1200&h=630&fit=crop&auto=format"
+  ogImage={ogImage}
 >
   <Hero
     title={title}
-    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/645fece67ca00725dc995d9e5bda9fe416b19961-1920x1276.jpg?w=1920&h=1080&fit=crop&auto=format"
+    backgroundImage={heroImage}
+    backgroundImages={heroImages.length > 1 ? heroImages.map((img: string) => `${img}?w=1920&h=1080&fit=crop&auto=format`) : undefined}
   >
     <Breadcrumbs inline crumbs={[{ label: title }]} />
   </Hero>

@@ -1,0 +1,356 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { PortableText } from "astro-portabletext";
+import { getPageBySlug } from "@/lib/sanity-data";
+
+const page = await getPageBySlug("media-kit");
+
+const heroTitle = page?.heroTitle || page?.title || "Partnership\nMedia Kit";
+const heroSubtitle = page?.heroSubtitle || "Authentic surf content. High-performing reach. A community that converts.";
+const heroTagline = page?.heroTagline || "By Invitation Only";
+const heroImages: string[] = page?.heroImages?.filter(Boolean) || [];
+const heroImage = heroImages[0]
+  ? `${heroImages[0]}?w=1920&h=1080&fit=crop&auto=format`
+  : "/images/placeholder.png";
+
+const seoTitle = page?.seo?.metaTitle || "Brand Partnerships & Media Kit · Rapture Surfcamps";
+const seoDesc = page?.seo?.metaDescription || "Partner with Rapture Surfcamps to reach 1.8M+ monthly surf & travel enthusiasts. Authentic content, exclusive collaborations, one brand per month.";
+const ogImage = page?.seoOgImageUrl
+  ? `${page.seoOgImageUrl}?w=1200&h=630&fit=crop&auto=format`
+  : heroImages[0]
+    ? `${heroImages[0]}?w=1200&h=630&fit=crop&auto=format`
+    : undefined;
+
+const blocks = page?.pageBuilder || [];
+
+const whoWeAre = blocks.find((b: any) => b._type === "richText" && b.heading?.includes("Who"));
+const exclusivity = blocks.find((b: any) => b._type === "contentBlock");
+const statsBlock = blocks.find((b: any) => b._type === "retreatStatsBar");
+const geoBlock = blocks.find((b: any) => b._type === "highlightsGrid" && b.heading?.includes("Audience Lives"));
+const demoBlock = blocks.find((b: any) => b._type === "highlightsGrid" && b.heading?.includes("Follows"));
+const whyBlock = blocks.find((b: any) => b._type === "highlightsGrid" && b.heading?.includes("Brands Choose"));
+const showcaseBlock = blocks.find((b: any) => b._type === "cardGrid" && b.heading?.includes("Performs"));
+const deliverablesBlock = blocks.find((b: any) => b._type === "cardGrid" && b.heading?.includes("What You"));
+const authenticBlock = blocks.find((b: any) => b._type === "richText" && b.heading?.includes("Authentic"));
+const howBlock = blocks.find((b: any) => b._type === "cardGrid" && b.heading?.includes("How It"));
+const ctaBlock = blocks.find((b: any) => b._type === "ctaSection");
+
+const stats = statsBlock?.stats || [];
+const geoItems = geoBlock?.items || [];
+const demoItems = demoBlock?.items || [];
+const whyItems = whyBlock?.items || [];
+const showcaseCards = showcaseBlock?.cards || [];
+const deliverableCards = deliverablesBlock?.cards || [];
+const howCards = howBlock?.cards || [];
+
+const exclusivityImage = exclusivity?.resolvedImageUrl
+  ? `${exclusivity.resolvedImageUrl}?w=800&h=1000&fit=crop&auto=format`
+  : "/images/placeholder.png";
+---
+
+<BaseLayout title={seoTitle} description={seoDesc} ogImage={ogImage}>
+  <Hero
+    title={heroTitle}
+    subtitle={heroSubtitle}
+    tagline={heroTagline}
+    backgroundImage={heroImage}
+    backgroundImages={heroImages.length > 1 ? heroImages.map((img: string) => `${img}?w=1920&h=1080&fit=crop&auto=format`) : undefined}
+    headingTag="h1"
+    centered
+  >
+    <Breadcrumbs inline crumbs={[{ label: "Media Kit" }]} />
+  </Hero>
+
+  <!-- Who We Are -->
+  {whoWeAre && (
+    <section class="py-20 sm:py-28 bg-dark">
+      <div class="max-w-4xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Since 2003</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-8">{whoWeAre.heading}</h2>
+        <div class="space-y-4 text-base sm:text-lg text-white/50 leading-relaxed mk-prose">
+          <PortableText value={whoWeAre.body} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Exclusivity -->
+  {exclusivity && (
+    <section class="py-20 sm:py-28 bg-dark-lighter">
+      <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
+          <div>
+            <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Exclusive Collaborations</p>
+            <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-6 leading-tight">{exclusivity.heading}</h2>
+            <div class="space-y-4 text-base text-white/50 leading-relaxed mk-prose">
+              <PortableText value={exclusivity.body} />
+            </div>
+          </div>
+          <div class="relative aspect-[4/5] rounded-xl overflow-hidden bg-dark">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark-lighter/80 to-transparent z-10"></div>
+            <img
+              src={exclusivityImage}
+              alt={exclusivity.resolvedImageAlt || "Natural product integration during a surf session"}
+              class="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="absolute bottom-6 left-6 right-6 z-20">
+              <p class="text-[10px] uppercase tracking-widest text-white/40 mb-1">Our Promise</p>
+              <p class="text-sm text-white/70">We only promote products we genuinely use and believe in.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Stats Bar -->
+  {stats.length > 0 && (
+    <section class="py-14 sm:py-20 bg-dark">
+      <div class="px-6 sm:px-12 lg:px-20">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-10 text-center">Key Statistics</p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10 sm:gap-12 text-center">
+          {stats.map((stat: any) => (
+            <div>
+              {stat.prefix && (
+                <p class="text-[10px] text-white/25 uppercase tracking-wider mb-1">{stat.prefix}</p>
+              )}
+              <p class="text-3xl sm:text-4xl lg:text-5xl font-bold text-ocean-light leading-none">{stat.value}</p>
+              <p class="text-[10px] sm:text-xs text-white/30 uppercase tracking-[0.15em] mt-2">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Audience: Geography + Demographics -->
+  {(geoItems.length > 0 || demoItems.length > 0) && (
+    <section class="py-20 sm:py-28 bg-dark-lighter">
+      <div class="max-w-6xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="text-center mb-14">
+          <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Our Audience</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white">High-Value Community</h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12 lg:gap-16">
+          {geoItems.length > 0 && (
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-6">{geoBlock.heading}</h3>
+              <div class="space-y-4">
+                {geoItems.map((geo: any) => {
+                  const pctMatch = geo.label?.match(/(\d+)/);
+                  const pct = pctMatch ? parseInt(pctMatch[1]) : 10;
+                  return (
+                    <div class="flex items-center justify-between">
+                      <span class="text-white/60 text-sm min-w-[100px]">{geo.label?.split("—")[0]?.trim()}</span>
+                      <div class="flex items-center gap-3 flex-1 mx-4">
+                        <div class="h-1.5 flex-1 rounded-full bg-white/5 overflow-hidden">
+                          <div class="h-full rounded-full bg-ocean-light/40" style={`width: ${pct}%`}></div>
+                        </div>
+                      </div>
+                      <span class="text-ocean-light font-semibold text-sm tabular-nums">{geo.label?.split("—")[1]?.trim() || ""}</span>
+                    </div>
+                  );
+                })}
+                <p class="text-xs text-white/25 mt-4 pt-4 border-t border-white/5">{geoItems[geoItems.length - 1]?.description || ""}</p>
+              </div>
+            </div>
+          )}
+          {demoItems.length > 0 && (
+            <div>
+              <h3 class="text-lg font-semibold text-white mb-6">{demoBlock.heading}</h3>
+              <div class="space-y-4">
+                {demoItems.map((item: any) => (
+                  <div class="border border-white/5 rounded-lg px-4 py-3">
+                    <p class="text-sm font-medium text-white/80">{item.label}</p>
+                    {item.description && <p class="text-xs text-white/35 mt-0.5">{item.description}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Why Brands Choose Us -->
+  {whyItems.length > 0 && (
+    <section class="py-20 sm:py-28 bg-dark">
+      <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="text-center mb-14">
+          <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">The Rapture Advantage</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white">{whyBlock.heading}</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-6">
+          {whyItems.map((item: any) => (
+            <div class="border border-white/5 rounded-xl p-6 sm:p-8 hover:border-ocean-light/20 transition-colors">
+              <h3 class="text-lg font-semibold text-white mb-2">{item.label}</h3>
+              <p class="text-sm text-white/40 leading-relaxed">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Content Showcase -->
+  {showcaseCards.length > 0 && (
+    <section class="py-20 sm:py-28 bg-dark-lighter">
+      <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="text-center mb-14">
+          <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Proof of Performance</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-3">{showcaseBlock.heading}</h2>
+          {showcaseBlock.subtext && <p class="text-white/40 text-sm max-w-lg mx-auto">{showcaseBlock.subtext}</p>}
+        </div>
+        <div class="grid sm:grid-cols-3 gap-6">
+          {showcaseCards.map((card: any) => (
+            <a
+              href={card.link || undefined}
+              target={card.link ? "_blank" : undefined}
+              rel={card.link ? "noopener" : undefined}
+              class:list={["group relative rounded-xl overflow-hidden bg-dark border border-white/5 hover:border-ocean-light/20 transition-colors", card.link && "cursor-pointer"]}
+            >
+              <div class="aspect-[4/5] bg-dark flex items-center justify-center">
+                <img
+                  src={card.resolvedImageUrl ? `${card.resolvedImageUrl}?w=600&h=750&fit=crop&auto=format` : "/images/placeholder.png"}
+                  alt={card.title || ""}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="p-4">
+                <p class="text-sm font-medium text-white/80 mb-1">{card.title}</p>
+                {card.body && (
+                  <div class="flex flex-wrap gap-x-3 text-xs text-white/35">
+                    {card.body.split("·").map((part: string) => (
+                      <span>{part.trim()}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- What You Get -->
+  {deliverableCards.length > 0 && (
+    <section class="py-20 sm:py-28 bg-dark">
+      <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="text-center mb-14">
+          <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Deliverables</p>
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white">{deliverablesBlock.heading}</h2>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {deliverableCards.map((item: any) => (
+            <div class="bg-dark-lighter rounded-xl p-6 border border-white/5">
+              <h3 class="text-base font-semibold text-white mb-2">{item.title}</h3>
+              <p class="text-sm text-white/40 leading-relaxed">{item.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- How We Keep It Authentic -->
+  {authenticBlock && (() => {
+    const body = authenticBlock.body || [];
+    const bullets = body.filter((b: any) => b.listItem === "bullet").map((b: any) =>
+      (b.children || []).map((c: any) => c.text || "").join("")
+    );
+    const closing = body.filter((b: any) => !b.listItem && b.style === "normal").map((b: any) =>
+      (b.children || []).map((c: any) => c.text || "").join("")
+    ).filter(Boolean);
+    return (
+      <section class="py-16 sm:py-20 bg-dark-lighter border-y border-white/5">
+        <div class="max-w-3xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+          <h2 class="text-xl sm:text-2xl font-semibold text-white mb-6">{authenticBlock.heading}</h2>
+          <div class="grid sm:grid-cols-2 gap-4 text-left">
+            {bullets.map((text: string) => (
+              <div class="flex gap-3 items-start">
+                <span class="text-ocean-light/50 mt-0.5 shrink-0">&#10003;</span>
+                <p class="text-sm text-white/40">{text}</p>
+              </div>
+            ))}
+          </div>
+          {closing.map((text: string) => (
+            <p class="text-sm text-ocean-light/60 font-medium mt-8">{text}</p>
+          ))}
+        </div>
+      </section>
+    );
+  })()}
+
+  <!-- How It Works -->
+  {howCards.length > 0 && (
+    <section class="py-20 sm:py-28 bg-dark">
+      <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl sm:text-4xl font-semibold text-white">{howBlock.heading}</h2>
+        </div>
+        <div class="grid sm:grid-cols-3 gap-8">
+          {howCards.map((step: any, i: number) => (
+            <div class="text-center sm:text-left">
+              <span class="text-5xl sm:text-6xl font-bold text-ocean-light/15 leading-none">{String(i + 1).padStart(2, "0")}</span>
+              <h3 class="text-lg font-semibold text-white mt-2 mb-3">{step.title}</h3>
+              <p class="text-sm text-white/40 leading-relaxed">{step.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  {ctaBlock && (
+    <section class="py-32 sm:py-44 bg-dark-lighter relative overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-ocean-light/[0.03] to-transparent"></div>
+      <div class="relative max-w-2xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Let's Talk</p>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-6">{ctaBlock.heading}</h2>
+        {ctaBlock.text && <p class="text-base text-white/40 leading-relaxed mb-10 max-w-lg mx-auto">{ctaBlock.text}</p>}
+        <a
+          href={ctaBlock.buttonUrl || "mailto:partnerships@rapturecamps.com"}
+          class="inline-block rounded-full bg-white/10 border border-white/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-white/20 transition-all"
+        >
+          {ctaBlock.buttonText || "Get in Touch"}
+        </a>
+        {ctaBlock.buttonUrl?.startsWith("mailto:") && (
+          <p class="text-xs text-white/20 mt-6">{ctaBlock.buttonUrl.replace("mailto:", "")}</p>
+        )}
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style is:global>
+  .mk-prose p { margin-bottom: 1rem; }
+  .mk-prose h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .mk-prose strong { color: rgba(255, 255, 255, 0.7); }
+  .mk-prose a {
+    color: var(--color-ocean-light, #38bdf8);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .mk-prose ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .mk-prose li { margin-bottom: 0.25rem; }
+
+</style>
