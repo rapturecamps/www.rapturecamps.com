@@ -1,0 +1,725 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+
+const seoTitle = "Rapture Bali vs CARI Surf vs WaveHouse vs Kala Surf — Uluwatu Surf Camp Comparison";
+const seoDesc = "Comparing the best surf camps on Bali's Bukit Peninsula: Rapture Surfcamps (Green Bowl & Padang Padang) vs CARI Surf, WaveHouse, and Kala Surf. Honest 2026 comparison.";
+
+const competitors = [
+  {
+    name: "Rapture Surfcamps",
+    slug: "rapture",
+    founded: "2003",
+    tagline: "2 Bukit Camps — The Original",
+    location: "Bukit Peninsula (Green Bowl + Padang Padang)",
+    campCount: "2 camps, 15 min apart",
+    accommodation: "Shared rooms, doubles, private suites, boutique villa with pool",
+    surfProgram: "All-level coaching, max 5:1 ratio, 2 sessions/day, video analysis included",
+    mealsIncluded: "3-course breakfast + dinner Mon–Fri",
+    yoga: "Daily, included",
+    priceFrom: "~€500/week",
+    priceNote: "Modular: book room only, add surf/yoga/meals daily",
+    capacity: "Green Bowl: 35 · Padang Padang: 16",
+    equipment: "Free all day, every day",
+    arrival: "Any day — even 1 night",
+    minStay: "1 night",
+    unique: ["20+ years, 85k+ guests worldwide", "2 distinct Bukit camps to choose from", "Boutique villa at Padang Padang (16 guests)", "Beachfront camp at Green Bowl (35 guests)", "Arrive & depart any day — no fixed schedules", "Book room only, add extras daily", "Free surf equipment all day", "Returning customer & student discounts", "Max 5:1 coaching ratio", "Retreat hosting program"],
+    highlight: true,
+  },
+  {
+    name: "CARI Surf",
+    slug: "cari",
+    founded: "~2023",
+    tagline: "The Padang Padang Newcomer",
+    location: "Padang Padang, Uluwatu",
+    campCount: "1 camp + off-site studios & villas",
+    accommodation: "Dorms, twin shared, premium double, surf studios, 1–2 bed villas",
+    surfProgram: "3 packs: Guiding, Lesson, Intensive — 2 sessions/day, video analysis in Lesson+",
+    mealsIncluded: "All-day breakfast; family dinners & BBQs on select days only",
+    yoga: "3x/week (7+ night stays)",
+    priceFrom: "~€55/night (~€385/week)",
+    priceNote: "Pack includes accommodation + breakfast + surf — dinner NOT daily",
+    capacity: "Not disclosed",
+    equipment: "Included in Lesson & Intensive packs only",
+    arrival: "Flexible",
+    minStay: "3 nights",
+    unique: ["New camp, modern facilities", "Intensive pack with strength training", "Partnership with local gym & wellness centre", "Surfskate integration", "Flexible pack structure", "Located right in Padang Padang village"],
+    highlight: false,
+  },
+  {
+    name: "WaveHouse",
+    slug: "wavehouse",
+    founded: "2011",
+    tagline: "Canggu + Uluwatu Dual Camp",
+    location: "Canggu (Berawa Beach) + Uluwatu (Bingin)",
+    campCount: "2 camps on different coasts",
+    accommodation: "Private rooms, shared rooms, boutique design",
+    surfProgram: "2 sessions/day, 2–3:1 ratio, daily video analysis, surf theory",
+    mealsIncluded: "Breakfast + lunch OR dinner daily",
+    yoga: "Daily, included",
+    priceFrom: "~€100/night (~€600/week with 7-day deal)",
+    priceNote: "Stay+Surf includes room, meals, 2x surf, yoga, theory, photos",
+    capacity: "Not disclosed (boutique camps)",
+    equipment: "Board rental included",
+    arrival: "Flexible",
+    minStay: "1 night (7-day progression recommended)",
+    unique: ["Since 2011, 20k+ surfers hosted", "2 locations: Canggu beach life + Uluwatu reef breaks", "2–3:1 student-to-instructor ratio", "Pool surf training sessions", "In-pool technique workshops", "Stay 7, pay 6 deal", "Modern minimalist design"],
+    highlight: false,
+  },
+  {
+    name: "Kala Surf",
+    slug: "kala",
+    founded: "~2022",
+    tagline: "The Uluwatu All-Rounder",
+    location: "Uluwatu, near Single Fin (5 min walk to waves)",
+    campCount: "1 camp",
+    accommodation: "6-bed dorms, 4-bed dorms, standard, superior, deluxe, king, family rooms",
+    surfProgram: "3 tiers: School (beginners), Coaching (L1–4), Guiding (L3–4) — 3:1 ratio, ISA certified",
+    mealsIncluded: "Breakfast included; dinner NOT included (on-site restaurant)",
+    yoga: "Mobility training & gym instead of yoga",
+    priceFrom: "~€56/night (~€390/week)",
+    priceNote: "Room + breakfast + surf — no dinner, no yoga",
+    capacity: "Not disclosed",
+    equipment: "Included in coaching & school packs",
+    arrival: "Flexible",
+    minStay: "Not disclosed",
+    unique: ["Surf skate bowl on-site", "Full gym + boxing + Muay Thai", "3:1 student-coach ratio", "ISA certified coaches", "Pool bar & pool table", "Family room option", "Surf survival workshops", "5 min walk to the beach"],
+    highlight: false,
+  },
+];
+
+const comparisonRows = [
+  { label: "Founded", key: "founded" },
+  { label: "Location", key: "location" },
+  { label: "Accommodation", key: "accommodation" },
+  { label: "Surf Program", key: "surfProgram" },
+  { label: "Meals", key: "mealsIncluded" },
+  { label: "Yoga / Fitness", key: "yoga" },
+  { label: "Starting Price", key: "priceFrom" },
+  { label: "What's Included", key: "priceNote" },
+  { label: "Camp Capacity", key: "capacity" },
+  { label: "Equipment", key: "equipment" },
+  { label: "Arrival Policy", key: "arrival" },
+  { label: "Minimum Stay", key: "minStay" },
+] as const;
+---
+
+<BaseLayout title={seoTitle} description={seoDesc}>
+  <Hero
+    title={"Bali Surf Camp\nShowdown"}
+    subtitle="Rapture vs CARI Surf vs WaveHouse vs Kala Surf — four camps on Bali's best coastline, compared honestly."
+    tagline="Bukit Peninsula · 2026"
+    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/a3c1efbd623ad78fe080476cd9f6e24bb6ed1470-1920x1080.jpg?w=1920&h=1080&fit=crop&auto=format"
+    headingTag="h1"
+    centered
+  >
+    <div class="flex justify-center">
+      <Breadcrumbs inline crumbs={[{ label: "Bali Surf Camp Comparison" }]} />
+    </div>
+  </Hero>
+
+  <!-- Intro -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-4xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Bukit Peninsula, Bali</p>
+      <h2 class="text-3xl sm:text-4xl font-semibold text-white mb-8">The Best Surf Camps in Uluwatu & Beyond</h2>
+      <div class="space-y-4 text-base sm:text-lg text-white/50 leading-relaxed">
+        <p>Bali's Bukit Peninsula is one of the most concentrated surf zones on earth — Padang Padang, Uluwatu, Bingin, Dreamland, Balangan, and Green Bowl all within a 20-minute radius. Naturally, some great surf camps have set up here.</p>
+        <p>We run two camps on the Bukit ourselves, so we know the area inside out. Here's how Rapture stacks up against three other popular Bali-based camps: CARI Surf, WaveHouse, and Kala Surf.</p>
+      </div>
+      <div class="mt-8 bg-white/[0.03] border border-white/5 rounded-xl px-6 py-5 max-w-2xl mx-auto">
+        <p class="text-xs text-white/30 leading-relaxed text-center"><strong class="text-white/40">A note on accuracy:</strong> We do our best to keep this comparison up to date, but competitors regularly change their concepts, pricing, and policies. Prices shown in EUR are approximate conversions from IDR. This guide reflects our research as of early 2026 — when in doubt, check each camp's website directly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section class="py-14 sm:py-20 bg-dark-lighter border-y border-white/5">
+    <div class="px-6 sm:px-12 lg:px-20">
+      <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-10 text-center">Rapture Bali at a Glance</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10 sm:gap-12 text-center">
+        {[
+          { value: "2", label: "Bukit Camps", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a2 2 0 110-4 2 2 0 010 4z" },
+          { value: "51", label: "Total Capacity", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+          { value: "6+", label: "Surf Breaks", icon: "M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" },
+          { value: "5:1", label: "Coaching Ratio", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+          { value: "2x", label: "Daily Meals", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+          { value: "Any", label: "Arrival Day", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+        ].map((stat) => (
+          <div>
+            <svg class="w-6 h-6 mx-auto mb-3 text-ocean-light/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d={stat.icon} />
+            </svg>
+            <p class="text-3xl sm:text-4xl lg:text-5xl font-bold text-ocean-light leading-none">{stat.value}</p>
+            <p class="text-[10px] sm:text-xs text-white/30 uppercase tracking-[0.15em] mt-2">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Competitor Cards -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-6xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="text-center mb-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">The Contenders</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white">Four Camps, One Peninsula</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {competitors.map((c) => (
+          <div class:list={[
+            "rounded-xl p-6 sm:p-7 transition-colors relative",
+            c.highlight
+              ? "bg-ocean-light/[0.06] border-2 border-ocean-light/30"
+              : "bg-dark-lighter border border-white/5 hover:border-white/10"
+          ]}>
+            {c.highlight && (
+              <span class="absolute -top-3 left-6 bg-ocean-light text-dark text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">That's Us</span>
+            )}
+            <p class="text-xs uppercase tracking-[0.2em] text-ocean-light/50 font-light mb-1">Est. {c.founded}</p>
+            <h3 class="text-xl font-semibold text-white mb-1">{c.name}</h3>
+            <p class="text-xs text-white/30 mb-4">{c.tagline}</p>
+            <p class="text-sm text-white/40 leading-relaxed mb-4">{c.location}</p>
+            <p class="text-2xl font-bold text-ocean-light mb-0.5">from {c.priceFrom}</p>
+            <p class="text-[10px] text-white/25 uppercase tracking-wider">{c.campCount}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Full Comparison Table -->
+  <section class="py-20 sm:py-28 bg-dark-lighter">
+    <div class="max-w-6xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="text-center mb-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Side by Side</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white">The Full Comparison</h2>
+      </div>
+
+      <!-- Mobile -->
+      <div class="lg:hidden space-y-8">
+        {comparisonRows.map((row) => (
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-ocean-light/60 font-light mb-3">{row.label}</p>
+            <div class="grid sm:grid-cols-2 gap-3">
+              {competitors.map((c) => (
+                <div class:list={[
+                  "rounded-lg px-4 py-3",
+                  c.highlight ? "bg-ocean-light/[0.06] border border-ocean-light/20" : "bg-dark border border-white/5"
+                ]}>
+                  <p class="text-[10px] uppercase tracking-wider text-white/30 mb-1">{c.name}</p>
+                  <p class="text-sm text-white/70">{(c as any)[row.key]}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden lg:block overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr>
+              <th class="text-left py-4 px-4 text-xs uppercase tracking-wider text-white/30 font-light w-40"></th>
+              {competitors.map((c) => (
+                <th class:list={["text-left py-4 px-4", c.highlight && "bg-ocean-light/[0.04] rounded-t-xl"]}>
+                  <p class="text-base font-semibold text-white">{c.name}</p>
+                  <p class="text-[10px] uppercase tracking-wider text-white/30 font-normal mt-0.5">Est. {c.founded}</p>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonRows.map((row, i) => (
+              <tr class={i % 2 === 0 ? "bg-dark/50" : ""}>
+                <td class="py-3.5 px-4 text-xs uppercase tracking-wider text-ocean-light/50 font-light align-top whitespace-nowrap">{row.label}</td>
+                {competitors.map((c) => (
+                  <td class:list={["py-3.5 px-4 text-white/60 align-top", c.highlight && "bg-ocean-light/[0.04]"]}>
+                    {(c as any)[row.key]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull Quote -->
+  <section class="py-16 sm:py-24 bg-dark relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-ocean-light/[0.02] via-transparent to-ocean-light/[0.02]"></div>
+    <div class="relative max-w-3xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+      <svg class="w-10 h-10 mx-auto mb-6 text-ocean-light/20" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+      <p class="text-2xl sm:text-3xl font-light text-white/70 leading-relaxed italic">The Bukit Peninsula has some of the <span class="text-ocean-light font-normal not-italic">best reef breaks on earth</span>. The difference is how your camp helps you <span class="text-ocean-light font-normal not-italic">make the most of them</span>.</p>
+    </div>
+  </section>
+
+  <!-- Standout Features -->
+  <section class="py-20 sm:py-28 bg-dark-lighter">
+    <div class="max-w-6xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="text-center mb-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Standout Features</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white">What Sets Each Camp Apart</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6">
+        {competitors.map((c) => (
+          <div class:list={[
+            "rounded-xl p-6 sm:p-8 transition-colors",
+            c.highlight ? "bg-ocean-light/[0.06] border-2 border-ocean-light/30" : "bg-dark border border-white/5"
+          ]}>
+            <h3 class="text-lg font-semibold text-white mb-1">{c.name}</h3>
+            <p class="text-xs text-white/30 mb-4">{c.tagline}</p>
+            <ul class="space-y-2.5">
+              {c.unique.map((item) => (
+                <li class="flex gap-3 items-start">
+                  <span class:list={["mt-0.5 shrink-0 text-sm", c.highlight ? "text-ocean-light" : "text-white/20"]}>&#10003;</span>
+                  <span class="text-sm text-white/50">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive 01: Surf Coaching -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 01</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Surf Coaching & Guiding</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-5 gap-8">
+        <div class="md:col-span-3">
+          <p class="text-base text-white/60 leading-relaxed mb-6">All four camps offer surf coaching on the Bukit — but the approach, ratios, and extras differ significantly. Rapture's <strong class="text-white/80">5:1 max ratio</strong> and included video analysis sits between WaveHouse's tighter 2–3:1 groups and Kala's 3:1 coaching ratio.</p>
+          <div class="flex items-center gap-6 py-5 px-6 bg-ocean-light/[0.06] rounded-xl border border-ocean-light/15 flex-wrap">
+            {[
+              { ratio: "5:1", name: "Rapture" },
+              { ratio: "2–3:1", name: "WaveHouse" },
+              { ratio: "3:1", name: "Kala" },
+              { ratio: "~4:1", name: "CARI" },
+            ].map((r, i) => (
+              <>
+                {i > 0 && <div class="w-px h-10 bg-white/10 hidden sm:block"></div>}
+                <div class="text-center">
+                  <p class:list={["text-3xl sm:text-4xl font-bold leading-none", i === 0 ? "text-ocean-light" : "text-white/20"]}>{r.ratio}</p>
+                  <p class:list={["text-[9px] uppercase tracking-wider mt-1", i === 0 ? "text-ocean-light/50" : "text-white/20"]}>{r.name}</p>
+                </div>
+              </>
+            ))}
+          </div>
+        </div>
+        <div class="md:col-span-2 space-y-3">
+          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-1">Where they shine</p>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">WaveHouse</p>
+            <p class="text-xs text-white/30 mt-0.5">Tightest ratio (2–3:1). In-pool technique workshops. Great for fast progression.</p>
+          </div>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">Kala Surf</p>
+            <p class="text-xs text-white/30 mt-0.5">3:1 ISA-certified coaching. Surf survival workshops. Dedicated 3-day beginner school.</p>
+          </div>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">CARI Surf</p>
+            <p class="text-xs text-white/30 mt-0.5">Intensive pack with strength training at a partner gym. Surfskate for on-land technique.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive 02: Food & Meals -->
+  <section class="py-20 sm:py-28 bg-dark-lighter">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 02</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Food & Meals</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        {[
+          { name: "Rapture", breakfast: true, dinner: true, note: "3-course breakfast + dinner Mon–Fri, all diets catered", hl: true },
+          { name: "WaveHouse", breakfast: true, dinner: true, note: "Breakfast + lunch OR dinner daily — you choose which", hl: false },
+          { name: "CARI Surf", breakfast: true, dinner: false, note: "All-day breakfast; BBQ & family dinners on select days only", hl: false },
+          { name: "Kala Surf", breakfast: true, dinner: false, note: "Breakfast included; on-site restaurant for other meals (extra)", hl: false },
+        ].map((m) => (
+          <div class:list={[
+            "rounded-xl p-5 text-center",
+            m.hl ? "bg-ocean-light/[0.08] border-2 border-ocean-light/25" : "bg-dark border border-white/5"
+          ]}>
+            <p class:list={["text-sm font-semibold mb-4", m.hl ? "text-ocean-light" : "text-white/60"]}>{m.name}</p>
+            <div class="flex justify-center gap-6 mb-4">
+              <div>
+                <div class:list={["w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-1", m.breakfast ? "bg-emerald-500/20" : "bg-white/5"]}>
+                  {m.breakfast ? <span class="text-emerald-400 text-lg">&#10003;</span> : <span class="text-white/15 text-lg">&times;</span>}
+                </div>
+                <p class="text-[9px] uppercase tracking-wider text-white/25">Breakfast</p>
+              </div>
+              <div>
+                <div class:list={["w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-1", m.dinner ? "bg-emerald-500/20" : "bg-white/5"]}>
+                  {m.dinner ? <span class="text-emerald-400 text-lg">&#10003;</span> : <span class="text-white/15 text-lg">&times;</span>}
+                </div>
+                <p class="text-[9px] uppercase tracking-wider text-white/25">Dinner</p>
+              </div>
+            </div>
+            <p class="text-xs text-white/35 leading-relaxed">{m.note}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive 03: Value & Flexibility -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 03</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Value, Flexibility & Equipment</h2>
+        </div>
+      </div>
+
+      <!-- Rapture vs Competitors model -->
+      <div class="grid sm:grid-cols-2 gap-6 mb-10">
+        <div class="bg-ocean-light/[0.06] border border-ocean-light/20 rounded-xl p-6">
+          <p class="text-xs uppercase tracking-wider text-ocean-light/60 mb-4">Rapture Model</p>
+          <div class="space-y-3">
+            {["Book room only — add surf/yoga/meals daily", "Arrive any day, even for 1 night", "Skip a surf day? Don't pay for it", "Free surf equipment all day, every day", "Returning customer & student discounts"].map((t) => (
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0"><span class="text-emerald-400 text-xs">&#10003;</span></div>
+                <p class="text-sm text-white/60">{t}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="bg-dark-lighter border border-white/5 rounded-xl p-6">
+          <p class="text-xs uppercase tracking-wider text-white/25 mb-4">What to Watch For</p>
+          <div class="space-y-3">
+            {[
+              "CARI: 3-night minimum, equipment only in Lesson/Intensive packs",
+              "WaveHouse: ~€600–700/week — premium pricing for Bali",
+              "Kala: no dinner included, equipment only in coaching packs",
+              "Most camps: fixed package tiers, harder to customise",
+            ].map((t) => (
+              <div class="flex items-center gap-3">
+                <div class="w-5 h-5 rounded-full bg-white/5 flex items-center justify-center shrink-0"><span class="text-white/20 text-xs">!</span></div>
+                <p class="text-sm text-white/30">{t}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="md:col-span-2 space-y-5">
+          <p class="text-base text-white/60 leading-relaxed"><strong class="text-white/80">Rapture's modular model is rare in Bali.</strong> Most camps here sell pre-bundled surf packs with a minimum stay. At Rapture, you can book accommodation for a single night, then add a surf lesson, yoga session, or dinner on the days you want them — and skip them on the days you don't.</p>
+          <p class="text-base text-white/60 leading-relaxed">Crucially, <strong class="text-white/80">surf equipment is free to use all day at both Rapture camps.</strong> After your lesson, grab a board and keep practising — no rental fee, no time limit. We believe more time in the water is what actually makes you a better surfer.</p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <p class="text-[10px] uppercase tracking-wider text-ocean-light/40 mb-1">Rapture Perks</p>
+          {[
+            { icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z", text: "Any arrival day" },
+            { icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z", text: "Free equipment all day" },
+            { icon: "M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z", text: "Returning guest discount" },
+            { icon: "M12 14l9-5-9-5-9 5 9 5zm0 7l9-5-9-5-9 5 9 5z", text: "Student discount" },
+          ].map((perk) => (
+            <div class="flex items-center gap-3 bg-dark-lighter rounded-lg px-4 py-3 border border-white/5">
+              <svg class="w-4 h-4 text-ocean-light/50 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d={perk.icon} /></svg>
+              <p class="text-sm text-white/50">{perk.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull Quote 2 -->
+  <section class="py-12 sm:py-16 bg-dark-lighter border-y border-white/5">
+    <div class="max-w-4xl mx-auto px-6 sm:px-12 lg:px-20 flex items-center gap-6 sm:gap-10">
+      <div class="hidden sm:block w-px h-16 bg-gradient-to-b from-transparent via-ocean-light/30 to-transparent shrink-0"></div>
+      <p class="text-lg sm:text-xl text-white/50 leading-relaxed">With two camps on the Bukit — a <strong class="text-white/70">35-guest beachfront camp</strong> and a <strong class="text-white/70">16-guest boutique villa</strong> — Rapture lets you choose the vibe that suits you. No other camp on this list offers that range.</p>
+    </div>
+  </section>
+
+  <!-- Deep Dive 04: Surf Spots & Location -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 04</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Surf Spots & Location</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <div>
+          <p class="text-base text-white/60 leading-relaxed mb-6">All four camps access Bukit Peninsula breaks, but <strong class="text-white/80">Rapture's two-camp setup gives the widest coverage.</strong> Green Bowl puts you near Dreamland, Balangan, and the uncrowded Green Bowl reef. Padang Padang camp is steps from the famous barrel, plus Uluwatu, Bingin, and Impossibles.</p>
+          <p class="text-xs text-white/30 leading-relaxed"><strong class="text-white/40">WaveHouse is unique</strong> in offering a Canggu location on the west coast — great for beginners who prefer beach breaks and the Canggu lifestyle. But for serious reef surfing, the other three camps are better positioned on the Bukit.</p>
+        </div>
+        <div class="space-y-3">
+          {[
+            { name: "Rapture", spots: "Padang Padang, Uluwatu, Impossibles, Dreamland, Balangan, Green Bowl, Bingin", count: "7+" },
+            { name: "CARI Surf", spots: "Padang Padang, Balangan, Dreamland, Bingin, Uluwatu", count: "5+" },
+            { name: "WaveHouse", spots: "Bingin, Uluwatu + Berawa, Old Man's (Canggu)", count: "5+" },
+            { name: "Kala Surf", spots: "Uluwatu, Padang Padang, Bingin, Dreamland", count: "4+" },
+          ].map((d) => (
+            <div class:list={["rounded-lg px-4 py-3", d.name === "Rapture" ? "bg-ocean-light/[0.06] border border-ocean-light/20" : "bg-dark-lighter border border-white/5"]}>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs font-medium text-white/50">{d.name}</span>
+                <span class="text-xs font-semibold text-ocean-light/60 tabular-nums">{d.count} breaks</span>
+              </div>
+              <p class="text-xs text-white/30">{d.spots}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive 05: Camp Size & Community -->
+  <section class="py-20 sm:py-28 bg-dark-lighter">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 05</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Camp Size & Community</h2>
+        </div>
+      </div>
+
+      <!-- Dot Grid -->
+      <div class="grid sm:grid-cols-3 gap-6 mb-10">
+        <div class="text-center p-6 bg-ocean-light/[0.06] border border-ocean-light/20 rounded-xl">
+          <p class="text-xs uppercase tracking-wider text-ocean-light/60 mb-3">Rapture — Padang Padang</p>
+          <div class="flex flex-wrap justify-center gap-1.5 max-w-[140px] mx-auto mb-3">
+            {Array.from({ length: 16 }).map(() => (
+              <div class="w-3.5 h-3.5 rounded-full bg-ocean-light/50"></div>
+            ))}
+          </div>
+          <p class="text-2xl font-bold text-ocean-light">16</p>
+          <p class="text-[9px] uppercase tracking-wider text-ocean-light/40 mt-0.5">guests max</p>
+        </div>
+        <div class="text-center p-6 bg-ocean-light/[0.06] border border-ocean-light/20 rounded-xl">
+          <p class="text-xs uppercase tracking-wider text-ocean-light/60 mb-3">Rapture — Green Bowl</p>
+          <div class="flex flex-wrap justify-center gap-1.5 max-w-[200px] mx-auto mb-3">
+            {Array.from({ length: 35 }).map(() => (
+              <div class="w-3.5 h-3.5 rounded-full bg-ocean-light/50"></div>
+            ))}
+          </div>
+          <p class="text-2xl font-bold text-ocean-light">35</p>
+          <p class="text-[9px] uppercase tracking-wider text-ocean-light/40 mt-0.5">guests max</p>
+        </div>
+        <div class="text-center p-6 bg-dark border border-white/5 rounded-xl">
+          <p class="text-xs uppercase tracking-wider text-white/25 mb-3">Competitors — varies</p>
+          <div class="flex flex-wrap justify-center gap-1 max-w-[200px] mx-auto mb-3">
+            {Array.from({ length: 40 }).map(() => (
+              <div class="w-3 h-3 rounded-full bg-white/10"></div>
+            ))}
+          </div>
+          <p class="text-2xl font-bold text-white/20">?</p>
+          <p class="text-[9px] uppercase tracking-wider text-white/20 mt-0.5">capacity undisclosed</p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-base text-white/60 leading-relaxed mb-4">Rapture is the only camp on this list that <strong class="text-white/80">publishes exact capacity numbers.</strong> Our Padang Padang villa tops out at 16 guests — genuinely boutique. Green Bowl is 35, still intimate enough that everyone knows each other at dinner.</p>
+          <p class="text-base text-white/60 leading-relaxed">The other three camps don't publicly disclose capacity, but all describe themselves as community-focused, smaller camps — which is a good sign for the Bukit surf camp scene overall.</p>
+        </div>
+        <div class="space-y-3">
+          <p class="text-[10px] uppercase tracking-wider text-white/25 mb-1">Community highlights</p>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">Kala Surf</p>
+            <p class="text-xs text-white/30 mt-0.5">Strong community vibe with pool bar, jam sessions, skate bowl. They describe themselves as "family" — similar ethos to Rapture.</p>
+          </div>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">WaveHouse</p>
+            <p class="text-xs text-white/30 mt-0.5">Modern boutique design. Weekly BBQs, bonfires, surf trivia. Pool training as a social activity.</p>
+          </div>
+          <div class="border-l-2 border-white/10 pl-4 py-2">
+            <p class="text-xs font-medium text-white/50">CARI Surf</p>
+            <p class="text-xs text-white/30 mt-0.5">New camp with family dinners and BBQs on select days. Growing community as a newer entrant.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deep Dive 06: Extras & Facilities -->
+  <section class="py-20 sm:py-28 bg-dark">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-ocean-light/10 flex items-center justify-center shrink-0">
+          <svg class="w-6 h-6 text-ocean-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+        </div>
+        <div>
+          <p class="text-[10px] uppercase tracking-[0.2em] text-ocean-light/40">Deep Dive 06</p>
+          <h2 class="text-2xl sm:text-3xl font-semibold text-white">Extras & Facilities</h2>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-4 gap-4">
+        {[
+          { name: "Rapture", items: ["Pool", "Restaurant & bar", "Daily yoga", "Free equipment all day", "Video analysis", "Retreat hosting", "Airport transfers"], hl: true },
+          { name: "CARI Surf", items: ["Pool", "Surfskate area", "Yoga (3x/week)", "Gym partner (off-site)", "Wellness partner", "Surf photos", "Airport transfers (7+ nights)"], hl: false },
+          { name: "WaveHouse", items: ["Pool", "Restaurant", "Daily yoga", "In-pool training", "Video analysis", "Friday BBQ", "Insurance included"], hl: false },
+          { name: "Kala Surf", items: ["Pool + swim-up bar", "Skate bowl", "Gym + boxing + Muay Thai", "Mobility training", "Pool table", "Restaurant", "Surf survival workshops"], hl: false },
+        ].map((f) => (
+          <div class:list={[
+            "rounded-xl p-5",
+            f.hl ? "bg-ocean-light/[0.08] border-2 border-ocean-light/25" : "bg-dark-lighter border border-white/5"
+          ]}>
+            <p class:list={["text-sm font-semibold mb-3", f.hl ? "text-ocean-light" : "text-white/60"]}>{f.name}</p>
+            <ul class="space-y-2">
+              {f.items.map((item) => (
+                <li class="flex gap-2 items-start">
+                  <span class:list={["mt-0.5 shrink-0 text-xs", f.hl ? "text-ocean-light" : "text-white/20"]}>&#10003;</span>
+                  <span class="text-xs text-white/40">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Who Should Choose Who -->
+  <section class="py-20 sm:py-28 bg-dark-lighter">
+    <div class="max-w-5xl mx-auto px-6 sm:px-12 lg:px-20">
+      <div class="text-center mb-14">
+        <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Honest Recommendations</p>
+        <h2 class="text-3xl sm:text-4xl font-semibold text-white">Which Bali Camp Is Right for You?</h2>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Rapture -->
+        <div class="bg-ocean-light/[0.06] border-2 border-ocean-light/30 rounded-xl p-6 sm:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="bg-ocean-light text-dark text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Our pick</span>
+            <h3 class="text-lg font-semibold text-white">Choose Rapture If You Want…</h3>
+          </div>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {[
+              "Two camps to choose from — boutique villa or beachfront",
+              "Arrive any day, stay even just 1 night",
+              "Book room only, add surf/yoga/meals daily",
+              "Free surf equipment all day to keep practising",
+              "The widest Bukit break coverage (7+ spots)",
+              "Breakfast AND dinner included",
+              "Returning customer & student discounts",
+              "20+ years experience across 5 countries",
+            ].map((text) => (
+              <div class="flex gap-3 items-start">
+                <span class="text-ocean-light mt-0.5 shrink-0 text-sm">&#10003;</span>
+                <p class="text-sm text-white/60">{text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Other 3 -->
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="bg-dark border border-white/5 rounded-xl p-5 sm:p-6">
+            <h3 class="text-base font-semibold text-white mb-3">CARI Surf</h3>
+            <ul class="space-y-2">
+              {[
+                "Newer camp, modern facilities",
+                "Budget-friendly (~€55/night)",
+                "Intensive pack with gym training",
+                "Right in Padang Padang village",
+                "Surfskate sessions included",
+              ].map((text) => (
+                <li class="flex gap-2 items-start">
+                  <span class="text-white/20 mt-0.5 shrink-0 text-xs">&#10003;</span>
+                  <span class="text-xs text-white/40">{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="bg-dark border border-white/5 rounded-xl p-5 sm:p-6">
+            <h3 class="text-base font-semibold text-white mb-3">WaveHouse</h3>
+            <ul class="space-y-2">
+              {[
+                "Canggu option for beach breaks",
+                "Tightest instructor ratio (2–3:1)",
+                "In-pool technique workshops",
+                "Modern boutique design",
+                "Lunch OR dinner included daily",
+              ].map((text) => (
+                <li class="flex gap-2 items-start">
+                  <span class="text-white/20 mt-0.5 shrink-0 text-xs">&#10003;</span>
+                  <span class="text-xs text-white/40">{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="bg-dark border border-white/5 rounded-xl p-5 sm:p-6">
+            <h3 class="text-base font-semibold text-white mb-3">Kala Surf</h3>
+            <ul class="space-y-2">
+              {[
+                "On-site skate bowl + gym",
+                "3:1 ISA-certified coaching",
+                "Boxing & Muay Thai classes",
+                "Budget dorms from ~€56/night",
+                "Surf survival workshops",
+              ].map((text) => (
+                <li class="flex gap-2 items-start">
+                  <span class="text-white/20 mt-0.5 shrink-0 text-xs">&#10003;</span>
+                  <span class="text-xs text-white/40">{text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Line -->
+  <section class="py-16 sm:py-20 bg-dark border-y border-white/5">
+    <div class="max-w-3xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+      <h2 class="text-xl sm:text-2xl font-semibold text-white mb-6">The Bottom Line</h2>
+      <div class="space-y-4 text-sm text-white/40 leading-relaxed">
+        <p>The Bukit Peninsula has never had more quality surf camps. All four on this page run solid operations and genuinely care about your surf experience.</p>
+        <p>What makes Rapture different is <strong class="text-white/70">choice and flexibility.</strong> Two distinct camps to match your vibe — a 16-guest boutique villa or a 35-guest beachfront camp. Arrive any day, stay any length, build your own package. Free equipment all day so you can practise after your lesson. Breakfast and dinner included. And over 20 years of experience making sure it all runs smoothly.</p>
+        <p>That's the Rapture approach — and it's been working since 2003.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-32 sm:py-44 bg-dark-lighter relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-ocean-light/[0.03] to-transparent"></div>
+    <div class="relative max-w-2xl mx-auto px-6 sm:px-12 lg:px-20 text-center">
+      <p class="text-xs uppercase tracking-[0.25em] text-ocean-light/60 font-light mb-4">Ready for Bali?</p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-6">All You Have Is Now</h2>
+      <p class="text-base text-white/40 leading-relaxed mb-10 max-w-lg mx-auto">Choose your Bali camp — Green Bowl for the beachfront vibe, Padang Padang for the boutique villa experience. Your Bukit adventure starts today.</p>
+      <a
+        href="/surfcamp/bali"
+        class="inline-block rounded-full bg-white/10 border border-white/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-white/20 transition-all"
+      >
+        Explore Our Bali Camps
+      </a>
+    </div>
+  </section>
+</BaseLayout>

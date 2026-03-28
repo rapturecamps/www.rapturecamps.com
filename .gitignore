@@ -48,3 +48,4 @@ docs/lighthouse/
 # google service account credentials
 *.gsc-credentials.json
 rapturecamps-*.json
+.firecrawl/
