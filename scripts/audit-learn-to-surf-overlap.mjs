@@ -16,7 +16,7 @@ const client = createClient({
   projectId: "ypmt1bmc",
   dataset: "production",
   apiVersion: "2024-01-01",
-  token: process.env.SANITY_WRITE_TOKEN || "skQsXKa9nX0abd2Kp43K7zfUmqVob1MOkplvyrAaltEYEQXFSSmJItwei3hx05uOZBpGhVpuJrAjUdmCm6D39vPLH9tiGXBbNWKKbUdcL63MUNZluExtPk2QCEFDEPSzxSOz1HqES1tDHcTjLSQ1tL8PCGG0ztOuvHniMEXfF69BR51e0Vix",
+  token: process.env.SANITY_WRITE_TOKEN,
   useCdn: false,
 });
 
