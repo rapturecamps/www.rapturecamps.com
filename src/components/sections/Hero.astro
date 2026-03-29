@@ -71,13 +71,10 @@ const hasRotation = !hasVideo && images.length > 1;
       muted
       playsinline
       preload="metadata"
+      src={backgroundVideo}
       class="absolute inset-0 h-full w-full object-cover"
       poster={videoPoster || images[0]}
-    >
-      {videoSources.map(({ src, type }) => (
-        <source src={src} type={type} />
-      ))}
-    </video>
+    />
   ) : hasRotation ? (
     <div class="hero-slideshow absolute inset-0" data-interval={rotationInterval}>
       {images.map((src, i) => (
