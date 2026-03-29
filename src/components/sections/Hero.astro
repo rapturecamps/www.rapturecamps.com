@@ -70,9 +70,9 @@ const hasRotation = !hasVideo && images.length > 1;
       loop
       muted
       playsinline
-      preload="metadata"
+      preload="auto"
       src={backgroundVideo}
-      class="absolute inset-0 h-full w-full object-cover"
+      class="hero-video absolute inset-0 h-full w-full object-cover"
       poster={videoPoster || images[0]}
     />
   ) : hasRotation ? (
@@ -96,7 +96,7 @@ const hasRotation = !hasVideo && images.length > 1;
     />
   )}
 
-  <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark" />
+  <div class="absolute inset-0 bg-gradient-to-b from-dark/40 via-dark/20 to-dark pointer-events-none" />
 
   <div class:list={["relative z-10 px-6 sm:px-12 lg:px-20", centered ? "max-w-[800px] mx-auto text-center" : "max-w-5xl", fullHeight ? "pb-[87px] sm:pb-16 lg:pb-20" : "pb-12 sm:pb-16 lg:pb-20"]}>
     {tagline && (
@@ -152,6 +152,19 @@ const hasRotation = !hasVideo && images.length > 1;
 
 <script is:inline>
   (function () {
+    var vid = document.querySelector(".hero-video");
+    if (vid) {
+      vid.muted = true;
+      function tryPlay() {
+        if (!vid.paused) return;
+        var p = vid.play();
+        if (p && p.catch) p.catch(function () {});
+      }
+      tryPlay();
+      vid.addEventListener("canplay", tryPlay, { once: true });
+      vid.addEventListener("loadeddata", tryPlay, { once: true });
+    }
+
     var slideshows = document.querySelectorAll(".hero-slideshow");
     slideshows.forEach(function (ss) {
       var slides = ss.querySelectorAll(".hero-slide");
