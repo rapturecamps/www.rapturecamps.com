@@ -70,7 +70,7 @@ const hasRotation = !hasVideo && images.length > 1;
       loop
       muted
       playsinline
-      preload="auto"
+      preload="metadata"
       class="hero-video absolute inset-0 h-full w-full object-cover"
       poster={videoPoster || images[0]}
     >
@@ -158,19 +158,12 @@ const hasRotation = !hasVideo && images.length > 1;
     var vid = document.querySelector(".hero-video");
     if (vid) {
       vid.muted = true;
-      var tryPlay = function () {
+      vid.setAttribute("muted", "");
+      vid.setAttribute("playsinline", "");
+      if (vid.paused) {
         var p = vid.play();
         if (p && p.catch) p.catch(function () {});
-      };
-      if (document.readyState === "complete") {
-        tryPlay();
-      } else {
-        window.addEventListener("load", tryPlay);
       }
-      document.addEventListener("touchstart", function once() {
-        tryPlay();
-        document.removeEventListener("touchstart", once);
-      }, { once: true, passive: true });
     }
 
     var slideshows = document.querySelectorAll(".hero-slideshow");
