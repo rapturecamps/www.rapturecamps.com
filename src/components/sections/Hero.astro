@@ -70,9 +70,8 @@ const hasRotation = !hasVideo && images.length > 1;
       loop
       muted
       playsinline
-      webkit-playsinline
-      preload="auto"
-      class="hero-video absolute inset-0 h-full w-full object-cover"
+      preload="metadata"
+      class="absolute inset-0 h-full w-full object-cover"
       poster={videoPoster || images[0]}
     >
       {videoSources.map(({ src, type }) => (
@@ -156,25 +155,6 @@ const hasRotation = !hasVideo && images.length > 1;
 
 <script is:inline>
   (function () {
-    var vid = document.querySelector(".hero-video");
-    if (vid) {
-      vid.muted = true;
-      vid.setAttribute("muted", "");
-      vid.setAttribute("playsinline", "");
-      vid.setAttribute("webkit-playsinline", "");
-
-      function tryPlay() {
-        if (!vid.paused) return;
-        var p = vid.play();
-        if (p && p.catch) p.catch(function () {});
-      }
-
-      tryPlay();
-      vid.addEventListener("canplay", tryPlay, { once: true });
-      vid.addEventListener("loadeddata", tryPlay, { once: true });
-      if (vid.readyState >= 3) tryPlay();
-    }
-
     var slideshows = document.querySelectorAll(".hero-slideshow");
     slideshows.forEach(function (ss) {
       var slides = ss.querySelectorAll(".hero-slide");
