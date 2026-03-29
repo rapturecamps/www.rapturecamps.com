@@ -1,0 +1,61 @@
+---
+interface Props {
+  title: string;
+  slug: string;
+  clusterSlug: string;
+  excerpt?: string;
+  difficulty?: "beginner" | "intermediate" | "advanced";
+  readTime?: string;
+  featuredImageUrl?: string;
+  lang?: string;
+}
+
+const { title, slug, clusterSlug, excerpt, difficulty, readTime, featuredImageUrl, lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+
+const diffColors: Record<string, string> = {
+  beginner: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+  intermediate: "text-amber-400 bg-amber-500/10 border-amber-500/20",
+  advanced: "text-red-400 bg-red-500/10 border-red-500/20",
+};
+---
+
+<a
+  href={`${prefix}/learn-to-surf/${clusterSlug}/${slug}`}
+  class="group flex gap-4 rounded-xl border border-white/10 hover:border-ocean/30 bg-dark-lighter p-4 transition-all"
+>
+  {featuredImageUrl && (
+    <div class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden hidden sm:block">
+      <img
+        src={`${featuredImageUrl}?w=160&h=160&fit=crop&auto=format`}
+        alt={title}
+        width={160}
+        height={160}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+    </div>
+  )}
+
+  <div class="flex-1 min-w-0">
+    <h3 class="font-display text-base font-semibold text-white group-hover:text-ocean transition-colors mb-1 line-clamp-1">
+      {title}
+    </h3>
+    {excerpt && (
+      <p class="text-sm text-white/40 line-clamp-2 mb-2">{excerpt}</p>
+    )}
+    <div class="flex flex-wrap items-center gap-2">
+      {difficulty && (
+        <span class={`text-[10px] font-semibold border rounded-full px-2 py-0.5 ${diffColors[difficulty] || ""}`}>
+          {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+        </span>
+      )}
+      {readTime && (
+        <span class="text-[10px] text-white/30">{readTime}</span>
+      )}
+    </div>
+  </div>
+
+  <span class="flex-shrink-0 text-white/15 group-hover:text-ocean self-center transition-colors">→</span>
+</a>

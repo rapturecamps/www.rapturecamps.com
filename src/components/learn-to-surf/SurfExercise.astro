@@ -1,0 +1,64 @@
+---
+const { node } = Astro.props as any;
+const title = node?.title || "Exercise";
+const description = node?.description;
+const duration = node?.duration;
+const equipment = node?.equipment ?? [];
+const steps = node?.steps ?? [];
+const resolvedImageUrl = node?.resolvedImageUrl;
+---
+
+<div class="rounded-xl border border-ocean/20 bg-ocean/5 overflow-hidden my-8">
+  <div class="px-5 py-4 border-b border-ocean/10 flex items-center gap-3">
+    <h4 class="font-display font-bold text-white !m-0">{title}</h4>
+    {duration && (
+      <span class="ml-auto text-xs font-medium text-ocean bg-ocean/10 rounded-full px-3 py-1">
+        {duration}
+      </span>
+    )}
+  </div>
+
+  <div class="px-5 py-4 space-y-4">
+    {description && (
+      <p class="text-white/55 text-[0.9375rem] leading-relaxed">{description}</p>
+    )}
+
+    {equipment.length > 0 && (
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-2">Equipment</p>
+        <div class="flex flex-wrap gap-2">
+          {equipment.map((item) => (
+            <span class="text-xs text-white/50 bg-white/5 border border-white/10 rounded-full px-3 py-1">
+              {item}
+            </span>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {steps.length > 0 && (
+      <ol class="space-y-2">
+        {steps.map((step, i) => (
+          <li class="flex items-start gap-3 text-[0.9375rem] leading-6 text-white/60">
+            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-ocean/20 text-ocean text-[11px] font-bold inline-flex items-center justify-center">
+              {i + 1}
+            </span>
+            <span>{step}</span>
+          </li>
+        ))}
+      </ol>
+    )}
+
+    {resolvedImageUrl && (
+      <img
+        src={`${resolvedImageUrl}?w=640&auto=format`}
+        alt={title}
+        width={640}
+        height={360}
+        loading="lazy"
+        decoding="async"
+        class="rounded-lg w-full"
+      />
+    )}
+  </div>
+</div>

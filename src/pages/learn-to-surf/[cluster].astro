@@ -1,0 +1,109 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import LessonCard from "@/components/learn-to-surf/LessonCard.astro";
+import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
+import { getLearnClusters, getLearnClusterBySlug, getLearnLessonsByCluster } from "@/lib/sanity-data";
+
+export async function getStaticPaths() {
+  const clusters = await getLearnClusters("en");
+  return clusters.map((c: any) => ({ params: { cluster: c.slug } }));
+}
+
+const { cluster: clusterSlug } = Astro.params;
+const cluster = await getLearnClusterBySlug(clusterSlug!, "en");
+
+if (!cluster) {
+  return Astro.redirect("/learn-to-surf");
+}
+
+const lessons = await getLearnLessonsByCluster(clusterSlug!, "en");
+
+const seoTitle = cluster.seo?.metaTitle || `${cluster.title} · Rapture`;
+const seoDesc = cluster.seo?.metaDescription || cluster.description || `Learn ${cluster.title.toLowerCase()} with free, expert surf lessons from Rapture Surfcamps.`;
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDesc}
+  ogImage={cluster.seo?.ogImageUrl || cluster.featuredImageUrl}
+  noindex={cluster.seo?.noindex}
+  translations={cluster._translations}
+  translationBasePath="/learn-to-surf"
+>
+  <Hero
+    title={cluster.heroTitle || cluster.title}
+    subtitle={cluster.heroSubtitle || cluster.description}
+    tagline={cluster.heroTagline || "Learn to Surf"}
+    backgroundImage={cluster.featuredImageUrl}
+    centered
+  >
+    <div class="flex justify-center">
+      <Breadcrumbs inline crumbs={[
+        { label: "Learn to Surf", href: "/learn-to-surf" },
+        { label: cluster.title },
+      ]} />
+    </div>
+  </Hero>
+
+
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-6xl px-6 sm:px-8">
+      <div class="max-w-3xl mb-12">
+        <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+          {cluster.title}
+        </h1>
+        {cluster.description && (
+          <p class="text-lg text-white/50 leading-relaxed">{cluster.description}</p>
+        )}
+      </div>
+
+      {/* Lesson listing */}
+      {lessons.length > 0 ? (
+        <div class="space-y-3 mb-16">
+          {lessons.map((lesson: any) => (
+            <LessonCard
+              title={lesson.title}
+              slug={lesson.slug}
+              clusterSlug={clusterSlug!}
+              excerpt={lesson.excerpt}
+              difficulty={lesson.difficulty}
+              readTime={lesson.readTime}
+              featuredImageUrl={lesson.featuredImageUrl}
+              lang="en"
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="rounded-2xl border border-white/10 bg-dark-lighter p-12 text-center mb-16">
+          <p class="text-white/40 text-lg">Lessons are being prepared. Check back soon!</p>
+        </div>
+      )}
+
+      {/* LMS CTA */}
+      {cluster.lmsCourseUrl && (
+        <div class="rounded-xl border border-ocean/20 bg-ocean/5 px-6 py-5 mb-16 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div>
+            <p class="font-display font-bold text-white">Practice in the Surfing Academy</p>
+            <p class="text-sm text-white/45 mt-0.5">Track your progress, take quizzes, and unlock all lessons.</p>
+          </div>
+          <a
+            href={cluster.lmsCourseUrl}
+            class="sm:ml-auto inline-flex items-center gap-2 rounded-lg bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors"
+          >
+            Open Course →
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* PageBuilder blocks */}
+  {cluster.pageBuilder?.length > 0 && (
+    <BlockRenderer blocks={cluster.pageBuilder} lang="en" />
+  )}
+
+  <CTASection />
+</BaseLayout>

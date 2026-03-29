@@ -1,0 +1,125 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/sections/Hero.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import ClusterCard from "@/components/learn-to-surf/ClusterCard.astro";
+import { getLearnClusters, getLearnLessons } from "@/lib/sanity-data";
+
+const clusters = await getLearnClusters("en");
+const lessons = await getLearnLessons("en");
+
+const clusterCounts: Record<string, number> = {};
+for (const lesson of lessons) {
+  const cs = lesson.clusterSlug;
+  if (cs) clusterCounts[cs] = (clusterCounts[cs] || 0) + 1;
+}
+
+const seoTitle = "Learn to Surf · Rapture";
+const seoDesc =
+  "Master surfing from your first wave to advanced maneuvers. Free lessons, exercises, and expert tips from an ISA-approved surf school.";
+---
+
+<BaseLayout title={seoTitle} description={seoDesc}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Learn to Surf",
+    "description": seoDesc,
+    "url": "https://www.rapturecamps.com/learn-to-surf",
+    "provider": {
+      "@type": "Organization",
+      "name": "Rapture Surfcamps",
+      "url": "https://www.rapturecamps.com",
+      "sameAs": [
+        "https://www.instagram.com/rapturecamps",
+        "https://www.facebook.com/rapturecamps"
+      ]
+    },
+    "hasCourseInstance": {
+      "@type": "CourseInstance",
+      "courseMode": "online",
+      "isAccessibleForFree": true
+    }
+  })} />
+
+  <Hero
+    title="Learn to Surf"
+    subtitle="From your first wave to advanced maneuvers — master surfing with free lessons from an ISA-approved surf school."
+    tagline="Surf Education Hub"
+    backgroundImage="https://cdn.sanity.io/images/ypmt1bmc/production/0f4699ad7ef6f2461c02fb321f9743ad8e649d06-1920x1080.jpg?w=1920&h=1080&fit=crop&auto=format"
+    centered
+  >
+    <div class="flex justify-center">
+      <Breadcrumbs inline crumbs={[{ label: "Learn to Surf" }]} />
+    </div>
+  </Hero>
+
+
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-6xl px-6 sm:px-8">
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+          Your Complete Guide to Learning<br />How to Surf
+        </h1>
+        <p class="text-lg text-white/50 leading-relaxed">
+          Whether you're standing up for the first time or working on your cutback, our
+          comprehensive surf lessons cover every skill you need. Built by ISA-certified coaches
+          at Rapture Surfcamps, each lesson includes step-by-step instructions, practice exercises,
+          and tips from years of teaching thousands of surfers worldwide.
+        </p>
+      </div>
+
+      {clusters.length > 0 ? (
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {clusters.map((cluster: any) => (
+            <ClusterCard
+              title={cluster.title}
+              slug={cluster.slug}
+              description={cluster.description}
+              icon={cluster.icon}
+              featuredImageUrl={cluster.featuredImageUrl}
+              lessonCount={clusterCounts[cluster.slug] || 0}
+              lang="en"
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="rounded-2xl border border-white/10 bg-dark-lighter p-12 text-center">
+          <p class="text-white/40 text-lg">Content is being prepared. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {/* Author attribution (E-E-A-T) */}
+  <section class="py-12 bg-dark-lighter">
+    <div class="mx-auto max-w-6xl px-6 sm:px-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-xl border border-white/10 bg-dark px-6 py-5">
+        <img
+          src="/images/rapturecamps-logo.svg"
+          alt="Rapture Surfcamps"
+          width={48}
+          height={48}
+          class="w-12 h-12 rounded-lg"
+        />
+        <div>
+          <p class="text-sm font-semibold text-white">
+            Created by Rapture Surfcamps
+          </p>
+          <p class="text-xs text-white/40 mt-0.5">
+            ISA Approved Surf School · Recognized by the Portugal Surfing Federation
+          </p>
+        </div>
+        <a
+          href="/about"
+          class="sm:ml-auto text-xs text-ocean hover:text-white transition-colors"
+        >
+          About us →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</BaseLayout>

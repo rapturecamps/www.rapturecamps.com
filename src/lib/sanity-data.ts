@@ -20,6 +20,11 @@ import {
   LINKIN_BIO,
   FAQS_BY_CAMP,
   ACTIVE_POPUPS,
+  ALL_LEARN_CLUSTERS,
+  LEARN_CLUSTER_BY_SLUG,
+  ALL_LEARN_LESSONS,
+  LEARN_LESSONS_BY_CLUSTER,
+  LEARN_LESSON_BY_SLUG,
 } from "./queries";
 import {
   destinations as hardcodedDestinations,
@@ -253,6 +258,60 @@ export async function getFaqsByCamp(
     return grouped;
   } catch (e) {
     console.warn(`[sanity] Failed to fetch FAQs for camp ${campSlug}`, e);
+  }
+  return null;
+}
+
+// ─── Learn to Surf — Clusters ───────────────────────────────────────────────
+
+export async function getLearnClusters(lang = "en") {
+  try {
+    const clusters = await sanityClient.fetch(ALL_LEARN_CLUSTERS, { lang });
+    return clusters || [];
+  } catch (e) {
+    console.warn("[sanity] Failed to fetch learn-to-surf clusters", e);
+    return [];
+  }
+}
+
+export async function getLearnClusterBySlug(slug: string, lang = "en") {
+  try {
+    const cluster = await sanityClient.fetch(LEARN_CLUSTER_BY_SLUG, { slug, lang });
+    if (cluster) return cluster;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch cluster ${slug}`, e);
+  }
+  return null;
+}
+
+// ─── Learn to Surf — Lessons ────────────────────────────────────────────────
+
+export async function getLearnLessons(lang = "en") {
+  try {
+    const lessons = await sanityClient.fetch(ALL_LEARN_LESSONS, { lang });
+    return lessons || [];
+  } catch (e) {
+    console.warn("[sanity] Failed to fetch learn-to-surf lessons", e);
+    return [];
+  }
+}
+
+export async function getLearnLessonsByCluster(clusterSlug: string, lang = "en") {
+  try {
+    const lessons = await sanityClient.fetch(LEARN_LESSONS_BY_CLUSTER, { clusterSlug, lang });
+    return lessons || [];
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch lessons for cluster ${clusterSlug}`, e);
+    return [];
+  }
+}
+
+export async function getLearnLessonBySlug(slug: string, clusterSlug: string, lang = "en") {
+  try {
+    const lesson = await sanityClient.fetch(LEARN_LESSON_BY_SLUG, { slug, clusterSlug, lang });
+    if (lesson) return lesson;
+  } catch (e) {
+    console.warn(`[sanity] Failed to fetch lesson ${slug} in cluster ${clusterSlug}`, e);
   }
   return null;
 }

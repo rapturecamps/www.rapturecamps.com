@@ -147,6 +147,9 @@ const translations: Record<string, Record<Lang, string>> = {
   "months.nov": { en: "Nov", de: "Nov" },
   "months.dec": { en: "Dec", de: "Dez" },
 
+  "nav.learnToSurf": { en: "Learn to Surf", de: "Surfen Lernen" },
+
+  "footer.learnToSurf": { en: "Learn to Surf", de: "Surfen Lernen" },
   "footer.legal": { en: "Legal", de: "Impressum" },
   "footer.privacy": { en: "Privacy Policy", de: "Datenschutz" },
   "footer.terms": { en: "Terms & Conditions", de: "AGB" },

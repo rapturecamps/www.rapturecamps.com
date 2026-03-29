@@ -23,7 +23,7 @@ const LANGUAGES = [
   { id: "de", title: "German" },
 ];
 
-const I18N_SCHEMA_TYPES = ["camp", "campSurfPage", "campRoomsPage", "campFoodPage", "country", "blogPost", "faq", "faqCategory", "page", "homepage", "linkinBio"];
+const I18N_SCHEMA_TYPES = ["camp", "campSurfPage", "campRoomsPage", "campFoodPage", "country", "blogPost", "faq", "faqCategory", "page", "homepage", "linkinBio", "learnToSurfCluster", "learnToSurfLesson"];
 
 export default defineConfig({
   name: "rapturecamps",
@@ -291,6 +291,78 @@ export default defineConfig({
                   ])
               ),
             S.divider(),
+            S.listItem()
+              .title("Learn to Surf")
+              .child(
+                S.list()
+                  .title("Learn to Surf")
+                  .items([
+                    S.listItem()
+                      .title("Clusters")
+                      .child(
+                        S.documentList()
+                          .title("Clusters")
+                          .schemaType("learnToSurfCluster")
+                          .apiVersion(API_V)
+                          .filter('_type == "learnToSurfCluster" && (language == "en" || !defined(language))')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                      ),
+                    S.listItem()
+                      .title("Clusters (DE)")
+                      .child(
+                        S.documentList()
+                          .title("German Clusters")
+                          .schemaType("learnToSurfCluster")
+                          .apiVersion(API_V)
+                          .filter('_type == "learnToSurfCluster" && language == "de"')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                      ),
+                    S.divider(),
+                    S.listItem()
+                      .title("All Lessons")
+                      .child(
+                        S.documentList()
+                          .title("All Lessons")
+                          .schemaType("learnToSurfLesson")
+                          .apiVersion(API_V)
+                          .filter('_type == "learnToSurfLesson" && (language == "en" || !defined(language))')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                      ),
+                    S.listItem()
+                      .title("All Lessons (DE)")
+                      .child(
+                        S.documentList()
+                          .title("German Lessons")
+                          .schemaType("learnToSurfLesson")
+                          .apiVersion(API_V)
+                          .filter('_type == "learnToSurfLesson" && language == "de"')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                      ),
+                    S.divider(),
+                    S.listItem()
+                      .title("By Cluster")
+                      .child(
+                        S.documentList()
+                          .title("Select Cluster")
+                          .schemaType("learnToSurfCluster")
+                          .apiVersion(API_V)
+                          .filter('_type == "learnToSurfCluster" && (language == "en" || !defined(language))')
+                          .defaultOrdering([{ field: "order", direction: "asc" }])
+                          .child((clusterId) =>
+                            S.documentList()
+                              .title("Lessons")
+                              .schemaType("learnToSurfLesson")
+                              .apiVersion(API_V)
+                              .filter(
+                                '_type == "learnToSurfLesson" && (language == "en" || !defined(language)) && cluster._ref == $clusterId'
+                              )
+                              .params({ clusterId })
+                              .defaultOrdering([{ field: "order", direction: "asc" }])
+                          )
+                      ),
+                  ])
+              ),
+            S.divider(),
             S.documentTypeListItem("redirect").title("Redirects"),
             S.documentTypeListItem("popup").title("Popups"),
             S.documentTypeListItem("videoTestimonialSet").title("Video Testimonials"),
@@ -311,6 +383,7 @@ export default defineConfig({
                   "country", "blogPost", "blogCategory",
                   "faq", "faqCategory", "page", "homepage", "linkinBio",
                   "siteSettings", "redirect", "popup", "videoTestimonialSet", "seoInsight",
+                  "learnToSurfCluster", "learnToSurfLesson",
                 ].includes(item.getId() ?? "")
             ),
           ]);
@@ -348,6 +421,7 @@ export default defineConfig({
       const SEO_TYPES = [
         "camp", "campSurfPage", "campRoomsPage", "campFoodPage",
         "country", "blogPost", "page", "homepage",
+        "learnToSurfCluster", "learnToSurfLesson",
       ];
 
       let actions = [...prev];

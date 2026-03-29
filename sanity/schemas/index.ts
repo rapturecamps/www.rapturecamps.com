@@ -17,6 +17,8 @@ import videoTestimonialSet from "./videoTestimonialSet";
 import seoInsight from "./seoInsight";
 import contentSilo from "./contentSilo";
 import contentHub from "./contentHub";
+import learnToSurfCluster from "./learnToSurfCluster";
+import learnToSurfLesson from "./learnToSurfLesson";
 
 import richText from "./blocks/richText";
 import cardGrid from "./blocks/cardGrid";
@@ -57,6 +59,11 @@ import retreatTestimonials from "./blocks/retreatTestimonials";
 import retreatStatsBar from "./blocks/retreatStatsBar";
 import retreatGallery from "./blocks/retreatGallery";
 
+import lessonStep from "./blocks/lessonStep";
+import surfTip from "./blocks/surfTip";
+import surfExercise from "./blocks/surfExercise";
+import surfMistake from "./blocks/surfMistake";
+
 import seo from "./objects/seo";
 
 export const schemaTypes = [
@@ -80,6 +87,8 @@ export const schemaTypes = [
   seoInsight,
   contentSilo,
   contentHub,
+  learnToSurfCluster,
+  learnToSurfLesson,
 
   // Page builder blocks — shared
   richText,
@@ -128,6 +137,12 @@ export const schemaTypes = [
   retreatTestimonials,
   retreatStatsBar,
   retreatGallery,
+
+  // Page builder blocks — learn to surf
+  lessonStep,
+  surfTip,
+  surfExercise,
+  surfMistake,
 
   // Objects
   seo,

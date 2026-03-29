@@ -18,11 +18,11 @@ const competitors = [
     surfProgram: "All-level coaching, max 5:1 ratio, 2 sessions/day, video analysis included",
     mealsIncluded: "Breakfast + dinner Mon–Fri (3-course)",
     yoga: "Daily, included",
-    priceFrom: "~€500/week",
+    priceFrom: "€45/night",
     priceNote: "Modular: book accommodation only, or add surf/yoga/meals à la carte",
     cancellation: "Free up to 30 days",
     arrival: "Any day — even 1 night",
-    languages: "EN, DE",
+    languages: "EN, DE, PT, ES",
     unique: ["20+ years experience", "85k+ guests served", "Small camps (~20 guests) — everyone knows everyone", "Arrive & depart any day (no fixed schedules)", "Book accommodation only — add extras daily", "Free surf equipment use all day, every day", "Returning customer discounts (cross-destination)", "Student discounts available", "Max 5:1 coaching ratio", "Premium villa options (infinity pool)", "Retreat hosting program", "10% group discount (4+)"],
     highlight: true,
   },
@@ -56,7 +56,7 @@ const competitors = [
     surfProgram: "Surf guiding 2x daily 7 days/week included, max 6:1 groups, video analysis 6x/week",
     mealsIncluded: "3-course breakfast included; dinner NOT included at most camps",
     yoga: "6 days/week, included",
-    priceFrom: "€20/night",
+    priceFrom: "€54/night",
     priceNote: "Accommodation + breakfast + guiding — no lessons for beginners, no dinner",
     cancellation: "Full payment before check-in",
     arrival: "Flexible",
@@ -164,7 +164,7 @@ const comparisonRows = [
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {competitors.map((c) => (
           <div class:list={[
-            "rounded-xl p-6 sm:p-7 transition-colors relative",
+            "rounded-xl p-6 sm:p-7 transition-colors relative flex flex-col",
             c.highlight
               ? "bg-ocean-light/[0.06] border-2 border-ocean-light/30"
               : "bg-dark-lighter border border-white/5 hover:border-white/10"
@@ -176,8 +176,10 @@ const comparisonRows = [
             <h3 class="text-xl font-semibold text-white mb-1">{c.name}</h3>
             <p class="text-xs text-white/30 mb-4">{c.tagline}</p>
             <p class="text-sm text-white/40 leading-relaxed mb-4">{c.destinations}</p>
-            <p class="text-2xl font-bold text-ocean-light mb-0.5">from {c.priceFrom}</p>
-            <p class="text-[10px] text-white/25 uppercase tracking-wider">{c.destCount}</p>
+            <div class="mt-auto">
+              <p class="text-2xl font-bold text-ocean-light mb-0.5">from {c.priceFrom}</p>
+              <p class="text-[10px] text-white/25 uppercase tracking-wider min-h-[2lh]">{c.destCount}</p>
+            </div>
           </div>
         ))}
       </div>
@@ -409,7 +411,7 @@ const comparisonRows = [
           <p class="text-base text-white/60 leading-relaxed"><strong class="text-white/80">You only pay for what you actually use.</strong> Book accommodation only for as little as one night, then add surf lessons, yoga, or meals on a daily basis. Want to go sightseeing one day instead of surfing? You don't pay for a lesson you won't take. No rigid weekly packages, no forced bundles.</p>
           <p class="text-base text-white/60 leading-relaxed">Rapture rewards loyalty: <strong class="text-white/80">returning customers get discounts across all destinations</strong> — so if you stayed in Portugal this year and want to try Costa Rica next year, you'll pay less the second time around. We also offer <strong class="text-white/80">student discounts</strong> to make surf camp accessible for younger travellers.</p>
           <div class="bg-white/[0.03] border border-white/5 rounded-xl p-5 mt-4">
-            <p class="text-xs text-white/30 leading-relaxed"><strong class="text-white/40">The catch with "cheaper" prices:</strong> Kima starts at €20/night and Lapoint at €396/week — but those are base prices. Add surf school for beginners, dinner, board rental, and extras and the total quickly approaches or exceeds Rapture's rate. Dreamsea's European camps include food but charge €170–280 extra for surf courses.</p>
+            <p class="text-xs text-white/30 leading-relaxed"><strong class="text-white/40">The catch with "cheaper" prices:</strong> Kima starts at €54/night and Lapoint at €396/week — but those are base prices. Add surf school for beginners, dinner, board rental, and extras and the total quickly approaches or exceeds Rapture's rate. Dreamsea's European camps include food but charge €170–280 extra for surf courses.</p>
           </div>
         </div>
         <div class="flex flex-col gap-3">
@@ -648,7 +650,7 @@ const comparisonRows = [
                 "Daily surf guiding included",
                 "Resort facilities & ice baths",
                 "Long-stay discounts",
-                "Budget dorms from €20/night",
+                "Budget dorms from €54/night",
               ].map((text) => (
                 <li class="flex gap-2 items-start">
                   <span class="text-white/20 mt-0.5 shrink-0 text-xs">&#10003;</span>

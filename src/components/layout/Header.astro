@@ -1,8 +1,9 @@
 ---
 import { navigation as fallbackNav, countries as fallbackCountries, destinations as fallbackDests } from "@/lib/data";
-import { getCountries, getDestinations, getSiteSettings } from "@/lib/sanity-data";
+import { getCountries, getDestinations, getSiteSettings, getLearnClusters } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
 import type { Lang } from "@/lib/i18n";
+import ClusterIcon from "@/components/learn-to-surf/ClusterIcon.astro";
 
 interface Props {
   alternatePath?: string | null;
@@ -44,6 +45,8 @@ const campsByCountry = countries.map((country: any) => ({
   ...country,
   camps: allDestinations.filter((d) => d.country === country.name),
 }));
+
+const learnClusters = await getLearnClusters(currentLang);
 ---
 
 <header
@@ -112,6 +115,62 @@ const campsByCountry = countries.map((country: any) => ({
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="learn-trigger" class="relative">
+          <button
+            id="learn-btn"
+            class="flex items-center gap-1 text-sm text-white/80 hover:text-white transition-colors"
+          >
+            {t("nav.learnToSurf", lang)}
+            <svg class="h-3.5 w-3.5 transition-transform duration-200" id="learn-chevron" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <div
+            id="learn-panel"
+            class="learn-panel fixed top-20 left-0 right-0 pt-0 opacity-0 invisible pointer-events-none transition-all duration-200"
+          >
+            <div class="bg-[#0c1e3d]/95 backdrop-blur-xl border-t border-b border-white/10 shadow-2xl">
+              <div class="mx-auto max-w-7xl px-8 lg:px-12 py-7">
+                <div class="grid grid-cols-4 gap-8">
+                  <div class="flex flex-col justify-between pr-4 border-r border-white/10">
+                    <div>
+                      <h3 class="font-display text-lg font-bold text-white mb-2">
+                        {t("nav.learnToSurf", lang)}
+                      </h3>
+                      <p class="text-sm text-white/40 leading-relaxed">
+                        {isDE
+                          ? "Von Anfänger bis Fortgeschrittene — 100+ Lektionen von ISA-zertifizierten Coaches."
+                          : "From beginner to advanced — 100+ lessons by ISA-certified coaches."}
+                      </p>
+                    </div>
+                    <a
+                      href={langPrefix + "/learn-to-surf"}
+                      class="mt-5 inline-flex items-center gap-2 rounded-lg bg-ocean/10 border border-ocean/20 px-4 py-2.5 text-sm font-semibold text-ocean hover:bg-ocean/20 transition-colors"
+                    >
+                      {isDE ? "Alle Lektionen" : "Explore All Lessons"}
+                      <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                    </a>
+                  </div>
+                  <div class="col-span-3 grid grid-cols-3 gap-x-6 gap-y-3">
+                    {learnClusters.map((cluster: any) => (
+                      <a
+                        href={`${langPrefix}/learn-to-surf/${cluster.slug}`}
+                        class="group flex items-center gap-3 rounded-xl px-3 py-2 -mx-1 hover:bg-white/5 transition-colors"
+                      >
+                        <span class="flex-shrink-0 text-ocean/70 group-hover:text-ocean transition-colors">
+                          <ClusterIcon icon={cluster.icon} class="h-5 w-5" />
+                        </span>
+                        <span class="text-sm font-medium text-white/85 group-hover:text-white transition-colors">{cluster.title}</span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -225,6 +284,36 @@ const campsByCountry = countries.map((country: any) => ({
       ))}
 
       <div class="my-4 border-t border-white/10" />
+
+      <div class="mobile-learn">
+        <button
+          class="mobile-learn-btn w-full flex items-center justify-between rounded-lg px-4 py-3 text-lg font-medium text-white/80 hover:text-white hover:bg-white/10"
+        >
+          <span>{t("nav.learnToSurf", lang)}</span>
+          <svg class="mobile-learn-chevron h-5 w-5 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        <div class="mobile-learn-items hidden pl-4 pb-2">
+          <a
+            href={langPrefix + "/learn-to-surf"}
+            class="block rounded-lg px-4 py-2.5 text-xs uppercase tracking-wider text-white/40 hover:text-white/70"
+          >
+            {isDE ? "Alle Lektionen" : "All Lessons"}
+          </a>
+          {learnClusters.map((cluster: any) => (
+            <a
+              href={`${langPrefix}/learn-to-surf/${cluster.slug}`}
+              class="flex items-center gap-3 rounded-lg px-4 py-2.5 text-base text-white/70 hover:text-white hover:bg-white/10"
+            >
+              <span class="flex-shrink-0 text-ocean/60">
+                <ClusterIcon icon={cluster.icon} class="h-5 w-5" />
+              </span>
+              <span>{cluster.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
 
       {navItems.map((item) => (
         <a

@@ -1,0 +1,40 @@
+---
+const { node } = Astro.props as any;
+const heading = node?.heading || "Common Mistakes";
+const mistakes = node?.mistakes ?? [];
+---
+
+<div class="my-8">
+  <h3 class="font-display text-xl font-bold text-white mb-6">{heading}</h3>
+  <div class="space-y-4">
+    {mistakes.map((item) => (
+      <div class="rounded-xl border border-white/10 bg-dark-lighter overflow-hidden">
+        <div class="grid sm:grid-cols-2">
+          <div class="px-5 py-4 border-b sm:border-b-0 sm:border-r border-white/10">
+            <p class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-red-400/60 mb-2">
+              <span class="text-red-400 text-sm">✗</span> Mistake
+            </p>
+            <p class="text-white/60 text-[0.9375rem] leading-relaxed">{item.mistake}</p>
+          </div>
+          <div class="px-5 py-4">
+            <p class="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-400/60 mb-2">
+              <span class="text-emerald-400 text-sm">✓</span> Correction
+            </p>
+            <p class="text-white/60 text-[0.9375rem] leading-relaxed">{item.correction}</p>
+          </div>
+        </div>
+        {item.resolvedImageUrl && (
+          <img
+            src={`${item.resolvedImageUrl}?w=720&auto=format`}
+            alt={`${item.mistake} vs ${item.correction}`}
+            width={720}
+            height={300}
+            loading="lazy"
+            decoding="async"
+            class="w-full border-t border-white/10"
+          />
+        )}
+      </div>
+    ))}
+  </div>
+</div>

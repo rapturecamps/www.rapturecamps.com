@@ -682,6 +682,150 @@ export const BLOG_POSTS_BY_HUB = `*[_type == "blogPost" && hub->name == $hubName
   "hub": hub->name
 }`;
 
+// ─── Learn to Surf ──────────────────────────────────────────────────────────
+
+const learnToSurfBlockProjection = `
+  _key, _type, ...,
+  "resolvedImageUrl": image.asset->url,
+  "resolvedImageAlt": image.asset->altText,
+  "resolvedPosterUrl": poster.asset->url,
+  "resolvedVideoPosterUrl": videoPoster.asset->url,
+  images[] { ..., "resolvedUrl": asset->url, "resolvedAlt": asset->altText },
+  cards[] { ..., "resolvedImageUrl": image.asset->url },
+  _type == "lessonStep" => {
+    ...,
+    steps[] { ..., "resolvedImageUrl": image.asset->url }
+  },
+  _type == "surfExercise" => {
+    ...,
+    "resolvedImageUrl": image.asset->url
+  },
+  _type == "surfMistake" => {
+    ...,
+    mistakes[] { ..., "resolvedImageUrl": image.asset->url }
+  },
+  _type == "inclusionsGrid" => {
+    ...,
+    items[] { ..., "resolvedIconImageUrl": iconImage.asset->url }
+  },
+  _type == "videoTestimonials" => {
+    ...,
+    videos[] { ..., "posterImageUrl": posterImage.asset->url },
+    "resolvedSet": testimonialSet->{
+      heading, bunnyLibraryId, bunnyPullZone,
+      videos[] { ..., "posterImageUrl": posterImage.asset->url }
+    }
+  },
+  _type == "faqSection" => {
+    ...,
+    "resolvedFaqs": faqRefs[] {
+      "faqId": coalesce(
+        *[_type == "translation.metadata" && ^._ref in translations[].value._ref][0]
+          .translations[_key == $lang][0].value._ref,
+        _ref
+      )
+    }{ "question": *[_id == ^.faqId][0].question, "answer": *[_id == ^.faqId][0].answer },
+    "resolvedCategoryFaqs": *[_type == "faq" && category._ref == ^.faqCategory._ref && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) { question, answer }
+  }
+`;
+
+export const ALL_LEARN_CLUSTERS = `*[_type == "learnToSurfCluster" && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  icon,
+  order,
+  lmsCourseUrl,
+  "featuredImageUrl": featuredImage.asset->url,
+  seo
+}`;
+
+export const LEARN_CLUSTER_BY_SLUG = `*[_type == "learnToSurfCluster" && slug.current == $slug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  icon,
+  order,
+  heroTitle,
+  heroSubtitle,
+  heroTagline,
+  lmsCourseUrl,
+  "featuredImageUrl": featuredImage.asset->url,
+  pageBuilder[] { ${learnToSurfBlockProjection} },
+  seo { ..., "ogImageUrl": ogImage.asset->url },
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    "slug": slug.current,
+    language
+  }
+}`;
+
+export const ALL_LEARN_LESSONS = `*[_type == "learnToSurfLesson" && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  "clusterSlug": cluster->slug.current,
+  "clusterTitle": cluster->title,
+  excerpt,
+  difficulty,
+  readTime,
+  order,
+  "featuredImageUrl": featuredImage.asset->url
+}`;
+
+export const LEARN_LESSONS_BY_CLUSTER = `*[_type == "learnToSurfLesson" && cluster->slug.current == $clusterSlug && (language == $lang || (!defined(language) && $lang == "en"))] | order(order asc) {
+  _id,
+  title,
+  "slug": slug.current,
+  excerpt,
+  difficulty,
+  readTime,
+  order,
+  lmsUrl,
+  "featuredImageUrl": featuredImage.asset->url
+}`;
+
+export const LEARN_LESSON_BY_SLUG = `*[_type == "learnToSurfLesson" && slug.current == $slug && cluster->slug.current == $clusterSlug && (language == $lang || (!defined(language) && $lang == "en"))][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  "clusterSlug": cluster->slug.current,
+  "clusterTitle": cluster->title,
+  excerpt,
+  difficulty,
+  readTime,
+  keyTakeaways,
+  introVideo,
+  lmsUrl,
+  order,
+  "featuredImageUrl": featuredImage.asset->url,
+  "prerequisites": prerequisites[]->{
+    _id, title, "slug": slug.current,
+    "clusterSlug": cluster->slug.current,
+    difficulty
+  },
+  "nextLessons": nextLessons[]->{
+    _id, title, "slug": slug.current,
+    "clusterSlug": cluster->slug.current,
+    difficulty
+  },
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      "url": asset->url,
+      "altText": asset->altText
+    },
+    ${learnToSurfBlockProjection}
+  },
+  seo { ..., "ogImageUrl": ogImage.asset->url },
+  "_translations": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+    "slug": slug.current,
+    language
+  }
+}`;
+
 export const RELATED_BLOG_POSTS = `{
   "byHub": *[_type == "blogPost" && silo->name == $siloName && hub->name == $hubName && (language == $lang || (!defined(language) && $lang == "en")) && _id != $excludeId] | order(publishedAt desc) [0...$limit] {
     _id, title, "slug": slug.current, excerpt, "featuredImage": featuredImage.asset->url, publishedAt,

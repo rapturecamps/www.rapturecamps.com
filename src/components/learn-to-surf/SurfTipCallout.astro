@@ -1,0 +1,54 @@
+---
+const { node } = Astro.props as any;
+const tipType = node?.tipType || "tip";
+const title = node?.title;
+const content = node?.content || "";
+
+const config: Record<string, { icon: string; label: string; border: string; bg: string; iconColor: string }> = {
+  tip: {
+    icon: "💡",
+    label: "Tip",
+    border: "border-emerald-500/30",
+    bg: "bg-emerald-500/5",
+    iconColor: "text-emerald-400",
+  },
+  warning: {
+    icon: "⚠️",
+    label: "Warning",
+    border: "border-amber-500/30",
+    bg: "bg-amber-500/5",
+    iconColor: "text-amber-400",
+  },
+  important: {
+    icon: "❗",
+    label: "Important",
+    border: "border-red-500/30",
+    bg: "bg-red-500/5",
+    iconColor: "text-red-400",
+  },
+  "pro-tip": {
+    icon: "🎯",
+    label: "Pro Tip",
+    border: "border-purple-500/30",
+    bg: "bg-purple-500/5",
+    iconColor: "text-purple-400",
+  },
+};
+
+const c = config[tipType] || config.tip;
+const displayTitle = title || c.label;
+
+function renderContent(text: string): string {
+  return text.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" class="text-ocean-light underline underline-offset-2 decoration-ocean-light/30 hover:text-white hover:decoration-white transition-colors">$1</a>'
+  );
+}
+---
+
+<aside class={`rounded-xl border ${c.border} ${c.bg} px-5 py-4 my-6`}>
+  <p class={`flex items-center gap-2 font-display font-semibold text-sm ${c.iconColor} mb-2`}>
+    <span class="text-base" aria-hidden="true">{c.icon}</span> {displayTitle}
+  </p>
+  <p class="text-white/60 text-[0.9375rem] leading-relaxed" set:html={renderContent(content)} />
+</aside>

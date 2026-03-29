@@ -1,0 +1,67 @@
+---
+interface LessonRef {
+  title: string;
+  slug: string;
+  clusterSlug: string;
+  difficulty?: string;
+}
+
+interface Props {
+  prerequisites?: LessonRef[];
+  nextLessons?: LessonRef[];
+  clusterSlug: string;
+  clusterTitle: string;
+  lang?: string;
+}
+
+const { prerequisites: rawPrereqs, nextLessons: rawNext, clusterSlug, clusterTitle, lang = "en" } = Astro.props;
+const prerequisites = rawPrereqs ?? [];
+const nextLessons = rawNext ?? [];
+const prefix = lang === "de" ? "/de" : "";
+---
+
+<nav class="mt-12 pt-8 border-t border-white/10">
+  {/* Prerequisites */}
+  {prerequisites.length > 0 && (
+    <div class="mb-6">
+      <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-3">Prerequisites</p>
+      <div class="flex flex-wrap gap-2">
+        {prerequisites.map((lesson) => (
+          <a
+            href={`${prefix}/learn-to-surf/${lesson.clusterSlug}/${lesson.slug}`}
+            class="text-sm text-ocean hover:text-white border border-ocean/20 hover:border-ocean/40 rounded-lg px-3 py-1.5 transition-colors"
+          >
+            {lesson.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* Next lessons */}
+  {nextLessons.length > 0 && (
+    <div class="mb-6">
+      <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-3">Continue Learning</p>
+      <div class="grid sm:grid-cols-2 gap-3">
+        {nextLessons.map((lesson) => (
+          <a
+            href={`${prefix}/learn-to-surf/${lesson.clusterSlug}/${lesson.slug}`}
+            class="group flex items-center gap-3 rounded-xl border border-white/10 hover:border-ocean/30 bg-dark-lighter px-4 py-3 transition-colors"
+          >
+            <span class="text-white/80 group-hover:text-white text-sm font-medium flex-1">{lesson.title}</span>
+            <span class="text-white/20 group-hover:text-ocean transition-colors">→</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {/* Back to cluster */}
+  <a
+    href={`${prefix}/learn-to-surf/${clusterSlug}`}
+    class="inline-flex items-center gap-2 text-sm text-white/40 hover:text-ocean transition-colors"
+  >
+    <span>←</span>
+    <span>All {clusterTitle} lessons</span>
+  </a>
+</nav>

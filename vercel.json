@@ -31,6 +31,76 @@
   ],
   "redirects": [
     {
+      "source": "/blog/how-to-pop-up-on-a-surfboard",
+      "destination": "/learn-to-surf/surf-fundamentals/pop-up",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/8-steps-on-how-to-pop-up-on-a-surfboard",
+      "destination": "/learn-to-surf/surf-fundamentals/pop-up",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-read-waves",
+      "destination": "/learn-to-surf/wave-knowledge/reading-waves",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/basics-to-read-a-wave",
+      "destination": "/learn-to-surf/wave-knowledge/reading-waves",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/common-surfing-mistakes",
+      "destination": "/learn-to-surf/surf-fundamentals/beginner-mistakes",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/mistakes-you-make-as-a-surfer-and-tips-on-how-to-fix-them",
+      "destination": "/learn-to-surf/surf-fundamentals/beginner-mistakes",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/learn-how-to-duck-dive",
+      "destination": "/learn-to-surf/paddling/duck-dive",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-is-duck-diving",
+      "destination": "/learn-to-surf/paddling/duck-dive",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-take-wax-off-a-surfboard",
+      "destination": "/learn-to-surf/surf-equipment/waxing-rewax",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-wax-a-surfboard",
+      "destination": "/learn-to-surf/surf-equipment/waxing-rewax",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/surf-etiquette-for-surfers",
+      "destination": "/learn-to-surf/surf-etiquette/surf-etiquette",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/what-is-the-diving-reflex",
+      "destination": "/learn-to-surf/surf-mindset/staying-calm-underwater",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/barrel-riding-basics",
+      "destination": "/learn-to-surf/surf-maneuvers/barrel-riding",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/how-to-surf-barrel-riding-tips",
+      "destination": "/learn-to-surf/surf-maneuvers/barrel-riding",
+      "statusCode": 301
+    },
+    {
       "source": "/surfcamp/:country/:camp/food/:recipe",
       "destination": "/surfcamp/:country/:camp/food",
       "statusCode": 301
@@ -4592,6 +4662,14 @@
     {
       "source": "/de/surfcamp/nicaragua",
       "destination": "/api/gone"
+    },
+    {
+      "source": "/surfing-academy/:path*",
+      "destination": "https://rapturecamps.surfskill.app/:path*"
+    },
+    {
+      "source": "/surfing-academy",
+      "destination": "https://rapturecamps.surfskill.app/"
     }
   ]
 }

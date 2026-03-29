@@ -274,51 +274,95 @@ const popupConfig = activePopup ? JSON.stringify({
           link.addEventListener("click", function () { closeMenu(); });
         });
 
-        /* --- Desktop destinations dropdown --- */
+        /* --- Desktop mega menu helpers --- */
         var destTrigger = document.getElementById("dest-trigger");
         var destPanel = document.getElementById("dest-panel");
         var destChevron = document.getElementById("dest-chevron");
         var destBtn = document.getElementById("dest-btn");
 
+        var learnTrigger = document.getElementById("learn-trigger");
+        var learnPanel = document.getElementById("learn-panel");
+        var learnChevron = document.getElementById("learn-chevron");
+        var learnBtn = document.getElementById("learn-btn");
+
+        var destOpen = false;
+        var destTimer = null;
+        var learnOpen = false;
+        var learnTimer = null;
+
+        function showDestDropdown() {
+          if (destTimer) { clearTimeout(destTimer); destTimer = null; }
+          if (learnOpen) hideLearnDropdown();
+          destOpen = true;
+          destPanel && destPanel.classList.add("is-open");
+          destChevron && destChevron.classList.add("is-open");
+          hdr.setAttribute("data-dropdown", "true");
+        }
+
+        function hideDestDropdown() {
+          destOpen = false;
+          destPanel && destPanel.classList.remove("is-open");
+          destChevron && destChevron.classList.remove("is-open");
+          if (!learnOpen) hdr.removeAttribute("data-dropdown");
+        }
+
+        function showLearnDropdown() {
+          if (learnTimer) { clearTimeout(learnTimer); learnTimer = null; }
+          if (destOpen) hideDestDropdown();
+          learnOpen = true;
+          learnPanel && learnPanel.classList.add("is-open");
+          learnChevron && learnChevron.classList.add("is-open");
+          hdr.setAttribute("data-dropdown", "true");
+        }
+
+        function hideLearnDropdown() {
+          learnOpen = false;
+          learnPanel && learnPanel.classList.remove("is-open");
+          learnChevron && learnChevron.classList.remove("is-open");
+          if (!destOpen) hdr.removeAttribute("data-dropdown");
+        }
+
+        /* --- Desktop destinations dropdown --- */
         if (destTrigger && destPanel && destChevron) {
-          var dropdownOpen = false;
-          var closeTimer = null;
+          destTrigger.addEventListener("mouseenter", showDestDropdown);
+          destTrigger.addEventListener("mouseleave", function () {
+            destTimer = setTimeout(hideDestDropdown, 150);
+          });
 
-          function showDropdown() {
-            if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
-            dropdownOpen = true;
-            destPanel.classList.add("is-open");
-            destChevron.classList.add("is-open");
-            hdr.setAttribute("data-dropdown", "true");
-          }
-
-          function hideDropdown() {
-            dropdownOpen = false;
-            destPanel.classList.remove("is-open");
-            destChevron.classList.remove("is-open");
-            hdr.removeAttribute("data-dropdown");
-          }
-
-          function scheduleClose() {
-            closeTimer = setTimeout(hideDropdown, 150);
-          }
-
-          destTrigger.addEventListener("mouseenter", showDropdown);
-          destTrigger.addEventListener("mouseleave", scheduleClose);
-
-          destBtn.addEventListener("click", function (e) {
+          destBtn && destBtn.addEventListener("click", function (e) {
             e.preventDefault();
-            if (dropdownOpen) { hideDropdown(); } else { showDropdown(); }
+            if (destOpen) { hideDestDropdown(); } else { showDestDropdown(); }
           });
 
           destPanel.querySelectorAll("a").forEach(function (link) {
-            link.addEventListener("click", hideDropdown);
-          });
-
-          document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape" && dropdownOpen) hideDropdown();
+            link.addEventListener("click", hideDestDropdown);
           });
         }
+
+        /* --- Desktop learn-to-surf dropdown --- */
+        if (learnTrigger && learnPanel && learnChevron) {
+          learnTrigger.addEventListener("mouseenter", showLearnDropdown);
+          learnTrigger.addEventListener("mouseleave", function () {
+            learnTimer = setTimeout(hideLearnDropdown, 150);
+          });
+
+          learnBtn && learnBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (learnOpen) { hideLearnDropdown(); } else { showLearnDropdown(); }
+          });
+
+          learnPanel.querySelectorAll("a").forEach(function (link) {
+            link.addEventListener("click", hideLearnDropdown);
+          });
+        }
+
+        /* --- Escape closes any open dropdown --- */
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape") {
+            if (destOpen) hideDestDropdown();
+            if (learnOpen) hideLearnDropdown();
+          }
+        });
 
         /* --- Mobile country accordions --- */
         var countryBtns = menu.querySelectorAll(".mobile-country-btn");
@@ -339,6 +383,67 @@ const popupConfig = activePopup ? JSON.stringify({
             }
           });
         });
+
+        /* --- Mobile learn-to-surf accordion --- */
+        var learnBtns = menu.querySelectorAll(".mobile-learn-btn");
+        learnBtns.forEach(function (lbtn) {
+          lbtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            var parent = lbtn.closest(".mobile-learn");
+            var items = parent.querySelector(".mobile-learn-items");
+            var chevron = parent.querySelector(".mobile-learn-chevron");
+            var isOpen = !items.classList.contains("hidden");
+
+            if (isOpen) {
+              items.classList.add("hidden");
+              chevron.classList.remove("is-open");
+            } else {
+              items.classList.remove("hidden");
+              chevron.classList.add("is-open");
+            }
+          });
+        });
+
+        /* --- Learn subnav: scroll-triggered fade-in + mobile collapsible --- */
+        var learnSubnav = document.getElementById("learn-subnav");
+        if (learnSubnav) {
+          var scrollThreshold = 80;
+          window.addEventListener("scroll", function () {
+            if (window.scrollY > scrollThreshold) {
+              learnSubnav.classList.add("is-visible");
+            } else {
+              learnSubnav.classList.remove("is-visible");
+            }
+          }, { passive: true });
+
+          var subnavToggle = learnSubnav.querySelector(".learn-subnav-toggle");
+          var subnavPanel = learnSubnav.querySelector(".learn-subnav-panel");
+          var subnavChevron = learnSubnav.querySelector(".learn-subnav-chevron");
+
+          if (subnavToggle && subnavPanel && subnavChevron) {
+            subnavToggle.addEventListener("click", function (e) {
+              e.preventDefault();
+              var isOpen = !subnavPanel.classList.contains("hidden");
+              if (isOpen) {
+                subnavPanel.classList.add("hidden");
+                subnavChevron.classList.remove("is-open");
+                subnavToggle.setAttribute("aria-expanded", "false");
+              } else {
+                subnavPanel.classList.remove("hidden");
+                subnavChevron.classList.add("is-open");
+                subnavToggle.setAttribute("aria-expanded", "true");
+              }
+            });
+
+            subnavPanel.querySelectorAll("a").forEach(function (link) {
+              link.addEventListener("click", function () {
+                subnavPanel.classList.add("hidden");
+                subnavChevron.classList.remove("is-open");
+                subnavToggle.setAttribute("aria-expanded", "false");
+              });
+            });
+          }
+        }
 
         /* --- Context-aware Book button --- */
         var contextBookingUrl = document.body.getAttribute("data-booking-url");

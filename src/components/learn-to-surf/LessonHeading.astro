@@ -1,0 +1,33 @@
+---
+/**
+ * Custom PortableText block handler that renders headings with id attributes
+ * so the Table of Contents anchor links can scroll to them.
+ */
+const { node } = Astro.props;
+const style = node.style;
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
+const text = (node.children || []).map((c: any) => c.text || "").join("");
+const id = slugify(text);
+const isHeading = ["h2", "h3", "h4"].includes(style);
+---
+
+{isHeading ? (
+  style === "h2" ? (
+    <h2 id={id}><slot /></h2>
+  ) : style === "h3" ? (
+    <h3 id={id}><slot /></h3>
+  ) : (
+    <h4 id={id}><slot /></h4>
+  )
+) : (
+  <p><slot /></p>
+)}

@@ -1,0 +1,68 @@
+---
+/**
+ * Auto-generates a table of contents from portable text body blocks.
+ * Extracts H2 and H3 headings and renders a clickable anchor list.
+ */
+interface Heading {
+  text: string;
+  id: string;
+  level: "h2" | "h3";
+}
+
+interface Props {
+  body: any[];
+}
+
+const { body = [] } = Astro.props;
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .trim();
+}
+
+function extractText(block: any): string {
+  if (!block.children) return "";
+  return block.children.map((c: any) => c.text || "").join("");
+}
+
+const headings: Heading[] = [];
+for (const block of body) {
+  if (block._type !== "block") continue;
+  if (block.style !== "h2" && block.style !== "h3") continue;
+  const text = extractText(block);
+  if (!text.trim()) continue;
+  headings.push({
+    text: text.trim(),
+    id: slugify(text),
+    level: block.style as "h2" | "h3",
+  });
+}
+---
+
+{headings.length >= 3 && (
+  <nav class="rounded-xl border border-white/10 bg-dark-lighter px-5 py-4 mb-10" aria-label="Table of contents">
+    <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-3">In this lesson</p>
+    <ol class="space-y-1.5">
+      {headings.map((h) => (
+        <li class={h.level === "h3" ? "pl-4" : ""}>
+          <a
+            href={`#${h.id}`}
+            class="text-sm text-white/50 hover:text-ocean transition-colors leading-snug block"
+          >
+            {h.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

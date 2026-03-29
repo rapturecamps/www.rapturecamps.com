@@ -1,6 +1,6 @@
 ---
 import { countries as fallbackCountries, navigation as fallbackNav } from "@/lib/data";
-import { getCountries, getSiteSettings } from "@/lib/sanity-data";
+import { getCountries, getSiteSettings, getLearnClusters } from "@/lib/sanity-data";
 
 interface Props {
   lang?: string;
@@ -13,6 +13,7 @@ const prefix = isDE ? "/de" : "";
 const settings = await getSiteSettings();
 const countries = await getCountries();
 const navigation = settings.navigation || fallbackNav;
+const learnClusters = await getLearnClusters(lang);
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/rapturecamps/", icon: "M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" },
@@ -27,6 +28,7 @@ const t = {
     : "A network of 8 unique surf camps in 5 countries on 4 continents. Helping more than 85k people learn to surf since 2003.",
   destinations: isDE ? "Reiseziele" : "Destinations",
   company: isDE ? "Unternehmen" : "Company",
+  learnToSurf: isDE ? "Surfen Lernen" : "Learn to Surf",
   getInTouch: isDE ? "Kontakt" : "Get in Touch",
   contactUs: isDE ? "Kontaktiere uns" : "Contact Us",
   bookNow: isDE ? "Jetzt buchen" : "Book Now",
@@ -52,7 +54,7 @@ const currentYear = new Date().getFullYear();
   />
   <div class="absolute inset-0 bg-dark-lighter/90" />
   <div class="relative z-10 px-6 sm:px-12 lg:px-20">
-    <div class="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-1 gap-10 py-14 md:grid-cols-2 lg:grid-cols-5">
       <div>
         <a href={`${prefix}/`} class="inline-flex items-center gap-3">
           <img src="/images/rapturecamps-logo.svg" alt="Rapture Surfcamps" width="54" height="48" class="h-12 w-auto" />
@@ -84,6 +86,24 @@ const currentYear = new Date().getFullYear();
             <li>
               <a href={`${prefix}/surfcamp/${country.slug}`} class="text-sm text-white/30 hover:text-white transition-colors">
                 {country.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-xs font-semibold uppercase tracking-wider text-white/50 mb-4">{t.learnToSurf}</h3>
+        <ul class="space-y-2.5">
+          <li>
+            <a href={`${prefix}/learn-to-surf`} class="text-sm text-white/30 hover:text-white transition-colors">
+              {isDE ? "Alle Lektionen" : "All Lessons"}
+            </a>
+          </li>
+          {learnClusters.slice(0, 6).map((cluster: any) => (
+            <li>
+              <a href={`${prefix}/learn-to-surf/${cluster.slug}`} class="text-sm text-white/30 hover:text-white transition-colors">
+                {cluster.title}
               </a>
             </li>
           ))}

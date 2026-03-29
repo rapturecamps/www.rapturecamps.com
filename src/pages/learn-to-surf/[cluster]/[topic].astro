@@ -1,0 +1,342 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import CTASection from "@/components/sections/CTASection.astro";
+import LessonHeader from "@/components/learn-to-surf/LessonHeader.astro";
+import LessonNav from "@/components/learn-to-surf/LessonNav.astro";
+import TableOfContents from "@/components/learn-to-surf/TableOfContents.astro";
+import LessonStep from "@/components/learn-to-surf/LessonStep.astro";
+import SurfTipCallout from "@/components/learn-to-surf/SurfTipCallout.astro";
+import SurfExercise from "@/components/learn-to-surf/SurfExercise.astro";
+import SurfMistakeBlock from "@/components/learn-to-surf/SurfMistakeBlock.astro";
+import LessonHeading from "@/components/learn-to-surf/LessonHeading.astro";
+import { PortableText } from "astro-portabletext";
+import PortableImage from "@/components/portable-text/PortableImage.astro";
+import LearnSubnav from "@/components/learn-to-surf/LearnSubnav.astro";
+import { getLearnLessons, getLearnLessonBySlug, getLearnLessonsByCluster, getLearnClusters } from "@/lib/sanity-data";
+
+export async function getStaticPaths() {
+  const lessons = await getLearnLessons("en");
+  return lessons.map((l: any) => ({
+    params: { cluster: l.clusterSlug, topic: l.slug },
+  }));
+}
+
+const { cluster: clusterSlug, topic: topicSlug } = Astro.params;
+const lesson = await getLearnLessonBySlug(topicSlug!, clusterSlug!, "en");
+
+if (!lesson) {
+  return Astro.redirect(`/learn-to-surf/${clusterSlug}`);
+}
+
+const allClusters = await getLearnClusters("en");
+const clusterLessons = await getLearnLessonsByCluster(clusterSlug!, "en");
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-").replace(/-+/g, "-").trim();
+}
+
+const seoTitle = lesson.seo?.metaTitle || `${lesson.title} · Rapture`;
+const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Learn ${lesson.title.toLowerCase()} with step-by-step instructions from Rapture Surfcamps.`;
+
+const articleJsonLd: Record<string, any> = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": lesson.title,
+  "description": seoDesc,
+  "url": `https://www.rapturecamps.com/learn-to-surf/${clusterSlug}/${topicSlug}`,
+  "author": {
+    "@type": "Organization",
+    "name": "Rapture Surfcamps",
+    "url": "https://www.rapturecamps.com",
+    "description": "ISA Approved Surf School, recognized by the Portugal Surfing Federation"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rapture Surfcamps",
+    "url": "https://www.rapturecamps.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.rapturecamps.com/images/rapturecamps-logo.svg"
+    }
+  }
+};
+
+if (lesson.featuredImageUrl) {
+  articleJsonLd.image = lesson.featuredImageUrl;
+}
+
+const stepBlocks = (lesson.body || []).filter((b: any) => b._type === "lessonStep");
+const howToJsonLd = stepBlocks.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": lesson.title,
+  "description": seoDesc,
+  "step": stepBlocks.flatMap((block: any) =>
+    (block.steps || []).map((step: any, i: number) => ({
+      "@type": "HowToStep",
+      "position": i + 1,
+      "name": step.title,
+      ...(step.description ? { "text": step.description } : {}),
+      ...(step.resolvedImageUrl ? { "image": step.resolvedImageUrl } : {}),
+    }))
+  ),
+} : null;
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={seoDesc}
+  ogImage={lesson.seo?.ogImageUrl || lesson.featuredImageUrl}
+  noindex={lesson.seo?.noindex}
+  translations={lesson._translations}
+  translationBasePath={`/learn-to-surf/${clusterSlug}`}
+>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(articleJsonLd)} />
+  {howToJsonLd && (
+    <script type="application/ld+json" slot="head" set:html={JSON.stringify(howToJsonLd)} />
+  )}
+
+  {/* Hero */}
+  <div class="relative">
+    {lesson.featuredImageUrl && (
+      <img
+        src={lesson.featuredImageUrl + "?w=1920&h=1080&fit=crop&auto=format"}
+        alt={lesson.title}
+        width={1920}
+        height={1080}
+        class="absolute inset-0 h-full w-full object-cover"
+        fetchpriority="high"
+      />
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-dark/50" />
+
+    <div class="relative z-10 pt-[116px] sm:pt-[148px] pb-8 sm:pb-10">
+      <div class="mx-auto max-w-3xl px-6 sm:px-8">
+        <p class="text-xs font-medium uppercase tracking-wider text-ocean mb-3">
+          <a href="/learn-to-surf" class="hover:text-white transition-colors">Learn to Surf</a>
+          <span class="text-white/20 mx-2">/</span>
+          <a href={`/learn-to-surf/${clusterSlug}`} class="hover:text-white transition-colors">{lesson.clusterTitle}</a>
+        </p>
+        <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+          {lesson.title}
+        </h1>
+        <Breadcrumbs inline crumbs={[
+          { label: "Learn to Surf", href: "/learn-to-surf" },
+          { label: lesson.clusterTitle, href: `/learn-to-surf/${clusterSlug}` },
+          { label: lesson.title },
+        ]} />
+      </div>
+    </div>
+  </div>
+
+  <LearnSubnav clusters={allClusters} activeCluster={clusterSlug!} lang="en" />
+
+  {/* Article body */}
+  <article class="pt-8 sm:pt-10 pb-16 sm:pb-20 bg-dark">
+    <div class="mx-auto max-w-3xl px-6 sm:px-8">
+      <LessonHeader
+        difficulty={lesson.difficulty}
+        readTime={lesson.readTime}
+        keyTakeaways={lesson.keyTakeaways}
+        introVideo={lesson.introVideo}
+      />
+
+      {lesson.body && (
+        <TableOfContents body={lesson.body} />
+      )}
+
+      <div class="lesson-prose">
+        {lesson.body ? (
+          <PortableText value={lesson.body} components={{
+            block: {
+              h2: LessonHeading,
+              h3: LessonHeading,
+              h4: LessonHeading,
+            },
+            type: {
+              image: PortableImage,
+              lessonStep: LessonStep,
+              surfTip: SurfTipCallout,
+              surfExercise: SurfExercise,
+              surfMistake: SurfMistakeBlock,
+            },
+          }} />
+        ) : (
+          <p class="text-white/40">This lesson is being prepared. Check back soon!</p>
+        )}
+      </div>
+
+      {/* LMS CTA */}
+      {lesson.lmsUrl && (
+        <div class="mt-12 rounded-xl border border-ocean/20 bg-ocean/5 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <div>
+            <p class="font-display font-bold text-white">Practice This Lesson</p>
+            <p class="text-sm text-white/45 mt-0.5">Track your progress, take quizzes, and get interactive coaching.</p>
+          </div>
+          <a
+            href={lesson.lmsUrl}
+            class="sm:ml-auto inline-flex items-center gap-2 rounded-lg bg-ocean px-5 py-2.5 text-sm font-semibold text-white hover:bg-ocean-light transition-colors"
+          >
+            Open in Academy →
+          </a>
+        </div>
+      )}
+
+      {/* Author attribution (E-E-A-T) */}
+      <div class="mt-12 pt-8 border-t border-white/10">
+        <div class="flex items-center gap-4">
+          <img
+            src="/images/rapturecamps-logo.svg"
+            alt="Rapture Surfcamps"
+            width={40}
+            height={40}
+            class="w-10 h-10 rounded-lg"
+          />
+          <div>
+            <p class="text-sm font-semibold text-white">Rapture Surfcamps</p>
+            <p class="text-xs text-white/40">ISA Approved Surf School · Portugal Surfing Federation</p>
+          </div>
+          <a href="/about" class="ml-auto text-xs text-ocean hover:text-white transition-colors">About us →</a>
+        </div>
+      </div>
+
+      <LessonNav
+        prerequisites={lesson.prerequisites}
+        nextLessons={lesson.nextLessons}
+        clusterSlug={clusterSlug!}
+        clusterTitle={lesson.clusterTitle}
+        lang="en"
+      />
+    </div>
+  </article>
+
+  <CTASection />
+</BaseLayout>
+
+<style is:global>
+  .lesson-prose {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .lesson-prose h2 {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+    scroll-margin-top: 2rem;
+  }
+
+  .lesson-prose h3 {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 600;
+    color: white;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+    scroll-margin-top: 2rem;
+  }
+
+  .lesson-prose h4 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    scroll-margin-top: 2rem;
+  }
+
+  .lesson-prose > :first-child { margin-top: 0; }
+
+  .lesson-prose p { margin-bottom: 1.5rem; }
+
+  .lesson-prose a {
+    color: var(--color-ocean-light, #5dade2);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(93, 173, 226, 0.3);
+    transition: color 0.15s, text-decoration-color 0.15s;
+  }
+
+  .lesson-prose a:hover {
+    color: white;
+    text-decoration-color: white;
+  }
+
+  .lesson-prose strong {
+    color: rgba(255, 255, 255, 0.85);
+    font-weight: 600;
+  }
+
+  .lesson-prose em { color: rgba(255, 255, 255, 0.65); }
+
+  .lesson-prose ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .lesson-prose ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .lesson-prose li {
+    margin-bottom: 0.5rem;
+    padding-left: 0.25rem;
+  }
+
+  .lesson-prose li::marker { color: rgba(255, 255, 255, 0.25); }
+
+  .lesson-prose li ul,
+  .lesson-prose li ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .lesson-prose blockquote {
+    border-left: 3px solid var(--color-ocean-light, #5dade2);
+    padding: 1rem 0 1rem 1.5rem;
+    margin: 2rem 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+  }
+
+  .lesson-prose blockquote p { margin-bottom: 0; }
+
+  .lesson-prose hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 3rem 0;
+  }
+
+  .lesson-prose figure { margin: 2.5rem 0; }
+
+  @media (max-width: 640px) {
+    .lesson-prose {
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .lesson-prose h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .lesson-prose h3 {
+      font-size: 1.25rem;
+      margin-top: 2rem;
+    }
+  }
+</style>

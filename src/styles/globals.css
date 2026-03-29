@@ -96,10 +96,36 @@ body {
   transform: rotate(180deg);
 }
 
+/* Desktop learn-to-surf dropdown */
+.learn-panel.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#learn-chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.mobile-learn-chevron.is-open {
+  transform: rotate(180deg);
+}
+
 /* Camp subnav sticky positioning */
 #camp-subnav,
-#retreat-subnav {
+#retreat-subnav,
+#learn-subnav {
   top: 5rem; /* h-20 = 80px = 5rem, sits right below the main header */
+}
+
+#learn-subnav.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.learn-subnav-chevron.is-open {
+  transform: rotate(180deg);
 }
 
 /* Rich text inside content blocks */

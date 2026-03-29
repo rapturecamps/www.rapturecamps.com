@@ -1,0 +1,65 @@
+---
+interface Props {
+  difficulty?: "beginner" | "intermediate" | "advanced";
+  readTime?: string;
+  keyTakeaways?: string[];
+  introVideo?: string;
+}
+
+const { difficulty, readTime, keyTakeaways = [], introVideo } = Astro.props;
+
+const difficultyConfig: Record<string, { label: string; color: string; bg: string }> = {
+  beginner: { label: "Beginner", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },
+  intermediate: { label: "Intermediate", color: "text-amber-400", bg: "bg-amber-500/10 border-amber-500/20" },
+  advanced: { label: "Advanced", color: "text-red-400", bg: "bg-red-500/10 border-red-500/20" },
+};
+
+const dc = difficulty ? difficultyConfig[difficulty] : null;
+---
+
+<div class="mb-10">
+  {/* Badges row */}
+  {(dc || readTime) && (
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+      {dc && (
+        <span class={`text-xs font-semibold border rounded-full px-3 py-1 ${dc.bg} ${dc.color}`}>
+          {dc.label}
+        </span>
+      )}
+      {readTime && (
+        <span class="text-xs text-white/40 border border-white/10 rounded-full px-3 py-1">
+          {readTime}
+        </span>
+      )}
+    </div>
+  )}
+
+  {/* Intro video */}
+  {introVideo && (
+    <div class="aspect-video rounded-xl overflow-hidden mb-8 border border-white/10">
+      <iframe
+        src={introVideo}
+        title="Lesson intro video"
+        class="w-full h-full"
+        loading="lazy"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope"
+        allowfullscreen
+      />
+    </div>
+  )}
+
+  {/* Key takeaways */}
+  {keyTakeaways.length > 0 && (
+    <div class="rounded-xl border border-white/10 bg-dark-lighter px-5 py-4">
+      <p class="text-xs font-semibold uppercase tracking-wider text-white/30 mb-3">Key Takeaways</p>
+      <ul class="space-y-2">
+        {keyTakeaways.map((takeaway) => (
+          <li class="flex gap-2.5 text-[0.9375rem] text-white/60">
+            <span class="text-ocean mt-0.5 flex-shrink-0">✓</span>
+            <span>{takeaway}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>

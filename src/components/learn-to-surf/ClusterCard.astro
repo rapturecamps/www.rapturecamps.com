@@ -1,0 +1,57 @@
+---
+import ClusterIcon from "./ClusterIcon.astro";
+
+interface Props {
+  title: string;
+  slug: string;
+  description?: string;
+  icon?: string;
+  featuredImageUrl?: string;
+  lessonCount?: number;
+  lang?: string;
+}
+
+const { title, slug, description, icon, featuredImageUrl, lessonCount, lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+---
+
+<a
+  href={`${prefix}/learn-to-surf/${slug}`}
+  class="group block rounded-2xl border border-white/10 hover:border-ocean/30 bg-dark-lighter overflow-hidden transition-all hover:shadow-lg hover:shadow-ocean/5"
+>
+  {featuredImageUrl ? (
+    <div class="relative h-40 overflow-hidden">
+      <img
+        src={`${featuredImageUrl}?w=480&h=200&fit=crop&auto=format`}
+        alt={title}
+        width={480}
+        height={200}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-dark-lighter to-transparent" />
+      <div class="absolute bottom-3 left-4 flex h-9 w-9 items-center justify-center rounded-lg bg-dark/70 backdrop-blur-sm text-ocean">
+        <ClusterIcon icon={icon} class="h-5 w-5" />
+      </div>
+    </div>
+  ) : (
+    <div class="h-28 bg-gradient-to-br from-ocean/10 to-transparent flex items-center justify-center">
+      <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-dark/50 text-ocean">
+        <ClusterIcon icon={icon} class="h-7 w-7" />
+      </div>
+    </div>
+  )}
+
+  <div class="px-5 py-4">
+    <h3 class="font-display text-lg font-bold text-white group-hover:text-ocean transition-colors mb-1">
+      {title}
+    </h3>
+    {description && (
+      <p class="text-sm text-white/45 line-clamp-2 mb-3">{description}</p>
+    )}
+    {lessonCount !== undefined && (
+      <span class="text-xs text-white/30">{lessonCount} lesson{lessonCount !== 1 ? "s" : ""}</span>
+    )}
+  </div>
+</a>
