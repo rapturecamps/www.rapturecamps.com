@@ -59,7 +59,7 @@ const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Lerne ${lesson
     )}
     <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/40 to-dark/50" />
 
-    <div class="relative z-10 pt-[116px] sm:pt-[148px] pb-8 sm:pb-10">
+    <div class="relative z-10 pt-[140px] sm:pt-[172px] pb-4 sm:pb-5">
       <div class="mx-auto max-w-3xl px-6 sm:px-8">
         <p class="text-xs font-medium uppercase tracking-wider text-ocean mb-3">
           <a href="/de/learn-to-surf" class="hover:text-white transition-colors">Surfen Lernen</a>
@@ -80,8 +80,9 @@ const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Lerne ${lesson
 
   <LearnSubnav clusters={allClusters} activeCluster={clusterSlug!} lang="de" />
 
-  <article class="pt-8 sm:pt-10 pb-16 sm:pb-20 bg-dark">
+  <article class="pt-1 pb-16 sm:pb-20 bg-dark">
     <div class="mx-auto max-w-3xl px-6 sm:px-8">
+      <div id="learn-subnav-sentinel" class="h-0" />
       <LessonHeader
         difficulty={lesson.difficulty}
         readTime={lesson.readTime}

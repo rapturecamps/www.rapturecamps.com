@@ -37,7 +37,7 @@ const seoDesc = cluster.seo?.metaDescription || cluster.description || `Learn ${
     title={cluster.heroTitle || cluster.title}
     subtitle={cluster.heroSubtitle || cluster.description}
     tagline={cluster.heroTagline || "Learn to Surf"}
-    backgroundImage={cluster.featuredImageUrl}
+    backgroundImage={cluster.heroImageUrl || cluster.featuredImageUrl}
     centered
   >
     <div class="flex justify-center">

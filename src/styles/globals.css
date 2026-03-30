@@ -120,12 +120,19 @@ body {
 
 #learn-subnav.is-visible {
   opacity: 1;
-  transform: translateY(0);
   pointer-events: auto;
 }
 
 .learn-subnav-chevron.is-open {
   transform: rotate(180deg);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Rich text inside content blocks */

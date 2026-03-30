@@ -751,6 +751,7 @@ export const LEARN_CLUSTER_BY_SLUG = `*[_type == "learnToSurfCluster" && slug.cu
   heroTitle,
   heroSubtitle,
   heroTagline,
+  "heroImageUrl": heroImage.asset->url,
   lmsCourseUrl,
   "featuredImageUrl": featuredImage.asset->url,
   pageBuilder[] { ${learnToSurfBlockProjection} },

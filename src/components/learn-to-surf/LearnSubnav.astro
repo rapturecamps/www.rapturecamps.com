@@ -21,39 +21,41 @@ const activeLabel = isHub
   : clusters.find((c) => c.slug === activeCluster)?.title || "Topics";
 ---
 
-<nav id="learn-subnav" class="sticky z-40 bg-dark/95 backdrop-blur-md border-b border-white/5 opacity-0 -translate-y-2 pointer-events-none transition-all duration-300">
-  <div class="mx-auto w-full px-4 sm:px-6 lg:px-10">
+<nav id="learn-subnav" class="sticky z-40 bg-dark/95 backdrop-blur-md border-b border-white/5 opacity-0 pointer-events-none transition-opacity duration-300 overflow-hidden">
+  <div class="mx-auto w-full">
 
     {/* Desktop: horizontal pill tabs */}
-    <div class="hidden lg:flex items-center gap-1.5 h-11">
-      <a
-        href={`${prefix}/learn-to-surf`}
-        class:list={[
-          "whitespace-nowrap text-xs px-3 py-1.5 rounded-full transition-colors",
-          isHub
-            ? "bg-white/10 text-white font-medium"
-            : "text-white/40 hover:text-white/70",
-        ]}
-      >
-        {lang === "de" ? "Alle" : "All"}
-      </a>
-      {clusters.map((c) => (
+    <div class="hidden lg:flex items-center gap-2 py-4 overflow-x-auto scrollbar-hide px-6">
+      <div class="mx-auto flex items-center gap-2 flex-shrink-0">
         <a
-          href={`${prefix}/learn-to-surf/${c.slug}`}
+          href={`${prefix}/learn-to-surf`}
           class:list={[
-            "whitespace-nowrap text-xs px-3 py-1.5 rounded-full transition-colors",
-            activeCluster === c.slug
+            "whitespace-nowrap text-sm leading-none px-4 py-2.5 rounded-full transition-colors",
+            isHub
               ? "bg-white/10 text-white font-medium"
               : "text-white/40 hover:text-white/70",
           ]}
         >
-          {c.title}
+          {lang === "de" ? "Alle" : "All"}
         </a>
-      ))}
+        {clusters.map((c) => (
+          <a
+            href={`${prefix}/learn-to-surf/${c.slug}`}
+            class:list={[
+              "whitespace-nowrap text-sm leading-none px-4 py-2.5 rounded-full transition-colors",
+              activeCluster === c.slug
+                ? "bg-white/10 text-white font-medium"
+                : "text-white/40 hover:text-white/70",
+            ]}
+          >
+            {c.title}
+          </a>
+        ))}
+      </div>
     </div>
 
     {/* Mobile: collapsible panel */}
-    <div class="lg:hidden">
+    <div class="lg:hidden px-4 sm:px-6">
       <button
         class="learn-subnav-toggle w-full flex items-center justify-between h-14"
         aria-expanded="false"

@@ -96,6 +96,14 @@ export default defineType({
       description: "Small uppercase text above the hero headline.",
       group: "hero",
     }),
+    defineField({
+      name: "heroImage",
+      title: "Hero Background Image",
+      type: "image",
+      options: { hotspot: true },
+      description: "Background image for the hero section. Falls back to the Featured Image if not set.",
+      group: "hero",
+    }),
 
     // LMS
     defineField({
