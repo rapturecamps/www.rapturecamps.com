@@ -107,4 +107,19 @@ const contactMethods = [
       </div>
     </div>
   </section>
+
+  <script is:inline>
+  (function(){
+    var f=document.querySelector('[name="zsWebToCase_105098000032334342"]');
+    if(f)f.addEventListener("submit",function(){
+      window.rc&&rc("contact_form_submitted",{form_type:"enquiry",language:"de",page:window.location.pathname});
+    });
+    document.querySelectorAll('a[href*="wa.me"],a[href*="t.me"]').forEach(function(a){
+      a.addEventListener("click",function(){
+        var ch=a.href.indexOf("wa.me")!==-1?"whatsapp":"telegram";
+        window.rc&&rc("messaging_clicked",{channel:ch,location:"contact_card",page:window.location.pathname});
+      });
+    });
+  })();
+  </script>
 </BaseLayout>

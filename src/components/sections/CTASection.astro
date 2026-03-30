@@ -43,13 +43,13 @@ const headingParts = heading.split("\n");
         href={buttonUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="rounded-full bg-ocean px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-ocean-light"
+        class="cta-track rounded-full bg-ocean px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-ocean-light"
       >
         {buttonText}
       </a>
       <a
         href={contactHref}
-        class="rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
+        class="cta-track rounded-full border border-white/20 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
       >
         {t("general.getInTouch", lang)}
       </a>
@@ -64,3 +64,13 @@ const headingParts = heading.split("\n");
     )}
   </div>
 </section>
+
+<script is:inline>
+(function(){
+  document.querySelectorAll(".cta-track").forEach(function(a){
+    a.addEventListener("click",function(){
+      window.rc&&rc("cta_clicked",{button_text:a.textContent.trim(),button_url:a.getAttribute("href"),page:window.location.pathname});
+    });
+  });
+})();
+</script>

@@ -467,6 +467,13 @@ const navItems = [
   function startAuto() { timer = setInterval(function () { goTo(current + 1); }, 5000); }
   startAuto();
 })();
+
+(function(){
+  var f=document.querySelector('[name="zsWebToCase_105098000032334342"]');
+  if(f)f.addEventListener("submit",function(){
+    window.rc&&rc("contact_form_submitted",{form_type:"retreat_partnership",language:"en",page:window.location.pathname});
+  });
+})();
 </script>
 
 <style>

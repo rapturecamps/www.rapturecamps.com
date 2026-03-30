@@ -24,8 +24,8 @@ const socialLinks = [
 
 const t = {
   tagline: isDE
-    ? "Ein Netzwerk von 8 einzigartigen Surfcamps in 5 Ländern auf 4 Kontinenten. Seit 2003 haben wir mehr als 85.000 Menschen das Surfen beigebracht."
-    : "A network of 8 unique surf camps in 5 countries on 4 continents. Helping more than 85k people learn to surf since 2003.",
+    ? "Ein Netzwerk von 6 einzigartigen Surfcamps in 3 Ländern auf 3 Kontinenten. Seit 2003 haben wir mehr als 85.000 Menschen das Surfen beigebracht."
+    : "A network of 6 unique surf camps in 3 countries on 3 continents. Helping more than 85k people learn to surf since 2003.",
   destinations: isDE ? "Reiseziele" : "Destinations",
   company: isDE ? "Unternehmen" : "Company",
   learnToSurf: isDE ? "Surfen Lernen" : "Learn to Surf",
@@ -216,5 +216,10 @@ const currentYear = new Date().getFullYear();
     }
   }, { rootMargin: "200px" });
   io.observe(el);
+
+  var nf = document.getElementById("zcampaignOptinForm");
+  if (nf) nf.addEventListener("submit", function () {
+    window.rc && rc("newsletter_subscribed", { signup_location: "footer", page: window.location.pathname });
+  });
 })();
 </script>

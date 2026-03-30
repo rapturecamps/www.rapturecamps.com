@@ -330,7 +330,8 @@ const segmentAngle = 360 / segmentCount;
       f.remove();
     } catch (e) {}
 
-    // Switch to spinning state
+    window.rc && rc("newsletter_subscribed", { signup_location: "popup_wheel", page: window.location.pathname });
+
     stepEmail.classList.add("hidden");
     stepSpinning.classList.remove("hidden");
     spinBtn.disabled = true;
@@ -358,6 +359,7 @@ const segmentAngle = 360 / segmentCount;
         prizeBody.textContent = "Better luck next time — we\u2019ve sent you something special by email!";
         prizeCodeWrap.classList.add("hidden");
       }
+      window.rc && rc("popup_interacted", { popup_type: "spinning_wheel", result: seg.label });
     }, 4300);
   });
 
@@ -377,6 +379,7 @@ const segmentAngle = 360 / segmentCount;
     if (e.detail && e.detail.type === "spinning-wheel") {
       window._rcPopupEvent = e.detail;
       show();
+      window.rc && rc("popup_shown", { popup_type: "spinning_wheel" });
     }
   });
 })();
