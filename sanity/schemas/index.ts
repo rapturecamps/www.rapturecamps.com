@@ -63,6 +63,7 @@ import lessonStep from "./blocks/lessonStep";
 import surfTip from "./blocks/surfTip";
 import surfExercise from "./blocks/surfExercise";
 import surfMistake from "./blocks/surfMistake";
+import surfTable from "./blocks/surfTable";
 
 import seo from "./objects/seo";
 
@@ -143,6 +144,7 @@ export const schemaTypes = [
   surfTip,
   surfExercise,
   surfMistake,
+  surfTable,
 
   // Objects
   seo,

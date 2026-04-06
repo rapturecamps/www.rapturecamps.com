@@ -1,0 +1,106 @@
+---
+import { t, type Lang } from "@/lib/i18n";
+import { getLearnLessons, getLearnClusters } from "@/lib/sanity-data";
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang || "en";
+const prefix = lang === "de" ? "/de" : "";
+
+const priorityClusters = ["surf-fundamentals", "take-off", "paddling", "wave-knowledge"];
+
+const [clusters, allLessons] = await Promise.all([
+  getLearnClusters(lang),
+  getLearnLessons(lang),
+]);
+
+const clusterMap = new Map(clusters.map((c: any) => [c.slug, c.title]));
+
+const featured = allLessons
+  .filter((l: any) => l.difficulty === "beginner" || l.difficulty === "intermediate")
+  .sort((a: any, b: any) => {
+    const ai = priorityClusters.indexOf(a.clusterSlug);
+    const bi = priorityClusters.indexOf(b.clusterSlug);
+    const ap = ai === -1 ? 99 : ai;
+    const bp = bi === -1 ? 99 : bi;
+    if (ap !== bp) return ap - bp;
+    return (a.order ?? 0) - (b.order ?? 0);
+  })
+  .slice(0, 4);
+
+const diffStyle: Record<string, { label: string; color: string }> = {
+  beginner: { label: lang === "de" ? "Anfänger" : "Beginner", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
+  intermediate: { label: lang === "de" ? "Fortgeschritten" : "Intermediate", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
+};
+---
+
+{featured.length > 0 && (
+  <section class="py-16 sm:py-20 bg-dark">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <p class="text-xs uppercase tracking-[0.2em] text-ocean-light/50 mb-3">{t("learnPromo.tagline", lang)}</p>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-white mb-4">{t("learnPromo.heading", lang)}</h2>
+        <p class="text-base text-white/45 max-w-2xl mx-auto leading-relaxed">
+          {lang === "de" ? (
+            <>Entdecke unsere kostenlosen Surf-Lektionen — von <a href={`${prefix}/learn-to-surf/surf-fundamentals`} class="text-ocean-light hover:underline">Surf-Grundlagen</a> und <a href={`${prefix}/learn-to-surf/take-off`} class="text-ocean-light hover:underline">Take-Off-Technik</a> bis hin zu <a href={`${prefix}/learn-to-surf/wave-knowledge`} class="text-ocean-light hover:underline">Wellenkunde</a>. Von ISA-zertifizierten Coaches geschrieben.</>
+          ) : (
+            <>Explore our free surf lessons — from <a href={`${prefix}/learn-to-surf/surf-fundamentals`} class="text-ocean-light hover:underline">surf fundamentals</a> and <a href={`${prefix}/learn-to-surf/take-off`} class="text-ocean-light hover:underline">take-off technique</a> to <a href={`${prefix}/learn-to-surf/wave-knowledge`} class="text-ocean-light hover:underline">reading waves</a>. Written by ISA-certified coaches.</>
+          )}
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {featured.map((lesson: any) => {
+          const dc = diffStyle[lesson.difficulty] || diffStyle.beginner;
+          const href = `${prefix}/learn-to-surf/${lesson.clusterSlug}/${lesson.slug}`;
+          return (
+            <a
+              href={href}
+              class="group block rounded-xl border border-white/5 bg-dark p-5 transition-all hover:border-ocean/30 hover:bg-dark/80"
+            >
+              {lesson.featuredImageUrl && (
+                <div class="aspect-[16/9] rounded-lg overflow-hidden mb-4">
+                  <img
+                    src={`${lesson.featuredImageUrl}?w=400&h=225&fit=crop&auto=format`}
+                    alt={lesson.title}
+                    width="400"
+                    height="225"
+                    loading="lazy"
+                    decoding="async"
+                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <div class="flex items-center gap-2 mb-3">
+                <span class={`text-[10px] font-semibold border rounded-full px-2.5 py-0.5 ${dc.color}`}>
+                  {dc.label}
+                </span>
+                {lesson.readTime && (
+                  <span class="text-[10px] text-white/30">{lesson.readTime}</span>
+                )}
+              </div>
+              <h3 class="text-sm font-semibold text-white group-hover:text-ocean-light transition-colors leading-snug mb-1.5">
+                {lesson.title}
+              </h3>
+              <p class="text-xs text-white/30">
+                {clusterMap.get(lesson.clusterSlug) || lesson.clusterTitle}
+              </p>
+            </a>
+          );
+        })}
+      </div>
+
+      <div class="text-center mt-8">
+        <a
+          href={`${prefix}/learn-to-surf`}
+          class="inline-flex items-center gap-2 rounded-full border border-white/15 px-6 py-2.5 text-sm font-medium text-white/70 hover:text-white hover:border-ocean/40 transition-all"
+        >
+          {t("learnPromo.browseAll", lang)}
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+)}

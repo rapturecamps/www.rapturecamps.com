@@ -15,6 +15,23 @@ const difficultyConfig: Record<string, { label: string; color: string; bg: strin
 };
 
 const dc = difficulty ? difficultyConfig[difficulty] : null;
+
+function toYouTubeEmbed(url: string): string {
+  try {
+    const u = new URL(url);
+    if (u.hostname === "youtu.be") {
+      return `https://www.youtube.com/embed${u.pathname}`;
+    }
+    if ((u.hostname === "www.youtube.com" || u.hostname === "youtube.com") && u.pathname === "/watch") {
+      const id = u.searchParams.get("v");
+      return id ? `https://www.youtube.com/embed/${id}` : url;
+    }
+    if (u.pathname.startsWith("/embed/")) return url;
+  } catch {}
+  return url;
+}
+
+const embedUrl = introVideo ? toYouTubeEmbed(introVideo) : null;
 ---
 
 <div class="mb-10" data-difficulty={difficulty || ""}>
@@ -35,14 +52,14 @@ const dc = difficulty ? difficultyConfig[difficulty] : null;
   )}
 
   {/* Intro video */}
-  {introVideo && (
+  {embedUrl && (
     <div class="aspect-video rounded-xl overflow-hidden mb-8 border border-white/10">
       <iframe
-        src={introVideo}
+        src={embedUrl}
         title="Lesson intro video"
         class="w-full h-full"
         loading="lazy"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       />
     </div>

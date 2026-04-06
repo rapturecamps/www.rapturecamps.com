@@ -1,0 +1,38 @@
+---
+const { node } = Astro.props;
+const headers: string[] = node.headers || [];
+const rows: { cells: string[] }[] = node.rows || [];
+
+function renderCell(text: string): string {
+  return text.replace(
+    /\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" class="text-ocean-light underline underline-offset-2 decoration-ocean-light/30 hover:text-white hover:decoration-white transition-colors">$1</a>'
+  );
+}
+---
+
+<div class="my-8 -mx-2 sm:mx-0 overflow-x-auto scrollbar-hide">
+  <table class="w-full text-left text-sm border-collapse">
+    <thead>
+      <tr>
+        {headers.map((h) => (
+          <th class="px-4 py-3 text-xs font-semibold uppercase tracking-wider text-ocean border-b border-white/10 whitespace-nowrap">
+            {h}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((row, i) => (
+        <tr class={i % 2 === 0 ? "bg-white/[0.02]" : ""}>
+          {(row.cells || []).map((cell, ci) => (
+            <td
+              class={`px-4 py-3 border-b border-white/5 ${ci === 0 ? "font-medium text-white/80 whitespace-nowrap" : "text-white/55"}`}
+              set:html={renderCell(cell)}
+            />
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

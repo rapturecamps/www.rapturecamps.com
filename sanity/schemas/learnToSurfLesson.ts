@@ -113,7 +113,7 @@ export default defineType({
       name: "introVideo",
       title: "Intro Video URL",
       type: "url",
-      description: "Bunny Stream embed URL for the intro video.",
+      description: "Paste a YouTube video URL. Supports youtube.com/watch and youtu.be links.",
       group: "header",
     }),
     defineField({
@@ -206,6 +206,7 @@ export default defineType({
         { type: "surfTip" },
         { type: "surfExercise" },
         { type: "surfMistake" },
+        { type: "surfTable" },
         { type: "imageGrid" },
         { type: "imageBreak" },
         { type: "imageCarousel" },

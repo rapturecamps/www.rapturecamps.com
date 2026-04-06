@@ -793,6 +793,7 @@ export const LEARN_LESSON_BY_SLUG = `*[_type == "learnToSurfLesson" && slug.curr
   "slug": slug.current,
   "clusterSlug": cluster->slug.current,
   "clusterTitle": cluster->title,
+  "clusterHeroImageUrl": coalesce(cluster->heroImage.asset->url, cluster->featuredImage.asset->url),
   excerpt,
   difficulty,
   readTime,

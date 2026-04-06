@@ -119,6 +119,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
           const videoSrc = pullZone && v.bunnyVideoId
             ? `https://${pullZone}/${v.bunnyVideoId}/play_720p.mp4`
             : "";
+          const isEager = i < 4;
 
           return (
             <div
@@ -137,8 +138,11 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
                     src={poster}
                     alt={`Video review by ${v.guestName || "Guest"}`}
                     class="vt-poster absolute inset-0 h-full w-full object-cover"
-                    loading="lazy"
+                    width={300}
+                    height={467}
+                    loading={isEager ? "eager" : "lazy"}
                     decoding="async"
+                    fetchpriority={isEager ? "high" : undefined}
                     onerror="this.remove()"
                   />
                 )}
@@ -146,7 +150,7 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
                 {videoSrc && (
                   <video
                     class="vt-video absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300"
-                    preload="none"
+                    preload={isEager ? "metadata" : "none"}
                     loop
                     playsinline
                     poster={poster}
@@ -313,8 +317,15 @@ const bodyHtml = block.body ? bodyToHtml(block.body) : "";
     }
 
     cards.forEach(function (card) {
+      var video = card.querySelector(".vt-video");
       var playBtn = card.querySelector(".vt-play-btn");
       if (!playBtn) return;
+
+      card.addEventListener("mouseenter", function () {
+        if (video && video.preload === "none") {
+          video.preload = "auto";
+        }
+      }, { once: true });
 
       playBtn.addEventListener("click", function (e) {
         e.stopPropagation();

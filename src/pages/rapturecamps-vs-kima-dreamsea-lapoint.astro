@@ -15,15 +15,15 @@ const competitors = [
     destinations: "Bali, Portugal, Costa Rica, Morocco, Nicaragua",
     destCount: "6–8 camps across 5 countries",
     accommodation: "Shared rooms, twin/double, private rooms, glamping, premium villas",
-    surfProgram: "All-level coaching, max 5:1 ratio, 2 sessions/day, video analysis included",
+    surfProgram: "All-level coaching, max 3:1 ratio, 2 sessions/day, video analysis, pool training & surf theory included",
     mealsIncluded: "Breakfast + dinner Mon–Fri (3-course)",
-    yoga: "Daily, included",
+    yoga: "Daily yoga, on-site gym & fitness equipment included",
     priceFrom: "€45/night",
     priceNote: "Modular: book accommodation only, or add surf/yoga/meals à la carte",
     cancellation: "Free up to 30 days",
     arrival: "Any day — even 1 night",
     languages: "EN, DE, PT, ES",
-    unique: ["20+ years experience", "85k+ guests served", "Small camps (~20 guests) — everyone knows everyone", "Arrive & depart any day (no fixed schedules)", "Book accommodation only — add extras daily", "Free surf equipment use all day, every day", "Returning customer discounts (cross-destination)", "Student discounts available", "Max 5:1 coaching ratio", "Premium villa options (infinity pool)", "Retreat hosting program", "10% group discount (4+)"],
+    unique: ["20+ years experience", "85k+ guests served", "Small camps (~20 guests) — everyone knows everyone", "Arrive & depart any day (no fixed schedules)", "Book accommodation only — add extras daily", "Free surf equipment use all day, every day", "Returning customer discounts (cross-destination)", "Student discounts available", "Max 3:1 coaching ratio", "Premium villa options (infinity pool)", "Retreat hosting program", "10% group discount (4+)"],
     highlight: true,
   },
   {
@@ -138,7 +138,7 @@ const comparisonRows = [
           { value: "20+", label: "Years Running", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
           { value: "85k+", label: "Happy Guests", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
           { value: "~20", label: "Guests per Camp", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a2 2 0 110-4 2 2 0 010 4z" },
-          { value: "5:1", label: "Coaching Ratio", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+          { value: "3:1", label: "Coaching Ratio", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
           { value: "5", label: "Countries", icon: "M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
           { value: "Any", label: "Arrival Day", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
         ].map((stat) => (
@@ -307,10 +307,10 @@ const comparisonRows = [
       </div>
       <div class="grid md:grid-cols-5 gap-8">
         <div class="md:col-span-3">
-          <p class="text-base text-white/60 leading-relaxed mb-6">All-level coaching included in every package with a strict <strong class="text-white/80">max 5:1 student-to-instructor ratio</strong> — one of the lowest in the industry. Video analysis and surf theory come standard, not as paid extras. Whether you're catching your first wave or refining your cutback, coaching is built into the price.</p>
+          <p class="text-base text-white/60 leading-relaxed mb-6">All-level coaching included in every package with a strict <strong class="text-white/80">max 3:1 student-to-instructor ratio</strong> — one of the lowest in the industry. Video analysis and surf theory come standard, not as paid extras. Whether you're catching your first wave or refining your cutback, coaching is built into the price.</p>
           <div class="flex items-center gap-6 py-5 px-6 bg-ocean-light/[0.06] rounded-xl border border-ocean-light/15">
             <div class="text-center">
-              <p class="text-4xl font-bold text-ocean-light leading-none">5:1</p>
+              <p class="text-4xl font-bold text-ocean-light leading-none">3:1</p>
               <p class="text-[9px] uppercase tracking-wider text-ocean-light/50 mt-1">Rapture</p>
             </div>
             <div class="w-px h-10 bg-white/10"></div>
@@ -606,7 +606,7 @@ const comparisonRows = [
               "Returning customer discounts across all destinations",
               "Student discounts available",
               "Small camps (~20 guests) — real community, not a crowd",
-              "The best instructor-to-student ratio (5:1)",
+              "The best instructor-to-student ratio (3:1)",
               "Daily breakfast AND dinner included (when booked)",
               "World-class Bali reef breaks (Bukit peninsula)",
               "Premium villa options in Portugal (Coxos)",

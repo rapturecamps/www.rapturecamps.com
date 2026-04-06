@@ -257,6 +257,38 @@ function parseSurfMistake(raw: string): any | null {
   };
 }
 
+function parseMarkdownTable(tableLines: string[]): any | null {
+  if (tableLines.length < 2) return null;
+
+  function splitRow(line: string): string[] {
+    return line
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
+      .map((c) => c.trim());
+  }
+
+  const headers = splitRow(tableLines[0]);
+
+  // Skip the separator line (|---|---|...)
+  const startRow = tableLines[1].match(/^[\s|:-]+$/) ? 2 : 1;
+
+  const rows = tableLines.slice(startRow).map((line) => ({
+    _key: generateKey(),
+    _type: "tableRow",
+    cells: splitRow(line),
+  }));
+
+  if (rows.length === 0) return null;
+
+  return {
+    _type: "surfTable",
+    _key: generateKey(),
+    headers,
+    rows,
+  };
+}
+
 function markdownToPortableText(md: string): any[] {
   const blocks: any[] = [];
   const lines = md.split("\n");
@@ -374,6 +406,19 @@ function markdownToPortableText(md: string): any[] {
         children,
       });
       i++;
+      continue;
+    }
+
+    // Markdown tables
+    if (line.trimStart().startsWith("|") && line.trimEnd().endsWith("|")) {
+      flushParagraph();
+      const tableLines: string[] = [];
+      while (i < lines.length && lines[i].trimStart().startsWith("|") && lines[i].trimEnd().endsWith("|")) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      const block = parseMarkdownTable(tableLines);
+      if (block) blocks.push(block);
       continue;
     }
 

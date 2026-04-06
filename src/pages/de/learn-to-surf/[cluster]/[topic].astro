@@ -9,6 +9,7 @@ import LessonStep from "@/components/learn-to-surf/LessonStep.astro";
 import SurfTipCallout from "@/components/learn-to-surf/SurfTipCallout.astro";
 import SurfExercise from "@/components/learn-to-surf/SurfExercise.astro";
 import SurfMistakeBlock from "@/components/learn-to-surf/SurfMistakeBlock.astro";
+import SurfTable from "@/components/learn-to-surf/SurfTable.astro";
 import LessonHeading from "@/components/learn-to-surf/LessonHeading.astro";
 import { PortableText } from "astro-portabletext";
 import PortableImage from "@/components/portable-text/PortableImage.astro";
@@ -46,10 +47,10 @@ const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Lerne ${lesson
   translations={lesson._translations}
   translationBasePath={`/learn-to-surf/${clusterSlug}`}
 >
-  <div class="relative">
-    {lesson.featuredImageUrl && (
+  <div class="relative pb-52 sm:pb-72">
+    {(lesson.featuredImageUrl || lesson.clusterHeroImageUrl) && (
       <img
-        src={lesson.featuredImageUrl + "?w=1920&h=1080&fit=crop&auto=format"}
+        src={(lesson.featuredImageUrl || lesson.clusterHeroImageUrl) + "?w=1920&h=1080&fit=crop&auto=format"}
         alt={lesson.title}
         width={1920}
         height={1080}
@@ -80,7 +81,7 @@ const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Lerne ${lesson
 
   <LearnSubnav clusters={allClusters} activeCluster={clusterSlug!} lang="de" />
 
-  <article class="pt-1 pb-16 sm:pb-20 bg-dark">
+  <article class="-mt-60 sm:-mt-80 relative z-10 pt-1 pb-16 sm:pb-20">
     <div class="mx-auto max-w-3xl px-6 sm:px-8">
       <div id="learn-subnav-sentinel" class="h-0" />
       <LessonHeader
@@ -106,6 +107,7 @@ const seoDesc = lesson.seo?.metaDescription || lesson.excerpt || `Lerne ${lesson
               surfTip: SurfTipCallout,
               surfExercise: SurfExercise,
               surfMistake: SurfMistakeBlock,
+              surfTable: SurfTable,
             },
           }} />
         ) : (

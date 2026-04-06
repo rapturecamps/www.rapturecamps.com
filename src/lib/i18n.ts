@@ -147,6 +147,10 @@ const translations: Record<string, Record<Lang, string>> = {
   "months.nov": { en: "Nov", de: "Nov" },
   "months.dec": { en: "Dec", de: "Dez" },
 
+  "learnPromo.tagline": { en: "Free Surf Lessons", de: "Kostenlose Surf-Lektionen" },
+  "learnPromo.heading": { en: "Want to Improve Faster?", de: "Schneller besser werden?" },
+  "learnPromo.browseAll": { en: "Browse All Lessons", de: "Alle Lektionen entdecken" },
+
   "nav.learnToSurf": { en: "Learn to Surf", de: "Surfen Lernen" },
 
   "footer.learnToSurf": { en: "Learn to Surf", de: "Surfen Lernen" },

@@ -15,17 +15,17 @@ const competitors = [
     location: "Bukit Peninsula (Green Bowl + Padang Padang)",
     campCount: "2 camps, 15 min apart",
     accommodation: "Shared rooms, doubles, private suites, boutique villa with pool",
-    surfProgram: "All-level coaching, max 5:1 ratio, 2 sessions/day, video analysis included",
+    surfProgram: "All-level coaching, max 3:1 ratio, 2 sessions/day, video analysis, pool training & surf theory included",
     mealsIncluded: "3-course breakfast + dinner Mon–Fri",
-    yoga: "Daily, included",
+    yoga: "Daily yoga, on-site gym & fitness equipment included",
     priceFrom: "€45/night",
     priceNote: "Modular: book room only, add surf/yoga/meals daily",
-    capacity: "Green Bowl: 35 · Padang Padang: 16",
+    capacity: "Green Bowl: 24 · Padang Padang: 22",
     equipment: "Free all day, every day",
     arrival: "Any day — even 1 night",
     minStay: "1 night",
     languages: "EN, DE, PT, ES",
-    unique: ["20+ years, 85k+ guests worldwide", "2 distinct Bukit camps to choose from", "Boutique villa at Padang Padang (16 guests)", "Beachfront camp at Green Bowl (35 guests)", "Arrive & depart any day — no fixed schedules", "Book room only, add extras daily", "Free surf equipment all day", "Returning customer & student discounts", "Max 5:1 coaching ratio", "Retreat hosting program"],
+    unique: ["20+ years, 85k+ guests worldwide", "2 distinct Bukit camps to choose from", "Boutique villa at Padang Padang (22 guests)", "Beachfront camp at Green Bowl (24 guests)", "Arrive & depart any day — no fixed schedules", "Book room only, add extras daily", "Free surf equipment all day", "Returning customer & student discounts", "Max 3:1 coaching ratio", "Retreat hosting program"],
     highlight: true,
   },
   {
@@ -146,9 +146,9 @@ const comparisonRows = [
       <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-10 sm:gap-12 text-center">
         {[
           { value: "2", label: "Bukit Camps", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a2 2 0 110-4 2 2 0 010 4z" },
-          { value: "51", label: "Total Capacity", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+          { value: "46", label: "Total Capacity", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
           { value: "6+", label: "Surf Breaks", icon: "M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" },
-          { value: "5:1", label: "Coaching Ratio", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
+          { value: "3:1", label: "Coaching Ratio", icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" },
           { value: "2x", label: "Daily Meals", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
           { value: "Any", label: "Arrival Day", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
         ].map((stat) => (
@@ -307,10 +307,10 @@ const comparisonRows = [
       </div>
       <div class="grid md:grid-cols-5 gap-8">
         <div class="md:col-span-3">
-          <p class="text-base text-white/60 leading-relaxed mb-6">All four camps offer surf coaching on the Bukit — but the approach, ratios, and extras differ significantly. Rapture's <strong class="text-white/80">5:1 max ratio</strong> and included video analysis sits between WaveHouse's tighter 2–3:1 groups and Kala's 3:1 coaching ratio.</p>
+          <p class="text-base text-white/60 leading-relaxed mb-6">All four camps offer surf coaching on the Bukit — but the approach, ratios, and extras differ significantly. Rapture's <strong class="text-white/80">3:1 max ratio</strong> and included video analysis matches the tightest in Bali, on par with Kala's 3:1 coaching ratio and ahead of WaveHouse's 2–3:1 groups.</p>
           <div class="flex items-center gap-6 py-5 px-6 bg-ocean-light/[0.06] rounded-xl border border-ocean-light/15 flex-wrap">
             {[
-              { ratio: "5:1", name: "Rapture" },
+              { ratio: "3:1", name: "Rapture" },
               { ratio: "2–3:1", name: "WaveHouse" },
               { ratio: "3:1", name: "Kala" },
               { ratio: "~4:1", name: "CARI" },
@@ -460,7 +460,7 @@ const comparisonRows = [
   <section class="py-12 sm:py-16 bg-dark-lighter border-y border-white/5">
     <div class="max-w-4xl mx-auto px-6 sm:px-12 lg:px-20 flex items-center gap-6 sm:gap-10">
       <div class="hidden sm:block w-px h-16 bg-gradient-to-b from-transparent via-ocean-light/30 to-transparent shrink-0"></div>
-      <p class="text-lg sm:text-xl text-white/50 leading-relaxed">With two camps on the Bukit — a <strong class="text-white/70">35-guest beachfront camp</strong> and a <strong class="text-white/70">16-guest boutique villa</strong> — Rapture lets you choose the vibe that suits you. No other camp on this list offers that range.</p>
+      <p class="text-lg sm:text-xl text-white/50 leading-relaxed">With two camps on the Bukit — a <strong class="text-white/70">24-guest beachfront camp</strong> and a <strong class="text-white/70">22-guest boutique villa</strong> — Rapture lets you choose the vibe that suits you. No other camp on this list offers that range.</p>
     </div>
   </section>
 
@@ -518,22 +518,22 @@ const comparisonRows = [
       <div class="grid sm:grid-cols-3 gap-6 mb-10">
         <div class="text-center p-6 bg-ocean-light/[0.06] border border-ocean-light/20 rounded-xl">
           <p class="text-xs uppercase tracking-wider text-ocean-light/60 mb-3">Rapture — Padang Padang</p>
-          <div class="flex flex-wrap justify-center gap-1.5 max-w-[140px] mx-auto mb-3">
-            {Array.from({ length: 16 }).map(() => (
+          <div class="flex flex-wrap justify-center gap-1.5 max-w-[160px] mx-auto mb-3">
+            {Array.from({ length: 22 }).map(() => (
               <div class="w-3.5 h-3.5 rounded-full bg-ocean-light/50"></div>
             ))}
           </div>
-          <p class="text-2xl font-bold text-ocean-light">16</p>
+          <p class="text-2xl font-bold text-ocean-light">22</p>
           <p class="text-[9px] uppercase tracking-wider text-ocean-light/40 mt-0.5">guests max</p>
         </div>
         <div class="text-center p-6 bg-ocean-light/[0.06] border border-ocean-light/20 rounded-xl">
           <p class="text-xs uppercase tracking-wider text-ocean-light/60 mb-3">Rapture — Green Bowl</p>
-          <div class="flex flex-wrap justify-center gap-1.5 max-w-[200px] mx-auto mb-3">
-            {Array.from({ length: 35 }).map(() => (
+          <div class="flex flex-wrap justify-center gap-1.5 max-w-[170px] mx-auto mb-3">
+            {Array.from({ length: 24 }).map(() => (
               <div class="w-3.5 h-3.5 rounded-full bg-ocean-light/50"></div>
             ))}
           </div>
-          <p class="text-2xl font-bold text-ocean-light">35</p>
+          <p class="text-2xl font-bold text-ocean-light">24</p>
           <p class="text-[9px] uppercase tracking-wider text-ocean-light/40 mt-0.5">guests max</p>
         </div>
         <div class="text-center p-6 bg-dark border border-white/5 rounded-xl">
@@ -550,7 +550,7 @@ const comparisonRows = [
 
       <div class="grid md:grid-cols-2 gap-8">
         <div>
-          <p class="text-base text-white/60 leading-relaxed mb-4">Rapture is the only camp on this list that <strong class="text-white/80">publishes exact capacity numbers.</strong> Our Padang Padang villa tops out at 16 guests — genuinely boutique. Green Bowl is 35, still intimate enough that everyone knows each other at dinner.</p>
+          <p class="text-base text-white/60 leading-relaxed mb-4">Rapture is the only camp on this list that <strong class="text-white/80">publishes exact capacity numbers.</strong> Our Padang Padang villa tops out at 22 guests — genuinely boutique. Green Bowl is 24, intimate enough that everyone knows each other at dinner.</p>
           <p class="text-base text-white/60 leading-relaxed">The other three camps don't publicly disclose capacity, but all describe themselves as community-focused, smaller camps — which is a good sign for the Bukit surf camp scene overall.</p>
         </div>
         <div class="space-y-3">
@@ -586,7 +586,7 @@ const comparisonRows = [
       </div>
       <div class="grid md:grid-cols-4 gap-4">
         {[
-          { name: "Rapture", items: ["Pool", "Restaurant & bar", "Daily yoga", "Free equipment all day", "Video analysis", "Retreat hosting", "Airport transfers"], hl: true },
+          { name: "Rapture", items: ["Pool", "Restaurant & bar", "Daily yoga", "On-site gym & fitness equipment", "Book a lesson, use equipment all day", "Video analysis", "Massages, trips & laundry bookable on-site", "Retreat hosting", "Airport transfers"], hl: true },
           { name: "CARI Surf", items: ["Pool", "Surfskate area", "Yoga (3x/week)", "Gym partner (off-site)", "Wellness partner", "Surf photos", "Airport transfers (7+ nights)"], hl: false },
           { name: "WaveHouse", items: ["Pool", "Restaurant", "Daily yoga", "In-pool training", "Video analysis", "Friday BBQ", "Insurance included"], hl: false },
           { name: "Kala Surf", items: ["Pool + swim-up bar", "Skate bowl", "Gym + boxing + Muay Thai", "Mobility training", "Pool table", "Restaurant", "Surf survival workshops"], hl: false },
@@ -708,7 +708,7 @@ const comparisonRows = [
       <h2 class="text-xl sm:text-2xl font-semibold text-white mb-6">The Bottom Line</h2>
       <div class="space-y-4 text-sm text-white/40 leading-relaxed">
         <p>The Bukit Peninsula has never had more quality surf camps. All four on this page run solid operations and genuinely care about your surf experience.</p>
-        <p>What makes Rapture different is <strong class="text-white/70">choice and flexibility.</strong> Two distinct camps to match your vibe — a 16-guest boutique villa or a 35-guest beachfront camp. Arrive any day, stay any length, build your own package. Free equipment all day so you can practise after your lesson. Breakfast and dinner included. And over 20 years of experience making sure it all runs smoothly.</p>
+        <p>What makes Rapture different is <strong class="text-white/70">choice and flexibility.</strong> Two distinct camps to match your vibe — a 22-guest boutique villa or a 24-guest beachfront camp. Arrive any day, stay any length, build your own package. Free equipment all day so you can practise after your lesson. Breakfast and dinner included. And over 20 years of experience making sure it all runs smoothly.</p>
         <p>That's the Rapture approach — and it's been working since 2003.</p>
       </div>
     </div>

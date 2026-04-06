@@ -2,6 +2,7 @@
 import CampLayout from "@/components/layout/CampLayout.astro";
 import BlockRenderer from "@/components/blocks/BlockRenderer.astro";
 import CTASection from "@/components/sections/CTASection.astro";
+import LearnToSurfPromo from "@/components/sections/LearnToSurfPromo.astro";
 import { destinations } from "@/lib/data";
 import { getDestinations, getCampBySlug, getCampSurfPage } from "@/lib/sanity-data";
 import { t } from "@/lib/i18n";
@@ -45,6 +46,8 @@ const blocks = surfPage?.pageBuilder;
   ) : (
     <CTASection lang="de" />
   )}
+
+  <LearnToSurfPromo lang="de" />
 
   <RelatedBlogPosts
     posts={surfPage?.relatedBlogPosts?.length ? surfPage.relatedBlogPosts : undefined}
