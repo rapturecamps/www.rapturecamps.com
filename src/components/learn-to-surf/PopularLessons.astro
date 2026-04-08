@@ -1,0 +1,77 @@
+---
+interface Lesson {
+  title: string;
+  slug: string;
+  clusterSlug: string;
+  clusterTitle?: string;
+  difficulty?: string;
+  featuredImageUrl?: string;
+}
+
+interface Props {
+  lessons: Lesson[];
+  lang?: string;
+}
+
+const { lessons, lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const isDE = lang === "de";
+
+const diffStyle: Record<string, string> = {
+  beginner: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20",
+  intermediate: "text-amber-400 bg-amber-500/10 border-amber-500/20",
+  advanced: "text-red-400 bg-red-500/10 border-red-500/20",
+};
+---
+
+<section class="py-16 sm:py-20 bg-dark">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-ocean/60 mb-2">
+          {isDE ? "Am beliebtesten" : "Most popular"}
+        </p>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">
+          {isDE ? "Beginne mit diesen Lektionen" : "Start with These Lessons"}
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {lessons.map((lesson) => {
+        const dc = diffStyle[lesson.difficulty || ""] || "";
+        return (
+          <a
+            href={`${prefix}/learn-to-surf/${lesson.clusterSlug}/${lesson.slug}`}
+            class="group block rounded-xl border border-white/5 bg-dark-lighter overflow-hidden transition-all hover:border-ocean/30 hover:shadow-lg hover:shadow-ocean/5"
+          >
+            {lesson.featuredImageUrl && (
+              <div class="aspect-[16/10] overflow-hidden">
+                <img
+                  src={`${lesson.featuredImageUrl}?w=400&h=250&fit=crop&auto=format`}
+                  alt={lesson.title}
+                  width={400}
+                  height={250}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            )}
+            <div class="p-4">
+              {lesson.difficulty && (
+                <span class:list={["text-[10px] font-semibold border rounded-full px-2 py-0.5 inline-block mb-2", dc]}>
+                  {lesson.difficulty.charAt(0).toUpperCase() + lesson.difficulty.slice(1)}
+                </span>
+              )}
+              <h3 class="font-display text-sm font-semibold text-white group-hover:text-ocean transition-colors leading-snug mb-1">
+                {lesson.title}
+              </h3>
+              <p class="text-[11px] text-white/30">{lesson.clusterTitle}</p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</section>

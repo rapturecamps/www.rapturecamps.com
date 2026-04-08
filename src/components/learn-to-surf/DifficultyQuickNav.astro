@@ -1,0 +1,83 @@
+---
+interface Props {
+  beginnerCount: number;
+  intermediateCount: number;
+  advancedCount: number;
+  lang?: string;
+}
+
+const { beginnerCount, intermediateCount, advancedCount, lang = "en" } = Astro.props;
+const isDE = lang === "de";
+
+const levels = [
+  {
+    id: "beginner",
+    label: isDE ? "Anfänger" : "Beginner",
+    desc: isDE
+      ? "Erste Schritte, Pop Up, Paddeln und Wellenkunde"
+      : "First steps, pop up, paddling, and ocean basics",
+    count: beginnerCount,
+    color: "text-emerald-400",
+    bg: "bg-emerald-500/10",
+    border: "border-emerald-500/20 hover:border-emerald-500/40",
+    anchor: "#start-here",
+  },
+  {
+    id: "intermediate",
+    label: isDE ? "Fortgeschritten" : "Intermediate",
+    desc: isDE
+      ? "Manöver, Wellenauswahl und fortgeschrittene Technik"
+      : "Maneuvers, wave selection, and advanced technique",
+    count: intermediateCount,
+    color: "text-amber-400",
+    bg: "bg-amber-500/10",
+    border: "border-amber-500/20 hover:border-amber-500/40",
+    anchor: "#build-skills",
+  },
+  {
+    id: "advanced",
+    label: isDE ? "Experte" : "Advanced",
+    desc: isDE
+      ? "Aerials, Barrel Riding und Wettkampf-Mindset"
+      : "Aerials, barrel riding, and competitive mindset",
+    count: advancedCount,
+    color: "text-red-400",
+    bg: "bg-red-500/10",
+    border: "border-red-500/20 hover:border-red-500/40",
+    anchor: "#go-deeper",
+  },
+];
+---
+
+<section class="py-12 sm:py-16 bg-dark">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <p class="text-xs uppercase tracking-[0.2em] text-white/30 text-center mb-6">
+      {isDE ? "Wähle dein Level" : "Choose your level"}
+    </p>
+    <div class="grid sm:grid-cols-3 gap-4">
+      {levels.map((level) => (
+        <a
+          href={level.anchor}
+          class:list={[
+            "group block rounded-xl border p-5 sm:p-6 transition-all",
+            level.border,
+            level.bg,
+          ]}
+        >
+          <div class="flex items-center gap-3 mb-2">
+            <span class:list={["text-2xl font-bold font-display", level.color]}>
+              {level.count}
+            </span>
+            <span class="text-xs text-white/30">
+              {isDE ? "Lektionen" : (level.count === 1 ? "lesson" : "lessons")}
+            </span>
+          </div>
+          <h3 class:list={["font-display text-lg font-bold mb-1", level.color]}>
+            {level.label}
+          </h3>
+          <p class="text-sm text-white/40 leading-relaxed">{level.desc}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

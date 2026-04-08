@@ -1,0 +1,102 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = "en" } = Astro.props;
+const isDE = lang === "de";
+
+const faqs = isDE ? [
+  {
+    q: "Wie lange dauert es, Surfen zu lernen?",
+    a: "Die meisten Anfänger stehen innerhalb von 1–2 Stunden auf dem Brett und reiten Weißwasserwellen. Um selbstständig grüne (ungebrochene) Wellen zu surfen, braucht man in der Regel 2–4 Wochen regelmäßiges Üben. Die Progression hängt von deiner Fitness, Schwimmfähigkeit und der Häufigkeit ab, mit der du im Wasser bist.",
+  },
+  {
+    q: "Kann ich Surfen alleine lernen?",
+    a: "Grundkenntnisse kann man sich durch Übung und Anleitung wie unsere kostenlosen Lektionen aneignen, aber zumindest ein paar Surfstunden mit einem zertifizierten Coach sind sehr empfehlenswert. Ein Lehrer korrigiert deine Technik sofort, bringt dir die Sicherheitsregeln bei und hilft dir, häufige Fehler zu vermeiden, die deinen Fortschritt wochen- oder monatelang verzögern können.",
+  },
+  {
+    q: "Welche Ausrüstung brauche ich zum Surfen?",
+    a: "Zum Anfangen brauchst du ein Surfbrett (ein weiches Schaumstoff-Board ist ideal für Anfänger), eine Leash, Surfwachs und je nach Wassertemperatur einen Neoprenanzug. Unser Surfboard-Guide für Anfänger hilft dir, das richtige Board zu wählen.",
+  },
+  {
+    q: "Ist Surfen gefährlich für Anfänger?",
+    a: "Wie jede Wassersportart birgt Surfen Risiken, aber mit der richtigen Anleitung, einem geeigneten Strand (Sandgrund, kleine Wellen) und grundlegenden Sicherheitskenntnissen ist es sicher zu erlernen. Unsere Lektionen zu Surfsicherheit und Strömungen decken alles Wichtige ab.",
+  },
+  {
+    q: "Was ist das beste Alter, um Surfen zu lernen?",
+    a: "Es gibt kein ‚bestes' Alter — wir unterrichten Kinder ab 5 Jahren und Erwachsene über 60. Surfen ist anpassbar: Brettgröße, Wellenauswahl und Technik lassen sich an jedes Fitnesslevel und Alter anpassen.",
+  },
+  {
+    q: "Muss ich ein guter Schwimmer sein, um Surfen zu lernen?",
+    a: "Du musst kein Leistungsschwimmer sein, aber du solltest dich im Wasser wohlfühlen und 50–100 Meter ohne Hilfe schwimmen können. Wasservertrauen ist wichtiger als Geschwindigkeit. Wenn du noch unsicher bist, beginne in flachem Wasser mit Weißwasserwellen.",
+  },
+] : [
+  {
+    q: "How long does it take to learn to surf?",
+    a: "Most beginners stand up and ride whitewater waves within 1–2 hours. To independently catch and ride unbroken (green) waves, expect 2–4 weeks of regular practice. Progression depends on your fitness, swimming ability, and how often you get in the water.",
+  },
+  {
+    q: "Can I learn to surf on my own?",
+    a: "You can build foundational knowledge through practice and guides like our free lessons, but at least a few sessions with a certified coach are highly recommended. An instructor corrects your technique in real time, teaches ocean safety, and helps you avoid common mistakes that can delay progress by weeks or months.",
+  },
+  {
+    q: "What equipment do I need to start surfing?",
+    a: "To get started you need a surfboard (a soft-top foam board is ideal for beginners), a leash, surf wax, and a wetsuit if the water is cool. Our beginner surfboard guide helps you choose the right board for your size and conditions.",
+  },
+  {
+    q: "Is surfing dangerous for beginners?",
+    a: "Like any ocean activity, surfing has risks — but with proper instruction, a suitable beach (sandy bottom, small waves), and basic safety knowledge, it is safe to learn. Our lessons on surf safety and rip currents cover the essentials every beginner should know before paddling out.",
+  },
+  {
+    q: "What's the best age to learn to surf?",
+    a: "There is no 'best' age — we teach kids as young as 5 and adults over 60. Surfing is adaptable: board size, wave choice, and technique can all be adjusted to match any fitness level and age group.",
+  },
+  {
+    q: "Do I need to be a strong swimmer to surf?",
+    a: "You don't need to be a competitive swimmer, but you should be comfortable in the ocean and able to swim 50–100 meters unassisted. Water confidence matters more than speed. If you're still building that confidence, start in shallow water riding whitewater waves.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((faq) => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a,
+    },
+  })),
+};
+---
+
+<script type="application/ld+json" slot="head" set:html={JSON.stringify(faqJsonLd)} />
+
+<section class="py-16 sm:py-20 bg-dark" id="faq">
+  <div class="mx-auto max-w-3xl px-6 sm:px-8">
+    <div class="text-center mb-10">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mb-3">
+        {isDE ? "Häufig gestellte Fragen" : "Frequently Asked Questions"}
+      </h2>
+      <p class="text-base text-white/40">
+        {isDE ? "Antworten auf die häufigsten Fragen zum Surfen lernen." : "Answers to the most common questions about learning to surf."}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {faqs.map((faq, i) => (
+        <details class="group rounded-xl border border-white/10 bg-dark-lighter overflow-hidden" open={i === 0}>
+          <summary class="flex items-center justify-between cursor-pointer px-5 py-4 text-white font-medium text-[15px] leading-snug hover:text-ocean transition-colors list-none [&::-webkit-details-marker]:hidden">
+            <span class="pr-4">{faq.q}</span>
+            <svg class="h-4 w-4 flex-shrink-0 text-white/30 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </summary>
+          <div class="px-5 pb-5 text-sm text-white/50 leading-relaxed">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

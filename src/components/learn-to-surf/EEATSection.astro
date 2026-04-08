@@ -1,0 +1,71 @@
+---
+interface Props {
+  lessonCount: number;
+  lang?: string;
+}
+
+const { lessonCount, lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const isDE = lang === "de";
+
+const stats = [
+  { value: "23+", label: isDE ? "Jahre Erfahrung" : "Years of Experience" },
+  { value: "85k+", label: isDE ? "Surfer unterrichtet" : "Surfers Taught" },
+  { value: "6", label: isDE ? "Surfcamps weltweit" : "Surfcamps Worldwide" },
+  { value: String(lessonCount), label: isDE ? "kostenlose Lektionen" : "Free Lessons" },
+];
+---
+
+<section class="py-16 sm:py-20 bg-dark-lighter">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="grid sm:grid-cols-2 gap-8 sm:gap-12 items-center">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-ocean/60 mb-3">
+          {isDE ? "Warum uns vertrauen" : "Why trust us"}
+        </p>
+        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mb-4">
+          {isDE ? "Geschrieben von zertifizierten Surf-Coaches" : "Written by Certified Surf Coaches"}
+        </h2>
+        <div class="space-y-3 text-base text-white/50 leading-relaxed">
+          <p>
+            {isDE
+              ? "Jede Lektion in diesem Guide wurde von ISA-zertifizierten Surf-Coaches geschrieben und geprüft, die täglich an einigen der besten Wellen der Welt unterrichten."
+              : "Every lesson in this guide is written and reviewed by ISA-certified surf coaches who teach daily at some of the best waves in the world."}
+          </p>
+          <p>
+            {isDE
+              ? "Rapture Surfcamps ist eine vom portugiesischen Surfverband anerkannte Surfschule mit über zwei Jahrzehnten Erfahrung in der Surf-Ausbildung an Stränden in Portugal, Costa Rica und Bali."
+              : "Rapture Surfcamps is a surf school recognized by the Portugal Surfing Federation with over two decades of experience teaching at beaches in Portugal, Costa Rica, and Bali."}
+          </p>
+        </div>
+        <a
+          href={`${prefix}/about`}
+          class="inline-flex items-center gap-2 mt-5 text-sm font-medium text-ocean hover:text-white transition-colors"
+        >
+          {isDE ? "Über uns erfahren" : "Learn about us"}
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        {stats.map((stat) => (
+          <div class="rounded-xl border border-white/5 bg-dark px-5 py-4 text-center">
+            <p class="font-display text-2xl sm:text-3xl font-bold text-ocean mb-1">{stat.value}</p>
+            <p class="text-xs text-white/35">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-white/5">
+      <div class="flex items-center gap-2">
+        <img src="/images/rapturecamps-logo.svg" alt="Rapture Surfcamps" width={28} height={28} class="w-7 h-7 rounded" />
+        <span class="text-xs text-white/40">ISA Approved Surf School</span>
+      </div>
+      <span class="text-white/10 hidden sm:inline">|</span>
+      <span class="text-xs text-white/40">
+        {isDE ? "Anerkannt vom portugiesischen Surfverband" : "Recognized by the Portugal Surfing Federation"}
+      </span>
+    </div>
+  </div>
+</section>

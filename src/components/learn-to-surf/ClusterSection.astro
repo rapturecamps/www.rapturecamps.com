@@ -1,0 +1,83 @@
+---
+import ClusterIcon from "./ClusterIcon.astro";
+
+interface Lesson {
+  title: string;
+  slug: string;
+  clusterSlug: string;
+  difficulty?: string;
+  readTime?: string;
+}
+
+interface Props {
+  title: string;
+  slug: string;
+  description?: string;
+  icon?: string;
+  lessons: Lesson[];
+  totalCount: number;
+  lang?: string;
+}
+
+const { title, slug, description, icon, lessons, totalCount, lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const isDE = lang === "de";
+const clusterHref = `${prefix}/learn-to-surf/${slug}`;
+const topLessons = lessons.slice(0, 4);
+
+const diffColors: Record<string, string> = {
+  beginner: "text-emerald-400/70",
+  intermediate: "text-amber-400/70",
+  advanced: "text-red-400/70",
+};
+---
+
+<div class="rounded-xl border border-white/5 bg-dark-lighter p-5 sm:p-6">
+  <div class="flex items-start gap-4 mb-4">
+    <div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-ocean/10 text-ocean">
+      <ClusterIcon icon={icon} class="h-5 w-5" />
+    </div>
+    <div class="flex-1 min-w-0">
+      <a href={clusterHref} class="group">
+        <h3 class="font-display text-lg font-bold text-white group-hover:text-ocean transition-colors">
+          {title}
+        </h3>
+      </a>
+      {description && (
+        <p class="text-sm text-white/40 mt-0.5 line-clamp-2">{description}</p>
+      )}
+    </div>
+    <span class="flex-shrink-0 text-xs text-white/25 mt-1">
+      {totalCount} {isDE ? "Lektionen" : (totalCount === 1 ? "lesson" : "lessons")}
+    </span>
+  </div>
+
+  <div class="space-y-1.5 mb-4">
+    {topLessons.map((lesson) => (
+      <a
+        href={`${prefix}/learn-to-surf/${lesson.clusterSlug}/${lesson.slug}`}
+        class="group flex items-center gap-3 rounded-lg px-3 py-2 -mx-1 hover:bg-white/5 transition-colors"
+      >
+        <span class="flex-shrink-0 w-1 h-1 rounded-full bg-ocean/40" aria-hidden="true" />
+        <span class="text-sm text-white/60 group-hover:text-white transition-colors flex-1 min-w-0 truncate">
+          {lesson.title}
+        </span>
+        {lesson.difficulty && (
+          <span class:list={["text-[10px] flex-shrink-0", diffColors[lesson.difficulty] || "text-white/30"]}>
+            {lesson.difficulty.charAt(0).toUpperCase() + lesson.difficulty.slice(1)}
+          </span>
+        )}
+      </a>
+    ))}
+  </div>
+
+  {totalCount > topLessons.length && (
+    <a
+      href={clusterHref}
+      class="inline-flex items-center gap-1.5 text-xs font-medium text-ocean hover:text-white transition-colors"
+    >
+      {isDE ? `Alle ${totalCount} Lektionen ansehen` : `View all ${totalCount} lessons`}
+      <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  )}
+</div>

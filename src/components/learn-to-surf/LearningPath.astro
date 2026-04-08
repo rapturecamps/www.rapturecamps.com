@@ -1,0 +1,79 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = "en" } = Astro.props;
+const prefix = lang === "de" ? "/de" : "";
+const isDE = lang === "de";
+
+const steps = [
+  {
+    num: 1,
+    title: isDE ? "Surf Grundlagen" : "Surf Fundamentals",
+    desc: isDE ? "Pop Up, Stance, Balance" : "Pop up, stance, balance",
+    href: `${prefix}/learn-to-surf/surf-fundamentals`,
+  },
+  {
+    num: 2,
+    title: isDE ? "Paddeln" : "Paddling",
+    desc: isDE ? "Technik, Duck Dive, Ausdauer" : "Technique, duck dive, endurance",
+    href: `${prefix}/learn-to-surf/paddling`,
+  },
+  {
+    num: 3,
+    title: isDE ? "Take Off" : "Take Off",
+    desc: isDE ? "Grüne Wellen, Angling, Timing" : "Green waves, angling, timing",
+    href: `${prefix}/learn-to-surf/take-off`,
+  },
+  {
+    num: 4,
+    title: isDE ? "Wellenkunde" : "Wave Knowledge",
+    desc: isDE ? "Wellen lesen, Positionierung" : "Reading waves, positioning",
+    href: `${prefix}/learn-to-surf/wave-knowledge`,
+  },
+  {
+    num: 5,
+    title: isDE ? "Manöver" : "Maneuvers",
+    desc: isDE ? "Bottom Turn, Cutback, Aerials" : "Bottom turn, cutback, aerials",
+    href: `${prefix}/learn-to-surf/surf-maneuvers`,
+  },
+];
+---
+
+<section class="py-16 sm:py-20 bg-dark-lighter">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="text-center mb-10">
+      <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mb-3">
+        {isDE ? "Der empfohlene Lernweg" : "The Recommended Learning Path"}
+      </h2>
+      <p class="text-base text-white/40 max-w-2xl mx-auto">
+        {isDE
+          ? "Folge dieser Reihenfolge für den schnellsten und sichersten Fortschritt — jede Stufe baut auf der vorherigen auf."
+          : "Follow this sequence for the fastest, safest progression — each stage builds on the one before it."}
+      </p>
+    </div>
+
+    <div class="relative">
+      {/* Connector line (desktop) */}
+      <div class="hidden sm:block absolute top-10 left-[10%] right-[10%] h-px bg-gradient-to-r from-ocean/0 via-ocean/30 to-ocean/0" aria-hidden="true" />
+
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 sm:gap-3">
+        {steps.map((step) => (
+          <a
+            href={step.href}
+            class="group relative flex flex-col items-center text-center rounded-xl border border-white/5 hover:border-ocean/30 bg-dark p-4 sm:p-5 transition-all"
+          >
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-ocean/15 text-ocean font-display text-sm font-bold mb-3 group-hover:bg-ocean/25 transition-colors">
+              {step.num}
+            </span>
+            <h3 class="font-display text-sm font-semibold text-white group-hover:text-ocean transition-colors mb-1 leading-tight">
+              {step.title}
+            </h3>
+            <p class="text-[11px] text-white/35 leading-snug">{step.desc}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

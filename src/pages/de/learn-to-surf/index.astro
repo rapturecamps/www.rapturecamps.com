@@ -3,7 +3,12 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Hero from "@/components/sections/Hero.astro";
 import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import CTASection from "@/components/sections/CTASection.astro";
-import ClusterCard from "@/components/learn-to-surf/ClusterCard.astro";
+import DifficultyQuickNav from "@/components/learn-to-surf/DifficultyQuickNav.astro";
+import LearningPath from "@/components/learn-to-surf/LearningPath.astro";
+import ClusterSection from "@/components/learn-to-surf/ClusterSection.astro";
+import PopularLessons from "@/components/learn-to-surf/PopularLessons.astro";
+import EEATSection from "@/components/learn-to-surf/EEATSection.astro";
+import SurfFAQ from "@/components/learn-to-surf/SurfFAQ.astro";
 import { getLearnClusters, getLearnLessons } from "@/lib/sanity-data";
 
 const clusters = await getLearnClusters("de");
@@ -12,18 +17,101 @@ const lessons = await getLearnLessons("de");
 const enClusters = clusters.length ? clusters : await getLearnClusters("en");
 const enLessons = lessons.length ? lessons : await getLearnLessons("en");
 
+const useClusters = enClusters;
+const useLessons = enLessons;
+
 const clusterCounts: Record<string, number> = {};
-for (const lesson of enLessons) {
+const clusterLessons: Record<string, any[]> = {};
+const difficultyCounts = { beginner: 0, intermediate: 0, advanced: 0 };
+
+for (const lesson of useLessons) {
   const cs = lesson.clusterSlug;
-  if (cs) clusterCounts[cs] = (clusterCounts[cs] || 0) + 1;
+  if (cs) {
+    clusterCounts[cs] = (clusterCounts[cs] || 0) + 1;
+    if (!clusterLessons[cs]) clusterLessons[cs] = [];
+    clusterLessons[cs].push(lesson);
+  }
+  const d = lesson.difficulty as keyof typeof difficultyCounts;
+  if (d && d in difficultyCounts) difficultyCounts[d]++;
 }
 
-const seoTitle = "Surfen Lernen · Rapture";
-const seoDesc =
-  "Surfen lernen von der ersten Welle bis zu fortgeschrittenen Manövern. Kostenlose Lektionen, Übungen und Expertentipps einer ISA-zertifizierten Surfschule.";
+const popularSlugs = [
+  "pop-up",
+  "reading-waves",
+  "duck-dive",
+  "surf-etiquette",
+  "bottom-turn",
+  "catching-unbroken-waves",
+  "take-off-techniques",
+  "surf-safety",
+];
+
+const popularLessons = popularSlugs
+  .map((slug) => useLessons.find((l: any) => l.slug === slug))
+  .filter(Boolean);
+
+const clusterGroups = [
+  {
+    id: "start-here",
+    label: "Hier starten",
+    desc: "Grundlegende Fähigkeiten für deine ersten Sessions im Wasser.",
+    slugs: ["surf-fundamentals", "paddling", "take-off"],
+  },
+  {
+    id: "build-skills",
+    label: "Fähigkeiten ausbauen",
+    desc: "Vom Wellen-Fangen zum Wellenreiten mit Stil.",
+    slugs: ["wave-knowledge", "surf-maneuvers", "surf-etiquette"],
+  },
+  {
+    id: "go-deeper",
+    label: "Vertiefe dein Wissen",
+    desc: "Training, Mindset, Ausrüstung und Coaching für engagierte Surfer.",
+    slugs: ["surf-mindset", "surf-fitness", "surf-equipment", "surfskate-training", "surf-coaching"],
+  },
+];
+
+const seoTitle = "Surfen Lernen: Kostenlose Lektionen von Anfänger bis Fortgeschritten · Rapture Surfcamps";
+const seoDesc = `Lerne Surfen mit ${useLessons.length}+ kostenlosen Lektionen von ISA-zertifizierten Coaches. Schritt-für-Schritt-Anleitungen zu Pop Up, Wellenreiten, Manövern, Fitness und mehr.`;
+
+const courseJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Surfen Lernen",
+  "description": seoDesc,
+  "url": "https://www.rapturecamps.com/de/learn-to-surf",
+  "inLanguage": "de",
+  "numberOfCredits": useLessons.length,
+  "provider": {
+    "@type": "Organization",
+    "name": "Rapture Surfcamps",
+    "url": "https://www.rapturecamps.com",
+    "sameAs": [
+      "https://www.instagram.com/rapturecamps",
+      "https://www.facebook.com/rapturecamps",
+    ],
+  },
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": "online",
+    "isAccessibleForFree": true,
+  },
+};
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.rapturecamps.com/de" },
+    { "@type": "ListItem", "position": 2, "name": "Surfen Lernen", "item": "https://www.rapturecamps.com/de/learn-to-surf" },
+  ],
+};
 ---
 
 <BaseLayout title={seoTitle} description={seoDesc}>
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(courseJsonLd)} />
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify(breadcrumbJsonLd)} />
+
   <Hero
     title="Surfen Lernen"
     subtitle="Von der ersten Welle bis zu fortgeschrittenen Manövern — lerne Surfen mit kostenlosen Lektionen einer ISA-zertifizierten Surfschule."
@@ -36,54 +124,84 @@ const seoDesc =
     </div>
   </Hero>
 
+  {/* Schwierigkeitsgrad Schnellnavigation */}
+  <DifficultyQuickNav
+    beginnerCount={difficultyCounts.beginner}
+    intermediateCount={difficultyCounts.intermediate}
+    advancedCount={difficultyCounts.advanced}
+    lang="de"
+  />
 
+  {/* Erweiterte Einleitung */}
   <section class="py-16 sm:py-20 bg-dark">
-    <div class="mx-auto max-w-6xl px-6 sm:px-8">
-      <div class="max-w-3xl mx-auto text-center mb-12">
-        <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-          Dein kompletter Guide zum Surfen Lernen
-        </h1>
-        <p class="text-lg text-white/50 leading-relaxed">
-          Ob du zum ersten Mal auf dem Board stehst oder an deinem Cutback arbeitest — unsere
-          umfassenden Surflektionen decken jede Fähigkeit ab, die du brauchst. Erstellt von
-          ISA-zertifizierten Coaches bei Rapture Surfcamps mit jahrelanger Erfahrung.
+    <div class="mx-auto max-w-3xl px-6 sm:px-8">
+      <h1 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">
+        Dein kompletter Guide zum Surfen Lernen
+      </h1>
+      <div class="space-y-5 text-lg text-white/50 leading-relaxed">
+        <p>
+          Dies ist die umfassendste kostenlose Surf-Ausbildungsressource im Web — <strong class="text-white/80">{useLessons.length} Lektionen</strong> in {useClusters.length} Kategorien, geschrieben von ISA-zertifizierten Coaches mit über 23 Jahren Erfahrung bei Rapture Surfcamps in Portugal, Costa Rica und Bali.
+        </p>
+        <p>
+          Ob du dich auf deine erste Surfstunde vorbereitest, den <a href="/de/learn-to-surf/surf-fundamentals/pop-up" class="text-ocean underline underline-offset-2 decoration-ocean/30 hover:text-white hover:decoration-white transition-colors">Pop Up</a> übst, an deinem <a href="/de/learn-to-surf/surf-maneuvers/bottom-turn" class="text-ocean underline underline-offset-2 decoration-ocean/30 hover:text-white hover:decoration-white transition-colors">Bottom Turn</a> arbeitest oder dich auf größere Wellen vorbereitest — jede Lektion bietet schrittweise Technik-Anleitungen, Übungen, häufige Fehler und Tipps von Coaches, die mehr als 85.000 Surfer unterrichtet haben.
+        </p>
+        <p>
+          Jede Lektion ist so aufgebaut, wie wir in unseren Camps tatsächlich unterrichten: Fähigkeiten werden progressiv aufgebaut, angefangen bei den <a href="/de/learn-to-surf/surf-fundamentals" class="text-ocean underline underline-offset-2 decoration-ocean/30 hover:text-white hover:decoration-white transition-colors">Grundlagen</a>, die alles andere erst möglich machen. Wähle dein Level, folge dem empfohlenen Lernweg oder springe direkt zu einem Thema.
         </p>
       </div>
-
-      {enClusters.length > 0 ? (
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {enClusters.map((cluster: any) => (
-            <ClusterCard
-              title={cluster.title}
-              slug={cluster.slug}
-              description={cluster.description}
-              icon={cluster.icon}
-              featuredImageUrl={cluster.featuredImageUrl}
-              lessonCount={clusterCounts[cluster.slug] || 0}
-              lang="de"
-            />
-          ))}
-        </div>
-      ) : (
-        <div class="rounded-2xl border border-white/10 bg-dark-lighter p-12 text-center">
-          <p class="text-white/40 text-lg">Inhalte werden vorbereitet. Schau bald wieder vorbei!</p>
-        </div>
-      )}
     </div>
   </section>
 
-  <section class="py-12 bg-dark-lighter">
-    <div class="mx-auto max-w-6xl px-6 sm:px-8">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-xl border border-white/10 bg-dark px-6 py-5">
-        <img src="/images/rapturecamps-logo.svg" alt="Rapture Surfcamps" width={48} height={48} class="w-12 h-12 rounded-lg" />
-        <div>
-          <p class="text-sm font-semibold text-white">Erstellt von Rapture Surfcamps</p>
-          <p class="text-xs text-white/40 mt-0.5">ISA-zertifizierte Surfschule · Anerkannt vom portugiesischen Surfverband</p>
-        </div>
-        <a href="/de/about" class="sm:ml-auto text-xs text-ocean hover:text-white transition-colors">Über uns →</a>
-      </div>
-    </div>
-  </section>
+  {/* Empfohlener Lernweg */}
+  <LearningPath lang="de" />
 
-  <CTASection />
+  {/* Beliebte Lektionen */}
+  {popularLessons.length > 0 && (
+    <PopularLessons lessons={popularLessons} lang="de" />
+  )}
+
+  {/* Cluster-Sektionen nach Progression */}
+  {clusterGroups.map((group) => {
+    const groupClusters = group.slugs
+      .map((s) => useClusters.find((c: any) => c.slug === s))
+      .filter(Boolean);
+
+    return groupClusters.length > 0 && (
+      <section class="py-16 sm:py-20 bg-dark" id={group.id}>
+        <div class="mx-auto max-w-6xl px-6 sm:px-8">
+          <div class="mb-8">
+            <p class="text-xs uppercase tracking-[0.2em] text-ocean/60 mb-2">{group.label}</p>
+            <p class="text-base text-white/40">{group.desc}</p>
+          </div>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {groupClusters.map((cluster: any) => (
+              <ClusterSection
+                title={cluster.title}
+                slug={cluster.slug}
+                description={cluster.description}
+                icon={cluster.icon}
+                lessons={clusterLessons[cluster.slug] || []}
+                totalCount={clusterCounts[cluster.slug] || 0}
+                lang="de"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  {/* E-E-A-T / Vertrauenssektion */}
+  <EEATSection lessonCount={useLessons.length} lang="de" />
+
+  {/* FAQ mit Schema */}
+  <SurfFAQ lang="de" />
+
+  <CTASection
+    heading={"Bereit, in Person zu surfen?"}
+    text="Setze diese Lektionen mit ISA-zertifizierten Coaches in einem Rapture Surfcamp um. Camps in Portugal, Costa Rica und Bali."
+    buttonText="Surfcamps entdecken"
+    buttonUrl="https://bookings.rapturecamps.com"
+    lang="de"
+  />
 </BaseLayout>
